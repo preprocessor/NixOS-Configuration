@@ -1,40 +1,42 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; #
-
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      # If you are not running an unstable channel of nixpkgs, select the corresponding branch of Nixvim.
-      # url = "github:nix-community/nixvim/nixos-25.11";
-
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     home-manager = {
       url = "github:nix-community/home-manager/master"; # master branch
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixcord = {
+      url = "github:FlameFlag/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # inputs.import-tree.url = "github:vic/import-tree";
+    # inputs.flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs = inputs: {
-    inherit inputs; # for repl !
+    inherit inputs; # for repl
 
     nixosConfigurations.ramiel = inputs.nixpkgs.lib.nixosSystem {
       modules = [
+	inputs.stylix.nixosModules.stylix
+	inputs.nixcord.homeModules.nixcord
         ./common
-	./ramiel # >:3
+        ./ramiel # system specific
       ];
       specialArgs = {
         inherit inputs;
       };
-    };
-
-    packages.x86_64-linux = let 
-      nixvim = inputs.nixvim.legacyPackages.x86_64-linux;
-      nvim = nixvim.makeNixvim (import ./nixvim);
-    in 
-    {
-      inherit nvim;
     };
   };
 }

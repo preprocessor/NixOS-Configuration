@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -44,8 +49,11 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
+  # services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
+
+  services.displayManager.ly.enable = true;
+  programs.niri.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -75,11 +83,17 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # Add zsh :>
+  programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.wyspr = {
     isNormalUser = true;
     description = "wyspr";
-    extraGroups = [ "networkmanager" "wheel" ];
+    initialPassword = "password";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -92,21 +106,17 @@
     };
   };
 
-  programs.zsh.enable = true;
+  home-manager.users.wyspr =
+    { pkgs, ... }:
+    {
+      imports = [
+        ../home # /default.nix
+      ];
 
-  home-manager.users.wyspr = { pkgs, ... }: {
-    imports = [
-      ../home # /default.nix
-    ];
-  
-    # This value determines the Home Manager release that your configuration is
-    # compatible with. This helps avoid breakage when a new Home Manager release
-    # introduces backwards incompatible changes.
-    #
-    # You should not change this value, even if you update Home Manager. If you do
-    # want to update the value, then make sure to first check the Home Manager
-    # release notes.
-    home.stateVersion = config.system.stateVersion; # Match NixOS version
+      home = {
+        stateVersion = config.system.stateVersion; # Match NixOS version
+        shell.enableShellIntegration = true;
+      };
   };
 
   # Allow unfree packages
@@ -116,14 +126,20 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
-    vesktop
     just
     wget
+    btop
+    eza
+    ripgrep
     zip
+    fastfetch
     git
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes"  ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
