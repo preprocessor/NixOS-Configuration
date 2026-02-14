@@ -30,7 +30,6 @@
     nixosConfigurations.ramiel = inputs.nixpkgs.lib.nixosSystem {
       modules = [
 	inputs.stylix.nixosModules.stylix
-	inputs.nixcord.homeModules.nixcord
         ./common
         ./ramiel # system specific
       ];

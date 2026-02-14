@@ -110,6 +110,7 @@
     { pkgs, ... }:
     {
       imports = [
+	inputs.nixcord.homeModules.nixcord
         ../home # /default.nix
       ];
 
@@ -134,6 +135,7 @@
     zip
     fastfetch
     git
+    lazygit
   ];
 
   nix.settings.experimental-features = [
