@@ -3,7 +3,7 @@
   programs.nixcord = {
     enable = true;
     
-    dorion.enable = true;
+    vesktop.enable = true;
 
 	#    config = {
 	#      notifyAboutUpdates = true;

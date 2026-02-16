@@ -1,20 +1,24 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 {
   imports = [
-    ./git.nix
-    ./xdg.nix
-    ./zsh.nix
-    ./nh.nix
-    ./zed.nix
     ./ghostty.nix
+    ./git.nix
     ./neovim.nix
+    ./nh.nix
     ./nixcord.nix
+    ./shell.nix
+    ./stylix.nix
+    ./xdg.nix
+    ./zed.nix
   ];
 
+  programs.home-manager.enable = true;
+
   home.packages = with pkgs; [
+    inputs.helium.packages.${pkgs.system}.default
+    prismlauncher
     virtualbox
     vivaldi
-    nixfmt
     steam
     gimp
   ];

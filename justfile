@@ -1,7 +1,4 @@
-default: build	
-build: rebuild
-rebuild:
-  nh os switch --diff always .
+default: test
 
 # boot  -  Build the new configuration and make it the boot default
 boot:
@@ -15,8 +12,11 @@ vm:
   nh os build-vm . --diff always
   ./result/bin/run-ramiel-vm
 
+check:
+  nix flake check --show-trace
+
 format:
   nixfmt **/*.nix
 
-nvim:
-  nix profile upgrade nvim
+rebuild:
+  nixos-rebuild switch --sudo --flake .
