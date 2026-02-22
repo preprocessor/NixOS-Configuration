@@ -17,6 +17,3 @@ check:
 
 format:
   nixfmt **/*.nix
-
-rebuild:
-  nixos-rebuild switch --sudo --flake .

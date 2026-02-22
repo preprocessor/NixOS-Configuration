@@ -6,8 +6,10 @@
 }:
 {
   imports = [
+    ./fonts.nix
     ./home-manager.nix
     ./locale.nix
+    ./overlays.nix
     ./packages.nix
     ./user.nix
   ];

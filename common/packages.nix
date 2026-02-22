@@ -1,6 +1,4 @@
 {
-  inputs,
-  config,
   pkgs,
   ...
 }:
@@ -35,20 +33,17 @@
     gnome-extension-manager
     brightnessctl
     imagemagick
-    victor-mono
     nixos-shell
     trash-cli
     fastfetch
-    fira-code
     ripgrep
     rmtrash
     lazygit
-    neovim
-    nixfmt
+    nvim-pkg # neovim
     unzip
     just
     wget
-    btop
+    btop-rocm
     bat
     eza
     zip

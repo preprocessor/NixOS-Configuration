@@ -1,6 +1,6 @@
 { ... }:
 {
   imports = [
-   ./style.nix
+   ./stylix.nix
   ];
 }

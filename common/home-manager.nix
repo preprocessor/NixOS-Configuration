@@ -14,13 +14,12 @@
     useUserPackages = true;
     backupFileExtension = "backup";
 
-    extraSpecialArgs = {
-      inherit inputs;
-    };
+    extraSpecialArgs = { inherit inputs; };
  
     users.wyspr = {
       imports = [
         inputs.nixcord.homeModules.nixcord
+        inputs.direnv-instant.homeModules.direnv-instant
         ../home # /default.nix
       ];
 

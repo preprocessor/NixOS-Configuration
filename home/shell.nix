@@ -9,35 +9,37 @@
         fish_greeting = "";
 
         mcd = "mkdir -p $argv[1]; and cd $argv[1]";
+
+        envtemplate = lib.concatStrings [
+          "nix flake init --template 'https://flakehub.com/f/the-nix-way/dev-templates/*#$argv[1]'"
+          "direnv allow"
+        ];
       };
 
       shellAliases = {
         weather = "curl -s 'wttr.in/?A&0'";
 
-        rebuild = "nh os build --diff always";
-        repl = "nix repl --file ~/Configuration/repl.nix";
+        rebuild = "nh os switch --diff always";
+        repl = "nix repl --file ~/Configuration/NixOs/repl.nix";
 
         ls = "eza --group-directories-first --icons";
         la = "eza --group-directories-first --icons -a";
         ll = "eza --group-directories-first --icons -al";
 
-        cp="cp -r";
+        cp = "cp -r";
 
-        rm="rmtrash -r";
-        rmdir="rmdirtrash";
+        rm = "rmtrash -r";
+        rmdir = "rmdirtrash";
       };
 
       shellAbbrs = {
-        cls="clear";
+        cls = "clear";
 
-        nv="nvim";
+        v = "nvim";
 
-        tree="tre ";
+        rustrepl = "evcxr";
 
-        rust="evcxr";
-        c="cargo";
-
-        clone="git clone";
+        clone = "git clone";
       };
 
       plugins = with pkgs.fishPlugins; [
@@ -79,131 +81,16 @@
       ];
     };
 
-    nix-your-shell = {
-      enable = true;
-      enableFishIntegration = true;
-    };
-
-    zsh = {
-      enable = false;
-      dotDir = "${config.xdg.configHome}/zsh";
-
-      autocd = true;
-
-      enableCompletion = true;
-      autosuggestion = {
-        enable = true;
-        highlight = "fg=yellow,underline";
-        strategy = [
-          "history"
-          "completion"
-        ];
-      };
-
-      # Whether to enable integration with terminals using the VTE library. This will let the terminal track the current working directory.
-      enableVteIntegration = true;
-
-      setOptions = [
-        "EXTENDED_HISTORY"
-        "CORRECT"
-        "NO_NOTIFY"
-      ];
-
-      dirHashes = {
-        docs   = "${config.home.homeDirectory}/Documents";
-        vids   = "${config.home.homeDirectory}/Videos";
-        dl     = "${config.home.homeDirectory}/Downloads";
-        code   = "${config.home.homeDirectory}/Code";
-        nixcfg = "${config.home.homeDirectory}/Configuration";
-        config = "${config.home.homeDirectory}/.config";
-      };
-
-      antidote = {
-        enable = true;
-        useFriendlyNames = true;
-        plugins = [
-          "zsh-users/zsh-autosuggestions"
-          "Aloxaf/fzf-tab"
-          "Freed-Wu/fzf-tab-source"
-          "chrissicool/zsh-256color"
-          "zsh-users/zsh-completions"
-          "le0me55i/zsh-extract"
-
-          # file extension color mappings
-          # znap eval trapd00r/LS_COLORS "$( whence -a dircolors gdircolors ) -b LS_COLORS"
-          # use LS_COLORS to theme less, git, grep and others
-          # znap source marlonrichert/zcolors
-          # znap eval   marlonrichert/zcolors "zcolors ${(q)LS_COLORS}"
-          # fish-like syntax highlighting
-          "zsh-users/zsh-syntax-highlighting"
-        ];
-      };
-
-      history = {
-        append = true;
-        expireDuplicatesFirst = true;
-
-        # If a new command line being added to the history list duplicates an older one,
-        # the older command is removed from the list (even if it is not the previous event).
-        ignoreAllDups = true;
-
-        # Do not enter comm and lines into the history list if the first character is a space.
-        ignoreSpace = true;
-
-        # Do not display a line previously found in the history file.
-        findNoDups = true;
-
-        # Do not write duplicate entries into the history file.
-        saveNoDups = true;
-
-        # Share command history between zsh sessions.
-        share = true;
-      };
-
-      shellAliases = {
-      };
-
-
-      initContent = ''
-
-        unset REPORTTIME
-
-        ZSH_HIGHLIGHT_HIGHLIGHTERS=( main brackets )
-        ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(buffer-empty bracketed-paste accept-line push-line-or-edit)
-
-        # function dotgit {
-        #   git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
-        # }
-
-        # mcd: make and change dir
-        mcd() {
-            mkdir -p "$1"
-            cd "$1"
-        }
-
-        # pass -h and --help through bat
-        alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
-        alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
-
-        #  ╭─────────────────╮
-        #  │ zsh completions │
-        #  ╰─────────────────╯
-        #  ╭─────────╮
-        #  │ fzf-tab │
-        #  ╰─────────╯
-
-        #  ╭──────────╮
-        #  │ keybinds │
-        #  ╰──────────╯
-
-      '';
-    };
-
     starship = {
-      enable = true;
-      enableZshIntegration = true;
+      enable =  true;
+      enableInteractive = false;
+      enableFishIntegration = true;
+      enableBashIntegration = true;
+
       settings = {
         add_newline = false;
+
+        right_format = "$nix_shell";
 
         format = lib.concatStrings [
           "[](fg:blue)"
@@ -212,6 +99,10 @@
           "$git_branch"
           "$character"
         ];
+
+        nix_shell = {
+          format = "[ nix-shell](cyan)";
+        };
 
         character = {
           success_symbol = " [](green) ";
@@ -228,9 +119,7 @@
         };
 
         directory.substitutions = {
-          ".config" = "⚙️";
-          "Documents" = "📄";
-          "Downloads" = "👇";
+          ".config" =" ";
           "nvim" = " ";
         };
 
@@ -242,6 +131,54 @@
         git_status = {
           format = "[($all_status$ahead_behind )](fg:blue bold)";
         };
+      };
+    };
+
+
+    nix-your-shell = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
+    # zsh = {
+    #   enable = false;
+    #   dirHashes = {
+    #     docs   = "${config.home.homeDirectory}/Documents";
+    #     vids   = "${config.home.homeDirectory}/Videos";
+    #     dl     = "${config.home.homeDirectory}/Downloads";
+    #     code   = "${config.home.homeDirectory}/Code";
+    #     nixcfg = "${config.home.homeDirectory}/Configuration";
+    #     config = "${config.home.homeDirectory}/.config";
+    #   };
+    #
+    #   initContent = ''
+    #     # pass -h and --help through bat
+    #     alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
+    #     alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+    #   '';
+    # };
+
+    lazygit = {
+      enable = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+
+      settings = {
+        git.pagers = [
+          { pager = ''delta --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"''; }
+          { pager = ''delta --side-by-side --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"''; }
+        ];
+      };
+    };
+
+    atuin = {
+      enable = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+
+      settings = {
+        filter_mode = "directory";
+        enter_accept = true;
       };
     };
 
@@ -258,5 +195,7 @@
       enableFishIntegration = true;
       enableNushellIntegration = true;
     };
+
+
   };
 }
