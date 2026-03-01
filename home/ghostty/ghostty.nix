@@ -1,6 +1,7 @@
 { ... }:
 {
-  # xdg.configFile."ghostty/themes/Gruvbox_Light_Soft".source = ./Gruvbox_Light_Soft.toml;
+  xdg.configFile."ghostty/themes/Gruvbox_Light_Soft".source = ./Gruvbox_Light_Soft.toml;
+  xdg.configFile."ghostty/themes/Everforest_Light_Soft".source = ./Everforest_Light_Soft.yaml;
 
   programs.ghostty = {
     enable = true;
@@ -8,9 +9,9 @@
     installVimSyntax = true;
 
     settings = {
-      theme = "Batman";
+      theme = "Gruvbox_Light_Soft";
 
-      font-size = "12.5";
+      font-size = "12";
 
       font-family = "Fira Code";
       font-style = "SemiBold";
@@ -24,20 +25,21 @@
       font-family-bold-italic = "Victor Mono";
       # font-style-bold-italic = "Bold Italic";
 
-      #                  │ Victor Mono  │ Fira Code
       font-feature = [
-        # ├──────────────┼───────────
-        "ss02" # │ Slashed Zero │ Horizontal <= symbols
-        "ss06" # │ Slashed 7    │ Lighten first slash in \\
-        "ss07" # │ Curved 6 + 9 │ ~= Ligatures
-        "ss10" # │ None         │ Combine letters
+        #                │ Victor Mono  │ Fira Code
+        #                ├──────────────┼───────────
+        "ss02" # .       │ Slashed Zero │ Horizontal <= symbols
+        "ss06" # .       │ Slashed 7    │ Lighten first slash in \\
+        "ss07" # .       │ Curved 6 + 9 │ ~= Ligatures
+        "ss10" # .       │ None         │ Combine letters
         # Ligatures
         "calt"
         "liga"
         "dlig"
       ];
 
-      # custom-shader = "${./shaders/starfield-colors.glsl}";
+      custom-shader = "${./shaders/starfield-colors.glsl}";
+      custom-shader-animation = "always";
     };
   };
 }

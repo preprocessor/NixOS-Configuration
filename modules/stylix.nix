@@ -1,14 +1,18 @@
-{ inputs, config, pkgs, ... }:
-let 
+{
+  inputs,
+  pkgs,
+  ...
+}:
+let
   apple-fonts = inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system};
   scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";
-in {
-
+in
+{
   config.scheme = scheme; # Set base16 scheme
 
   config.stylix = {
     enable = true;
-    autoEnable = true;
+    autoEnable = false;
 
     base16Scheme = scheme;
 
@@ -30,10 +34,7 @@ in {
     };
 
     targets = {
-      gtk.enable = true;
-      gnome.enable = true;
 
     };
   };
-
 }

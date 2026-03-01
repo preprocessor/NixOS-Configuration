@@ -5,19 +5,21 @@
 }:
 {
   imports = [
-    ./direnv.nix
     ./ghostty/ghostty.nix
+    ./direnv.nix
     ./git.nix
-    ./neovim.nix
     ./nh.nix
     ./nixcord.nix
-    ./shell.nix
+    ./shell
     ./stylix.nix
+    ./vicinae.nix
     ./xdg.nix
     ./zed.nix
   ];
 
   programs.home-manager.enable = true;
+
+  programs.nix-index-database.comma.enable = true;
 
   home.packages =
     with pkgs;
@@ -50,12 +52,12 @@
       wyspr-waow
       inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
       capitaine-cursors-themed
+      gimp-with-plugins
       gruvbox-dark-gtk
       prismlauncher
       virtualbox
       vivaldi
       delta
       steam
-      gimp
     ];
 }

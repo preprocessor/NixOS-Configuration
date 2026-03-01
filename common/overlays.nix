@@ -1,6 +1,8 @@
 { inputs, ... }:
 {
   nixpkgs.overlays = [
-    inputs.nixstart-nvim.overlays.default
+    inputs.neovim.overlays.default
+    # inputs.hevel.overlays.default
+    inputs.river.overlays.default
   ];
 }

@@ -1,7 +1,6 @@
 {
   inputs,
   config,
-  pkgs,
   ...
 }:
 {
@@ -15,9 +14,10 @@
     backupFileExtension = "backup";
 
     extraSpecialArgs = { inherit inputs; };
- 
+
     users.wyspr = {
       imports = [
+        inputs.nix-index-database.homeModules.default
         inputs.nixcord.homeModules.nixcord
         inputs.direnv-instant.homeModules.direnv-instant
         ../home # /default.nix

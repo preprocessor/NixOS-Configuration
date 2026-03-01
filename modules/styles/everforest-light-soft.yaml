@@ -18,11 +18,11 @@ palette:
   base0D: "#3A94C5" # Blue              │ Functions, Methods, Attribute IDs, Headings
   base0E: "#DF69BA" # Magenta           │ Keywords, Storage, Selector, Markup Italic, Diff Changed
   base0F: "#E66868" # Dark Red or Brown │ Deprecated Highlighting for Methods and Functions, Opening/Closing Embedded Language Tags, e.g., <?php ?>
-  base10: "#708089" # Darker Black      │ Darker Background
-  base11: "#5C6A72" # Darkest Black     │ The Darkest Background
-  base12: "#FADBD0" # Light Red
-  base13: "#F1E4C5" # Light Yellow
-  base14: "#E5E6C5" # Light Green
-  base15: "#E1E4BD" # Light Cyan
-  base16: "#E1E7DD" # Light Blue
-  base17: "#F1DDD4" # Light Magenta
+  base10: "#5c6a72" # Darker Black      │ Darker Background
+  base11: "#708089" # Darkest Black     │ The Darkest Background
+  base12: "#E67E80" # Light Red
+  base13: "#DBBC7F" # Light Yellow
+  base14: "#A7C080" # Light Green
+  base15: "#83C092" # Light Cyan
+  base16: "#7FBBB3" # Light Blue
+  base17: "#D699B6" # Light Magenta

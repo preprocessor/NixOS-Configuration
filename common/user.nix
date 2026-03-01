@@ -1,18 +1,22 @@
+{ pkgs, ... }:
+let
+  shell = pkgs.fish;
+in
 {
-  inputs,
-  config,
-  pkgs,
-  ...
-}:
-{
-  users.users.wyspr = {
-    isNormalUser = true;
-    description = "wyspr";
-    initialPassword = "password";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    shell = pkgs.fish;
+  environment.shells = [ shell ];
+
+  users = {
+    defaultUserShell = shell;
+
+    users.wyspr = {
+      isNormalUser = true;
+      description = "wyspr";
+      initialPassword = "password";
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+      inherit shell;
+    };
   };
 }
