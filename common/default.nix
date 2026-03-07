@@ -2,7 +2,6 @@
 {
   imports = [
     ./fonts.nix
-    ./home-manager.nix
     ./locale.nix
     ./overlays.nix
     ./packages.nix
@@ -15,6 +14,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  hardware.bluetooth.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;

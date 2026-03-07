@@ -15,11 +15,15 @@
     };
   };
 
+  security.pam.services.ly.enableGnomeKeyring = true;
+
   programs = {
+    dconf.enable = true;
     niri.enable = true;
     bash.enable = true;
     fish.enable = true;
     neovim.defaultEditor = true;
+    mangowc.enable = true;
   };
 
   # Allow unfree packages
@@ -57,13 +61,15 @@
       (flakePkg "river" "rill")
       (flakePkg "river" "canoe")
 
-      brightnessctl
+      qbittorrent-enhanced
       xwayland-satellite
+      brightnessctl
       imagemagick
       nixos-shell
       quickshell
       trash-cli
       fastfetch
+      wlclock
       ripgrep
       rmtrash
       lazygit
@@ -72,7 +78,7 @@
       just
       wget
       btop
-      bat
+      at
       eza
       zip
       git

@@ -1,5 +1,10 @@
 default: test
 
+subupdate:
+  nix flake update neovim
+  # nix flake update River
+  # nix flake update canoe
+
 # boot  -  Build the new configuration and make it the boot default
 boot:
   nh os boot --ask --diff always

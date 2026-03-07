@@ -5,12 +5,12 @@
 }:
 let
   apple-fonts = inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system};
-  scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-light-soft.yaml";
+  scheme = ./styles/espresso-libre.yaml;
 in
 {
-  config.scheme = scheme; # Set base16 scheme
+  scheme = scheme; # Set base16 scheme
 
-  config.stylix = {
+  stylix = {
     enable = true;
     autoEnable = false;
 
@@ -34,7 +34,14 @@ in
     };
 
     targets = {
-
+      console.enable = true;
     };
   };
+  # config.home-manager.users.wyspr.stylix = {
+  #   targets = {
+  #     # neovim.enable = false;
+  #     # ghostty.enable = false;
+  #     qt.platform = "qtct";
+  #   };
+  # };
 }

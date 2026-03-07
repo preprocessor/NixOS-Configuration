@@ -4,9 +4,9 @@
     {
       nixosConfigurations.ramiel = inputs.nixpkgs.lib.nixosSystem {
         modules = [
-          ./common
-          ./modules
+          ./common # shared configs / programs
           ./ramiel # system specific
+          ./home # home-manager
         ];
         specialArgs = { inherit inputs; };
       };

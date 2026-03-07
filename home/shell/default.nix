@@ -6,10 +6,6 @@
     ./starship.nix
   ];
 
-  home.sessionVariables = {
-    # EDITOR = "nvim";
-  };
-
   programs = {
     nix-your-shell = {
       enable = true;

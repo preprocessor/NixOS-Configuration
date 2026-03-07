@@ -9,7 +9,7 @@
     installVimSyntax = true;
 
     settings = {
-      theme = "Gruvbox_Light_Soft";
+      theme = "Flexoki Light";
 
       font-size = "12";
 
@@ -37,6 +37,8 @@
         "liga"
         "dlig"
       ];
+
+      window-decoration = "none";
 
       custom-shader = "${./shaders/starfield-colors.glsl}";
       custom-shader-animation = "always";

@@ -1,63 +1,37 @@
 {
   inputs,
-  pkgs,
+  config,
   ...
 }:
 {
   imports = [
-    ./ghostty/ghostty.nix
-    ./direnv.nix
-    ./git.nix
-    ./nh.nix
-    ./nixcord.nix
-    ./shell
-    ./stylix.nix
-    ./vicinae.nix
-    ./xdg.nix
-    ./zed.nix
+    inputs.home-manager.nixosModules.home-manager
+    ./canoe.nix
   ];
 
-  programs.home-manager.enable = true;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "backup";
 
-  programs.nix-index-database.comma.enable = true;
+    extraSpecialArgs = { inherit inputs; };
 
-  home.packages =
-    with pkgs;
-    let
-      wyspr-eye = pkgs.writeShellApplication {
-        name = "eye";
-        runtimeInputs = [ pkgs.coreutils ];
-        text = (builtins.readFile ./bin/eye);
+    users.wyspr = {
+      imports = [
+        inputs.nix-index-database.homeModules.default
+        inputs.nixcord.homeModules.nixcord
+        inputs.direnv-instant.homeModules.direnv-instant
+        ./packages.nix
+      ];
+
+      home = {
+        stateVersion = config.system.stateVersion; # Match NixOS version
+        shell = {
+          enableFishIntegration = true;
+          enableBashIntegration = true;
+          enableNushellIntegration = true;
+        };
       };
-
-      wyspr-gbc = pkgs.writeShellApplication {
-        name = "gbc";
-        runtimeInputs = [ pkgs.coreutils ];
-        checkPhase = "";
-        text = (builtins.readFile ./bin/gbc);
-      };
-
-      wyspr-waow = pkgs.writeShellApplication {
-        name = "waow";
-        checkPhase = "";
-        runtimeInputs = [
-          pkgs.coreutils
-        ];
-        text = (builtins.readFile ./bin/waow);
-      };
-    in
-    [
-      wyspr-eye
-      wyspr-gbc
-      wyspr-waow
-      inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
-      capitaine-cursors-themed
-      gimp-with-plugins
-      gruvbox-dark-gtk
-      prismlauncher
-      virtualbox
-      vivaldi
-      delta
-      steam
-    ];
+    };
+  };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 let
   browser = "vivaldi-stable.desktop";
 in
