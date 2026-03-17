@@ -1,41 +1,19 @@
 {
   outputs =
-    { self, nixpkgs, ... }@inputs:
-    {
-      nixosConfigurations.ramiel = inputs.nixpkgs.lib.nixosSystem {
-        modules = [
-          ./common # shared configs / programs
-          ./ramiel # system specific
-          ./home # home-manager
-        ];
-        specialArgs = { inherit inputs; };
-      };
-    };
+    { ... }@inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
-
-    # NixOS modules covering hardware quirks
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
-    # Apple's New York & San Francisco fonts
-    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
+    import-tree.url = "github:vic/import-tree"; # Import all nix files in a directory tree.
+    flake-parts.url = "github:hercules-ci/flake-parts"; # Simplify Nix Flakes with the module system
+    nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
+    apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
+    # wrappers.url = "github:lassulus/wrappers";
 
     # Manage user environments
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Manage discord with Nix
-    nixcord = {
-      url = "github:FlameFlag/nixcord";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
-
-    # Chromium-based privacy-focused browser
-    helium = {
-      url = "github:AlvaroParker/helium-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -59,14 +37,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Nix + Neovim
-    neovim.url = "path:/home/wyspr/Configuration/Neovim/";
-    # Hevel window manager
-    # hevel.url = "path:/home/wyspr/Configuration/Hevel/";
-    # River window manager
-    river.url = "path:/home/wyspr/Configuration/River/";
+    rabid.url = "path:/home/wyspr/Configuration/Rabid";
+    gimp.url = "path:/home/wyspr/Configuration/GIMP";
+    neovim = {
+      url = "path:/home/wyspr/Configuration/Neovim/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    # inputs.import-tree.url = "github:vic/import-tree";
-    # inputs.flake-parts.url = "github:hercules-ci/flake-parts";
+    mango = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 }

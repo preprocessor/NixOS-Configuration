@@ -2,8 +2,7 @@ default: test
 
 subupdate:
   nix flake update neovim
-  # nix flake update River
-  # nix flake update canoe
+  nix flake update rabid
 
 # boot  -  Build the new configuration and make it the boot default
 boot:
