@@ -17,7 +17,6 @@
         description = "${self.const.username}";
         isNormalUser = true;
         initialPassword = "password";
-        shell = pkgs.fish;
         extraGroups = [
           "networkmanager"
           "wheel"

@@ -177,6 +177,11 @@
           # reload config
           bind=SUPER,r,reload_config
 
+          # app launcher
+          bind=SUPER,space,spawn,tofi-drun --drun-launch=true
+          # cmd launcher
+          bind=SUPER+ALT,space,spawn_shell,tofi-run | xargs --no-run-if-empty ghostty -e
+
           # menu and terminal
           # bind=SUPER,space,spawn,fuzzel
           bind=SUPER,Return,spawn,ghostty
@@ -277,6 +282,18 @@
           bind=CTRL+ALT,Left,resizewin,-50,+0
           bind=CTRL+ALT,Right,resizewin,+50,+0
 
+          # volume
+          bind=NONE,XF86AudioRaiseVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%+
+          bind=NONE,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_SINK@ 5%-
+          bind=NONE,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_SINK@ toggle
+          bind=SHIFT,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_SOURCE@ toggle
+
+          # brightness
+          bind=SUPER,F2,spawn,brightnessctl s +2%
+          bind=SUPER+SHIFT,F2,spawn,brightnessctl s 100%
+          bind=SUPER,F1,spawn,brightnessctl s 2%-
+          bind=SUPER+SHIFT,F1,spawn,brightnessctl s 1%
+
           # Mouse Button Bindings
           # btn_left and btn_right can't bind none mod key
           mousebind=SUPER,btn_left,moveresize,curmove
@@ -290,13 +307,7 @@
           axisbind=SUPER,RIGHT,viewtoright
 
           # layer rule
-          # layerrule=animation_type_open:zoom,layer_name:rofi
-          # layerrule=animation_type_close:zoom,layer_name:rofi
-
-          # layerrule=animation_type_open:zoom,layer_name:fuzzel
-          # layerrule=animation_type_close:zoom,layer_name:fuzzel
-
-          layerrule=noshadow:1,layer_name:vicinae
+          layerrule=noshadow:1,layer_name:anyrun
 
           cursor_theme=hand-of-evil
           cursor_size=128
@@ -317,8 +328,6 @@
         autostart_sh = /* bash */ ''
           wl-clip-persist --clipboard regular --reconnect-tries 0 &
           wl-paste --type text --watch cliphist store &
-          ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all
-          ${pkgs.vicinae}/bin/vicinae server
         '';
       };
     };

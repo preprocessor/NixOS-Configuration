@@ -14,7 +14,7 @@
         "@wheel"
       ];
 
-      services.dbus.implementation = "dbus"; # more like broken
+      services.dbus.implementation = "broker"; # more like broken
 
       nixpkgs.config.allowUnfree = true;
       nixpkgs.config.rocmSupport = true;

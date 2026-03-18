@@ -9,6 +9,8 @@
     flake-parts.url = "github:hercules-ci/flake-parts"; # Simplify Nix Flakes with the module system
     nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
+    vicinae.url = "github:vicinaehq/vicinae"; # Vicinae is a keyboard-driven command launcher for Linux, inspired by Raycast
+    vicinae-extensions.url = "github:vicinaehq/extensions"; # Vicinae extensions
     # wrappers.url = "github:lassulus/wrappers";
 
     # Manage user environments
