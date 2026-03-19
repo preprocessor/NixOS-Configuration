@@ -45,6 +45,7 @@
         wyspr_gbc
         hand_of_evil
         zide
+        bemoji_tofi
 
         waypaper
         gimp

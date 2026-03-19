@@ -9,8 +9,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts"; # Simplify Nix Flakes with the module system
     nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
-    vicinae.url = "github:vicinaehq/vicinae"; # Vicinae is a keyboard-driven command launcher for Linux, inspired by Raycast
-    vicinae-extensions.url = "github:vicinaehq/extensions"; # Vicinae extensions
+    driftwm = "github:malbiruk/driftwm";
     # wrappers.url = "github:lassulus/wrappers";
 
     # Manage user environments
@@ -39,17 +38,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    rabid.url = "path:/home/wyspr/Configuration/Rabid";
-    gimp.url = "path:/home/wyspr/Configuration/GIMP";
-    neovim = {
-      url = "path:/home/wyspr/Configuration/Neovim/";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     mango = {
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim = {
+      url = "path:/home/wyspr/Configuration/Neovim/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    rabid = {
+      url = "path:/home/wyspr/Configuration/Rabid";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    gimp.url = "path:/home/wyspr/Configuration/GIMP";
 
   };
 }

@@ -68,7 +68,6 @@
             NoOnboardingDelay.enabled = true;
             NoUnblockToJump.enabled = true;
             petpet.enabled = true;
-            StreamerModeOnStream.enabled = true;
             Translate.enabled = true;
             Unindent.enabled = true;
             UnsuppressEmbeds.enabled = true;

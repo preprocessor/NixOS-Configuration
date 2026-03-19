@@ -10,12 +10,14 @@ in
       wayland
       desktop
       scheme
+      everforest
     ];
     homeModules = with homeManager; [
       ramiel
       wayland
       desktop
       shell
+      everforest
     ];
     configuration = {
       system = "x86_64-linux";

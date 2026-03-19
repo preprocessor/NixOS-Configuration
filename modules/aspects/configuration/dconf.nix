@@ -1,7 +1,7 @@
 {
   flake.modules.homeManager.ramiel.dconf.settings = {
     "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-light";
+      color-scheme = "prefer-dark";
     };
   };
 
