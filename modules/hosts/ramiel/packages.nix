@@ -23,6 +23,9 @@
         just # a command runner
         wget
         tree
+        grim
+        swaylock
+        slurp
         isd # inspect system d
         btop
         eza # better ls

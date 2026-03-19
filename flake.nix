@@ -9,7 +9,9 @@
     flake-parts.url = "github:hercules-ci/flake-parts"; # Simplify Nix Flakes with the module system
     nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
-    driftwm = "github:malbiruk/driftwm";
+    worktrunk.url = "github:max-sixty/worktrunk";
+
+    driftwm.url = "github:malbiruk/driftwm";
     # wrappers.url = "github:lassulus/wrappers";
 
     # Manage user environments

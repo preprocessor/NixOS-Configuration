@@ -181,6 +181,8 @@
           bind=SUPER,space,spawn,tofi-drun --drun-launch=true
           # cmd launcher
           bind=SUPER+ALT,space,spawn_shell,tofi-run | xargs --no-run-if-empty ghostty -e
+          # emoji picker
+          bind=SUPER,period,spawn_shell,tofi-run | xargs --no-run-if-empty ghostty -e
 
           # menu and terminal
           # bind=SUPER,space,spawn,fuzzel
@@ -307,7 +309,7 @@
           axisbind=SUPER,RIGHT,viewtoright
 
           # layer rule
-          layerrule=noshadow:1,layer_name:anyrun
+          ; layerrule=noshadow:1,layer_name:anyrun
 
           cursor_theme=hand-of-evil
           cursor_size=128
