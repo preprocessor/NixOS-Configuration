@@ -8,7 +8,7 @@
     };
   };
 
-  flake.modules.nixos.scheme = {
+  flake.modules.nixos.desktop = {
     imports = [
       inputs.base16.nixosModule
       inputs.stylix.nixosModules.stylix

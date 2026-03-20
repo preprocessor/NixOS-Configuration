@@ -2,9 +2,22 @@
   flake.modules.nixos.default =
     { pkgs, ... }:
     {
-      # Whether to enable the RealtimeKit system service, which hands out realtime scheduling priority to user processes on demand. For example, PulseAudio and PipeWire use this to acquire realtime priority.
-      security.rtkit.enable = true;
-      security.pam.services.ly.enableGnomeKeyring = true;
+      security = {
+        sudo.enable = false;
+        sudo-rs = {
+          enable = true;
+          wheelNeedsPassword = true;
+          execWheelOnly = true;
+          extraConfig = ''
+            Defaults pwfeedback
+          '';
+        };
+
+        # Whether to enable the RealtimeKit system service, which hands out realtime scheduling priority to user processes on demand. For example, PulseAudio and PipeWire use this to acquire realtime priority.
+        rtkit.enable = true;
+        polkit.enable = true;
+        pam.services.ly.enableGnomeKeyring = true;
+      };
 
       systemd.user.services.polkit-agent = {
         description = "PolicyKit Authentication by Gnome";

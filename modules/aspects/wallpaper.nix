@@ -2,7 +2,7 @@
 {
   flake-file.inputs.awww.url = "git+https://codeberg.org/LGFae/awww";
 
-  flake.modules.homeManager.wayland =
+  flake.modules.homeManager.desktop =
     { pkgs, ... }:
     {
       home.packages = [

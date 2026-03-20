@@ -1,4 +1,10 @@
+{ inputs, ... }:
 {
+  flake-file.inputs.ghostty-shaders = {
+    url = "github:sahaj-b/ghostty-cursor-shaders";
+    flake = false;
+  };
+
   flake.modules.homeManager.desktop = {
     programs.ghostty = {
       enable = true;
@@ -16,9 +22,10 @@
         ];
 
         window-decoration = "none";
+        window-padding-balance = true;
 
-        # custom-shader = "${./shaders/animated-gradient-shader.glsl}";
-        # custom-shader-animation = "always";
+        custom-shader = "${inputs.ghostty-shaders}/cursor_tail.glsl";
+        custom-shader-animation = "always";
 
         font-family = "Maple Mono";
         font-style = "Medium";

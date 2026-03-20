@@ -2,6 +2,12 @@
   flake.modules.homeManager.default =
     { pkgs, ... }:
     {
+      programs.zoxide = {
+        enable = true;
+        enableBashIntegration = true;
+        enableFishIntegration = true;
+      };
+
       programs.yazi = {
         enable = true;
         shellWrapperName = "y";

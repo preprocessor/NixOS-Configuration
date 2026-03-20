@@ -7,16 +7,12 @@ in
   flake.nixosConfigurations.ramiel = mkSystem {
     nixosModules = with nixos; [
       ramiel
-      wayland
       desktop
-      scheme
       everforest
     ];
     homeModules = with homeManager; [
       ramiel
-      wayland
       desktop
-      shell
       everforest
     ];
     configuration = {

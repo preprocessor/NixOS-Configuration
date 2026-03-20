@@ -6,9 +6,7 @@
   };
 
   flake.modules.nixos.default = {
-    imports = [
-      inputs.home-manager.nixosModules.home-manager
-    ];
+    imports = [ inputs.home-manager.nixosModules.home-manager ];
 
     home-manager = {
       verbose = true;

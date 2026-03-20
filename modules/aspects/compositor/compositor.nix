@@ -5,14 +5,12 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.nixos.wayland =
-    { pkgs, ... }:
-    {
-      imports = [ inputs.mango.nixosModules.mango ];
-      programs.mango.enable = true;
-    };
+  flake.modules.nixos.desktop = {
+    imports = [ inputs.mango.nixosModules.mango ];
+    programs.mango.enable = true;
+  };
 
-  flake.modules.homeManager.wayland =
+  flake.modules.homeManager.desktop =
     { pkgs, osConfig, ... }:
     let
       scheme = osConfig.scheme;

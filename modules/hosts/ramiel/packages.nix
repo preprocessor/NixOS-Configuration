@@ -24,7 +24,6 @@
       homePackages = with pkgs; [
         virtualbox
         vivaldi
-        delta
       ];
     });
 }

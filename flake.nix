@@ -11,15 +11,22 @@
       url = "github:Mic92/direnv-instant";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    driftwm.url = "github:malbiruk/driftwm";
     everforest-yazi = {
       url = "github:Chromium-3-Oxide/everforest-medium.yazi";
+      flake = false;
+    };
+    fish-plugin-enhancd = {
+      url = "github:babarot/enhancd";
       flake = false;
     };
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+    };
+    ghostty-shaders = {
+      url = "github:sahaj-b/ghostty-cursor-shaders";
+      flake = false;
     };
     gimp.url = "path:/home/wyspr/Configuration/GIMP";
     home-manager = {

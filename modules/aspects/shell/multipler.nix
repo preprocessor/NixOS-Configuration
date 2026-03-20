@@ -34,46 +34,46 @@
               plugin location="file:${zjstatus}" {
                 hide_frame_for_single_pane "true"
 
-                format_left   "{mode}{tabs}"
-                format_center ""
-                format_right  "{pipe_zjstatus_hints}{datetime}"
+                format_left   "{mode}{pipe_zjstatus_hints}"
+                format_center "{tabs}"
+                format_right  "{datetime}"
                 format_space  ""
 
                 // Note: this is necessar
                 pipe_zjstatus_hints_format "{output}"
 
-                mode_normal               "#[fg=#${scheme.base00},bg=#${scheme.base0B},bold] {name} "
-                mode_locked               "#[fg=#${scheme.base00},bg=#${scheme.base08},bold] {name} "
-                mode_resize               "#[fg=#${scheme.base00},bg=#${scheme.base0A},bold] {name} "
-                mode_pane                 "#[fg=#${scheme.base00},bg=#${scheme.base0E},bold] {name} "
-                mode_tab                  "#[fg=#${scheme.base00},bg=#${scheme.base0D},bold] {name} "
-                mode_scroll               "#[fg=#${scheme.base00},bg=#${scheme.base0C},bold] {name} "
-                mode_session              "#[fg=#${scheme.base00},bg=#${scheme.base09},bold] {name} "
-                mode_move                 "#[fg=#${scheme.base00},bg=#${scheme.base0F},bold] {name} "
+                mode_locked               "#[bg=#${scheme.base00},fg=#${scheme.base08},bold]  "
+                mode_normal               "#[bg=#${scheme.base00},fg=#${scheme.base0B},bold]  "
+                mode_resize               "#[bg=#${scheme.base00},fg=#${scheme.base0A},bold] 󰩨 "
+                mode_pane                 "#[bg=#${scheme.base00},fg=#${scheme.base0E},bold]  "
+                mode_tab                  "#[bg=#${scheme.base00},fg=#${scheme.base0D},bold] 󱦞 "
+                mode_scroll               "#[bg=#${scheme.base00},fg=#${scheme.base0C},bold]  "
+                mode_session              "#[bg=#${scheme.base00},fg=#${scheme.base09},bold] 󰍻 "
+                mode_move                 "#[bg=#${scheme.base00},fg=#${scheme.base0F},bold]  "
 
                 // inactive tabs
-                tab_normal                "#[fg=#${scheme.base03},bg=#${scheme.base01}] {index} {floating_indicator}"   
-                tab_normal_fullscreen     "#[fg=#${scheme.base03},bg=#${scheme.base01}] {index} {fullscreen_indicator}" 
-                tab_normal_sync           "#[fg=#${scheme.base03},bg=#${scheme.base01}] {index} {sync_indicator}"       
+                tab_normal                "#[bg=#${scheme.base03},fg=#${scheme.base01}] ○ {floating_indicator}"   
+                tab_normal_fullscreen     "#[bg=#${scheme.base03},fg=#${scheme.base01}] ○ {fullscreen_indicator}" 
+                tab_normal_sync           "#[bg=#${scheme.base03},fg=#${scheme.base01}] ○ {sync_indicator}"       
 
                 // formatting for the current active tab
-                tab_active                "#[fg=#${scheme.base00},bg=#${scheme.base0D},bold] {index} {floating_indicator}"
-                tab_active_fullscreen     "#[fg=#${scheme.base00},bg=#${scheme.base0D},bold] {index} {fullscreen_indicator}"
-                tab_active_sync           "#[fg=#${scheme.base00},bg=#${scheme.base0D},bold] {index} {sync_indicator}"
+                tab_active                "#[bg=#${scheme.base00},fg=#${scheme.base0D},bold] ● {floating_indicator}"
+                tab_active_fullscreen     "#[bg=#${scheme.base00},fg=#${scheme.base0D},bold] ● {fullscreen_indicator}"
+                tab_active_sync           "#[bg=#${scheme.base00},fg=#${scheme.base0D},bold] ● {sync_indicator}"
 
                 tab_separator             ""
                 // format when renaming a tab
-                tab_rename                "#[bg=#${scheme.base0E},fg=#${scheme.base00}] {index} {name} {floating_indicator} "
+                tab_rename                "#[fg=#${scheme.base0E},bg=#${scheme.base00}] {index} {name} {floating_indicator} "
 
                 // indicators
-                tab_sync_indicator        "<> "
-                tab_fullscreen_indicator  "[] "
-                tab_floating_indicator    "⬚ "
+                tab_sync_indicator        " "
+                tab_fullscreen_indicator  "󰊓 "
+                tab_floating_indicator    " "
 
                 // limit tab display count
                 tab_display_count         "3"  // limit number of visible tabs
-                tab_truncate_start_format "#[fg=#${scheme.base0A},bg=#${scheme.base03}]#[fg=#${scheme.base00},bg=#${scheme.base0A}]+{count} "
-                tab_truncate_end_format   "#[fg=#${scheme.base00},bg=#${scheme.base0A}] +{count}#[fg=#${scheme.base0A}]"
+                tab_truncate_start_format "#[fg=#${scheme.base00},bg=#${scheme.base0A}] {count} "
+                tab_truncate_end_format   "#[fg=#${scheme.base00},bg=#${scheme.base0A}] {count} "
 
                 datetime                  "#[fg=#${scheme.base00},bg=#${scheme.base04},bold] {format} "
                 datetime_format           "%l:%M %p"

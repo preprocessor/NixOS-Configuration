@@ -1,4 +1,3 @@
-{ lib, ... }:
 {
   flake.modules.homeManager.default = {
     programs.starship = {
@@ -14,13 +13,7 @@
 
         right_format = "$nix_shell";
 
-        format = lib.concatStrings [
-          "[](fg:blue)"
-          "$directory"
-          "[](fg:blue)"
-          "$git_branch"
-          "$character"
-        ];
+        format = "[](fg:blue)$directory[](fg:blue)$git_branch$character";
 
         nix_shell = {
           format = "[ nix-shell](cyan)";
@@ -29,6 +22,8 @@
         character = {
           success_symbol = " [](green) ";
           error_symbol = " [](red) ";
+          vimcmd_symbol = " [󰏤](blue) ";
+          vimcmd_visual_symbol = " [󰈈](blue) ";
         };
 
         directory = {

@@ -169,24 +169,6 @@
         "type": "github"
       }
     },
-    "driftwm": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_3"
-      },
-      "locked": {
-        "lastModified": 1773863847,
-        "narHash": "sha256-pU2+XaCha9xLIW3nmDg3hBBZach0ls/eIwubI6ebiys=",
-        "owner": "malbiruk",
-        "repo": "driftwm",
-        "rev": "8b1a08b34614f0fe7a6a5fd94a3e1b1390768991",
-        "type": "github"
-      },
-      "original": {
-        "owner": "malbiruk",
-        "repo": "driftwm",
-        "type": "github"
-      }
-    },
     "everforest": {
       "flake": false,
       "locked": {
@@ -232,6 +214,22 @@
       "original": {
         "owner": "rafaelmardojai",
         "repo": "firefox-gnome-theme",
+        "type": "github"
+      }
+    },
+    "fish-plugin-enhancd": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1737684369,
+        "narHash": "sha256-pKQbwiqE0KdmRDbHQcW18WfxyJSsKfymWt/TboY2iic=",
+        "owner": "babarot",
+        "repo": "enhancd",
+        "rev": "5afb4eb6ba36c15821de6e39c0a7bb9d6b0ba415",
+        "type": "github"
+      },
+      "original": {
+        "owner": "babarot",
+        "repo": "enhancd",
         "type": "github"
       }
     },
@@ -453,7 +451,7 @@
         "flake-parts": "flake-parts_4",
         "git-hooks": "git-hooks",
         "luvit-meta": "luvit-meta",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1755304025,
@@ -469,9 +467,25 @@
         "type": "github"
       }
     },
+    "ghostty-shaders": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1761796431,
+        "narHash": "sha256-ruhEqXnWRCYdX5mRczpY3rj1DTdxyY3BoN9pdlDOKrE=",
+        "owner": "sahaj-b",
+        "repo": "ghostty-cursor-shaders",
+        "rev": "4faa83e4b9306750fc8de64b38c6f53c57862db8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sahaj-b",
+        "repo": "ghostty-cursor-shaders",
+        "type": "github"
+      }
+    },
     "gimp": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1773447588,
@@ -773,22 +787,6 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1773646010,
-        "narHash": "sha256-iYrs97hS7p5u4lQzuNWzuALGIOdkPXvjz7bviiBjUu8=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "5b2c2d84341b2afb5647081c1386a80d7a8d8605",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
-      "locked": {
         "lastModified": 1773282481,
         "narHash": "sha256-b/GV2ysM8mKHhinse2wz+uP37epUrSE+sAKXy/xvBY4=",
         "owner": "nixos",
@@ -803,7 +801,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1718714799,
         "narHash": "sha256-FUZpz9rg3gL8NVPKbqU8ei1VkPLsTIfAJ2fdAf5qjak=",
@@ -819,7 +817,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_6": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1773734432,
         "narHash": "sha256-IF5ppUWh6gHGHYDbtVUyhwy/i7D261P7fWD1bPefOsw=",
@@ -835,7 +833,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_7": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1767892417,
         "narHash": "sha256-dhhvQY67aboBk8b0/u0XB6vwHdgbROZT3fJAjyNh5Ww=",
@@ -911,10 +909,11 @@
         "awww": "awww",
         "base16": "base16",
         "direnv-instant": "direnv-instant",
-        "driftwm": "driftwm",
         "everforest-yazi": "everforest-yazi",
+        "fish-plugin-enhancd": "fish-plugin-enhancd",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts_2",
+        "ghostty-shaders": "ghostty-shaders",
         "gimp": "gimp",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
@@ -922,7 +921,7 @@
         "neovim": "neovim",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_6",
+        "nixpkgs": "nixpkgs_5",
         "nixpkgs-lib": [
           "nixpkgs"
         ],
@@ -1264,7 +1263,7 @@
       "inputs": {
         "crane": "crane",
         "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs_7",
+        "nixpkgs": "nixpkgs_6",
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
