@@ -1,5 +1,11 @@
 { self, ... }:
 {
+  flake-file.inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
+  };
+
   flake.modules.nixos.default =
     { lib, ... }:
     {

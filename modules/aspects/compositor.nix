@@ -1,5 +1,10 @@
 { inputs, ... }:
 {
+  flake-file.inputs.mango = {
+    url = "github:mangowm/mango";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   flake.modules.nixos.wayland =
     { pkgs, ... }:
     {
@@ -323,6 +328,8 @@
 
           windowrule=isoverlay:1,isglobal:1,isfloating:1,appid:^()$,title:^(Picture in picture)$
           windowrule=width:1280,height:720,offsetx:90,offsety:90,appid:^()$,title:^(Picture in picture)$
+
+          windowrule=isoverlay:1,isglobal:1,isfloating:1,appid:^(waypaper)$,title:^(Waypaper)$
 
           source=~/.config/mango/dyn.conf
         '';

@@ -2,7 +2,10 @@
 {
   imports = [
     inputs.flake-parts.flakeModules.modules
+    inputs.flake-file.flakeModules.dendritic
   ];
+
+  flake-file.inputs.import-tree.url = "github:vic/import-tree";
 
   systems = [
     "x86_64-linux"
@@ -16,10 +19,7 @@
     let
       pkgs = import inputs.nixpkgs {
         inherit system;
-        config.allowUnfree = true;
-        config.rocmSupport = true;
-        # overlays = [
-        # ];
+        # overlays = [ ];
       };
     in
     {

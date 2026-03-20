@@ -1,6 +1,6 @@
 {
-  flake.modules.nixos.default.programs.bash.enable = true;
   flake.modules.nixos.default.programs.fish.enable = true;
+
   flake.modules.homeManager.default =
     { pkgs, ... }:
     {
@@ -46,8 +46,8 @@
           cp = "cp -r";
           mkdir = "mkdir -p";
 
-          rm = "rmtrash -r";
-          rmdir = "rmdirtrash";
+          rm = "trash-put";
+          rmdir = "trash-put";
 
           # "" = "nvim ";
         };

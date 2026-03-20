@@ -1,5 +1,7 @@
 { inputs, ... }:
 {
+  flake-file.inputs.apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
+
   flake.modules.nixos.ramiel =
     { pkgs, ... }:
     let
@@ -8,10 +10,7 @@
     {
 
       fonts.packages = with pkgs; [
-        # fira-code
-        # victor-mono
         noto-fonts-color-emoji
-
         maple-mono.variable
 
         apple-fonts.sf-pro

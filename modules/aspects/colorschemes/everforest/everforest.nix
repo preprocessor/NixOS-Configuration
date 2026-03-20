@@ -1,4 +1,10 @@
+{ inputs, ... }:
 {
+  flake-file.inputs.everforest-yazi = {
+    url = "github:Chromium-3-Oxide/everforest-medium.yazi";
+    flake = false;
+  };
+
   flake.modules.nixos.everforest =
     { pkgs, ... }:
     let
@@ -11,20 +17,12 @@
 
   flake.modules.homeManager.everforest =
     { lib, pkgs, ... }:
-    let
-      everforest-yazi = pkgs.fetchFromGitHub {
-        owner = "Chromium-3-Oxide";
-        repo = "everforest-medium.yazi";
-        rev = "3d5f8471fa6d5c2130d8a980b4ef48d8c5c8521d";
-        hash = "sha256-FXg++wVSGrJZnYodzkS4eVIeQE1xm8o0urnoInqfP5g=";
-      };
-    in
     {
       xdg.configFile."bat/themes/everforest.tmTheme".text = lib.readFile ./everforest.tmTheme;
       programs.bat.config.theme = "everforest";
 
       programs.yazi = {
-        flavors.everforest-medium = "${everforest-yazi}";
+        flavors.everforest-medium = inputs.everforest-yazi;
 
         theme.flavor = {
           dark = "everforest-medium";

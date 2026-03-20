@@ -1,5 +1,13 @@
 { inputs, ... }:
 {
+  flake-file.inputs = {
+    base16.url = "github:SenchoPens/base16.nix";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
   flake.modules.nixos.scheme = {
     imports = [
       inputs.base16.nixosModule

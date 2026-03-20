@@ -1,9 +1,12 @@
 { inputs, ... }:
 {
+  flake-file.inputs.direnv-instant = {
+    url = "github:Mic92/direnv-instant";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   flake.modules.homeManager.default = {
-    imports = [
-      inputs.direnv-instant.homeModules.direnv-instant
-    ];
+    imports = [ inputs.direnv-instant.homeModules.direnv-instant ];
 
     programs = {
       direnv = {

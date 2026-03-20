@@ -1,9 +1,13 @@
+{ inputs, ... }:
 {
-  flake.modules.homeManager.wayland =
-    { lib, ... }:
-    {
-      services.swww.enable = true;
-      systemd.user.services.swww.Unit.ConditionEnvironment = lib.mkForce "";
+  flake-file.inputs.awww.url = "git+https://codeberg.org/LGFae/awww";
 
+  flake.modules.homeManager.wayland =
+    { pkgs, ... }:
+    {
+      home.packages = [
+        inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
+        pkgs.waypaper
+      ];
     };
 }

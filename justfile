@@ -1,5 +1,8 @@
 default: test
 
+flake:
+  nix run .#write-flake
+
 subupdate:
   nix flake update neovim
   nix flake update rabid

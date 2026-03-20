@@ -16,7 +16,7 @@
       users.users."${self.const.username}" = {
         description = "${self.const.username}";
         isNormalUser = true;
-        initialPassword = "password";
+        initialPassword = "password"; # for VMs
         extraGroups = [
           "networkmanager"
           "wheel"
