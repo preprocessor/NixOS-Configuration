@@ -16,16 +16,7 @@
         customTitleBar = false;
       };
 
-      # vencord.themes = {
-      #   "${theme.name}" = theme.file;
-      # };
-
       vencord.settings = {
-        # enabledThemes = [ "${theme.name}.css" ];
-        themeLinks = [
-          "https://raw.githubusercontent.com/F0XX00/midnight-everforest-discord/501e9fef6e208cffc4ea68f0c292976d28230fed/midnight-everforest.theme.css"
-        ];
-
         autoUpdate = true;
         autoUpdateNotification = false;
         disableMinSize = true;
@@ -60,8 +51,6 @@
           WebKeybinds.enabled = true;
           WebScreenShareFixes.enabled = true;
         };
-
-        # useQuickCss = true;
       };
     };
   };

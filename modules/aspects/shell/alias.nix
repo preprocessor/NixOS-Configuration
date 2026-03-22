@@ -22,20 +22,27 @@
               ll = "${_ eza} --group-directories-first --icons -al";
 
               man = "batman";
+              cat = "bat --plain";
+
+              gr = "cd (git rev-parse --show-toplevel)"; # cd to git root
 
               cp = "cp -r";
               mkdir = "mkdir -p";
 
               rm = "trash-put";
               rmdir = "trash-put";
+
+              # y = yazi
+              # f = pay-respects
             };
 
           shellAbbrs = {
             clone = "git clone";
             cls = "clear";
 
-            # y = yazi
-            # f = pay-respects
+            wf = "nix run .#write-flake";
+            ga = "git add .";
+
             v = "nvim";
             x = "exit";
           };

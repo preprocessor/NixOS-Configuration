@@ -3,9 +3,8 @@
   imports = [
     inputs.flake-parts.flakeModules.modules
     inputs.flake-file.flakeModules.dendritic
+    inputs.flake-file.flakeModules.nix-auto-follow
   ];
-
-  flake-file.inputs.import-tree.url = "github:vic/import-tree";
 
   systems = [
     "x86_64-linux"

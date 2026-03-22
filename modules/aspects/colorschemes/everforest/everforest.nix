@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake-file.inputs.everforest-yazi = {
+  flake-file.inputs.yazi-theme-everforest = {
     url = "github:Chromium-3-Oxide/everforest-medium.yazi";
     flake = false;
   };
@@ -22,7 +22,7 @@
       programs.bat.config.theme = "everforest";
 
       programs.yazi = {
-        flavors.everforest-medium = inputs.everforest-yazi;
+        flavors.everforest-medium = inputs.yazi-theme-everforest;
 
         theme.flavor = {
           dark = "everforest-medium";
@@ -37,11 +37,19 @@
           package = pkgs.everforest-gtk-theme;
         };
         iconTheme = lib.mkDefault {
-          name = "Everforest-Dark";
-          package = pkgs.everforest-gtk-theme;
+          name = "Adwaita";
+          package = pkgs.adwaita-icon-theme;
         };
         gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
       };
+
+      programs.vesktop.vencord.settings.themeLinks = [
+        "https://raw.githubusercontent.com/F0XX00/midnight-everforest-discord/501e9fef6e208cffc4ea68f0c292976d28230fed/midnight-everforest.theme.css"
+      ];
+
+      programs.zellij.settings.theme = "everforest-dark";
+      programs.ghostty.settings.theme = "Everforest Dark Hard";
+
     };
 }
 
@@ -61,3 +69,20 @@
 # base0D: "#7fbbb3" blue,
 # base0E: "#d699b6" purpl,
 # base0F: "#9da9a0" grey2,
+#
+# mnemonic = {
+#   red = base08;
+#   orange = base09;
+#   yellow = base0A;
+#   green = base0B;
+#   cyan = base0C;
+#   blue = base0D;
+#   magenta = base0E;
+#   brown = base0F;
+#   bright-red = base12 or base08;
+#   bright-yellow = base13 or base0A;
+#   bright-green = base14 or base0B;
+#   bright-cyan = base15 or base0C;
+#   bright-blue = base16 or base0D;
+#   bright-magenta = base17 or base0E;
+# };

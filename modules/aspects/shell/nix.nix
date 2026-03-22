@@ -1,18 +1,18 @@
 { inputs, ... }:
 {
-  flake-file.inputs.nix-index-database = {
-    url = "github:nix-community/nix-index-database";
-    inputs.nixpkgs.follows = "nixpkgs";
+  flake-file.inputs = {
+    direnv-instant.url = "github:Mic92/direnv-instant";
+    nix-index-database.url = "github:nix-community/nix-index-database";
   };
 
-  flake-file.inputs.direnv-instant = {
-    url = "github:Mic92/direnv-instant";
-    inputs.nixpkgs.follows = "nixpkgs";
+  flake.modules.nixos.default.nix.settings = {
+    extra-substituters = [ "https://bazinga.cachix.org" ];
+    extra-trusted-public-keys = [ "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU=" ];
   };
 
   flake.modules.homeManager.default.imports = [
-    inputs.nix-index-database.homeModules.default
     inputs.direnv-instant.homeModules.direnv-instant
+    inputs.nix-index-database.homeModules.default
   ];
 
   flake.modules.homeManager.default.programs = {
@@ -34,8 +34,11 @@
 
     nh = {
       enable = true;
-      clean.enable = true;
-      clean.extraArgs = "--keep-since 4d --keep 3";
+      clean = {
+        enable = true;
+        extraArgs = "--keep-since 4d --keep 5";
+        dates = "daily";
+      };
       flake = "$HOME/Configuration/NixOS"; # sets NH_OS_FLAKE variable for you
     };
 

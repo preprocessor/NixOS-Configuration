@@ -9,6 +9,7 @@
     type = lib.types.attrsOf lib.types.unspecified;
     default = { };
   };
+
   config.flake.lib = {
     hm = modules: {
       home-manager.users.${self.const.username}.imports = modules;

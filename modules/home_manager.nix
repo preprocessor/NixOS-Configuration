@@ -1,9 +1,6 @@
 { inputs, self, ... }:
 {
-  flake-file.inputs.home-manager = {
-    url = "github:nix-community/home-manager/master";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  flake-file.inputs.home-manager.url = "github:nix-community/home-manager/master";
 
   flake.modules.nixos.default = {
     imports = [ inputs.home-manager.nixosModules.home-manager ];

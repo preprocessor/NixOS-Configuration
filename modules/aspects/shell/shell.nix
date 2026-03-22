@@ -28,24 +28,22 @@
         preferAbbrs = true;
 
         functions = {
-          starship_transient_prompt_func = ''printf  " \e[1;32m  \e[0m"'';
+          starship_transient_prompt_func = ''printf  " \e[1;96m  \e[0m"'';
 
           mcd = "mkdir -p $argv[1]; and cd $argv[1]"; # mkdir + cd
-          gr = "cd (git rev-parse --show-toplevel)"; # cd to git root
 
           __zoxide_interactive = /* fish */ ''
             set dir (zoxide query --interactive | string trim)
 
             if test -n "$dir"
               cd "$dir"
-              y
             end
 
             commandline -f repaint
           '';
         };
 
-        interactiveShellInit = ''
+        interactiveShellInit = /* fish */ ''
           fish_vi_key_bindings # Vim mode
 
           bind -M insert Z __zoxide_interactive
