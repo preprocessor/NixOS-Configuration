@@ -12,7 +12,7 @@
     # cmd launcher
     bind=SUPER+ALT,space,spawn_shell,tofi-run | xargs --no-run-if-empty ghostty -e
     # emoji picker
-    bind=SUPER,period,spawn_shell,tofi-run | xargs --no-run-if-empty ghostty -e
+    bind=SUPER,period,spawn,bemoji
 
     # menu and terminal
     # bind=SUPER,space,spawn,fuzzel

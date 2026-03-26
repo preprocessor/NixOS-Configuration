@@ -46,11 +46,15 @@
           "maps/ctrl+shift+k=resize_split:up,50"
           "maps/ctrl+shift+l=resize_split:right,50"
 
+          "ctrl+h=goto_split:left"
+          "ctrl+j=goto_split:bottom"
+          "ctrl+k=goto_split:top"
+          "ctrl+l=goto_split:right"
         ];
 
         mouse-scroll-multiplier = "1";
-
         unfocused-split-opacity = 0.9;
+        mouse-hide-while-typing = true;
 
         window-decoration = "none";
         window-padding-balance = true;

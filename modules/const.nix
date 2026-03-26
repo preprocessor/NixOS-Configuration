@@ -7,6 +7,7 @@
       stateVersion = "25.11";
       username = "wyspr";
       homedir = "/home/wyspr";
+      cfgdir = "/home/wyspr/Configuration/NixOS";
     };
   };
 }

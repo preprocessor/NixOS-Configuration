@@ -1,48 +1,47 @@
+{ self, ... }:
 {
   flake.modules.homeManager.default =
-    { pkgs, lib, ... }:
+    { pkgs, ... }:
     {
       home.packages = with pkgs; [
         uutils-coreutils-noprefix
+        eza # better ls
       ];
 
       programs = {
         fish = {
-          shellAliases =
-            let
-              _ = lib.getExe;
-            in
-            with pkgs;
-            {
-              rebuild = "nh os switch --diff always";
-              repl = "nix repl --file ~/Configuration/NixOS/repl.nix";
+          shellAliases = {
 
-              ls = "${_ eza} --group-directories-first --icons";
-              la = "${_ eza} --group-directories-first --icons -a";
-              ll = "${_ eza} --group-directories-first --icons -al";
+            ls = "eza --group-directories-first --icons";
+            la = "eza --group-directories-first --icons -a";
+            ll = "eza --group-directories-first --icons -al";
 
-              man = "batman";
-              cat = "bat --plain";
+            man = "batman";
+            cat = "bat --plain";
 
-              gr = "cd (git rev-parse --show-toplevel)"; # cd to git root
+            gr = "cd (git rev-parse --show-toplevel)"; # cd to git root
 
-              cp = "cp -r";
-              mkdir = "mkdir -p";
+            cp = "cp -r";
+            mkdir = "mkdir -p";
 
-              rm = "trash-put";
-              rmdir = "trash-put";
+            rm = "trash-put";
+            rmdir = "trash-put";
 
-              # y = yazi
-              # f = pay-respects
-            };
+            write-flake = "nix run ${self.const.cfgdir}/#write-flake";
+            rebuild = "nh os switch --diff always";
+            repl = "nix repl --file ${self.const.cfgdir}/repl.nix";
+
+            # y = yazi
+            # f = pay-respects
+          };
 
           shellAbbrs = {
             clone = "git clone";
             cls = "clear";
-
-            wf = "nix run .#write-flake";
             ga = "git add .";
-
+            wf = "write-flake";
+            rb = "rebuild";
+            cd = "z";
             v = "nvim";
             x = "exit";
           };

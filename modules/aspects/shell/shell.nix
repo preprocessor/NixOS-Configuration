@@ -31,22 +31,10 @@
           starship_transient_prompt_func = ''printf  " \e[1;96m  \e[0m"'';
 
           mcd = "mkdir -p $argv[1]; and cd $argv[1]"; # mkdir + cd
-
-          __zoxide_interactive = /* fish */ ''
-            set dir (zoxide query --interactive | string trim)
-
-            if test -n "$dir"
-              cd "$dir"
-            end
-
-            commandline -f repaint
-          '';
         };
 
         interactiveShellInit = /* fish */ ''
           fish_vi_key_bindings # Vim mode
-
-          bind -M insert Z __zoxide_interactive
 
           set -g fish_greeting # Disable greeting
         '';

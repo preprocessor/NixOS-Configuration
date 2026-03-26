@@ -17,7 +17,9 @@
         rtkit.enable = true;
         polkit.enable = true;
         pam.services.ly.enableGnomeKeyring = true;
+        pam.services.swaylock = { };
       };
+      services.gnome.gnome-keyring.enable = true; # secret service
 
       systemd.user.services.polkit-agent = {
         description = "PolicyKit Authentication by Gnome";

@@ -2,9 +2,20 @@
 {
   imports = [
     inputs.flake-parts.flakeModules.modules
-    inputs.flake-file.flakeModules.dendritic
-    inputs.flake-file.flakeModules.nix-auto-follow
+    inputs.flake-file.flakeModules.default
+    inputs.flake-file.flakeModules.import-tree
+    inputs.flake-file.flakeModules.allfollow
   ];
+
+  flake-file.outputs = "inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules)";
+  flake-file.inputs = {
+    # channel urls are faster and more reliable than github
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
+    nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
+    flake-file.url = "github:vic/flake-file";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
 
   systems = [
     "x86_64-linux"
