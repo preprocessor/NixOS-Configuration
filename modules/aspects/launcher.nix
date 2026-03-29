@@ -1,49 +1,83 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
+  flake-file.inputs.vicinae.url = "github:vicinaehq/vicinae";
+
   flake.modules.homeManager.default =
-    { pkgs, osConfig, ... }:
-    let
-      apple-fonts = inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system};
-      scheme = osConfig.scheme.withHashtag;
-    in
+    { pkgs, ... }:
     {
-      xdg.configFile."tofi/config_bemoji".text = /* ini */ ''
-        font = "${apple-fonts.sf-pro}/share/fonts/truetype/SF-Pro.ttf";
+      imports = [ inputs.vicinae.homeManagerModules.default ];
 
-        padding-left = 1%
-        padding-top = 2%
-        padding-right = 1%
-        padding-bottom = 2%
+      nix.settings = {
+        extra-substituters = [ "https://vicinae.cachix.org" ];
+        extra-trusted-public-keys = [ "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=" ];
+      };
 
-        corner-radius = 0
+      # systemd.user.services.vicinae.Service.Environment = [
+      #   "PATH=/etc/profiles/per-user/${self.const.username}/bin"
+      #   "PATH=/run/current-system/sw/bin"
+      # ];
 
-        border-color = ${scheme.yellow}
-        border-width = 4
-
-        background-color = ${scheme.base01}
-        text-color = ${scheme.base05}
-        selection-color = ${scheme.yellow}
-
-        width = 720
-        height = 720
-      '';
-
-      programs.tofi = {
+      services.vicinae = {
         enable = true;
-        settings = {
-          width = "100%";
-          height = "100%";
-          border-width = 0;
-          outline-width = 0;
-          padding-left = "35%";
-          padding-top = "35%";
-          result-spacing = 25;
-          num-results = 5;
-          font = "${apple-fonts.sf-pro}/share/fonts/truetype/SF-Pro.ttf";
-          background-color = "#000A";
-          text-color = scheme.base05;
-          selection-color = scheme.cyan;
+        package = pkgs.vicinae;
+        systemd = {
+          enable = true; # default: false
+          autoStart = true; # default: false
+          environment = {
+            USE_LAYER_SHELL = 1;
+          };
         };
+
+        settings = {
+          close_on_focus_loss = true;
+          consider_preedit = true;
+          activate_on_single_click = true;
+          pop_to_root_on_close = true;
+          favicon_service = "twenty";
+          search_files_in_root = true;
+          font = {
+            normal = {
+              family = "SF Pro Text";
+              size = 12;
+            };
+          };
+          theme = {
+            light = {
+              name = "vicinae-dark";
+              icon_theme = "default";
+            };
+            dark = {
+              name = "vicinae-dark";
+              icon_theme = "default";
+            };
+          };
+          launcher_window = {
+            opacity = 0.98;
+            blur.enabled = true;
+
+            client_side_decorations = {
+              enabled = true;
+              rounding = 0;
+              border_width = 5;
+            };
+
+            # In compact mode, vicinae only shows a search bar in the root search if no query is entered, only expanding to its full size when searching.
+            # WARNING: compact mode works best when vicinae is rendered as a layer surface (the default if available), as opposed to a regular floating window.
+            # That's because the part that is not rendered in compact mode is still part of the full window size, allowing the window to be gracefully expanded without having to deal
+            # with a compositor window resize which can generate a lot of visual noise. Server side borders and blur will look notably out of place.
+            compact_mode = {
+              enabled = false;
+            };
+
+          };
+        };
+        # extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+        #   bluetooth
+        #   nix
+        #   power-profile
+        #   # Extension names can be found in the link below, it's just the folder names
+        #   # https://github.com/vicinaehq/extensions/tree/main/extensions
+        # ];
       };
     };
 }

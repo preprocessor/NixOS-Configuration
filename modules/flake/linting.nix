@@ -27,7 +27,7 @@
           # runtimeInputs = [ pkgs.allfollow ];
           # ${lib.getExe pkgs.allfollow} prune --pretty --in-place "${self.const.cfgdir}/flake.lock"
           text = ''
-            allfollow prune --pretty --in-place "${self.const.cfgdir}/flake.lock"
+            allfollow prune --pretty "${self.const.cfgdir}/flake.lock" -fo "${self.const.cfgdir}/flake.lock"
           '';
         };
     };

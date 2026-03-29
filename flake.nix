@@ -65,6 +65,7 @@
     nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
     rabid.url = "path:/home/wyspr/Configuration/Rabid";
     stylix.url = "github:nix-community/stylix";
+    vicinae.url = "github:vicinaehq/vicinae";
     worktrunk.url = "github:max-sixty/worktrunk/v0.30.1";
     wrappers.url = "github:Lassulus/wrappers";
     yazi-plugin-fuzzy-search.url = "github:onelocked/fuzzy-search.yazi";

@@ -15,8 +15,10 @@
       };
       "Mod+Space" = {
         spawn = [
-          "tofi-drun"
-          "--drun-launch=true"
+          "vicinae"
+          "toggle"
+          # "tofi-drun"
+          # "--drun-launch=true"
         ];
         _attrs = {
           hotkey-overlay-title = "Run an Application: tofi";
