@@ -21,6 +21,7 @@
 
     direnv = {
       enable = true;
+      silent = true;
       enableFishIntegration = true;
       enableBashIntegration = true;
       nix-direnv.enable = true;

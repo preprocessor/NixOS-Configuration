@@ -21,6 +21,8 @@
       };
       services.gnome.gnome-keyring.enable = true; # secret service
 
+      virtualisation.podman.enable = true;
+
       systemd.user.services.polkit-agent = {
         description = "PolicyKit Authentication by Gnome";
         wantedBy = [ "graphical-session.target" ];

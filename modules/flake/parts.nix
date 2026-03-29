@@ -1,21 +1,8 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.flake-parts.flakeModules.modules
-    inputs.flake-file.flakeModules.default
-    inputs.flake-file.flakeModules.import-tree
-    inputs.flake-file.flakeModules.allfollow
-  ];
+  flake-file.inputs.flake-parts.url = "github:hercules-ci/flake-parts";
 
-  flake-file.outputs = "inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules)";
-  flake-file.inputs = {
-    # channel urls are faster and more reliable than github
-    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
-    nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
-    flake-file.url = "github:vic/flake-file";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-  };
+  imports = [ inputs.flake-parts.flakeModules.modules ];
 
   systems = [
     "x86_64-linux"
@@ -27,16 +14,13 @@
   perSystem =
     { system, ... }:
     let
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        # overlays = [ ];
-      };
+      pkgs = import inputs.nixpkgs { inherit system; };
     in
     {
       # initialize the pkgs for perSystem to be the patched nixpkgs
       _module.args = { inherit pkgs; };
 
-      formatter = pkgs.nixfmt;
+      formatter = pkgs.alejandra;
 
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [

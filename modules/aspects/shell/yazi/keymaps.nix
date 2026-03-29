@@ -15,14 +15,6 @@
           {
             on = [
               "g"
-              "l"
-            ];
-            run = "plugin lazygit";
-            desc = "Open lazygit";
-          }
-          {
-            on = [
-              "g"
               "r"
             ];
             run = ''shell -- ya emit cd "$(git rev-parse --show-toplevel)"'';

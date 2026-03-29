@@ -1,5 +1,12 @@
 { lib, self, ... }:
 {
+  flake-file.inputs = {
+    # channel urls are faster and more reliable than github
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
+    nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
+  };
+
   flake.modules.nixos.default = {
     system.stateVersion = self.const.stateVersion;
     nix.settings.experimental-features = [
@@ -11,6 +18,8 @@
       "root"
       "@wheel"
     ];
+
+    nix.settings.use-xdg-base-directories = true;
 
     services.dbus.implementation = "broker"; # more like broken
 

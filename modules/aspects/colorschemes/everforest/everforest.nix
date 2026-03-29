@@ -1,8 +1,15 @@
 { inputs, ... }:
 {
-  flake-file.inputs.yazi-theme-everforest = {
-    url = "github:Chromium-3-Oxide/everforest-medium.yazi";
-    flake = false;
+  flake-file.inputs = {
+    yazi-theme-everforest = {
+      url = "github:Chromium-3-Oxide/everforest-medium.yazi";
+      flake = false;
+    };
+
+    everforest-theme-collection = {
+      url = "github:neuromaancer/everforest_collection";
+      flake = false;
+    };
   };
 
   flake.modules.nixos.everforest =
@@ -18,8 +25,10 @@
   flake.modules.homeManager.everforest =
     { lib, pkgs, ... }:
     {
-      xdg.configFile."bat/themes/everforest.tmTheme".text = lib.readFile ./everforest.tmTheme;
       programs.bat.config.theme = "everforest";
+      xdg.configFile."bat/themes/everforest.tmTheme".source = ./everforest2.tmTheme;
+      # xdg.configFile."bat/themes/everforest.tmTheme".source =
+      #   "${inputs.everforest-theme-collection}/bat/everforest-soft.tmTheme";
 
       programs.yazi = {
         flavors.everforest-medium = inputs.yazi-theme-everforest;
@@ -47,7 +56,6 @@
         "https://raw.githubusercontent.com/F0XX00/midnight-everforest-discord/501e9fef6e208cffc4ea68f0c292976d28230fed/midnight-everforest.theme.css"
       ];
 
-      programs.zellij.settings.theme = "everforest-dark";
       programs.ghostty.settings.theme = "Everforest Dark Hard";
 
     };

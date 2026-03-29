@@ -22,7 +22,7 @@
 
           character = {
             success_symbol = " [](bright-green) ";
-            error_symbol = " [](bright-red) ";
+            error_symbol = " [](bright-red) ";
             vimcmd_symbol = " [󰏤](bright-blue) ";
             vimcmd_visual_symbol = " [󰈈](bright-yellow) ";
           };

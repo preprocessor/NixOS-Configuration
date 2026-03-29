@@ -17,7 +17,12 @@
     };
 
   flake.modules.homeManager.default =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     {
       xdg.configFile = {
         "xdg-desktop-portal-termfilechooser/config".text = # toml
@@ -46,7 +51,7 @@
               path="$4"
               out="$5"
 
-              command="${pkgs.foot}/bin/foot --app-id=FileChooser -e ${pkgs.yazi}/bin/yazi"
+              command="${lib.getExe pkgs.ghostty} --class=FileChooser -e ${lib.getExe pkgs.yazi}"
 
               if [ "$save" = "1" ]; then
                   set -- --chooser-file="$out" "$path"
