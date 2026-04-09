@@ -7,33 +7,47 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
   };
 
-  flake.modules.nixos.default = {
-    system.stateVersion = self.const.stateVersion;
-    nix.settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+  flake.modules.nixos.default =
+    { pkgs, ... }:
+    {
+      nix.settings = {
+        use-xdg-base-directories = true;
+        warn-dirty = false;
+        auto-optimise-store = true;
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
 
-    nix.settings.trusted-users = [
-      "root"
-      "@wheel"
-    ];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
+      };
 
-    nix.settings.use-xdg-base-directories = true;
+      services.scx = {
+        enable = true;
+        package = pkgs.scx.rustscheds;
+        scheduler = "scx_lavd";
+      };
 
-    services.dbus.implementation = "broker"; # more like broken
+      nixpkgs.config = {
+        allowUnfree = true;
+        rocmSupport = true;
+      };
 
-    nixpkgs.config.allowUnfree = true;
-    nixpkgs.config.rocmSupport = true;
+      system.stateVersion = self.const.stateVersion;
 
-    programs.nano.enable = lib.mkForce false; # Take out the trash
+      services.dbus.implementation = "broker";
 
-    # This is a workaround to set NIXOS_OZONE_WL as described in https://wiki.nixos.org/wiki/Wayland#Electron_and_Chromium
-    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+      programs.nano.enable = lib.mkForce false; # Take out the trash
 
-    environment.variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+      # This is a workaround to set NIXOS_OZONE_WL as described in https://wiki.nixos.org/wiki/Wayland#Electron_and_Chromium
+      environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+      environment.variables = {
+        EDITOR = "nvim";
+        VISUAL = "nvim";
+      };
     };
-  };
 }

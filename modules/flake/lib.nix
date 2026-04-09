@@ -11,9 +11,9 @@
   };
 
   config.flake.lib = {
-    hm = modules: {
-      home-manager.users.${self.const.username}.imports = modules;
-    };
+    mkMangoCfg = cfg: lib.generators.toINIWithGlobalSection { } { globalSection = cfg; };
+
+    hm = modules: { home-manager.users.${self.const.username}.imports = modules; };
 
     mkSystem =
       {

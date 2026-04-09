@@ -10,7 +10,7 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        hand_of_evil
+        hand-of-evil
         gimp
       ];
     };

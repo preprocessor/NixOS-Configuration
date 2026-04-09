@@ -1,6 +1,7 @@
 { inputs, self, ... }:
 {
   flake-file.inputs.vicinae.url = "github:vicinaehq/vicinae";
+  flake-file.inputs.vicinae-extensions.url = "github:vicinaehq/extensions";
 
   flake.modules.homeManager.default =
     { pkgs, ... }:
@@ -71,13 +72,14 @@
 
           };
         };
-        # extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
-        #   bluetooth
-        #   nix
-        #   power-profile
-        #   # Extension names can be found in the link below, it's just the folder names
-        #   # https://github.com/vicinaehq/extensions/tree/main/extensions
-        # ];
+        extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+          bluetooth
+          nix
+          power-profile
+          niri
+          # Extension names can be found in the link below, it's just the folder names
+          # https://github.com/vicinaehq/extensions/tree/main/extensions
+        ];
       };
     };
 }

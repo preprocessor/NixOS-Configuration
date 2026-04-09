@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   flake.modules.nixos.default = {
     services.udisks2.enable = true;
@@ -13,7 +14,7 @@
           # https://github.com/nix-community/home-manager/issues/632
           program_options = {
             # replace with your favorite file manager
-            file_manager = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.yazi}/bin/yazi";
+            file_manager = "${lib.getExe pkgs.ghostty} -e ${lib.getExe pkgs.yazi}";
           };
         };
       };

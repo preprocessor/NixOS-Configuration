@@ -12,6 +12,9 @@
       fonts.packages = with pkgs; [
         noto-fonts-color-emoji
         maple-mono.variable
+        nerd-fonts.jetbrains-mono
+        inter
+        font-awesome_6
 
         apple-fonts.sf-pro
         apple-fonts.sf-compact

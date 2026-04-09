@@ -12,6 +12,7 @@
     { pkgs, ... }:
     let
       zoom = inputs.yazi-plugins-repo + "/zoom.yazi";
+      inherit (lib) getExe;
     in
     {
       imports = [ inputs.yazi-plugin-fuzzy-search.homeManagerModules.default ];
@@ -136,12 +137,13 @@
         settings.plugin = {
           prepend_previewers =
             let
-              bat = "${lib.getExe pkgs.bat} -p --color=always";
+              bat = "${getExe pkgs.bat} -p --color=always";
+              qemu-img = lib.getExe' pkgs.qemu-utils "qemu-img";
             in
             [
               {
                 url = "*.md";
-                run = ''piper -- CLICOLOR_FORCE=1 ${lib.getExe pkgs.glow} -w=$w -s=dark -- "$1"'';
+                run = ''piper -- CLICOLOR_FORCE=1 ${getExe pkgs.glow} -w=$w -s=dark -- "$1"'';
               }
               {
                 mime = "text/*";
@@ -153,15 +155,15 @@
               }
               {
                 url = "*.qcow2";
-                run = ''piper -- ${pkgs.qemu-utils}/bin/qemu-img info "$1" | ${bat} -l asa'';
+                run = ''piper -- ${qemu-img} info "$1" | ${bat} -l asa'';
               }
               {
                 url = "*/";
-                run = ''piper -- ${lib.getExe pkgs.eza} --color=always --icons=always --no-quotes -TL=3 "$1"'';
+                run = ''piper -- ${getExe pkgs.eza} --color=always --icons=always --no-quotes -TL=3 "$1"'';
               }
               {
                 url = "*.txt.gz";
-                run = ''piper -- ${lib.getExe pkgs.gzip} -dc "$1"'';
+                run = ''piper -- ${getExe pkgs.gzip} -dc "$1"'';
               }
               {
                 mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}";
@@ -172,7 +174,7 @@
           append_previewers = [
             {
               url = "*";
-              run = ''piper -- ${lib.getExe pkgs.hexyl} --border=none --terminal-width=$w "$1"'';
+              run = ''piper -- ${getExe pkgs.hexyl} --border=none --terminal-width=$w "$1"'';
             }
           ];
 

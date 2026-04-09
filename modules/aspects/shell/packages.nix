@@ -17,9 +17,8 @@
         gum
         jq # parse json
         # custom packages
-        bemoji_tofi
-        wyspr_eye
-        wyspr_gbc
+        wyspr-eye
+        wyspr-gbc
         ocr
         # wyspr_waow
       ];

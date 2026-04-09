@@ -17,11 +17,18 @@
         spawn = [
           "vicinae"
           "toggle"
-          # "tofi-drun"
-          # "--drun-launch=true"
         ];
         _attrs = {
-          hotkey-overlay-title = "Run an Application: tofi";
+          hotkey-overlay-title = "Open application launcher: vicinae";
+        };
+      };
+      "Mod+V" = {
+        spawn = [
+          "vicinae"
+          "vicinae://extensions/vicinae/clipboard/history"
+        ];
+        _attrs = {
+          hotkey-overlay-title = "Open clipboard manager: vicinae";
         };
       };
       "Super+Alt+L" = {

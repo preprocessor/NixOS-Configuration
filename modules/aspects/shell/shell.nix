@@ -1,10 +1,5 @@
 { inputs, ... }:
 {
-  flake-file.inputs.fish-plugin-enhancd = {
-    url = "github:babarot/enhancd";
-    flake = false;
-  };
-
   flake.modules.nixos.default =
     { pkgs, ... }:
     {
@@ -43,10 +38,6 @@
           {
             name = "fzf";
             src = fzf.src;
-          }
-          {
-            name = "enhancd";
-            src = inputs.fish-plugin-enhancd;
           }
         ];
       };

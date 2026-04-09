@@ -1,12 +1,31 @@
-{ inputs, ... }:
+{ lib, ... }:
 {
-  flake-file.inputs.awww.url = "git+https://codeberg.org/LGFae/awww";
+  flake.modules.nixos.desktop =
+    { pkgs, ... }:
+    {
+      systemd.user.services.awww-daemon = {
+        description = "awww wallpaper daemon";
+        wantedBy = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = lib.getExe' pkgs.awww "awww-daemon";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
+      };
+
+      environment.systemPackages = [
+        pkgs.awww
+      ];
+    };
 
   flake.modules.homeManager.desktop =
     { pkgs, ... }:
     {
       home.packages = [
-        inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
         pkgs.waypaper
       ];
     };

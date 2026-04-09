@@ -10,9 +10,7 @@
         hardwareAcceleration = true;
         hardwareVideoAcceleration = true;
         discordBranch = "stable";
-        tray = false;
         autoStartMinimized = false;
-        minimizeToTray = false;
         customTitleBar = false;
       };
 

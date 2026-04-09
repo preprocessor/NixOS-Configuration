@@ -5,10 +5,9 @@
         # Floating windows
         matches = [
           # Open the picture-in-picture player as floating as well as browser settings
-          { title = "^Picture-in-Picture$"; }
           {
-            app-id = "^vivaldi-stable$";
-            title = "^Vivaldi Settings$";
+            app-id = "^vivaldi-snapshot$";
+            title = "^Vivaldi Settings";
           }
           # Steam rules
           {
@@ -32,6 +31,9 @@
             app-id = "^waypaper$";
             title = "^Waypaper$";
           }
+          {
+            title = "^SteamTinkerLaunch.*$";
+          }
         ];
         open-floating = true;
       }
@@ -47,10 +49,33 @@
         # Use this instead if you want them visible on third-party screenshot tools.
         # block-out-from "screencast"
       }
-      # {
-      #   matches = [ { app-id = "^com\.mitchellh\.ghostty$"; } ];
-      #   draw-border-with-background = false;
-      # }
+      {
+        draw-border-with-background = false;
+      }
+      {
+        matches = [
+          { app-id = "steam"; }
+          { title = "^notificationtoasts_\d+_desktop$"; }
+        ];
+        default-floating-position._attrs = {
+          x = 20;
+          y = 20;
+          relative-to = "bottom-right";
+        };
+      }
+      {
+        matches = [
+          { title = "^Picture-in-Picture$"; }
+          { title = "^Picture in picture$"; }
+        ];
+
+        open-floating = true;
+        default-floating-position._attrs = {
+          x = 10;
+          y = 10;
+          relative-to = "bottom-right";
+        };
+      }
 
     ];
 

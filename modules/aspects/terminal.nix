@@ -83,10 +83,6 @@
           window-padding-balance = true;
           window-save-state = "always";
 
-          background-blur = 10;
-          background-opacity = 0.85;
-          background-opacity-cells = true;
-
           shell-integration = "fish";
 
           custom-shader-animation = "always";

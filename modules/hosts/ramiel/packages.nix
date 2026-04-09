@@ -23,7 +23,6 @@
 
       homePackages = with pkgs; [
         virtualbox
-        vivaldi
         mpv
         qview
       ];

@@ -1,8 +1,10 @@
 { inputs, ... }:
 {
   flake-file.inputs = {
-    niri.url = "github:niri-wm/niri/wip/branch";
+    niri.url = "github:niri-wm/niri";
+    qml-niri.url = "github:imiric/qml-niri/main";
     wrappers.url = "github:Lassulus/wrappers";
+    system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
   };
 
   flake.modules.nixos.desktop =
@@ -46,6 +48,37 @@
         };
       };
 
+      systemd.user.services.system76-scheduler-niri = {
+        description = "Niri integration for system76-scheduler";
+        after = [ "niri.service" ];
+        wantedBy = [ "niri.service" ];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = lib.getExe (
+            inputs.system76-scheduler-niri.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs {
+              doCheck = false;
+            }
+          );
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
+      };
+
+      services = {
+        xserver = {
+          enable = true;
+          desktopManager.lxqt = {
+            enable = true;
+            extraPackages = with pkgs; [
+              lxqt.qterminal
+              lxqt.pcmanfm-qt
+              lxqt.lxqt-runner
+              lxqt.lxqt-wayland-session
+            ];
+          };
+        };
+
+      };
     };
 
   flake.modules.nixos.default =

@@ -7,7 +7,6 @@
       #   spawn-sh-at-startup "wl-paste --type text --watch cliphist store"
       # '';
       spawn-at-startup = [
-        "awww-daemon"
         "wl-clip-persist --clipboard regular --reconnect-tries 0"
         "wl-paste --type text --watch cliphist store"
       ];

@@ -8,9 +8,9 @@
       };
 
       stylix.cursor = {
-        package = pkgs.hand_of_evil;
-        name = "hand-of-evil";
-        size = 24;
+        package = pkgs.posy-cursors;
+        name = "Posy_Cursor_Black";
+        size = 128;
       };
     };
 }

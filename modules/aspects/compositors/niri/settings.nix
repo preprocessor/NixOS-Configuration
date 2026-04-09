@@ -13,7 +13,11 @@
         screenshot-path = self.const.homedir + "/Pictures/Screenshots/%Y-%m-%d %H:%M:%S.png";
         gestures.hot-corners.off = null;
 
-        outputs."DP-2".mode = "3440x1440@74.983";
+        outputs."DP-2" = {
+          mode = "3440x1440@74.983";
+          variable-refresh-rate._attrs.on-demand = true;
+        };
+
         input = {
           keyboard = {
             xkb.options = "caps:escape";
@@ -36,9 +40,14 @@
           # Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
           focus-follows-mouse._attrs.max-scroll-amount = "0%";
           warp-mouse-to-focus = null;
+          workspace-auto-back-and-forth = null;
+          mod-key = "Super";
+          mod-key-nested = "Alt";
 
         };
-        extraConfig = (lib.mkAfter ''include optional=true "${self.const.homedir}/.config/niri/dyn.kdl";'');
+        extraConfig = /* kdl */ ''
+          include optional=true "${self.const.homedir}/.config/niri/dyn.kdl";
+        '';
       };
     };
 }

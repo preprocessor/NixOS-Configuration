@@ -14,5 +14,8 @@
         # colormix_col3 = 0x20000000
       };
     };
+
+    security.pam.services.ly.enableGnomeKeyring = true;
   };
+
 }
