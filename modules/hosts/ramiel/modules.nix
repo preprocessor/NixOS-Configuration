@@ -8,15 +8,11 @@ in
     nixosModules = with nixos; [
       ramiel
       desktop
-      # everforest
-      # kanagawa-dragon
       tokyonight-night
     ];
     homeModules = with homeManager; [
       ramiel
       desktop
-      # everforest
-      # kanagawa-dragon
       tokyonight-night
     ];
     configuration = {

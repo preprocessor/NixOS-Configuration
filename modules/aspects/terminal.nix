@@ -81,13 +81,15 @@
 
           window-decoration = false;
           window-padding-balance = true;
-          window-save-state = "always";
+          window-save-state = "never";
 
           shell-integration = "fish";
 
-          custom-shader-animation = "always";
+          # custom-shader-animation = "always";
 
-          custom-shader = "${inputs.ghostty-cursor-shaders}/cursor_tail.glsl";
+          custom-shader = [
+            "${inputs.ghostty-cursor-shaders}/cursor_tail.glsl"
+          ];
 
           font-family = "Maple Mono";
           font-style = "Medium";

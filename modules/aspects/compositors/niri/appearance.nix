@@ -22,23 +22,17 @@
 
           background-color = "transparent";
 
-          border = {
-            off = null;
-            width = 2;
-            active-color = scheme.base05;
-            inactive-color = scheme.base02;
-            urgent-color = scheme.base0F;
-          };
+          border.off = null;
 
           focus-ring = {
             on = null;
-            width = 2;
+            width = 1;
             active-color = scheme.base05;
           };
 
           shadow = {
             on = null;
-            softness = 15;
+            softness = 10;
             spread = 10;
             offset._attrs = {
               x = 0;

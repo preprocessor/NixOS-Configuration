@@ -17,6 +17,8 @@
     {
       imports = [ inputs.yazi-plugin-fuzzy-search.homeManagerModules.default ];
 
+      home.packages = [ pkgs.ouch ];
+
       programs.yazi = {
         plugins = {
           inherit (pkgs.yaziPlugins)

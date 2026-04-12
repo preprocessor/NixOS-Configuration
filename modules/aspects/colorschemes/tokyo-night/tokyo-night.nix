@@ -75,6 +75,7 @@
 
       stylix.targets = {
         vesktop.enable = true;
+        # https://raw.githubusercontent.com/radiotaiso/TokyoNightVencord/master/tokyo-night.theme.css ??
       };
     };
 }

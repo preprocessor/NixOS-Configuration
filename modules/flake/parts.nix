@@ -14,7 +14,11 @@
   perSystem =
     { system, ... }:
     let
-      pkgs = import inputs.nixpkgs { inherit system; };
+      # Configure Nix to allow unfree packages.
+      config = {
+        allowUnfree = true;
+      };
+      pkgs = import inputs.nixpkgs { inherit system config; };
     in
     {
       # initialize the pkgs for perSystem to be the patched nixpkgs

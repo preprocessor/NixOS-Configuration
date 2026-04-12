@@ -6,6 +6,12 @@
       homeDirectory = "${self.const.homedir}";
     };
 
+    hjem.users."${self.const.username}" = {
+      enable = true;
+      user = "${self.const.username}";
+      directory = "${self.const.homedir}";
+    };
+
     users.users."${self.const.username}" = {
       description = "${self.const.username}";
       isNormalUser = true;

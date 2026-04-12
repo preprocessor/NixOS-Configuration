@@ -26,29 +26,42 @@
                 "setwallpaper"
               ];
             }
+            {
+              mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}";
+              use = [ "ouch" ];
+            }
           ];
         };
 
-        settings.opener = {
-          setwallpaper = [
-            {
-              run = "awww img --transition-fps 75 %s";
-              desc = "Set Wallpaper";
-            }
-          ];
-          gimp = [
-            {
-              run = "gimp %s";
-              desc = "Image Editor";
-            }
-          ];
-          video-trimmer = [
-            {
-              run = "${lib.getExe pkgs.video-trimmer} %s";
-              desc = "Video Trimmer";
-            }
-          ];
-        };
+        settings.opener =
+          with pkgs;
+          with lib;
+          {
+            setwallpaper = [
+              {
+                run = "${getExe' awww "awww"} img --transition-fps 75 %s";
+                desc = "Set Wallpaper";
+              }
+            ];
+            gimp = [
+              {
+                run = "${getExe gimp} %s";
+                desc = "Image Editor";
+              }
+            ];
+            video-trimmer = [
+              {
+                run = "${getExe video-trimmer} %s";
+                desc = "Video Trimmer";
+              }
+            ];
+            ouch = [
+              {
+                run = ''${getExe ouch} d -y "$@"'';
+                desc = "Extract here with ouch";
+              }
+            ];
+          };
 
         settings.preview = {
           wrap = "no";

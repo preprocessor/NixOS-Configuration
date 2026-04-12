@@ -51,6 +51,7 @@
       flake = false;
     };
     gimp.url = "path:/home/wyspr/Configuration/GIMP";
+    hjem.url = "github:feel-co/hjem";
     home-manager.url = "github:nix-community/home-manager/master";
     import-tree.url = "github:vic/import-tree";
     kanagawa-tmtheme = {

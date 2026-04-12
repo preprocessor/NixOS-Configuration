@@ -17,10 +17,7 @@
     let
       inherit (config.custom.programs.niri) settings;
 
-      niri_wrapped =
-        (inputs.wrappers.wrapperModules.niri.apply {
-          inherit pkgs settings;
-        }).wrapper;
+      niri_wrapped = (inputs.wrappers.wrapperModules.niri.apply { inherit pkgs settings; }).wrapper;
 
       niri_overlay = final: prev: {
         niri = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -38,9 +35,7 @@
       xdg.portal = {
         config = {
           niri = {
-            "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
-              "termfilechooser"
-            ];
+            "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
             default = lib.mkForce [ "gnome" ];
             "org.freedesktop.impl.portal.Secret" = lib.mkForce [ "gnome-keyring" ];
             "org.freedesktop.impl.portal.Chooser" = lib.mkForce [ "none" ];
@@ -62,22 +57,6 @@
           RestartSec = 1;
           TimeoutStopSec = 10;
         };
-      };
-
-      services = {
-        xserver = {
-          enable = true;
-          desktopManager.lxqt = {
-            enable = true;
-            extraPackages = with pkgs; [
-              lxqt.qterminal
-              lxqt.pcmanfm-qt
-              lxqt.lxqt-runner
-              lxqt.lxqt-wayland-session
-            ];
-          };
-        };
-
       };
     };
 

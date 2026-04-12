@@ -22,7 +22,9 @@
         apple-fonts.ny
       ];
 
+      fonts.enableDefaultPackages = true;
       fonts.fontDir.enable = true;
+
       fonts.fontconfig = {
         enable = true;
         antialias = true;

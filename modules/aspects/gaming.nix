@@ -50,7 +50,7 @@
       hardware.steam-hardware.enable = true;
 
       services = {
-        pipewire.lowLatency.enable = true;
+        # pipewire.lowLatency.enable = true;
         input-remapper.enable = true;
         system76-scheduler.enable = true;
       };
