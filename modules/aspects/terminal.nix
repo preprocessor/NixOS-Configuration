@@ -37,37 +37,8 @@
             "ctrl+shift+tab=unbind"
             "ctrl+shift+w=unbind"
 
-            "ctrl+space=activate_key_table_once:maps"
-            "ctrl+shift+space=activate_key_table:maps"
-
-            "maps/ctrl+space=deactivate_key_table"
-            "maps/ctrl+shift+space=deactivate_key_table"
-            "maps/escape=deactivate_key_table"
-
-            "maps/ctrl+x=close_surface"
-            "maps/ctrl+q=close_window"
-
             "ctrl+backslash=new_split:down"
             "chain=resize_split:down,400"
-
-            "maps/v=new_split:right"
-            "maps/s=new_split:down"
-            "chain=resize_split:down,400"
-
-            "performable:maps/h=goto_split:left"
-            "performable:maps/j=goto_split:down"
-            "performable:maps/k=goto_split:up"
-            "performable:maps/l=goto_split:right"
-
-            "maps/ctrl+h=resize_split:left,10"
-            "maps/ctrl+j=resize_split:down,10"
-            "maps/ctrl+k=resize_split:up,10"
-            "maps/ctrl+l=resize_split:right,10"
-
-            "maps/ctrl+shift+h=resize_split:left,50"
-            "maps/ctrl+shift+j=resize_split:down,50"
-            "maps/ctrl+shift+k=resize_split:up,50"
-            "maps/ctrl+shift+l=resize_split:right,50"
 
             "performable:ctrl+shift+h=goto_split:left"
             "performable:ctrl+shift+j=goto_split:bottom"
