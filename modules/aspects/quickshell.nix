@@ -4,14 +4,6 @@
   flake-file.inputs.qml-niri.url = "github:imiric/qml-niri/main";
 
   flake.modules.nixos.desktop =
-    { pkgs, ... }:
-    {
-      fonts.packages = with pkgs; [
-        lucide
-      ];
-    };
-
-  flake.modules.homeManager.desktop =
     {
       pkgs,
       osConfig,
@@ -46,7 +38,11 @@
       };
     in
     {
-      home.packages = [ quickshellWrapped ];
+      fonts.packages = with pkgs; [
+        lucide
+      ];
 
+      hj.packages = [ quickshellWrapped ];
     };
+
 }

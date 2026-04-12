@@ -3,7 +3,7 @@
   flake.modules.nixos.desktop =
     { pkgs, ... }:
     {
-      systemd.user.services.awww-daemon = {
+      hj.systemd.services.awww-daemon = {
         description = "awww wallpaper daemon";
         wantedBy = [ "graphical-session.target" ];
         after = [ "graphical-session.target" ];
@@ -17,16 +17,9 @@
         };
       };
 
-      environment.systemPackages = [
-        pkgs.awww
-      ];
-    };
-
-  flake.modules.homeManager.desktop =
-    { pkgs, ... }:
-    {
-      home.packages = [
-        pkgs.waypaper
+      hj.packages = with pkgs; [
+        awww
+        waypaper
       ];
     };
 }
