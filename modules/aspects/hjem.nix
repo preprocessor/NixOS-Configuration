@@ -15,6 +15,4 @@
 
     hjem.clobberByDefault = true;
   };
-
-  flake.modules.hjem.default = { };
 }
