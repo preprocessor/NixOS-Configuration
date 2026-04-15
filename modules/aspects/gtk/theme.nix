@@ -115,6 +115,6 @@
   flake.modules.nixos.desktop =
     { config, ... }:
     {
-      environment.systemPackages = [ config.custom.gtk.theme.package ];
+      hj.packages = [ config.custom.gtk.theme.package ];
     };
 }

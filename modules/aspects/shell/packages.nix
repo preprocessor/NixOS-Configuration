@@ -1,8 +1,8 @@
 {
-  flake.modules.homeManager.default =
+  flake.modules.nixos.default =
     { pkgs, ... }:
     {
-      home.packages = with pkgs; [
+      hj.packages = with pkgs; [
         imagemagick
         trash-cli
         fetchutils

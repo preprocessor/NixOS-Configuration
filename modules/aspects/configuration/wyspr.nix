@@ -1,19 +1,23 @@
 { self, ... }:
+let
+  inherit (self.const) username homedir;
+in
 {
   flake.modules.nixos.default = {
-    home-manager.users."${self.const.username}".home = {
-      username = "${self.const.username}";
-      homeDirectory = "${self.const.homedir}";
+    home-manager.users."${username}".home = {
+      username = username;
+      homeDirectory = homedir;
     };
 
-    hjem.users."${self.const.username}" = {
+    # Will be referenced as "hj" in this flake
+    hjem.users."${username}" = {
       enable = true;
-      user = "${self.const.username}";
-      directory = "${self.const.homedir}";
+      user = username;
+      directory = homedir;
     };
 
-    users.users."${self.const.username}" = {
-      description = "${self.const.username}";
+    users.users."${username}" = {
+      description = username;
       isNormalUser = true;
       initialPassword = "password"; # for VMs
       extraGroups = [

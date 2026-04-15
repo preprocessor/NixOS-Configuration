@@ -1,7 +1,11 @@
-{ inputs, self, ... }:
+# Sources:
+# https://github.com/iynaix/dotfiles/blob/7cfd3aec29feec3807206591260e594ad28094f9/modules/gui/niri/default.nix
+# https://github.com/onelocked/NixOS/blob/master/modules/nixos/desktop/niri/niri.nix
+
+{ inputs, ... }:
 {
   flake-file.inputs = {
-    niri.url = "github:niri-wm/niri/wip/branch";
+    niri.url = "github:niri-wm/niri";
     qml-niri.url = "github:imiric/qml-niri/main";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
@@ -15,55 +19,28 @@
       ...
     }:
     let
-      inherit (config.custom.programs.niri) settings;
+      niri = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri;
 
-      source = lib.getExe config.programs.niri.package;
-      niri_wrapped =
+      niri_wrapped = inputs.wrappers.wrappers.niri.wrap {
+        inherit (config.custom.programs.niri) settings;
+        inherit pkgs;
+        v2-settings = false;
+        package = lib.mkForce (
+          niri.overrideAttrs (o: ({
+            patches = [
+              (pkgs.fetchpatch2 {
+                name = "focus_ring_fade_animation_and_gradient_rotation.patch";
+                url = "https://github.com/niri-wm/niri/pull/3577.patch";
+                hash = "sha256-NQysXDDdH/Nru2imyBEHndy5UJmqtEsMIw7DmKCxy5U=";
+              })
+            ];
 
-        (inputs.wrappers.wrappers.niri.wrap {
-          inherit pkgs settings;
-          v2-settings = false;
-          package = (
-            pkgs.niri.overrideAttrs (
-              o:
-              (
-                source
-                // {
-                  inherit (o) version; # needed for annoying version check
-
-                  postPatch = ''
-                    patchShebangs resources/niri-session
-                    substituteInPlace resources/niri.service \
-                      --replace-fail 'ExecStart=niri' "ExecStart=$out/bin/niri"
-                  '';
-
-                  # creating an overlay for buildRustPackage overlay (NOTE: this is an IFD)
-                  # https://discourse.nixos.org/t/is-it-possible-to-override-cargosha256-in-buildrustpackage/4393/3
-                  cargoDeps = pkgs.rustPlatform.importCargoLock {
-                    lockFile = "${source.src}/Cargo.lock";
-                    allowBuiltinFetchGit = true;
-                  };
-
-                  patches = (o.patches or [ ]) ++ [
-                    # unmerged PR to fix this
-                    # https://github.com/YaLTeR/niri/pull/3004
-                    ./transparent-fullscreen.patch
-                  ];
-
-                  doCheck = false; # faster builds
-                }
-              )
-            )
-          );
-        }).wrapper;
-
-      niri_overlay = final: prev: {
-        niri = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.default;
+            doCheck = false; # faster builds
+          }))
+        );
       };
     in
     {
-      nixpkgs.overlays = [ niri_overlay ];
-
       programs.niri = {
         enable = true;
         useNautilus = false;
@@ -76,21 +53,9 @@
           niri = {
             prettyName = "niri";
             comment = "Niri compositor managed by UWSM";
-            binPath = "${lib.getExe config.programs.niri.package}"; # NOTE: /run/current-system/sw/bin/niri is more preferred to avoid version mismatch
+            binPath = "/run/current-system/sw/bin/niri";
+            # [NOTE] "/run/current-system/sw/bin/niri" is preferred to "lib.getExe pkgs.niri" avoid version mismatch
             extraArgs = [ "--session" ];
-          };
-        };
-      };
-      services = {
-        displayManager.enable = lib.mkForce false;
-        greetd = {
-          enable = true;
-          useTextGreeter = true;
-          settings = {
-            default_session = {
-              command = "${lib.getExe pkgs.tuigreet} --cmd ${lib.getExe config.programs.uwsm.package} start niri-uwsm.desktop";
-              user = self.const.username;
-            };
           };
         };
       };
@@ -154,7 +119,7 @@
         programs.niri = {
           settings = lib.mkOption {
             type = lib.types.submodule {
-              freeformType = (pkgs.formats.json { }).type;
+              freeformType = lib.types.attrs;
               options = {
                 binds = lib.mkOption {
                   default = { };

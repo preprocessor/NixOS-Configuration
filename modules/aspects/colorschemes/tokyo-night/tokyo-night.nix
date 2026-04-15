@@ -21,10 +21,18 @@
     { pkgs, ... }:
     let
       scheme = inputs.colorschemes + "/base24/tokyo-night-dark.yaml";
+      tmTheme = inputs.tokyonight-theme + "/extras/sublime/tokyonight_night.tmTheme";
+      tnExtras = inputs.tokyonight-theme + "/extras";
     in
     {
       scheme = scheme; # Set base16 scheme
       stylix.base16Scheme = scheme; # Set stylix base16 scheme
+
+      hj.xdg.config.files."ghostty/config".text = "theme = TokyoNight Night";
+
+      hj.xdg.config.files."bat/themes/tokyonight.tmTheme".source = tmTheme;
+
+      hj.xdg.config.files."eza/theme.yml".source = tnExtras + "/eza/tokyonight_night.yml";
     };
 
   flake.modules.homeManager.tokyonight-night =
@@ -34,22 +42,13 @@
       tnExtras = inputs.tokyonight-theme + "/extras";
     in
     {
-      programs.ghostty.settings.theme = "TokyoNight Night";
-
       programs.delta.options.include.path = tmTheme;
 
       programs.fish.interactiveShellInit = builtins.readFile (tnExtras + "/fish/tokyonight_night.fish");
 
-      xdg.configFile."eza/theme.yml".source = tnExtras + "/eza/tokyonight_night.yml";
-
       # home.file.".Xresources".source = tnExtras + "/xresources/tokyonight_night.Xresources";
 
-      xdg.configFile."bat/themes/tokyonight.tmTheme".source = tmTheme;
       programs.bat.config.theme = "tokyonight";
-
-      xdg.configFile."opencode/themes/tokyonight.json".source =
-        tnExtras + "/opencode/tokyonight_night.json";
-      programs.opencode.tui.theme = "tokyonight";
 
       programs.yazi = {
         flavors.tokyonight = inputs.tokyonight-yazi-theme + "/tokyonight-night.yazi";
@@ -59,23 +58,6 @@
           light = "tokyonight";
           use = "tokyonight";
         };
-      };
-
-      gtk = {
-        theme = lib.mkDefault {
-          name = "Tokyonight-Night-BL-LB";
-          package = pkgs.tokyonight-gtk-theme;
-        };
-        iconTheme = lib.mkDefault {
-          name = "Tokyonight-Dark";
-          package = pkgs.tokyonight-gtk-theme;
-        };
-        gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
-      };
-
-      stylix.targets = {
-        vesktop.enable = true;
-        # https://raw.githubusercontent.com/radiotaiso/TokyoNightVencord/master/tokyo-night.theme.css ??
       };
     };
 }

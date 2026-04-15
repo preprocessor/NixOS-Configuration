@@ -57,10 +57,12 @@
           { app-id = "steam"; }
           { title = "^notificationtoasts_\d+_desktop$"; }
         ];
-        default-floating-position._attrs = {
-          x = 20;
-          y = 20;
-          relative-to = "bottom-right";
+        default-floating-position = _: {
+          props = {
+            x = 20;
+            y = 20;
+            relative-to = "bottom-right";
+          };
         };
       }
       {
@@ -70,10 +72,12 @@
         ];
 
         open-floating = true;
-        default-floating-position._attrs = {
-          x = 10;
-          y = 10;
-          relative-to = "bottom-right";
+        default-floating-position = _: {
+          props = {
+            x = 10;
+            y = 10;
+            relative-to = "bottom-right";
+          };
         };
       }
 

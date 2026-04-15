@@ -5,10 +5,7 @@
   flake.modules.nixos.desktop =
     { pkgs, ... }:
     {
-      imports = [
-        inputs.nix-gaming.nixosModules.pipewireLowLatency
-        inputs.nix-gaming.nixosModules.platformOptimizations
-      ];
+      imports = [ inputs.nix-gaming.nixosModules.platformOptimizations ];
 
       nix.settings = {
         substituters = [ "https://nix-gaming.cachix.org" ];
@@ -16,7 +13,7 @@
       };
 
       environment.systemPackages = with pkgs; [
-        protonup-ng
+        protonup-rs
       ];
 
       environment.sessionVariables = {
@@ -29,9 +26,7 @@
         remotePlay.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
         extraPackages = [ pkgs.latencyflex-vulkan ];
-        extraCompatPackages = with pkgs; [
-          steamtinkerlaunch
-        ];
+        extraCompatPackages = [ pkgs.steamtinkerlaunch ];
       };
 
       programs.gamemode.enable = true;
@@ -50,15 +45,10 @@
       hardware.steam-hardware.enable = true;
 
       services = {
-        # pipewire.lowLatency.enable = true;
         input-remapper.enable = true;
         system76-scheduler.enable = true;
       };
-    };
 
-  flake.modules.homeManager.desktop =
-    { pkgs, ... }:
-    {
       programs.obs-studio = {
         enable = true;
         plugins = with pkgs.obs-studio-plugins; [
@@ -67,7 +57,7 @@
         ];
       };
 
-      home.packages = with pkgs; [
+      hj.packages = with pkgs; [
         prismlauncher # Minecraft
         runelite # Runescape
         bolt-launcher # Runescape

@@ -1,6 +1,5 @@
 { inputs, ... }:
 {
-  flake-file.inputs.dms.url = "path:/home/wyspr/Configuration/DankMaterialShell";
   flake-file.inputs.qml-niri.url = "github:imiric/qml-niri/main";
 
   flake.modules.nixos.desktop =
@@ -29,7 +28,7 @@
         inherit pkgs;
         package = inputs.qml-niri.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
         aliases = [ "qs" ];
-        runtimeInputs = quickshellDeps;
+        extraPackages = quickshellDeps;
         env = {
           QT_QPA_PLATFORMTHEME = "gtk3";
           QML_IMPORT_PATH = qmlImportPath;
