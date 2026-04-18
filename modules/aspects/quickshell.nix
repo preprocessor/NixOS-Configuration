@@ -1,6 +1,12 @@
 { inputs, ... }:
 {
-  flake-file.inputs.qml-niri.url = "github:imiric/qml-niri/main";
+  flake-file.inputs.qml-niri = {
+    url = "github:imiric/qml-niri/main";
+    inputs = {
+      nixpkgs.follows = "nixpkgs";
+      flake-parts.follows = "flake-parts";
+    };
+  };
 
   flake.modules.nixos.desktop =
     {

@@ -1,6 +1,10 @@
 { inputs, ... }:
 {
-  flake-file.inputs.nix-gaming.url = "github:fufexan/nix-gaming";
+  flake-file.inputs.nix-gaming = {
+    url = "github:fufexan/nix-gaming";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-parts.follows = "flake-parts";
+  };
 
   flake.modules.nixos.desktop =
     { pkgs, ... }:

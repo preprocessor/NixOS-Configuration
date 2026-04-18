@@ -1,8 +1,6 @@
 { lib, self, ... }:
 {
   flake-file.inputs = {
-    systems.url = "github:nix-systems/x86_64-linux";
-    flake-utils.inputs.systems.follows = "systems";
     # channel urls are faster and more reliable than github
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
@@ -25,6 +23,9 @@
           "root"
           "@wheel"
         ];
+
+        extra-substituters = [ "https://bazinga.cachix.org" ];
+        extra-trusted-public-keys = [ "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU=" ];
       };
 
       services.scx = {

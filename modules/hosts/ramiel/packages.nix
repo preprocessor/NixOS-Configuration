@@ -21,10 +21,14 @@
         overskride
       ];
 
-      homePackages = with pkgs; [
+      homePackages = [ ];
+    })
+    // {
+      hj.packages = with pkgs; [
+        vivaldi
         virtualbox
         mpv
         qview
       ];
-    });
+    };
 }

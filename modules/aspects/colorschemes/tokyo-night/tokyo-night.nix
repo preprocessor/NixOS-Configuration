@@ -31,32 +31,25 @@
       hj.xdg.config.files."ghostty/config".text = "theme = TokyoNight Night";
 
       hj.xdg.config.files."bat/themes/tokyonight.tmTheme".source = tmTheme;
+      hj.xdg.config.files."bat/config".text = "--theme=tokyonight";
 
       hj.xdg.config.files."eza/theme.yml".source = tnExtras + "/eza/tokyonight_night.yml";
-    };
 
-  flake.modules.homeManager.tokyonight-night =
-    { lib, pkgs, ... }:
-    let
-      tmTheme = inputs.tokyonight-theme + "/extras/sublime/tokyonight_night.tmTheme";
-      tnExtras = inputs.tokyonight-theme + "/extras";
-    in
-    {
-      programs.delta.options.include.path = tmTheme;
+      programs.fish.interactiveShellInit = builtins.readFile "${tnExtras}/fish/tokyonight_night.fish";
 
-      programs.fish.interactiveShellInit = builtins.readFile (tnExtras + "/fish/tokyonight_night.fish");
+      hj.xdg.config.files."lazygit/config.yml".text =
+        builtins.readFile "${tnExtras}/lazygit/tokyonight_night.yml";
 
-      # home.file.".Xresources".source = tnExtras + "/xresources/tokyonight_night.Xresources";
+      hj.xdg.config.files."btop/themes/tokyonight_night.theme".source =
+        tnExtras + "/btop/tokyonight_night.theme";
 
-      programs.bat.config.theme = "tokyonight";
+      hj.xdg.config.files."yazi/flavors/tokyonight.yazi/".source =
+        inputs.tokyonight-yazi-theme + "/tokyonight-night.yazi";
 
-      programs.yazi = {
-        flavors.tokyonight = inputs.tokyonight-yazi-theme + "/tokyonight-night.yazi";
-
+      custom.programs.yazi.settings = {
         theme.flavor = {
           dark = "tokyonight";
           light = "tokyonight";
-          use = "tokyonight";
         };
       };
     };

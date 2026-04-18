@@ -5,10 +5,16 @@
 { inputs, ... }:
 {
   flake-file.inputs = {
-    niri.url = "github:niri-wm/niri";
+    niri = {
+      url = "github:niri-wm/niri";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     qml-niri.url = "github:imiric/qml-niri/main";
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
-    system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
+    system76-scheduler-niri = {
+      url = "github:Kirottu/system76-scheduler-niri";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   flake.modules.nixos.desktop =
@@ -21,7 +27,7 @@
     let
       niri = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri;
 
-      niri_wrapped = inputs.wrappers.wrappers.niri.wrap {
+      niriWrapped = inputs.wrappers.wrappers.niri.wrap {
         inherit (config.custom.programs.niri) settings;
         inherit pkgs;
         v2-settings = false;
@@ -44,7 +50,7 @@
       programs.niri = {
         enable = true;
         useNautilus = false;
-        package = niri_wrapped;
+        package = niriWrapped;
       };
 
       programs.uwsm = {
@@ -98,12 +104,12 @@
             pkgs.writeShellApplication {
               name = "niri-reload-config";
               runtimeInputs = [
-                niri_wrapped
+                niriWrapped
                 pkgs.procps
               ];
               text = ''
                 if pgrep -x "niri" > /dev/null; then
-                  niri msg action load-config-file --path "${niri_wrapped.configuration.constructFiles.generatedConfig.outPath}"
+                  niri msg action load-config-file --path "${niriWrapped.configuration.constructFiles.generatedConfig.outPath}"
                 fi
               '';
             }

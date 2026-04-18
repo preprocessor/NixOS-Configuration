@@ -11,7 +11,6 @@
   };
 
   config.flake.lib = {
-    hm = modules: { home-manager.users.${self.const.username}.imports = modules; };
 
     mkSystem =
       {
@@ -21,10 +20,9 @@
       }:
       let
         nixosWithDefault = nixosModules ++ [ self.modules.nixos.default ];
-        homeWithDefault = homeModules ++ [ self.modules.homeManager.default ];
       in
       inputs.nixpkgs.lib.nixosSystem {
-        modules = nixosWithDefault ++ lib.optional (homeWithDefault != [ ]) (self.lib.hm homeWithDefault);
+        modules = nixosWithDefault;
       }
       // configuration;
 
@@ -35,7 +33,6 @@
       }:
       {
         environment.systemPackages = nixosPackages;
-        home-manager.users."${self.const.username}".home.packages = homePackages;
       };
   };
 }

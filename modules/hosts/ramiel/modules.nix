@@ -1,7 +1,7 @@
 { self, ... }:
 let
   inherit (self.lib) mkSystem;
-  inherit (self.modules) nixos homeManager;
+  inherit (self.modules) nixos;
 in
 {
   flake.nixosConfigurations.ramiel = mkSystem {
@@ -9,12 +9,9 @@ in
       ramiel
       desktop
       tokyonight-night
+      shell
     ];
-    homeModules = with homeManager; [
-      ramiel
-      desktop
-      tokyonight-night
-    ];
+    homeModules = [ ];
     configuration = {
       system = "x86_64-linux";
     };

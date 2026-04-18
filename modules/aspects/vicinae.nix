@@ -1,15 +1,17 @@
-{
-  lib,
-  inputs,
-  ...
-}:
+{ lib, inputs, ... }:
 {
   flake-file.inputs = {
     vicinae = {
       url = "github:vicinaehq/vicinae";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vicinae-extensions.url = "github:vicinaehq/extensions";
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.vicinae.follows = "vicinae";
+      inputs.systems.follows = "systems";
+      inputs.flake-compat.follows = "flake-compat";
+    };
   };
 
   flake.modules.nixos.desktop =
@@ -25,8 +27,8 @@
       custom.services.vicinae = {
         enable = true;
         systemd = {
-          enable = true; # default: false
-          autoStart = true; # default: false
+          enable = true;
+          autoStart = true;
           environment = {
             USE_LAYER_SHELL = 1;
           };

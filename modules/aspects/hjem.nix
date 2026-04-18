@@ -5,7 +5,10 @@
   ...
 }:
 {
-  flake-file.inputs.hjem.url = "github:feel-co/hjem";
+  flake-file.inputs.hjem = {
+    url = "github:feel-co/hjem";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   flake.modules.nixos.default = {
     imports = [

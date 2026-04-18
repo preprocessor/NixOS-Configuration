@@ -1,21 +1,14 @@
 {
-  flake.modules.homeManager.default =
+
+  flake.modules.nixos.default =
     { pkgs, ... }:
     let
       tomlFormat = pkgs.formats.toml { };
     in
     {
-      programs.zoxide = {
-        enable = true;
-        enableBashIntegration = true;
-        enableFishIntegration = true;
-      };
+      hj.packages = [ pkgs.lla ];
 
-      home.packages = [
-        pkgs.lla
-      ];
-
-      xdg.configFile."lla/config.toml".source = tomlFormat.generate "lla-config" {
+      hj.xdg.config.files."lla/config.toml".source = tomlFormat.generate "lla-config" {
         default_sort = "name";
         default_format = "grid";
 
@@ -134,5 +127,6 @@
           editor = "";
         };
       };
+
     };
 }

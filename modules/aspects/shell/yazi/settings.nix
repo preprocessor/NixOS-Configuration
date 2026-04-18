@@ -1,15 +1,10 @@
 { lib, ... }:
 {
-  flake.modules.homeManager.default =
+  flake.modules.nixos.shell =
     { pkgs, ... }:
     {
-      programs.yazi = {
-        enable = true;
-        shellWrapperName = "y";
-        enableBashIntegration = true;
-        enableFishIntegration = true;
-
-        settings.open = {
+      custom.programs.yazi.settings = {
+        open = {
           prepend_rules = [
             {
               mime = "image/*"; # Apply this to all image types
@@ -33,7 +28,7 @@
           ];
         };
 
-        settings.opener =
+        opener =
           with pkgs;
           with lib;
           {
@@ -63,7 +58,7 @@
             ];
           };
 
-        settings.preview = {
+        preview = {
           wrap = "no";
           tab_size = 2;
           image_filter = "triangle"; # from fast to slow but high quality: nearest, triangle, catmull-rom, lanczos3
@@ -74,7 +69,7 @@
           image_quality = 90;
         };
 
-        settings.mgr = {
+        mgr = {
           ratio = [
             1
             2

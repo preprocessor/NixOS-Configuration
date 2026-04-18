@@ -1,5 +1,5 @@
 # Based on: https://github.com/iynaix/dotfiles/blob/7cfd3aec29feec3807206591260e594ad28094f9/modules/gui/gtk/default.nix
-{ self, lib, ... }:
+{ lib, ... }:
 {
   flake.modules.nixos.default =
     { config, pkgs, ... }:

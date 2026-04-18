@@ -4,11 +4,6 @@ let
 in
 {
   flake.modules.nixos.default = {
-    home-manager.users."${username}".home = {
-      username = username;
-      homeDirectory = homedir;
-    };
-
     # Will be referenced as "hj" in this flake
     hjem.users."${username}" = {
       enable = true;

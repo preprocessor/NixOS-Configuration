@@ -4,7 +4,10 @@
     {
       hj.packages = with pkgs; [
         imagemagick
+        ripgrep
+        fd
         trash-cli
+        nix-init
         fetchutils
         nvim-pkg # neovim
         silicon

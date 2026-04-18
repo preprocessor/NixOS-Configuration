@@ -16,14 +16,13 @@
         };
       };
 
-      hj.xdg.config.files."xdg-desktop-portal-termfilechooser/config".text = # toml
-        ''
-          [filechooser]
-          cmd=yazi-wrapper.sh
-          default_dir=${config.hj.directory}/Downloads/
-          open_mode=default
-          save_mode=default
-        '';
+      hj.xdg.config.files."xdg-desktop-portal-termfilechooser/config".text = /* toml */ ''
+        [filechooser]
+        cmd=yazi-wrapper.sh
+        default_dir=${config.hj.directory}/Downloads/
+        open_mode=default
+        save_mode=default
+      '';
 
       hj.xdg.config.files."xdg-desktop-portal-termfilechooser/yazi-wrapper.sh" = {
         executable = true;

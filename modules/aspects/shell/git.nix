@@ -1,46 +1,29 @@
-{ lib, ... }:
+{ inputs, ... }:
 {
-  flake.modules.homeManager.default =
-    { pkgs, ... }:
-    {
-      home.packages = [ pkgs.worktrunk ];
-      programs.fish.interactiveShellInit = ''
-        ${lib.getExe pkgs.worktrunk} config shell init fish | source
-      '';
+  flake-file.inputs.fish-completion-sync = {
+    url = "github:iynaix/fish-completion-sync";
+    flake = false;
+  };
 
-      programs.gh.enable = true;
-
-      programs.git = {
-        enable = true;
+  flake.modules.nixos.default =
+    { pkgs, config, ... }:
+    let
+      gitWrapped = inputs.wrappers.wrappers.git.wrap {
+        inherit pkgs;
         settings = {
           init.defaultBranch = "main";
           user = {
             name = "wyspr";
             email = "wyspr@wyspr.xyz";
           };
+          pager.diff = pkgs.diffnav;
         };
       };
-
-      programs.delta = {
-        enable = true;
-        enableGitIntegration = true;
-      };
-
-      programs.lazygit = {
-        enable = true;
-        enableBashIntegration = true;
-        enableFishIntegration = true;
-
-        settings = {
-          git.pagers = [
-            {
-              pager = ''${lib.getExe pkgs.delta} --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"'';
-            }
-            {
-              pager = ''${lib.getExe pkgs.delta} --side-by-side --file-style "#74548c" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --navigate --keep-plus-minus-markers --commit-style="#8eb893"'';
-            }
-          ];
-        };
-      };
+    in
+    {
+      hj.packages = with pkgs; [
+        gitWrapped
+        gh
+      ];
     };
 }
