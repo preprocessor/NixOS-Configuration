@@ -17,7 +17,7 @@
         };
       };
 
-      hj.packages = with pkgs; [
+      environment.systemPackages = with pkgs; [
         awww
         waypaper
       ];

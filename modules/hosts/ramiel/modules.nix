@@ -1,19 +1,16 @@
-{ self, ... }:
+{ inputs, self, ... }:
 let
-  inherit (self.lib) mkSystem;
   inherit (self.modules) nixos;
 in
 {
-  flake.nixosConfigurations.ramiel = mkSystem {
-    nixosModules = with nixos; [
+  flake.nixosConfigurations.ramiel = inputs.nixpkgs.lib.nixosSystem {
+    modules = with nixos; [
+      default
       ramiel
       desktop
       tokyonight-night
       shell
     ];
-    homeModules = [ ];
-    configuration = {
-      system = "x86_64-linux";
-    };
+    system = "x86_64-linux";
   };
 }

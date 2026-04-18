@@ -49,18 +49,11 @@
     };
 
   flake.modules.nixos.default =
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
+    { pkgs, lib, ... }:
     let
       inherit (pkgs.formats.toml { }) type;
       default = { };
       mkMapOption = description: lib.mkOption { inherit type description default; };
-
-      cfg = config.custom.programs.yazi;
     in
     {
       options.custom.programs.yazi = {
@@ -127,7 +120,9 @@
         initLua = lib.mkOption {
           type = with lib.types; nullOr (either path lines);
           default = "";
-          description = "The init.lua for Yazi itself.";
+          description = ''
+            The init.lua for Yazi itself.
+          '';
           example = lib.literalExpression "./init.lua";
         };
 
@@ -184,7 +179,5 @@
           };
         };
       };
-
-      config = lib.mkIf (cfg != { }) { };
     };
 }

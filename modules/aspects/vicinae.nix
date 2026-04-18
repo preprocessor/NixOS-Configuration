@@ -290,7 +290,12 @@
               // themeFiles;
           };
 
-        hj.systemd.services.vicinae = lib.mkIf (cfg.systemd.enable) {
+        # systemd.user.services.vicinae.Service.Environment = [
+        #   "PATH=/etc/profiles/per-user/${self.const.username}/bin"
+        #   "PATH=/run/current-system/sw/bin"
+        # ];
+
+        systemd.user.services.vicinae = lib.mkIf (cfg.systemd.enable) {
           description = "Vicinae server daemon";
           documentation = [ "https://docs.vicinae.com" ];
           after = [ cfg.systemd.target ];

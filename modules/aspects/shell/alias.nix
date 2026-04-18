@@ -16,7 +16,8 @@
           let
             lla = lib.getExe pkgs.lla;
           in
-          {
+          config.environment.shellAliases
+          // {
             l = lla + " -T";
             ls = lla;
             la = lla + " -AT";
@@ -38,8 +39,9 @@
             repl = "nix repl --file ${self.const.cfgdir}/repl.nix";
           };
 
-        shellAbbrs = config.environment.shellAliases // {
+        shellAbbrs = {
           ehistory = ''nvim "${config.hj.xdg.data.directory}/fish/fish_history"'';
+          ppath = "echo $PATH | tr ' ' '\n'";
           ga = "git add .";
           clone = "git clone";
           cls = "clear";

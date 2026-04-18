@@ -12,7 +12,7 @@
     {
       hj.packages = [ pkgs.starship ];
 
-      environment.sessionVariables.STARSHIP_CONFIG = "$HOME/.config/starship.toml";
+      hj.environment.sessionVariables.STARSHIP_CONFIG = "$HOME/.config/starship.toml";
 
       programs.fish.interactiveShellInit = ''
         if test "$TERM" != "dumb"

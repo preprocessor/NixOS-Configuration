@@ -43,10 +43,14 @@
       hj.xdg.config.files."btop/themes/tokyonight_night.theme".source =
         tnExtras + "/btop/tokyonight_night.theme";
 
-      hj.xdg.config.files."yazi/flavors/tokyonight.yazi/".source =
-        inputs.tokyonight-yazi-theme + "/tokyonight-night.yazi";
+      # hj.xdg.config.files."yazi/flavors/tokyonight.yazi/".source =
+      #   inputs.tokyonight-yazi-theme + "/tokyonight-night.yazi";
 
       custom.programs.yazi.settings = {
+        flavors = {
+          tokyonight = inputs.tokyonight-yazi-theme + "/tokyonight-night.yazi";
+        };
+
         theme.flavor = {
           dark = "tokyonight";
           light = "tokyonight";

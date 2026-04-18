@@ -38,8 +38,8 @@
         nix-direnv.enable = true;
       };
 
-      programs.fish.interactiveShellInit = lib.mkAfter ''
-        eval "$(${lib.getExe pkgs.direnv-instant} hook zsh)"
-      '';
+      # programs.fish.interactiveShellInit = lib.mkAfter ''
+      #   ${lib.getExe pkgs.direnv-instant} hook fish | source"
+      # '';
     };
 }

@@ -11,22 +11,22 @@
         };
 
         initrd.systemd.enable = true;
-        plymouth =
-          let
-            theme = "pixels";
-          in
-          {
-            inherit theme;
-            enable = true;
-            themePackages = with pkgs; [
-              # By default we would install all themes
-              (adi1090x-plymouth-themes.override {
-                selected_themes = [ theme ];
-              })
-            ];
-          };
+        # plymouth =
+        #   let
+        #     theme = "pixels";
+        #   in
+        #   {
+        #     inherit theme;
+        #     enable = true;
+        #     themePackages = with pkgs; [
+        #       # By default we would install all themes
+        #       (adi1090x-plymouth-themes.override {
+        #         selected_themes = [ theme ];
+        #       })
+        #     ];
+        #   };
         consoleLogLevel = 3;
-        loader.timeout = 1;
+        loader.timeout = 2;
         kernelParams = [
           "quiet"
           "udev.log_level=3"

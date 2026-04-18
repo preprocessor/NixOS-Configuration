@@ -11,28 +11,27 @@
   };
 
   config.flake.lib = {
-
-    mkSystem =
-      {
-        nixosModules,
-        homeModules ? [ ],
-        configuration ? { },
-      }:
-      let
-        nixosWithDefault = nixosModules ++ [ self.modules.nixos.default ];
-      in
-      inputs.nixpkgs.lib.nixosSystem {
-        modules = nixosWithDefault;
-      }
-      // configuration;
-
-    mkPackages =
-      {
-        nixosPackages ? [ ],
-        homePackages ? [ ],
-      }:
-      {
-        environment.systemPackages = nixosPackages;
-      };
+    # mkSystem =
+    #   {
+    #     nixosModules,
+    #     homeModules ? [ ],
+    #     configuration ? { },
+    #   }:
+    #   let
+    #     nixosWithDefault = nixosModules ++ [ self.modules.nixos.default ];
+    #   in
+    #   inputs.nixpkgs.lib.nixosSystem {
+    #     modules = nixosWithDefault;
+    #   }
+    #   // configuration;
+    #
+    # mkPackages =
+    #   {
+    #     nixosPackages ? [ ],
+    #     homePackages ? [ ],
+    #   }:
+    #   {
+    #     environment.systemPackages = nixosPackages;
+    #   };
   };
 }

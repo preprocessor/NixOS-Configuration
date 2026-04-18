@@ -29,7 +29,7 @@
             on = set;
             width = 1;
             active-color = scheme.base05;
-            fade-duration-ms = 500;
+            # fade-duration-ms = 500;
           };
 
           shadow = {

@@ -1,12 +1,8 @@
-{ self, ... }:
 {
   flake.modules.nixos.ramiel =
     { pkgs, ... }:
-    let
-      inherit (self.lib) mkPackages;
-    in
-    (mkPackages {
-      nixosPackages = with pkgs; [
+    {
+      environment.systemPackages = with pkgs; [
         qbittorrent-enhanced
         xwayland-satellite
         brightnessctl
@@ -19,11 +15,9 @@
         # wlsunset # or gammastep
         wlogout
         overskride
+
       ];
 
-      homePackages = [ ];
-    })
-    // {
       hj.packages = with pkgs; [
         vivaldi
         virtualbox
