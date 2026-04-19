@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.default = {
+  w.default = {
     programs.zoxide = {
       enable = true;
       enableFishIntegration = true;

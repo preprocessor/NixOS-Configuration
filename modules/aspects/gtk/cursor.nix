@@ -1,34 +1,6 @@
 { self, lib, ... }:
 {
-  flake.modules.nixos.default =
-    { pkgs, ... }:
-    {
-      options.custom = {
-        gtk = {
-          cursor = {
-            package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs.posy-cursors;
-              description = "Package providing the cursor theme.";
-            };
-
-            name = lib.mkOption {
-              type = lib.types.str;
-              default = "Posy_Cursor_Black";
-              description = "The cursor name within the package.";
-            };
-
-            size = lib.mkOption {
-              type = lib.types.int;
-              default = 32;
-              description = "The cursor size.";
-            };
-          };
-        };
-      };
-    };
-
-  flake.modules.nixos.desktop =
+  w.desktop =
     { pkgs, config, ... }:
     let
       gtkCursor = config.custom.gtk.cursor;
@@ -50,32 +22,19 @@
       };
     in
     {
-      environment = {
-        sessionVariables = {
-          XCURSOR_SIZE = gtkCursor.size;
-          XCURSOR_THEME = gtkCursor.name;
-        };
-
-        systemPackages = [
-          gtkCursor.package
-        ];
-      };
+      environment.systemPackages = [
+        gtkCursor.package
+        default_index_theme_package
+      ];
 
       # Add cursor icon link to $XDG_DATA_HOME/icons as well for redundancy.
       hj.xdg.data.files = {
         "icons/${gtkCursor.name}".source = "${gtkCursor.package}/share/icons/${gtkCursor.name}";
       };
 
-      hj.packages = [
-        default_index_theme_package
-      ];
-
       hj.environment.sessionVariables = {
-        # Set directory to look for cursors in, needed for some applications
-        # that are unable to find cursors otherwise. See:
-        # https://github.com/nix-community/home-manager/issues/2812
-        # https://wiki.archlinux.org/title/Cursor_themes#Environment_variable
-        XCURSOR_PATH = "${self.const.homedir}/.local/share/icons";
+        XCURSOR_SIZE = gtkCursor.size;
+        XCURSOR_THEME = gtkCursor.name;
       };
 
       hj.files.".icons/default/index.theme".source =
@@ -108,4 +67,31 @@
       };
     };
 
+  w.default =
+    { pkgs, ... }:
+    {
+      options.custom = {
+        gtk = {
+          cursor = {
+            package = lib.mkOption {
+              type = lib.types.package;
+              default = pkgs.posy-cursors;
+              description = "Package providing the cursor theme.";
+            };
+
+            name = lib.mkOption {
+              type = lib.types.str;
+              default = "Posy_Cursor_Black";
+              description = "The cursor name within the package.";
+            };
+
+            size = lib.mkOption {
+              type = lib.types.int;
+              default = 32;
+              description = "The cursor size.";
+            };
+          };
+        };
+      };
+    };
 }

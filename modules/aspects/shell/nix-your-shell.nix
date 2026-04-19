@@ -1,9 +1,9 @@
 {
-  flake.modules.nixos.default =
+  w.default =
     { pkgs, lib, ... }:
     {
-      programs.fish.interactiveShellInit = ''
-        ${lib.getExe pkgs.nix-your-shell} --nom fish | source
-      '';
+      # programs.fish.interactiveShellInit = ''
+      #   ${lib.getExe pkgs.nix-your-shell} --nom fish | source
+      # '';
     };
 }

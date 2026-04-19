@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.default =
+  w.default =
     { pkgs, ... }:
     {
       hj.packages = with pkgs; [
@@ -8,6 +8,7 @@
         fd
         trash-cli
         nix-init
+        nurl
         fetchutils
         nvim-pkg # neovim
         silicon

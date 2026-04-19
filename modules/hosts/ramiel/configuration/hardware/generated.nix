@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.ramiel =
+  w.ramiel =
     {
       config,
       lib,

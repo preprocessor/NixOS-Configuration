@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  flake.modules.nixos.desktop =
+  w.desktop =
     { pkgs, ... }:
     {
       custom.services.udiskie = {
@@ -13,7 +13,7 @@
       };
     };
 
-  flake.modules.nixos.default =
+  w.default =
     { pkgs, config, ... }:
     let
       inherit (lib) mkOption types;
@@ -78,7 +78,7 @@
             "auto"
             "never"
           ];
-          default = "auto";
+          default = "never";
           description = ''
             Whether to display tray icon.
 
@@ -124,9 +124,10 @@
 
           serviceConfig = {
             Type = "simple";
-            ExecsSart = toString ([ (lib.getExe' cfg.package "udiskie") ]
-              # ++ lib.optional config.xsession.preferStatusNotifierItems "--appindicator"
-            );
+            ExecStart = lib.getExe' cfg.package "udiskie";
+            # ExecStart = toString ([ (lib.getExe' cfg.package "udiskie") ]
+            #   # ++ lib.optional config.xsession.preferStatusNotifierItems "--appindicator"
+            # );
             Restart = "on-failure";
             RestartSec = 1;
             TimeoutStopSec = 10;

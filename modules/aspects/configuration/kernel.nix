@@ -1,11 +1,15 @@
 { self, inputs, ... }:
 {
-  flake-file.inputs.nix-cachyos-kernel = {
+  ff.nix-cachyos-kernel = {
     url = "github:xddxdd/nix-cachyos-kernel/release";
-    inputs.nixpkgs.follows = "nixpkgs";
+    inputs = {
+      nixpkgs.follows = "nixpkgs";
+      flake-compat.follows = "flake-compat";
+      flake-parts.follows = "flake-parts";
+    };
   };
 
-  flake.modules.nixos.default =
+  w.default =
     { pkgs, ... }:
     {
       nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];

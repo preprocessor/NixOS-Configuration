@@ -1,12 +1,12 @@
 { inputs, ... }:
 {
-  flake-file.inputs.nix-gaming = {
+  ff.nix-gaming = {
     url = "github:fufexan/nix-gaming";
     inputs.nixpkgs.follows = "nixpkgs";
     inputs.flake-parts.follows = "flake-parts";
   };
 
-  flake.modules.nixos.desktop =
+  w.desktop =
     { pkgs, ... }:
     {
       imports = [ inputs.nix-gaming.nixosModules.platformOptimizations ];
@@ -20,9 +20,7 @@
         protonup-rs
       ];
 
-      environment.sessionVariables = {
-        STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
-      };
+      hj.environment.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
 
       programs.steam = {
         enable = true;

@@ -1,41 +1,7 @@
 # Based on: https://github.com/iynaix/dotfiles/blob/7cfd3aec29feec3807206591260e594ad28094f9/modules/gui/gtk/default.nix
 { lib, ... }:
 {
-  flake.modules.nixos.default =
-    { config, pkgs, ... }:
-    let
-      inherit (lib) mkOption types literalExpression;
-    in
-    {
-      options.custom = {
-        # type referenced from nixpkgs:
-        # https://github.com/NixOS/nixpkgs/blob/554be6495561ff07b6c724047bdd7e0716aa7b46/nixos/modules/programs/dconf.nix#L121C9-L134C11
-        dconf.settings = mkOption {
-          type = types.attrs;
-          default = { };
-          description = "An attrset used to generate dconf keyfile.";
-          example = literalExpression ''
-            with lib.gvariant;
-            {
-              "com/raggesilver/BlackBox" = {
-                scrollback-lines = mkUint32 10000;
-                theme-dark = "Tommorrow Night";
-              };
-            }
-          '';
-        };
-        gtk = {
-          bookmarks = mkOption {
-            type = types.listOf types.str;
-            default = [ ];
-            example = [ "/home/jane/Documents" ];
-            description = "File browser bookmarks.";
-          };
-        };
-      };
-    };
-
-  flake.modules.nixos.desktop =
+  w.desktop =
     { config, ... }:
     let
       gtkCfg = config.custom.gtk;
@@ -72,6 +38,11 @@
         };
       };
 
+      # use per user settings
+      hj.xdg.config.files."gtk-3.0/bookmarks".text = lib.concatMapStringsSep "\n" (
+        b: "file://${b}"
+      ) gtkCfg.bookmarks;
+
       programs.dconf = {
         enable = true;
 
@@ -101,11 +72,5 @@
         ];
       };
 
-      hj.xdg = {
-        # use per user settings
-        config.files."gtk-3.0/bookmarks".text = lib.concatMapStringsSep "\n" (
-          b: "file://${b}"
-        ) gtkCfg.bookmarks;
-      };
     };
 }

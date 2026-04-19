@@ -3,7 +3,7 @@ let
   inherit (self.const) username homedir;
 in
 {
-  flake.modules.nixos.default = {
+  w.default = {
     # Will be referenced as "hj" in this flake
     hjem.users."${username}" = {
       enable = true;

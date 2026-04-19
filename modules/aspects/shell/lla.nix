@@ -1,6 +1,6 @@
 {
 
-  flake.modules.nixos.default =
+  w.default =
     { pkgs, ... }:
     let
       tomlFormat = pkgs.formats.toml { };
@@ -124,7 +124,7 @@
             ".vscode"
           ];
 
-          editor = "";
+          # editor = "";
         };
       };
 

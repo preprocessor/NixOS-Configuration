@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  flake.modules.nixos.default =
+  w.default =
     { pkgs, config, ... }:
     let
       scheme = config.scheme.withHashtag;
@@ -25,8 +25,8 @@
           paging:
             colorArg: always
           pagers:
-            - pager: ${lib.getExe pkgs.delta} --commit-style="${scheme.green}" --file-style "${scheme.magenta}" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi
-            - pager: ${lib.getExe pkgs.delta} --commit-style="${scheme.green}" --file-style "${scheme.magenta}" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --side-by-side
+            - pager: ${lib.getExe pkgs.delta} --commit-style="${scheme.yellow}" --file-style "${scheme.bright-red}" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi
+            - pager: ${lib.getExe pkgs.delta} --commit-style="${scheme.yellow}" --file-style "${scheme.bright-red}" --features space-separated --dark --diff-highlight --true-color always --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}" --line-fill-method=ansi --side-by-side
 
         color:
           ui true

@@ -1,61 +1,70 @@
-{ inputs, ... }:
 {
-  flake-file.inputs = {
-    colorschemes = {
-      url = "github:tinted-theming/schemes";
-      flake = false;
-    };
-
-    tokyonight-theme = {
-      url = "github:folke/tokyonight.nvim";
-      flake = false;
-    };
-
-    tokyonight-yazi-theme = {
-      url = "github:kalidyasin/yazi-flavors";
-      flake = false;
-    };
-  };
-
-  flake.modules.nixos.tokyonight-night =
-    { pkgs, ... }:
+  w.tokyonight-night =
+    { pkgs, lib, ... }:
     let
-      scheme = inputs.colorschemes + "/base24/tokyo-night-dark.yaml";
-      tmTheme = inputs.tokyonight-theme + "/extras/sublime/tokyonight_night.tmTheme";
-      tnExtras = inputs.tokyonight-theme + "/extras";
+      inherit (pkgs) fetchFromGitHub;
+
+      scheme =
+        fetchFromGitHub {
+          owner = "tinted-theming";
+          repo = "schemes";
+          rev = "3fa37f7b72d332b406fdc254008ed6d6b50efb4c";
+          hash = "sha256-KIeHXjhlEh1wsyT6rITze7Hvc1L6fhgk30nPpcmrSrc=";
+        }
+        + "/base24/tokyo-night-dark.yaml";
+
+      tokyonight =
+        fetchFromGitHub {
+          owner = "folke";
+          repo = "tokyonight.nvim";
+          rev = "cdc07ac78467a233fd62c493de29a17e0cf2b2b6";
+          hash = "sha256-a9iRWue7DB7s/wNdxqqB51Jya5P9X6sDftqhdmKggU0=";
+        }
+        + "/extras";
+
+      tmTheme = tokyonight + "/sublime/tokyonight_night.tmTheme";
+
+      tokyonight-yazi-theme =
+        fetchFromGitHub {
+          owner = "kalidyasin";
+          repo = "yazi-flavors";
+          rev = "70fe6b4a245a59b546166aae6c45ee2b471869c2";
+          hash = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
+        }
+        + "/tokyonight-night.yazi";
+
+      tokyonight-vesktop-theme = fetchFromGitHub {
+        owner = "refact0r";
+        repo = "system24";
+        rev = "942c28771d1230567d65a5362814e0267317f455";
+        hash = "sha256-2n4u+ibWDHRG84xo7u9posWX31JQ//80NZCZh5T/B9o=";
+      };
     in
     {
       scheme = scheme; # Set base16 scheme
       stylix.base16Scheme = scheme; # Set stylix base16 scheme
 
-      hj.xdg.config.files."ghostty/config".text = "theme = TokyoNight Night";
+      hj.xdg.config.files = {
+        "ghostty/config".text = "theme = TokyoNight Night";
+        "bat/themes/tokyonight.tmTheme".source = tmTheme;
+        "bat/config".text = "--theme=tokyonight";
+        "eza/theme.yml".source = tokyonight + "/eza/tokyonight_night.yml";
+        "btop/themes/tokyonight_night.theme".source = tokyonight + "/btop/tokyonight_night.theme";
+        "lazygit/config.yml".text = builtins.readFile "${tokyonight}/lazygit/tokyonight_night.yml";
+        "vesktop/themes/tokyonight_system24.css".source =
+          tokyonight-vesktop-theme + "/theme/flavors/system24-tokyo-night.theme.css";
+      };
 
-      hj.xdg.config.files."bat/themes/tokyonight.tmTheme".source = tmTheme;
-      hj.xdg.config.files."bat/config".text = "--theme=tokyonight";
-
-      hj.xdg.config.files."eza/theme.yml".source = tnExtras + "/eza/tokyonight_night.yml";
-
-      programs.fish.interactiveShellInit = builtins.readFile "${tnExtras}/fish/tokyonight_night.fish";
-
-      hj.xdg.config.files."lazygit/config.yml".text =
-        builtins.readFile "${tnExtras}/lazygit/tokyonight_night.yml";
-
-      hj.xdg.config.files."btop/themes/tokyonight_night.theme".source =
-        tnExtras + "/btop/tokyonight_night.theme";
-
-      # hj.xdg.config.files."yazi/flavors/tokyonight.yazi/".source =
-      #   inputs.tokyonight-yazi-theme + "/tokyonight-night.yazi";
-
-      custom.programs.yazi.settings = {
-        flavors = {
-          tokyonight = inputs.tokyonight-yazi-theme + "/tokyonight-night.yazi";
-        };
-
+      programs.fish.interactiveShellInit = builtins.readFile (tokyonight + "/fish/tokyonight_night.fish");
+      custom.programs.yazi = {
+        flavors.tokyonight = tokyonight-yazi-theme;
         theme.flavor = {
           dark = "tokyonight";
           light = "tokyonight";
         };
       };
+
+      custom.programs.fuzzel.moreCfg = builtins.readFile "${tokyonight}/fuzzel/tokyonight_night.ini" ;
     };
 }
 

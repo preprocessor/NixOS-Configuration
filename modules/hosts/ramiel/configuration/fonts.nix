@@ -1,11 +1,11 @@
 { inputs, ... }:
 {
-  flake-file.inputs.apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
+  ff.apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
 
-  flake.modules.nixos.ramiel =
+  w.ramiel =
     { pkgs, ... }:
     let
-      apple-fonts = inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system};
+      apple-fonts = inputs.apple-fonts.packages.${pkgs.sys};
     in
     {
 

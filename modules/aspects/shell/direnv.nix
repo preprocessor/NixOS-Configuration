@@ -1,14 +1,14 @@
 { inputs, ... }:
 {
-  flake-file.inputs.direnv-instant = {
+  ff.direnv-instant = {
     url = "github:Mic92/direnv-instant";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  flake.modules.nixos.default =
+  w.default =
     { lib, pkgs, ... }:
     let
-      direnv-instant = inputs.direnv-instant.packages.${pkgs.stdenv.hostPlatform.system}.direnv-instant;
+      direnv-instant = inputs.direnv-instant.packages.${pkgs.sys}.direnv-instant;
       package = (
         pkgs.runCommand "direnv-instant"
           {
@@ -38,8 +38,8 @@
         nix-direnv.enable = true;
       };
 
-      # programs.fish.interactiveShellInit = lib.mkAfter ''
-      #   ${lib.getExe pkgs.direnv-instant} hook fish | source"
-      # '';
+      programs.fish.interactiveShellInit = lib.mkAfter ''
+        ${lib.getExe pkgs.direnv-instant} hook fish | source
+      '';
     };
 }

@@ -1,7 +1,7 @@
 { self, ... }:
 {
 
-  flake.modules.nixos.default =
+  w.default =
     {
       pkgs,
       config,
@@ -53,6 +53,57 @@
 
           v = "nvim";
           x = "exit";
+        };
+
+        functions = {
+          starship_transient_prompt_func = ''printf  " \e[1;96m  \e[0m"'';
+
+          mcd = "mkdir -p $argv[1]; and cd $argv[1]"; # mkdir + cd
+
+          store = "y (dirname (dirname (readlink -f (which $argv[1]))))";
+
+          ncp = ''echo "pkgs.$(nurl $(wl-paste));" | wl-copy'';
+
+
+
+          __onelockeds_fuzzy_zox = /* fish */ ''
+            set -l dir (
+              zoxide query -ls 2>/dev/null \
+              | awk -v home="$HOME" '{
+                  score = $1
+                  sub(/^[ \t]*[0-9.]+[ \t]+/, "", $0)
+                  orig = $0
+                  sub("^" home, "~", $0)
+
+                  green = "\033[32m"
+                  dim   = "\033[2m"
+                  reset = "\033[0m"
+
+                  printf "%s%6s %s│%s  %s\t%s\n", green, score, reset dim, reset, $0, orig
+              }' \
+              | fzf \
+                  --ansi --no-sort --height=100% --layout=reverse --info=inline-right \
+                  --scheme=path --delimiter='\t' --with-nth=1 \
+                  --prompt "󰰷 Zoxide: ➜ " --pointer="▶" --separator "─" \
+                  --scrollbar "│" --border="rounded" --padding="1,2" \
+                  --header " Rank │  Directory" \
+                  --preview '
+                      printf "   Tree Structure\n";
+                      printf "  \033[2m────────────────\033[0m\n";
+                      eza -TL=3 --color=always --icons {2} 2>/dev/null | tail -n +2
+                  ' \
+                  --preview-window="right:50%:wrap:border-left" \
+                  --bind "ctrl-j:down,ctrl-k:up" \
+                  --bind "ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up" \
+              | cut -f2 | string trim
+            )
+
+            if test -n "$dir"
+                cd "$dir"
+                # yazi
+            end
+            commandline -f repaint
+          '';
         };
       };
     };

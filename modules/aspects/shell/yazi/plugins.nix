@@ -1,30 +1,50 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.shell =
+  w.shell =
     { pkgs, lib, ... }:
     let
       inherit (lib) getExe;
-      zoom = inputs.yazi-plugins-repo + "/zoom.yazi";
-      fuzzy-search = inputs.yazi-plugin-fuzzy-search.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      yazi-plugins-repo = pkgs.fetchFromGitHub {
+        owner = "yazi-rs";
+        repo = "plugins";
+        rev = "442d9080da7524c8e58e10c610b832538c87464d";
+        hash = "sha256-5WxCUf/Lv3wms7IPgkK0lJuJhIPa1E46obOFASS8eZU=";
+      };
+
+      zoom = yazi-plugins-repo + "/zoom.yazi";
+      fuzzy-search = inputs.yazi-plugin-fuzzy-search.packages.${pkgs.sys}.default;
     in
     {
+      custom.programs.yazi.initLua = /* lua */ ''
+        require("starship"):setup()
+
+        require("git"):setup {
+        	order = 1500, -- Order of status signs showing in the line mode
+        }
+
+        require("smart-enter"):setup {
+          open_multi = true, -- Allow open to target multiple selected files
+        }
+      '';
+
+      custom.programs.yazi.plugins = {
+        inherit (pkgs.yaziPlugins)
+          lazygit
+          bypass
+          git
+          jump-to-char
+          smart-filter
+          smart-enter
+          starship
+          ouch
+          restore
+          piper
+          chmod
+          ;
+        inherit zoom fuzzy-search;
+      };
+
       custom.programs.yazi.settings = {
-        plugins = {
-          inherit (pkgs.yaziPlugins)
-            lazygit
-            bypass
-            git
-            jump-to-char
-            smart-filter
-            smart-enter
-            starship
-            ouch
-            restore
-            piper
-            chmod
-            ;
-          inherit zoom fuzzy-search;
-        };
         plugin.prepend_previewers =
           let
             bat = "${getExe pkgs.bat} -p --color=always";
@@ -66,6 +86,19 @@
           {
             url = "*";
             run = ''piper -- ${getExe pkgs.hexyl} --border=none --terminal-width=$w "$1"'';
+          }
+        ];
+
+        plugin.prepend_fetchers = [
+          {
+            id = "git";
+            url = "*";
+            run = "git";
+          }
+          {
+            id = "git";
+            url = "*/";
+            run = "git";
           }
         ];
 

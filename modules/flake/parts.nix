@@ -1,9 +1,10 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
-  flake-file.inputs.flake-parts.url = "github:hercules-ci/flake-parts";
+  ff.flake-parts.url = "github:hercules-ci/flake-parts";
 
   imports = [
     inputs.flake-parts.flakeModules.modules
+    (lib.mkAliasOptionModule [ "w" ] [ "flake" "modules" "nixos" ])
   ];
   systems = [
     "x86_64-linux"
@@ -16,9 +17,7 @@
     { system, ... }:
     let
       # Configure Nix to allow unfree packages.
-      config = {
-        allowUnfree = true;
-      };
+      config.allowUnfree = true;
       pkgs = import inputs.nixpkgs { inherit system config; };
     in
     {

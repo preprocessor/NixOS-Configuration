@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.ramiel.networking = {
+  w.ramiel.networking = {
     hostName = "ramiel";
     # interfaces.wlp5s0.useDHCP = true;
     # networkmanager.dns = "none";

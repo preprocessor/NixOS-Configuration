@@ -1,12 +1,28 @@
+{ inputs, ... }:
 {
-  flake.modules.nixos.default =
-    { pkgs, ... }:
+  w.default =
+    { pkgs, lib, ... }:
+    let
+      toml = pkgs.formats.toml { };
+      wrappedAtuin = inputs.wrappers.lib.wrapPackage {
+        inherit pkgs;
+        package = pkgs.atuin;
+        env = {
+          ATUIN_CONFIG_DIR = pkgs.linkFarm "atuin-config" [
+            {
+              name = "config.toml";
+              path = toml.generate "config.toml" {
+                enter_accept = true;
+                filter_mode = "session-preload";
+                search_mode = "fuzzy";
+              };
+            }
+          ];
+        };
+      };
+    in
     {
-      hj.packages = [ pkgs.atuin ];
-
-      hj.xdg.config.files."atuin/config.toml".text = /* toml */ ''
-        enter_accept = true
-        filter_mode = "session"
-      '';
+      hj.packages = [ wrappedAtuin ];
+      programs.fish.interactiveShellInit = "${lib.getExe wrappedAtuin} init fish | source";
     };
 }

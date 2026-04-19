@@ -1,14 +1,8 @@
 { inputs, ... }:
 {
-  flake-file.inputs = {
-    yazi-plugin-fuzzy-search.url = "github:onelocked/fuzzy-search.yazi";
-    yazi-plugins-repo = {
-      url = "github:yazi-rs/plugins";
-      flake = false;
-    };
-  };
+  ff.yazi-plugin-fuzzy-search.url = "github:onelocked/fuzzy-search.yazi";
 
-  flake.modules.nixos.shell =
+  w.shell =
     {
       pkgs,
       config,
@@ -16,24 +10,39 @@
       ...
     }:
     let
-      yaziWrapped = inputs.wrappers.wrappers.yazi.wrap {
-        inherit pkgs;
-        extraPackages = with pkgs; [
-          glow
-          ripgrep
-          ouch
-          lua
-        ];
-        settings = with config.custom.programs; {
-          keymap = yazi.keymap;
-          yazi = yazi.settings;
+      flavorsObject = lib.concatMapAttrs (name: value: {
+        constructFiles."flavor-${name}-toml" = {
+          relPath = "yazi-config/flavors/${name}.yazi/flavor.toml";
+          content = builtins.readFile "${value}/flavor.toml";
         };
-        constructFiles.initLua = {
-          relPath = "yazi-config/init.lua";
-          content = config.custom.programs.yazi.initLua;
-        };
-      };
 
+        constructFiles."flavor-${name}-tmtheme" = {
+          relPath = "yazi-config/flavors/${name}.yazi/tmtheme.xml";
+          content = builtins.readFile "${value}/tmtheme.xml";
+        };
+      }) config.custom.programs.yazi.flavors;
+
+      yaziWrapped = inputs.wrappers.wrappers.yazi.wrap (
+        lib.recursiveUpdate {
+          inherit pkgs;
+          inherit (config.custom.programs.yazi) plugins;
+          extraPackages = with pkgs; [
+            ripgrep
+            glow
+            ouch
+            git
+          ];
+          settings = with config.custom.programs; {
+            keymap = yazi.keymap;
+            yazi = yazi.settings;
+          };
+
+          constructFiles.initLua = {
+            relPath = "yazi-config/init.lua";
+            content = config.custom.programs.yazi.initLua;
+          };
+        } flavorsObject
+      );
     in
     {
       environment.systemPackages = [ yaziWrapped ];
@@ -48,31 +57,96 @@
       '';
     };
 
-  flake.modules.nixos.default =
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
+  w.default =
+    { pkgs, lib, ... }:
     let
       inherit (pkgs.formats.toml { }) type;
       default = { };
       mkMapOption = description: lib.mkOption { inherit type description default; };
-
-      cfg = config.custom.programs.yazi;
     in
+    with lib;
     {
       options.custom.programs.yazi = {
-        settings = lib.mkOption {
-          default = { };
 
+        initLua = mkOption {
+          type = with types; nullOr (either path lines);
+          default = "";
+          description = "The init.lua for Yazi itself.";
+          example = literalExpression "./init.lua";
+        };
+
+        plugins = mkOption {
+          type = types.attrsOf (types.nullOr types.path);
+          default = { };
+          description = "An attribute set of plugin names and their paths";
+          example = literalMD ''
+            ```nix
+            with pkgs.yaziPlugins; {
+              smart-enter = smart-enter;
+              drag = inputs.drag;
+              gvfs = inputs.gvfs-yazi;
+              git = git;
+              starship = starship;
+              full-border = full-border;
+            };
+            ```
+          '';
+        };
+
+        flavors = mkOption {
+          type =
+            with types;
+            attrsOf (oneOf [
+              path
+              package
+            ]);
+          default = { };
+          description = ''
+            Pre-made themes.
+            Values should be a package or path containing the required files.
+            Will be linked to {file}`$XDG_CONFIG_HOME/yazi/flavors/<name>.yazi`.
+
+            See <https://yazi-rs.github.io/docs/flavors/overview/> for documentation.
+          '';
+          example = literalExpression ''
+            {
+              foo = ./foo;
+              bar = pkgs.bar;
+            }
+          '';
+        };
+
+        theme = mkOption {
+          inherit type default;
+          example = literalExpression ''
+            {
+              filetype = {
+                rules = [
+                  { fg = "#7AD9E5"; mime = "image/*"; }
+                  { fg = "#F3D398"; mime = "video/*"; }
+                  { fg = "#F35A98"; mime = "audio/*"; }
+                  { fg = "#CD9EFC"; mime = "application/bzip"; }
+                ];
+              };
+            }
+          '';
+          description = ''
+            Configuration written to
+            {file}`$XDG_CONFIG_HOME/yazi/theme.toml`.
+
+            See <https://yazi-rs.github.io/docs/configuration/theme>
+            for the full list of options
+          '';
+        };
+
+        settings = mkOption {
+          default = { };
           description = ''
             Content of yazi.toml file.
             See the configuration reference at <https://yazi-rs.github.io/docs/configuration/yazi>
           '';
 
-          type = lib.types.submodule {
+          type = types.submodule {
             freeformType = type;
             options = {
               mgr = mkMapOption ''
@@ -124,21 +198,14 @@
           };
         };
 
-        initLua = lib.mkOption {
-          type = with lib.types; nullOr (either path lines);
-          default = "";
-          description = "The init.lua for Yazi itself.";
-          example = lib.literalExpression "./init.lua";
-        };
-
-        keymap = lib.mkOption {
+        keymap = mkOption {
           default = { };
           description = ''
             Content of keymap.toml file.
             See the configuration reference at <https://yazi-rs.github.io/docs/configuration/keymap>
           '';
 
-          type = lib.types.submodule {
+          type = types.submodule {
             freeformType = type;
             options = {
               mgr = mkMapOption ''
@@ -184,7 +251,5 @@
           };
         };
       };
-
-      config = lib.mkIf (cfg != { }) { };
     };
 }

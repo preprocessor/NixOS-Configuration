@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.modules.nixos.shell = {
+  w.shell = {
     custom.programs.yazi.keymap = {
       mgr.prepend_keymap = [
         {

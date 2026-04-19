@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake-file.inputs.qml-niri = {
+  ff.qml-niri = {
     url = "github:imiric/qml-niri/main";
     inputs = {
       nixpkgs.follows = "nixpkgs";
@@ -8,7 +8,7 @@
     };
   };
 
-  flake.modules.nixos.desktop =
+  w.desktop =
     {
       pkgs,
       osConfig,
@@ -32,7 +32,7 @@
 
       quickshellWrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
-        package = inputs.qml-niri.packages.${pkgs.stdenv.hostPlatform.system}.quickshell;
+        package = inputs.qml-niri.packages.${pkgs.sys}.quickshell;
         aliases = [ "qs" ];
         extraPackages = quickshellDeps;
         env = {

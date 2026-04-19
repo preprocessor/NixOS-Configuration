@@ -4,7 +4,7 @@
 
 { inputs, ... }:
 {
-  flake-file.inputs = {
+  ff = {
     niri = {
       url = "github:niri-wm/niri";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +17,7 @@
     };
   };
 
-  flake.modules.nixos.desktop =
+  w.desktop =
     {
       pkgs,
       config,
@@ -25,7 +25,7 @@
       ...
     }:
     let
-      niri = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri;
+      niri = inputs.niri.packages.${pkgs.sys}.niri;
 
       niriWrapped = inputs.wrappers.wrappers.niri.wrap {
         inherit (config.custom.programs.niri) settings;
@@ -53,34 +53,6 @@
         package = niriWrapped;
       };
 
-      programs.uwsm = {
-        enable = true;
-        waylandCompositors = {
-          niri = {
-            prettyName = "niri";
-            comment = "Niri compositor managed by UWSM";
-            binPath = "/run/current-system/sw/bin/niri";
-            # [NOTE] "/run/current-system/sw/bin/niri" is preferred to "lib.getExe pkgs.niri" avoid version mismatch
-            extraArgs = [ "--session" ];
-          };
-        };
-      };
-
-      xdg.portal = {
-        config = {
-          niri = {
-            "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
-            default = lib.mkForce [ "gnome" ];
-            "org.freedesktop.impl.portal.Secret" = lib.mkForce [ "gnome-keyring" ];
-            "org.freedesktop.impl.portal.Chooser" = lib.mkForce [ "none" ];
-          };
-        };
-      };
-
-      environment.shellAliases = {
-        niri-log = ''journalctl --user -u niri --no-hostname -o cat | awk '{$1=""; print $0}' | sed 's/^ *//' | sed 's/\x1b[[0-9;]*m//g' '';
-      };
-
       hj.systemd.services.system76-scheduler-niri = {
         description = "Niri integration for system76-scheduler";
         after = [ "niri.service" ];
@@ -88,7 +60,7 @@
         serviceConfig = {
           Type = "simple";
           ExecStart = lib.getExe (
-            inputs.system76-scheduler-niri.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs {
+            inputs.system76-scheduler-niri.packages.${pkgs.sys}.default.overrideAttrs {
               doCheck = false;
             }
           );
@@ -116,9 +88,32 @@
           );
         };
       };
+
+      programs.uwsm.waylandCompositors.niri = {
+        prettyName = "niri";
+        comment = "Niri compositor managed by UWSM";
+        binPath = "/run/current-system/sw/bin/niri";
+        # [NOTE] "/run/current-system/sw/bin/niri" is preferred to "lib.getExe pkgs.niri" avoid version mismatch
+        extraArgs = [ "--session" ];
+      };
+
+      xdg.portal = {
+        config = {
+          niri = {
+            "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "termfilechooser" ];
+            default = lib.mkForce [ "gnome" ];
+            "org.freedesktop.impl.portal.Secret" = lib.mkForce [ "gnome-keyring" ];
+            "org.freedesktop.impl.portal.Chooser" = lib.mkForce [ "none" ];
+          };
+        };
+      };
+
+      environment.shellAliases = {
+        niri-log = ''journalctl --user -u niri --no-hostname -o cat | awk '{$1=""; print $0}' | sed 's/^ *//' | sed 's/\x1b[[0-9;]*m//g' '';
+      };
     };
 
-  flake.modules.nixos.default =
+  w.default =
     { lib, pkgs, ... }:
     {
       options.custom = {

@@ -1,21 +1,24 @@
 { inputs, ... }:
 {
-  flake-file.inputs = {
-    yazi-theme-everforest = {
-      url = "github:Chromium-3-Oxide/everforest-medium.yazi";
-      flake = false;
-    };
 
-    everforest-theme-collection = {
-      url = "github:neuromaancer/everforest_collection";
-      flake = false;
-    };
-  };
-
-  flake.modules.nixos.everforest =
+  w.everforest =
     { pkgs, ... }:
     let
       scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
+
+      yazi-theme-everforest = pkgs.fetchFromGitHub {
+        owner = "Chromium-3-Oxide";
+        repo = "everforest-medium.yazi";
+        rev = "a074b041871b43d1248a76f0a54465c5dd1034a7";
+        hash = "sha256-tNULJOsOiVRcCtr/mXRnQY4gsbjZbgxcjN4vVCtbl2I=";
+      };
+
+      everforest-theme-collection = pkgs.fetchFromGitHub {
+        owner = "neuromaancer";
+        repo = "everforest_collection";
+        rev = "ec3936e65699f38f8a9b1468d6ac20a25423d5af";
+        hash = "sha256-HQQzmSYcQY4jYyk7zyxdOSJylqJl4aBobT37pST6AXE=";
+      };
     in
     {
       scheme = scheme; # Set base16 scheme

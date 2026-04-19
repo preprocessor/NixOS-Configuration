@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop.custom.programs.niri.settings = {
+  w.desktop.custom.programs.niri.settings = {
     window-rules = [
       {
         # Floating windows

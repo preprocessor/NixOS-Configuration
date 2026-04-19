@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.ramiel =
+  w.ramiel =
     { pkgs, ... }:
     {
       nixpkgs.overlays = [

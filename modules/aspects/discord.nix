@@ -1,14 +1,39 @@
 {
-  flake.modules.nixos.desktop =
+  w.desktop =
     { pkgs, ... }:
     {
+    };
 
-      hj.config.files =
-        let
-          jsonFormat = pkgs.formats.json { };
-        in
-        {
-          "vesktop/settings.json".source = jsonFormat.generate "vesktop-settings" {
+  w.default =
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    let
+      json = pkgs.formats.json { };
+      cfg = config.custom.programs.vesktop;
+    in
+    {
+      options.custom.programs.vesktop = lib.mkOption {
+        type = json.type;
+        default = { };
+        description = "Vesktop settings";
+        options = {
+          vencord = lib.mkOption {
+            type = json.type;
+            default = { };
+            description = "Vencord settings";
+          };
+        };
+      };
+
+      config = lib.mkIf (cfg != { }) {
+        hj.packages = [ pkgs.vesktop ];
+
+        hj.xdg.config.files = {
+          "vesktop/settings.json".source = json.generate "vesktop-settings" {
             appBadge = false;
             arRPC = true;
             disableMinSize = true;
@@ -20,11 +45,15 @@
             customTitleBar = false;
           };
 
-          "vesktop/settings/settings.json".source = jsonFormat.generate "vencord-settings" {
+          "vesktop/settings/settings.json".source = json.generate "vencord-settings" {
             autoUpdate = true;
             autoUpdateNotification = false;
             disableMinSize = true;
             notifyAboutUpdates = false;
+
+            enabledThemes = [
+              ""
+            ];
 
             plugins = {
               AlwaysExpandRoles.enabled = true;
@@ -57,7 +86,6 @@
             };
           };
         };
-
-      hjem.users.wyspr.packages = [ pkgs.vesktop ];
+      };
     };
 }

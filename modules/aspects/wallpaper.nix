@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  flake.modules.nixos.desktop =
+  w.desktop =
     { pkgs, ... }:
     {
       hj.systemd.services.awww-daemon = {
@@ -17,9 +17,11 @@
         };
       };
 
-      environment.systemPackages = with pkgs; [
-        awww
+      hj.packages = with pkgs; [
         waypaper
+        awww
       ];
+
+      custom.programs.niri.settings.spawn-at-startup = [ "${lib.getExe pkgs.waypaper} --restore" ];
     };
 }

@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake-file.inputs = {
+  ff = {
     base16.url = "github:SenchoPens/base16.nix";
     stylix = {
       url = "github:nix-community/stylix";
@@ -11,7 +11,7 @@
     };
   };
 
-  flake.modules.nixos.desktop = {
+  w.desktop = {
     imports = [
       inputs.base16.nixosModule
       inputs.stylix.nixosModules.stylix
@@ -23,6 +23,9 @@
 
       targets = {
         console.enable = true;
+        # gtk.enable = true;
+        gtksourceview.enable = true;
+        # qt.enable = true;
       };
     };
   };

@@ -2,7 +2,7 @@ let
   browser = "vivaldi-stable.desktop";
 in
 {
-  flake.modules.nixos.ramiel.hj.xdg.mime-apps = {
+  w.ramiel.hj.xdg.mime-apps = {
     default-applications = {
       "x-scheme-handler/discord" = "vesktop.desktop";
       "text/html" = browser;

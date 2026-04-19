@@ -17,28 +17,17 @@
 #   +     .       .        ▀▀▀ ▀▀▀▀▀▀▀  o       *    ▀▄▄▄▀            .      o
 #      .     *         .           *.              +       ..        o      .      +.
 {
-  description = "wyspr's NixOS Configuration";
+  description = "wyspr's Terrible NixOS Configuration";
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+  outputs =
+    inputs: ./modules |> inputs.import-tree |> inputs.flake-parts.lib.mkFlake { inherit inputs; };
 
   inputs = {
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
     base16.url = "github:SenchoPens/base16.nix";
-    bat-syntax-justfile = {
-      url = "github:nk9/just_sublime";
-      flake = false;
-    };
-    colorschemes = {
-      url = "github:tinted-theming/schemes";
-      flake = false;
-    };
     direnv-instant = {
       url = "github:Mic92/direnv-instant";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    fish-completion-sync = {
-      url = "github:iynaix/fish-completion-sync";
-      flake = false;
     };
     flake-compat.url = "github:edolstra/flake-compat";
     flake-file.url = "github:vic/flake-file";
@@ -56,18 +45,20 @@
     };
     ghostty = {
       url = "github:ghostty-org/ghostty";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ghostty-cursor-shaders = {
-      url = "github:sahaj-b/ghostty-cursor-shaders";
-      flake = false;
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     gimp.url = "path:/home/wyspr/Configuration/GIMP";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.flake-compat.follows = "flake-compat";
+    };
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager.url = "github:nix-community/home-manager/master";
     import-tree.url = "github:vic/import-tree";
     neovim = {
       url = "path:/home/wyspr/Configuration/Neovim/";
@@ -77,13 +68,13 @@
       url = "github:niri-wm/niri";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri-shaders-collection = {
-      url = "github:jgarza9788/niri-animation-collection";
-      flake = false;
-    };
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
@@ -99,6 +90,14 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
+    otterlauncher = {
+      url = "github:kuokuo123/otter-launcher";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+    };
     qml-niri = {
       url = "github:imiric/qml-niri/main";
       inputs = {
@@ -124,14 +123,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     systems.url = "github:nix-systems/x86_64-linux";
-    tokyonight-theme = {
-      url = "github:folke/tokyonight.nvim";
-      flake = false;
-    };
-    tokyonight-yazi-theme = {
-      url = "github:kalidyasin/yazi-flavors";
-      flake = false;
-    };
     treefmt-nix.url = "github:numtide/treefmt-nix";
     vicinae = {
       url = "github:vicinaehq/vicinae";
@@ -148,9 +139,5 @@
     };
     wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
     yazi-plugin-fuzzy-search.url = "github:onelocked/fuzzy-search.yazi";
-    yazi-plugins-repo = {
-      url = "github:yazi-rs/plugins";
-      flake = false;
-    };
   };
 }

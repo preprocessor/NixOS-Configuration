@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.default.services = {
+  w.default.services = {
     pulseaudio.enable = false;
 
     pipewire = {

@@ -1,21 +1,9 @@
 { lib, ... }:
 {
-  flake.modules.nixos.shell =
+  w.shell =
     { pkgs, ... }:
     {
       environment.systemPackages = [ pkgs.ouch ];
-
-      custom.programs.yazi.initLua = /* lua */ ''
-        -- require("starship"):setup()
-        --
-        -- require("git"):setup {
-        -- 	order = 1500, -- Order of status signs showing in the line mode
-        -- }
-        --
-        -- require("smart-enter"):setup {
-        --   open_multi = true, -- Allow open to target multiple selected files
-        -- }
-      '';
 
       custom.programs.yazi.settings = {
         open = {

@@ -1,18 +1,21 @@
 { inputs, ... }:
 {
-  flake-file.inputs = {
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ghostty-cursor-shaders = {
-      url = "github:sahaj-b/ghostty-cursor-shaders";
-      flake = false;
-    };
+  ff.ghostty = {
+    url = "github:ghostty-org/ghostty";
+    inputs.nixpkgs.follows = "nixpkgs";
+    inputs.flake-compat.follows = "flake-compat";
   };
 
-  flake.modules.nixos.desktop =
+  w.desktop =
     { pkgs, config, ... }:
+    let
+      ghostty-cursor-shaders = pkgs.fetchFromGitHub {
+        owner = "sahaj-b";
+        repo = "ghostty-cursor-shaders";
+        rev = "4faa83e4b9306750fc8de64b38c6f53c57862db8";
+        hash = "sha256-ruhEqXnWRCYdX5mRczpY3rj1DTdxyY3BoN9pdlDOKrE=";
+      };
+    in
     {
       nixpkgs.overlays = [ inputs.ghostty.overlays.default ];
 
@@ -22,11 +25,14 @@
       };
 
       hj.xdg.config.files."ghostty/config".text = ''
-        custom-shader = ${inputs.ghostty-cursor-shaders}/cursor_tail.glsl
+
+        custom-shader = ${ghostty-cursor-shaders}/cursor_tail.glsl
+
         font-family = Maple Mono
         font-family-bold = Maple Mono
         font-family-bold-italic = Maple Mono
         font-family-italic = Maple Mono
+
         font-feature = calt
         font-feature = cv01
         font-feature = cv02
@@ -39,26 +45,37 @@
         font-feature = cv43
         font-feature = ss03
         font-feature = ss10
+
         font-size = 12
         font-style = Medium
         font-style-bold = ExtraBold
         font-style-bold-italic = Bold Italic
         font-style-italic = Italic
+
         keybind = ctrl+shift+t=unbind
         keybind = ctrl+shift+w=unbind
         keybind = ctrl+shift+n=unbind
+
         keybind = ctrl+backslash=new_split:down
         keybind = chain=resize_split:down,400
+
         keybind = performable:ctrl+shift+h=goto_split:left
         keybind = performable:ctrl+shift+j=goto_split:bottom
         keybind = performable:ctrl+shift+k=goto_split:top
         keybind = performable:ctrl+shift+l=goto_split:right
+
+        keybind = global:cmd+backquote=toggle_quick_terminal
+
         mouse-hide-while-typing = true
         mouse-scroll-multiplier = 1
+
         shell-integration = fish
+
         unfocused-split-opacity = 0.800000
+
         window-decoration = false
         window-padding-balance = true
+
         window-save-state = never
       '';
 
@@ -86,10 +103,10 @@
       hj.xdg.config.files."systemd/user/app-com.mitchellh.ghostty.service".source =
         "${pkgs.ghostty}/share/systemd/user/app-com.mitchellh.ghostty.service";
 
-      # programs.fish.interactiveShellInit = ''
-      #   if set -q GHOSTTY_RESOURCES_DIR
-      #     source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
-      #   end
-      # '';
+      programs.fish.interactiveShellInit = ''
+        if set -q GHOSTTY_RESOURCES_DIR
+          source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
+        end
+      '';
     };
 }

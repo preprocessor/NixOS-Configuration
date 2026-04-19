@@ -1,6 +1,6 @@
-{ lib, inputs, ... }:
+{ self, inputs, ... }:
 {
-  flake-file.inputs = {
+  ff = {
     vicinae = {
       url = "github:vicinaehq/vicinae";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,8 +14,12 @@
     };
   };
 
-  flake.modules.nixos.desktop =
-    { pkgs, ... }:
+  w.desktop =
+    {
+      config,
+      pkgs,
+      ...
+    }:
     {
       nixpkgs.overlays = [ inputs.vicinae.overlays.default ];
 
@@ -35,12 +39,24 @@
         };
 
         settings = {
+          telemetry.system_info = false;
           close_on_focus_loss = true;
           consider_preedit = true;
           activate_on_single_click = true;
           pop_to_root_on_close = true;
           favicon_service = "twenty";
           search_files_in_root = true;
+          applications = {
+            preferences = {
+              paths = [
+                "${config.hj.xdg.data.directory}/share/applications"
+                "/etc/profiles/per-user/${self.const.username}/share/applications"
+                "/run/current-system/sw/share/applications"
+              ];
+              defaultAction = "focus";
+              launchPrefix = "app2unit --";
+            };
+          };
           font = {
             normal = {
               family = "SF Pro Text";
@@ -77,7 +93,7 @@
 
           };
         };
-        extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+        extensions = with inputs.vicinae-extensions.packages.${pkgs.sys}; [
           bluetooth
           nix
           power-profile
@@ -88,8 +104,8 @@
       };
     };
 
-  flake.modules.nixos.default =
-    { pkgs, config, ... }:
+  w.default =
+    { pkgs, config, lib, ... }:
     let
       cfg = config.custom.services.vicinae;
 

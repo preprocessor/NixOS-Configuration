@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  flake.modules.nixos.default =
+  w.default =
     {
       pkgs,
       config,
@@ -8,7 +8,7 @@
       ...
     }:
     let
-      apple-fonts = inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system};
+      apple-fonts = inputs.apple-fonts.packages.${pkgs.sys};
       scheme = config.scheme.withHashtag;
 
       toIni =
@@ -20,11 +20,8 @@
     {
       environment.systemPackages = with pkgs; [
         tofi
-        app2unit
         bemoji-tofi
       ];
-
-      hj.environment.sessionVariables.APP2UNIT_SLICES = "a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice";
 
       hj.xdg.config.files = {
         "tofi/config".text = toIni {

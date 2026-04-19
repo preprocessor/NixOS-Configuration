@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.shell =
+  w.shell =
     { pkgs, lib, ... }:
     {
       programs.bash.interactiveShellInit = /* bash */ ''

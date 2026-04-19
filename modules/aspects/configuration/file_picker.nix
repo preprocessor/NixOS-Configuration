@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.desktop =
+  w.desktop =
     {
       config,
       lib,

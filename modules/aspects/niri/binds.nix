@@ -1,6 +1,6 @@
 { self, lib, ... }:
 {
-  flake.modules.nixos.desktop =
+  w.desktop =
     { pkgs, ... }:
     {
       custom.programs.niri.settings = {
@@ -28,15 +28,17 @@
                 repeat = false;
               };
             };
-            "Mod+Space" = _: {
-              content.spawn-sh = [
-                "tofi-drun | xargs --no-run-if-empty app2unit"
-              ];
-              props.hotkey-overlay-title = "Open application launcher: vicinae";
-            };
+            # "Mod+Space" = _: {
+            #   content.spawn = [
+            #     # "tofi-drun | xargs --no-run-if-empty app2unit"
+            #     "fuzzel"
+            #   ];
+            #   props.hotkey-overlay-title = "Open application launcher: fuzzel";
+            # };
             "Mod+Alt+Space" = _: {
               content.spawn-sh = [
-                "tofi-run | xargs --no-run-if-empty ghostty -e"
+                ""
+                # "tofi-run | xargs --no-run-if-empty ghostty -e"
               ];
             };
             "Mod+V" = _: {

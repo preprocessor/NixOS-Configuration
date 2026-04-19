@@ -1,12 +1,18 @@
 {
   inputs,
+  lib,
   ...
 }:
 {
-  imports = [ inputs.flake-file.flakeModules.dendritic ];
+  imports = [
+    inputs.flake-file.flakeModules.dendritic
+    (lib.mkAliasOptionModule [ "ff" ] [ "flake-file" "inputs" ])
+  ];
 
   flake-file = {
-    description = "wyspr's NixOS Configuration";
+    description = "wyspr's Terrible NixOS Configuration";
+
+    outputs = /* nix */ "inputs: ./modules |> inputs.import-tree |> inputs.flake-parts.lib.mkFlake { inherit inputs; }";
 
     do-not-edit = ''
       #   o  .  ▄▀▀▀▄  .▄▀▄ * ▄▀▄ .  ..     o   .-.       +      .   .      |      .

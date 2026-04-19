@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.default = {
+  w.default = {
     programs.nh = {
       enable = true;
       flake = "$HOME/Configuration/NixOS"; # sets NH_OS_FLAKE variable for you

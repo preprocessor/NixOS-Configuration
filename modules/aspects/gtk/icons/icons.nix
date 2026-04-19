@@ -73,29 +73,7 @@
         };
     };
 
-  flake.modules.nixos.default =
-    { pkgs, ... }:
-    {
-      options.custom = {
-        gtk = {
-          iconTheme = {
-            package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs.tela-icon-theme;
-              description = "Package providing the icon theme.";
-            };
-
-            name = lib.mkOption {
-              type = lib.types.str;
-              default = "Tela-blue-dark";
-              description = "The name of the icon theme within the package.";
-            };
-          };
-        };
-      };
-    };
-
-  flake.modules.nixos.desktop =
+  w.desktop =
     { config, pkgs, ... }:
     {
       environment.systemPackages = [

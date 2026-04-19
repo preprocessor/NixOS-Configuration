@@ -1,12 +1,14 @@
-{ inputs, ... }:
 {
-  flake-file.inputs.bat-syntax-justfile = {
-    url = "github:nk9/just_sublime";
-    flake = false;
-  };
-
-  flake.modules.nixos.default =
+  w.default =
     { pkgs, ... }:
+    let
+      bat-syntax-justfile = pkgs.fetchFromGitHub {
+        owner = "nk9";
+        repo = "just_sublime";
+        rev = "2dcc60286d1af6a4c6c2c03d50bc03230dc56ce3";
+        hash = "sha256-XlxItYVL9I612DhfCGHiUdv6U6Nv9LOlEbJVf1zTwPg=";
+      };
+    in
     {
       hj.packages = with pkgs; [
         bat-extras.batman
@@ -14,8 +16,6 @@
       ];
 
       hj.xdg.config.files."bat/syntaxes/justfile.sublime-syntax".source =
-        "${inputs.bat-syntax-justfile}/Syntax/Just.sublime-syntax";
-
+        "${bat-syntax-justfile}/Syntax/Just.sublime-syntax";
     };
-
 }
