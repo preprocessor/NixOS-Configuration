@@ -32,7 +32,6 @@
           hash = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
         }
         + "/tokyonight-night.yazi";
-
       tokyonight-vesktop-theme = fetchFromGitHub {
         owner = "refact0r";
         repo = "system24";
@@ -58,13 +57,14 @@
       programs.fish.interactiveShellInit = builtins.readFile (tokyonight + "/fish/tokyonight_night.fish");
       custom.programs.yazi = {
         flavors.tokyonight = tokyonight-yazi-theme;
+
         theme.flavor = {
           dark = "tokyonight";
           light = "tokyonight";
         };
       };
 
-      custom.programs.fuzzel.moreCfg = builtins.readFile "${tokyonight}/fuzzel/tokyonight_night.ini" ;
+      custom.programs.fuzzel.moreCfg = builtins.readFile "${tokyonight}/fuzzel/tokyonight_night.ini";
     };
 }
 

@@ -1,0 +1,7 @@
+{
+  w.ramiel = {
+    stylix.icons = {
+
+    };
+  };
+}

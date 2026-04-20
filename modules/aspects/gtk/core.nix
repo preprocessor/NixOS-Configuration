@@ -18,30 +18,25 @@
           gtk-theme-name = gtkCfg.theme.name;
           gtk-icon-theme-name = config.custom.gtk.iconTheme.name;
           gtk-application-prefer-dark-theme = 1;
-          gtk-error-bell = 0;
+          # gtk-error-bell = 0;
         };
       };
     in
     {
-      environment = {
-        etc = {
-          "xdg/gtk-3.0/settings.ini".text = gtkIni;
-          "xdg/gtk-4.0/settings.ini".text = gtkIni;
-          "xdg/gtk-2.0/gtkrc".text = ''
-            gtk-icon-theme-name = "${config.custom.gtk.iconTheme.name}";
-            gtk-theme-name = "${gtkCfg.theme.name}";
-          '';
-        };
-
-        sessionVariables = {
-          GTK2_RC_FILES = "/etc/xdg/gtk-2.0/gtkrc";
-        };
+      environment.sessionVariables = {
+        GTK2_RC_FILES = "/etc/xdg/gtk-2.0/gtkrc";
       };
 
       # use per user settings
-      hj.xdg.config.files."gtk-3.0/bookmarks".text = lib.concatMapStringsSep "\n" (
-        b: "file://${b}"
-      ) gtkCfg.bookmarks;
+      hj.xdg.config.files = {
+        "gtk-3.0/bookmarks".text = lib.concatMapStringsSep "\n" (b: "file://${b}") gtkCfg.bookmarks;
+        "gtk-3.0/settings.ini".text = gtkIni;
+        "gtk-4.0/settings.ini".text = gtkIni;
+        "gtk-2.0/gtkrc".text = ''
+          gtk-icon-theme-name = "${config.custom.gtk.iconTheme.name}";
+          gtk-theme-name = "${gtkCfg.theme.name}";
+        '';
+      };
 
       programs.dconf = {
         enable = true;

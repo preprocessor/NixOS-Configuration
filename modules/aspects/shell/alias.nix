@@ -27,7 +27,7 @@
             man = "batman";
             cat = "bat --plain";
 
-            gr = "cd (git rev-parse --show-toplevel)"; # cd to git root
+            gtop = lib.getExe pkgs.amdgpu_top;
 
             cp = "cp -r";
             mkdir = "mkdir -p";
@@ -35,36 +35,35 @@
             rm = "trash-put";
             rmdir = "trash-put";
 
-            write-flake = "nix run ${self.const.cfgdir}/#write-flake";
             repl = "nix repl --file ${self.const.cfgdir}/repl.nix";
           };
 
         shellAbbrs = {
           ehistory = ''nvim "${config.hj.xdg.data.directory}/fish/fish_history"'';
           ppath = "echo $PATH | tr ' ' '\n'";
-          ga = "git add .";
+
           clone = "git clone";
           cls = "clear";
 
-          rb = "nh os switch";
-          ost = "nh os test";
+          ga = "git add .";
+          gr = "cd (git rev-parse --show-toplevel)"; # cd to git root
 
-          wf = "write-flake";
+          ost = "nh os test";
+          rb = "nh os switch";
+          wf = "nix run ${self.const.cfgdir}/#write-flake";
 
           v = "nvim";
           x = "exit";
         };
 
         functions = {
-          starship_transient_prompt_func = ''printf  " \e[1;96m  \e[0m"'';
-
           mcd = "mkdir -p $argv[1]; and cd $argv[1]"; # mkdir + cd
 
-          store = "y (dirname (dirname (readlink -f (which $argv[1]))))";
+          store = ''y (string match -r "/nix/store/[^/]*" (builtin realpath (type -fP yazi)))'';
 
           ncp = ''echo "pkgs.$(nurl $(wl-paste));" | wl-copy'';
 
-
+          starship_transient_prompt_func = ''printf " \e[1;96m  \e[0m"'';
 
           __onelockeds_fuzzy_zox = /* fish */ ''
             set -l dir (

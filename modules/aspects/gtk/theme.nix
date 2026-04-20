@@ -90,9 +90,11 @@
       nixpkgs.overlays = [
         (f: p: { inherit tokyonight-dynamic-gtk-theme; })
         (f: p: { inherit tokyonight-custom-gtk-theme; })
-
       ];
 
-      environment.systemPackages = [ config.custom.gtk.theme.package ];
+      environment.systemPackages = with pkgs;[ 
+        tokyonight-dynamic-gtk-theme
+        tokyonight-custom-gtk-theme
+      ];
     };
 }

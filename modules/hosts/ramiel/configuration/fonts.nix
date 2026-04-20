@@ -10,11 +10,9 @@
     {
 
       fonts.packages = with pkgs; [
-        noto-fonts-color-emoji
         maple-mono.variable
-        nerd-fonts.jetbrains-mono
-        inter
         font-awesome_6
+        inter
 
         apple-fonts.sf-pro
         apple-fonts.sf-compact
@@ -37,7 +35,6 @@
           rgba = "rgb";
           lcdfilter = "light";
         };
-        defaultFonts.emoji = [ "Noto Color Emoji" ];
       };
 
       stylix.fonts = {
@@ -54,6 +51,11 @@
         monospace = {
           package = apple-fonts.sf-mono;
           name = "SF Mono Regular";
+        };
+
+        emoji = {
+          package = pkgs.noto-fonts-color-emoji;
+          name = "Noto Color Emoji";
         };
       };
     };

@@ -3,7 +3,12 @@
   w.desktop =
     { pkgs, ... }:
     {
-      hj.systemd.services.awww-daemon = {
+      hj.packages = with pkgs; [
+        waypaper
+        awww
+      ];
+
+      systemd.user.services.awww-daemon = {
         description = "awww wallpaper daemon";
         wantedBy = [ "graphical-session.target" ];
         after = [ "graphical-session.target" ];
@@ -16,11 +21,6 @@
           TimeoutStopSec = 10;
         };
       };
-
-      hj.packages = with pkgs; [
-        waypaper
-        awww
-      ];
 
       custom.programs.niri.settings.spawn-at-startup = [ "${lib.getExe pkgs.waypaper} --restore" ];
     };

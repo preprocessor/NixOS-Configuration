@@ -10,39 +10,42 @@
       ...
     }:
     let
-      flavorsObject = lib.concatMapAttrs (name: value: {
-        constructFiles."flavor-${name}-toml" = {
-          relPath = "yazi-config/flavors/${name}.yazi/flavor.toml";
-          content = builtins.readFile "${value}/flavor.toml";
+      flavorsObject =
+        config.custom.programs.yazi.flavors
+        |> lib.concatMapAttrs (
+          name: repo: {
+            "flavor-${name}-toml" = {
+              relPath = "yazi-config/flavors/${name}.yazi/flavor.toml";
+              content = builtins.readFile "${repo}/flavor.toml";
+            };
+            "flavor-${name}-tmtheme" = {
+              relPath = "yazi-config/flavors/${name}.yazi/tmtheme.xml";
+              content = builtins.readFile "${repo}/tmtheme.xml";
+            };
+          }
+        );
+
+      yaziWrapped = inputs.wrappers.wrappers.yazi.wrap ({
+        inherit pkgs;
+        inherit (config.custom.programs.yazi) plugins;
+        extraPackages = with pkgs; [
+          ripgrep
+          glow
+          ouch
+          git
+        ];
+        settings = with config.custom.programs.yazi; {
+          inherit keymap theme;
+          yazi = settings;
         };
-
-        constructFiles."flavor-${name}-tmtheme" = {
-          relPath = "yazi-config/flavors/${name}.yazi/tmtheme.xml";
-          content = builtins.readFile "${value}/tmtheme.xml";
-        };
-      }) config.custom.programs.yazi.flavors;
-
-      yaziWrapped = inputs.wrappers.wrappers.yazi.wrap (
-        lib.recursiveUpdate {
-          inherit pkgs;
-          inherit (config.custom.programs.yazi) plugins;
-          extraPackages = with pkgs; [
-            ripgrep
-            glow
-            ouch
-            git
-          ];
-          settings = with config.custom.programs; {
-            keymap = yazi.keymap;
-            yazi = yazi.settings;
-          };
-
-          constructFiles.initLua = {
+        constructFiles = {
+          initLua = {
             relPath = "yazi-config/init.lua";
             content = config.custom.programs.yazi.initLua;
           };
-        } flavorsObject
-      );
+        }
+        // flavorsObject;
+      });
     in
     {
       environment.systemPackages = [ yaziWrapped ];
@@ -67,7 +70,6 @@
     with lib;
     {
       options.custom.programs.yazi = {
-
         initLua = mkOption {
           type = with types; nullOr (either path lines);
           default = "";
@@ -76,7 +78,7 @@
         };
 
         plugins = mkOption {
-          type = types.attrsOf (types.nullOr types.path);
+          type = with types; attrsOf (nullOr path);
           default = { };
           description = "An attribute set of plugin names and their paths";
           example = literalMD ''
@@ -94,12 +96,7 @@
         };
 
         flavors = mkOption {
-          type =
-            with types;
-            attrsOf (oneOf [
-              path
-              package
-            ]);
+          type = with types; attrsOf path;
           default = { };
           description = ''
             Pre-made themes.
