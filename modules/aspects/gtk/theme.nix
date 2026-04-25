@@ -1,6 +1,6 @@
 {
   w.desktop =
-    { pkgs, config, ... }:
+    { pkgs, ... }:
     let
       tokyonight-theme = pkgs.tokyonight-gtk-theme.override {
         colorVariants = [ "dark" ];
@@ -92,7 +92,7 @@
         (f: p: { inherit tokyonight-custom-gtk-theme; })
       ];
 
-      environment.systemPackages = with pkgs;[ 
+      environment.systemPackages = [
         tokyonight-dynamic-gtk-theme
         tokyonight-custom-gtk-theme
       ];

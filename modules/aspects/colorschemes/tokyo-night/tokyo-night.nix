@@ -1,11 +1,14 @@
 {
   w.tokyonight-night =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     let
-      inherit (pkgs) fetchFromGitHub;
-
-      scheme =
-        fetchFromGitHub {
+      colorscheme =
+        pkgs.fetchFromGitHub {
           owner = "tinted-theming";
           repo = "schemes";
           rev = "3fa37f7b72d332b406fdc254008ed6d6b50efb4c";
@@ -14,7 +17,7 @@
         + "/base24/tokyo-night-dark.yaml";
 
       tokyonight =
-        fetchFromGitHub {
+        pkgs.fetchFromGitHub {
           owner = "folke";
           repo = "tokyonight.nvim";
           rev = "cdc07ac78467a233fd62c493de29a17e0cf2b2b6";
@@ -25,14 +28,14 @@
       tmTheme = tokyonight + "/sublime/tokyonight_night.tmTheme";
 
       tokyonight-yazi-theme =
-        fetchFromGitHub {
+        pkgs.fetchFromGitHub {
           owner = "kalidyasin";
           repo = "yazi-flavors";
           rev = "70fe6b4a245a59b546166aae6c45ee2b471869c2";
           hash = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
         }
         + "/tokyonight-night.yazi";
-      tokyonight-vesktop-theme = fetchFromGitHub {
+      tokyonight-vesktop-theme = pkgs.fetchFromGitHub {
         owner = "refact0r";
         repo = "system24";
         rev = "942c28771d1230567d65a5362814e0267317f455";
@@ -40,8 +43,7 @@
       };
     in
     {
-      scheme = scheme; # Set base16 scheme
-      stylix.base16Scheme = scheme; # Set stylix base16 scheme
+      scheme = colorscheme; # Set base16 scheme
 
       hj.xdg.config.files = {
         "ghostty/config".text = "theme = TokyoNight Night";
@@ -50,11 +52,10 @@
         "eza/theme.yml".source = tokyonight + "/eza/tokyonight_night.yml";
         "btop/themes/tokyonight_night.theme".source = tokyonight + "/btop/tokyonight_night.theme";
         "lazygit/config.yml".text = builtins.readFile "${tokyonight}/lazygit/tokyonight_night.yml";
-        "vesktop/themes/tokyonight_system24.css".source =
-          tokyonight-vesktop-theme + "/theme/flavors/system24-tokyo-night.theme.css";
       };
 
       programs.fish.interactiveShellInit = builtins.readFile (tokyonight + "/fish/tokyonight_night.fish");
+
       custom.programs.yazi = {
         flavors.tokyonight = tokyonight-yazi-theme;
 
@@ -65,6 +66,13 @@
       };
 
       custom.programs.fuzzel.moreCfg = builtins.readFile "${tokyonight}/fuzzel/tokyonight_night.ini";
+
+      hj.xdg.config.files."vesktop/themes/tokyonight_system24.css".source =
+        tokyonight-vesktop-theme + "/theme/flavors/system24-tokyo-night.theme.css";
+      custom.programs.vesktop.vencord.settings.enabledThemes = [ "tokyonight_system24.css" ];
+
+      custom.programs.kitty.settings.theme =
+        builtins.readFile "${tokyonight}/kitty/tokyonight_night.conf";
     };
 }
 

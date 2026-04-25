@@ -10,7 +10,7 @@
             termExec =
               cmd:
               [
-                "ghostty"
+                "kitty"
                 "-e"
               ]
               ++ (lib.flatten cmd);
@@ -22,9 +22,12 @@
 
             # Suggested binds for running programs: terminal, app launcher, screen locker.
             "Mod+Return" = _: {
-              content.spawn = lib.getExe pkgs.ghostty;
+              content.spawn = [
+                "kitty"
+                "-1"
+              ];
               props = {
-                hotkey-overlay-title = "Open a Terminal: ghostty";
+                hotkey-overlay-title = "Open a Terminal: kitty";
                 repeat = false;
               };
             };

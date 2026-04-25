@@ -64,8 +64,6 @@
         runelite # Runescape
         bolt-launcher # Runescape
         dualsensectl # Dualsense Controller
-        bottles # Wine manager
-        wine
       ];
     };
 }

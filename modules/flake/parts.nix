@@ -6,12 +6,7 @@
     inputs.flake-parts.flakeModules.modules
     (lib.mkAliasOptionModule [ "w" ] [ "flake" "modules" "nixos" ])
   ];
-  systems = [
-    "x86_64-linux"
-    "aarch64-linux"
-    "x86_64-darwin"
-    "aarch64-darwin"
-  ];
+  systems = [ "x86_64-linux" ];
 
   perSystem =
     { system, ... }:

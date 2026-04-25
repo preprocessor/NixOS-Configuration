@@ -78,7 +78,7 @@
     {
       environment.systemPackages = [
         # use base tela icon theme that will be replaced by dynamic one at startup
-        config.custom.gtk.iconTheme.package
+        pkgs.tela-icon-theme
         # associate nix files with nix icon
         (pkgs.writeTextFile {
           name = "nix-mimetype";

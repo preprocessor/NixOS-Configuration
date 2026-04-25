@@ -3,9 +3,13 @@
   w.desktop =
     { pkgs, config, ... }:
     let
-      gtkCursor = config.custom.gtk.cursor;
+      cursor = {
+        package = pkgs.posy-cursors;
+        name = "Posy_Cursor_Black";
+        size = 32;
+      };
 
-      default_cursor_path = "${gtkCursor.package}/share/icons/${gtkCursor.name}/cursors/left_ptr";
+      default_cursor_path = "${cursor.package}/share/icons/${cursor.name}/cursors/left_ptr";
 
       default_index_theme_package = pkgs.writeTextFile {
         name = "index.theme";
@@ -17,33 +21,33 @@
           [Icon Theme]
           Name=Default
           Comment=Default Cursor Theme
-          Inherits=${gtkCursor.name}
+          Inherits=${cursor.name}
         '';
       };
     in
     {
       environment.systemPackages = [
-        gtkCursor.package
+        cursor.package
         default_index_theme_package
       ];
 
       # Add cursor icon link to $XDG_DATA_HOME/icons as well for redundancy.
       hj.xdg.data.files = {
-        "icons/${gtkCursor.name}".source = "${gtkCursor.package}/share/icons/${gtkCursor.name}";
+        "icons/${cursor.name}".source = "${cursor.package}/share/icons/${cursor.name}";
       };
 
       hj.environment.sessionVariables = {
-        XCURSOR_SIZE = gtkCursor.size;
-        XCURSOR_THEME = gtkCursor.name;
+        XCURSOR_SIZE = cursor.size;
+        XCURSOR_THEME = cursor.name;
       };
 
       hj.files.".icons/default/index.theme".source =
         "${default_index_theme_package}/share/icons/default/index.theme";
-      hj.files.".icons/${gtkCursor.name}".source = "${gtkCursor.package}/share/icons/${gtkCursor.name}";
+      hj.files.".icons/${cursor.name}".source = "${cursor.package}/share/icons/${cursor.name}";
 
       hj.files.".Xresources".text = ''
-        Xcursor.theme = ${gtkCursor.name};
-        Xcursor.size = ${toString gtkCursor.size};
+        Xcursor.theme = ${cursor.name};
+        Xcursor.size = ${toString cursor.size};
       '';
 
       hj.files.".xprofile".text = ''
@@ -56,7 +60,7 @@
         # script starts up graphical-session.target.
         systemctl --user stop graphical-session.target graphical-session-pre.target
 
-        ${lib.getExe pkgs.xsetroot} -xcf ${default_cursor_path} ${toString gtkCursor.size}
+        ${lib.getExe pkgs.xsetroot} -xcf ${default_cursor_path} ${toString cursor.size}
 
         export HM_XPROFILE_SOURCED=1
       '';
@@ -79,17 +83,6 @@
               description = "Package providing the cursor theme.";
             };
 
-            name = lib.mkOption {
-              type = lib.types.str;
-              default = "Posy_Cursor_Black";
-              description = "The cursor name within the package.";
-            };
-
-            size = lib.mkOption {
-              type = lib.types.int;
-              default = 32;
-              description = "The cursor size.";
-            };
           };
         };
       };

@@ -1,8 +1,10 @@
 {
   w.desktop =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
+    let
+      scheme = config.scheme.withHashtag;
+    in
     {
-
       custom.programs.vesktop = {
         settings = {
           appBadge = false;
@@ -14,21 +16,16 @@
           discordBranch = "stable";
           autoStartMinimized = false;
           customTitleBar = false;
+          splashBackground = scheme.base00;
+          splashColor = scheme.base05;
+          splashTheming = true;
         };
-
-        # splashBackground = "#000000";
-        # splashColor = "#ffffff";
-        # splashTheming = true;
 
         vencord.settings = {
           autoUpdate = true;
           autoUpdateNotification = false;
           disableMinSize = true;
           notifyAboutUpdates = false;
-
-          # enabledThemes = [
-          #   ""
-          # ];
 
           plugins = {
             AlwaysExpandRoles.enabled = true;
@@ -93,8 +90,8 @@
         hj.packages = [ pkgs.vesktop ];
 
         hj.xdg.config.files = {
-          "vesktop/settings.json".source = json.generate "vesktop-settings" cfg;
-          "vesktop/settings/settings.json".source = json.generate "vencord-settings" cfg.vencord;
+          "vesktop/settings.json".source = json.generate "vesktop-settings" cfg.settings;
+          "vesktop/settings/settings.json".source = json.generate "vencord-settings" cfg.vencord.settings;
         };
       };
     };

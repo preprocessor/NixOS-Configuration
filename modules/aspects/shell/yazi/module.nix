@@ -1,6 +1,9 @@
 { inputs, ... }:
 {
-  ff.yazi-plugin-fuzzy-search.url = "github:onelocked/fuzzy-search.yazi";
+  ff.yazi-plugin-fuzzy-search = {
+    url = "github:onelocked/fuzzy-search.yazi";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   w.shell =
     {
@@ -29,9 +32,9 @@
         inherit pkgs;
         inherit (config.custom.programs.yazi) plugins;
         extraPackages = with pkgs; [
+          ouch-rar
           ripgrep
           glow
-          ouch
           git
         ];
         settings = with config.custom.programs.yazi; {

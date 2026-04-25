@@ -7,7 +7,7 @@
         enable = true;
         settings = {
           program_options = {
-            file_manager = "${lib.getExe pkgs.ghostty} -e ${lib.getExe pkgs.yazi}";
+            file_manager = "${lib.getExe pkgs.kitty} -e ${lib.getExe pkgs.yazi}";
           };
         };
       };

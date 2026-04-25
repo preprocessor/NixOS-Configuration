@@ -28,7 +28,7 @@
           qtmultimedia
         ]);
 
-      qmlImportPath = (lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix quickshellDeps);
+      qmlImportPath = lib.makeSearchPath pkgs.kdePackages.qtbase.qtQmlPrefix quickshellDeps;
 
       quickshellWrapped = inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
@@ -43,10 +43,7 @@
       };
     in
     {
-      fonts.packages = with pkgs; [
-        lucide
-      ];
-
+      fonts.packages = with pkgs; [ lucide ];
       hj.packages = [ quickshellWrapped ];
     };
 

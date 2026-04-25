@@ -2,7 +2,7 @@
   w.ramiel =
     { pkgs, ... }:
     {
-      # Bootloader.
+      environment.etc.issue.text = "";
 
       boot = {
         loader = {

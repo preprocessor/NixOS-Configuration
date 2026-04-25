@@ -3,7 +3,7 @@
   w.shell =
     { pkgs, ... }:
     {
-      environment.systemPackages = [ pkgs.ouch ];
+      environment.systemPackages = [ pkgs.ouch-rar ];
 
       custom.programs.yazi.settings = {
         open = {

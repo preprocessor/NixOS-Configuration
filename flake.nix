@@ -20,7 +20,15 @@
   description = "wyspr's Terrible NixOS Configuration";
 
   outputs =
-    inputs: ./modules |> inputs.import-tree |> inputs.flake-parts.lib.mkFlake { inherit inputs; };
+    inputs@{ flake-parts, ... }:
+    let
+      inherit (inputs.nixpkgs.lib) hasPrefix fileset;
+      imports =
+        ./modules
+        |> fileset.fileFilter (file: file.hasExt "nix" && !(hasPrefix "_" file.name))
+        |> fileset.toList;
+    in
+    flake-parts.lib.mkFlake { inherit inputs; } { inherit imports; };
 
   inputs = {
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
@@ -29,32 +37,16 @@
       url = "github:Mic92/direnv-instant";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-compat.url = "github:edolstra/flake-compat";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
-    flake-utils.inputs.systems.follows = "systems";
-    gen-luarc = {
-      url = "github:mrcjkb/nix-gen-luarc-json";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     ghostty = {
       url = "github:ghostty-org/ghostty";
-      inputs = {
-        flake-compat.follows = "flake-compat";
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     gimp.url = "path:/home/wyspr/Configuration/GIMP";
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.flake-compat.follows = "flake-compat";
-    };
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -71,7 +63,6 @@
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs = {
-        flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
       };
@@ -95,7 +86,6 @@
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
       };
     };
     qml-niri = {
@@ -109,21 +99,10 @@
       url = "path:/home/wyspr/Configuration/Rabid";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs = {
-        base16.follows = "base16";
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-      };
-    };
     system76-scheduler-niri = {
       url = "github:Kirottu/system76-scheduler-niri";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    systems.url = "github:nix-systems/x86_64-linux";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
     vicinae = {
       url = "github:vicinaehq/vicinae";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -131,13 +110,17 @@
     vicinae-extensions = {
       url = "github:vicinaehq/extensions";
       inputs = {
-        flake-compat.follows = "flake-compat";
         nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
         vicinae.follows = "vicinae";
       };
     };
-    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
-    yazi-plugin-fuzzy-search.url = "github:onelocked/fuzzy-search.yazi";
+    wrappers = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    yazi-plugin-fuzzy-search = {
+      url = "github:onelocked/fuzzy-search.yazi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

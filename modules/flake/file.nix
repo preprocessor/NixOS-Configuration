@@ -12,7 +12,16 @@
   flake-file = {
     description = "wyspr's Terrible NixOS Configuration";
 
-    outputs = /* nix */ "inputs: ./modules |> inputs.import-tree |> inputs.flake-parts.lib.mkFlake { inherit inputs; }";
+    outputs = /* nix */ ''
+      inputs@{ flake-parts, ... }:
+      flake-parts.lib.mkFlake { inherit inputs; } {
+        imports =
+          with inputs.nixpkgs.lib;
+          ./modules
+          |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name)
+          |> fileset.toList;
+      }
+    '';
 
     do-not-edit = ''
       #   o  .  ▄▀▀▀▄  .▄▀▄ * ▄▀▄ .  ..     o   .-.       +      .   .      |      .

@@ -9,8 +9,13 @@
       url = "github:niri-wm/niri";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    qml-niri.url = "github:imiric/qml-niri/main";
-    wrappers.url = "github:BirdeeHub/nix-wrapper-modules";
+    qml-niri = {
+      url = "github:imiric/qml-niri/main";
+    };
+    wrappers = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     system76-scheduler-niri = {
       url = "github:Kirottu/system76-scheduler-niri";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,7 +30,7 @@
       ...
     }:
     let
-      niri = inputs.niri.packages.${pkgs.sys}.niri;
+      inherit (inputs.niri.packages.${pkgs.sys}) niri;
 
       niriWrapped = inputs.wrappers.wrappers.niri.wrap {
         inherit (config.custom.programs.niri) settings;

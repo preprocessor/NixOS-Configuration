@@ -15,9 +15,9 @@
 
       hj.packages = with pkgs; [
         vivaldi
-        virtualbox
         mpv
         qview
+        gdmap # similar to WinDirStat
       ];
     };
 }

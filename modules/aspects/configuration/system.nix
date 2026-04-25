@@ -29,9 +29,6 @@
         extra-trusted-public-keys = [ "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU=" ];
       };
 
-      nix.optimise.automatic = true;
-      nix.optimise.dates = [ "19:30" ];
-
       services.scx = {
         enable = true;
         package = pkgs.scx.rustscheds;
