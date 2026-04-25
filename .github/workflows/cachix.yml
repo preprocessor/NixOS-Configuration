@@ -1,0 +1,80 @@
+name: Build and Cache Specific Nix Packages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prepare-matrix:
+    name: Check Cache
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            experimental-features = pipe-operators
+
+      - name: Filter packages against Cachix
+        id: set-matrix
+        run: |
+          PACKAGES=("amdgpu_top")
+          TO_BUILD=()
+
+          for pkg in "${PACKAGES[@]}"; do
+            STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath")
+            echo "Checking $pkg..."
+
+            if ! nix path-info --store https://bazinga.cachix.org "$STORE_PATH" >/dev/null 2>&1; then
+              echo " -> Not found. Queuing for build."
+              TO_BUILD+=("\"$pkg\"")
+            else
+              echo " -> Already in cache. Skipping."
+            fi
+          done
+
+          if [ ${#TO_BUILD[@]} -eq 0 ]; then
+            echo "All packages are cached."
+            echo "matrix=[]" >> "$GITHUB_OUTPUT"
+          else
+            JSON_ARRAY="[$(IFS=,; echo "${TO_BUILD[*]}")]"
+            echo "matrix=$JSON_ARRAY" >> "$GITHUB_OUTPUT"
+          fi
+
+  build-heavy-packages:
+    needs: prepare-matrix
+    if: ${{ needs.prepare-matrix.outputs.matrix != '[]' }}
+    name: Build ${{ matrix.package }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            experimental-features = pipe-operators
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: bazinga
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Build and Push ${{ matrix.package }}
+        run: |
+          echo "Starting build for ${{ matrix.package }}..."
+          nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-out-paths --print-build-logs \
+          | cachix push bazinga
