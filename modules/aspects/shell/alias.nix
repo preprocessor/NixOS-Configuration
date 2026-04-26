@@ -18,22 +18,22 @@
           in
           config.environment.shellAliases
           // {
-            l = lla + " -T";
+            l = lla + " -T ";
             ls = lla;
-            la = lla + " -AT";
-            ll = lla + " -Al";
-            lss = lla + " -S";
+            la = lla + " -AT ";
+            ll = lla + " -Al ";
+            lss = lla + " -S ";
 
             man = "batman";
-            cat = "bat --plain";
+            cat = "bat --plain ";
 
             gtop = lib.getExe pkgs.amdgpu_top;
 
-            cp = "cp -r";
+            cp = "cp -r ";
             mkdir = "mkdir -p";
 
-            rm = "trash-put";
-            rmdir = "trash-put";
+            rm = "trash-put ";
+            rmdir = "trash-put ";
 
             repl = "nix repl --file ${self.const.cfgdir}/repl.nix";
           };
@@ -52,7 +52,7 @@
 
           ost = "nh os test";
           rb = "nh os switch";
-          wf = "nix run ${self.const.cfgdir}/#write-flake";
+          wf = "cd ${self.const.cfgdir} && nix run .#write-flake";
 
           v = "nvim";
           x = "exit";

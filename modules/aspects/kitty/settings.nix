@@ -61,6 +61,11 @@
         "alt+right" = "neighboring_window right";
         "alt+up" = "neighboring_window up";
         "alt+down" = "neighboring_window down";
+        # Navigation with Ctrl + Shift + {h, j, k, l}
+        "ctrl+shift+h" = "neighboring_window left";
+        "ctrl+shift+l" = "neighboring_window right";
+        "ctrl+shift+k" = "neighboring_window up";
+        "ctrl+shift+j" = "neighboring_window down";
 
         "ctrl+x" = "close_window";
       };
