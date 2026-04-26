@@ -53,8 +53,8 @@
 
       keybindings = {
         # Splits
-        "ctrl+shift+|" = "launch --location=vsplit";
-        "ctrl+|" = "combine : launch --location=hsplit : resize_window shorter 10";
+        "ctrl+shift+\\" = "launch --location=vsplit";
+        "ctrl+\\" = "combine : launch --location=hsplit : layout_action bias 25";
         "ctrl+n" = "launch --location=vsplit";
         # Navigation with Alt + arrows
         "alt+left" = "neighboring_window left";
@@ -65,14 +65,14 @@
         "ctrl+x" = "close_window";
       };
 
-      extraConfig = # toml
+      extraConfig =
         let
-          font-features = "+cv01 +cv06 +cv09 +cv10 +cv11 +cv31 +cv38 +cv40 +cv42 +cv43 +cv64 +cv66 +ss03 +ss07 +ss08 +ss09 +ss10 +ss11 +calt";
+          font-features = "+cv01 +cv02 +cv03 +cv04 +cv06 +cv09 +cv10 +cv31 +cv38 +cv40 +cv42 +cv43 +cv64 +cv66 +ss03 +ss07 +ss08 +ss09 +ss10 +ss11";
         in
         ''
-          font_features MapleMono-NF-Bold ${font-features}
+          font_features MapleMono-NF-Medium ${font-features}
           font_features MapleMono-NF-ExtraBold ${font-features}
-          font_features MapleMono-NF-BoldItalic ${font-features}
+          font_features MapleMono-NF-Italic ${font-features}
           font_features MapleMono-NF-ExtraBoldItalic ${font-features}
           mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection
           mouse_map left press ungrabbed mouse_selection drag_or_normal_select

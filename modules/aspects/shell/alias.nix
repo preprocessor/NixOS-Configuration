@@ -42,7 +42,7 @@
           ehistory = ''nvim "${config.hj.xdg.data.directory}/fish/fish_history"'';
           ppath = "echo $PATH | tr ' ' '\n'";
 
-          nos = "cd /home/wyspr/Configuration/NixOS/";
+          nos = "cd /home/wyspr/Configuration/NixOS/ && yazi";
 
           clone = "git clone";
           cls = "clear";

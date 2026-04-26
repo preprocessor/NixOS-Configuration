@@ -2,9 +2,11 @@
   w.default =
     { pkgs, lib, ... }:
     {
+      hj.packages = [ pkgs.nix-your-shell ];
+
       programs.fish.interactiveShellInit = ''
         if command -q nix-your-shell
-          ${lib.getExe pkgs.nix-your-shell} --nom fish | source | source
+          nix-your-shell fish | source
         end
       '';
     };
