@@ -1,0 +1,7 @@
+keys:
+  - &wyspr age1363msjxccrj6cnshdlvfrev333kn7mvre82p9f0294m9cjdj2gws2lq0x9
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - age:
+      - *wyspr
