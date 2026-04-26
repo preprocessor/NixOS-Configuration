@@ -4,14 +4,14 @@
     {
       hj.packages = with pkgs; [
         imagemagick
-        ripgrep
-        fd
-        trash-cli
-        nix-init
-        nurl
         fetchutils
+        trash-cli
+        ripgrep
+        nix-init
         nvim-pkg # neovim
         silicon
+        npins
+        nurl
         just # a command runner
         wget
         tree
@@ -19,6 +19,7 @@
         btop
         mcat
         gum
+        fd
         jq # parse json
         # custom packages
         eye

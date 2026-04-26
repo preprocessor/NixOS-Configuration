@@ -1,10 +1,5 @@
 { inputs, ... }:
 {
-  ff.yazi-plugin-fuzzy-search = {
-    url = "github:onelocked/fuzzy-search.yazi";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   w.shell =
     {
       pkgs,

@@ -16,10 +16,6 @@
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    system76-scheduler-niri = {
-      url = "github:Kirottu/system76-scheduler-niri";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   w.desktop =
@@ -56,22 +52,6 @@
         enable = true;
         useNautilus = false;
         package = niriWrapped;
-      };
-
-      hj.systemd.services.system76-scheduler-niri = {
-        description = "Niri integration for system76-scheduler";
-        after = [ "niri.service" ];
-        wantedBy = [ "niri.service" ];
-        serviceConfig = {
-          Type = "simple";
-          ExecStart = lib.getExe (
-            inputs.system76-scheduler-niri.packages.${pkgs.sys}.default.overrideAttrs {
-              doCheck = false;
-            }
-          );
-          RestartSec = 1;
-          TimeoutStopSec = 10;
-        };
       };
 
       # restart niri with new settings on rebuild

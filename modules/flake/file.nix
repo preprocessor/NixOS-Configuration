@@ -5,11 +5,13 @@
 }:
 {
   imports = [
-    inputs.flake-file.flakeModules.dendritic
+    inputs.flake-file.flakeModules.default
     (lib.mkAliasOptionModule [ "ff" ] [ "flake-file" "inputs" ])
   ];
 
   flake-file = {
+    inputs.flake-file.url = "github:vic/flake-file";
+
     description = "wyspr's Terrible NixOS Configuration";
 
     outputs = /* nix */ ''

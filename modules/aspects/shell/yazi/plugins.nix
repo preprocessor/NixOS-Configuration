@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   w.shell =
     { pkgs, lib, ... }:
@@ -11,8 +10,23 @@
         hash = "sha256-5WxCUf/Lv3wms7IPgkK0lJuJhIPa1E46obOFASS8eZU=";
       };
 
+      yazi-fuzzy-search = pkgs.fetchFromGitHub {
+        owner = "onelocked";
+        repo = "fuzzy-search.yazi";
+        rev = "16cea088a39c7769fbd22c4810347b04dd38c6b2";
+        hash = "sha256-3YsZQ7SOkJZfUWP2KGzp8fPpT42M+x2aThs/AYmdy0o=";
+      };
+
+      fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
+        pname = "fuzzy-search.yazi";
+        version = yazi-fuzzy-search.shortRev or yazi-fuzzy-search.dirtyShortRev or "dirty";
+        src = lib.cleanSourceWith {
+          src = yazi-fuzzy-search;
+          filter = name: type: (baseNameOf name == "main.lua");
+        };
+      };
+
       zoom = yazi-plugins-repo + "/zoom.yazi";
-      fuzzy-search = inputs.yazi-plugin-fuzzy-search.packages.${pkgs.sys}.default;
     in
     {
       custom.programs.yazi.initLua = /* lua */ ''

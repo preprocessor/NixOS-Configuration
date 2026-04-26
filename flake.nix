@@ -37,15 +37,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-file.url = "github:vic/flake-file";
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    import-tree.url = "github:vic/import-tree";
     neovim = {
       url = "path:/home/wyspr/Configuration/Neovim/";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -72,27 +69,13 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
-    qml-niri = {
-      url = "github:imiric/qml-niri/main";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
+    qml-niri.url = "github:imiric/qml-niri/main";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    system76-scheduler-niri = {
-      url = "github:Kirottu/system76-scheduler-niri";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     wrappers = {
       url = "github:BirdeeHub/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    yazi-plugin-fuzzy-search = {
-      url = "github:onelocked/fuzzy-search.yazi";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
