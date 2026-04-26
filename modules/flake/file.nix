@@ -10,7 +10,7 @@
   ];
 
   flake-file = {
-    inputs.flake-file.url = "github:vic/flake-file";
+    inputs.flake-file.url = "github:preprocessor/flake-file-dn";
 
     description = "wyspr's Terrible NixOS Configuration";
 
