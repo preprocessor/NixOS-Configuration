@@ -1,4 +1,11 @@
+{ inputs, ... }:
 {
+  flake-file.inputs.colorscheme = {
+    url = "github:tinted-theming/schemes";
+    flake = false;
+    buildTime = true;
+  };
+
   w.tokyonight-night =
     {
       pkgs,
