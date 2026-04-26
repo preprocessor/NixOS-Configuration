@@ -35,11 +35,12 @@
           hash = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
         }
         + "/tokyonight-night.yazi";
+
       tokyonight-vesktop-theme = pkgs.fetchFromGitHub {
-        owner = "refact0r";
-        repo = "system24";
-        rev = "942c28771d1230567d65a5362814e0267317f455";
-        hash = "sha256-2n4u+ibWDHRG84xo7u9posWX31JQ//80NZCZh5T/B9o=";
+        owner = "ForRealy";
+        repo = "Tokyo-Night-fixed";
+        rev = "585302fe074249eff2212930d26b0153a5ff5102";
+        hash = "sha256-iipzyCRE6XbOERlcxRj8Vdbx0lN66XZ7wNJgexeoAcM=";
       };
     in
     {
@@ -67,9 +68,9 @@
 
       custom.programs.fuzzel.moreCfg = builtins.readFile "${tokyonight}/fuzzel/tokyonight_night.ini";
 
-      hj.xdg.config.files."vesktop/themes/tokyonight_system24.css".source =
-        tokyonight-vesktop-theme + "/theme/flavors/system24-tokyo-night.theme.css";
-      custom.programs.vesktop.vencord.settings.enabledThemes = [ "tokyonight_system24.css" ];
+      hj.xdg.config.files."vesktop/themes/tokyonight.css".source =
+        tokyonight-vesktop-theme + "/themes/tokyo-night.theme.css";
+      custom.programs.vesktop.vencord.settings.enabledThemes = [ "tokyonight.css" ];
 
       custom.programs.kitty.settings.theme =
         builtins.readFile "${tokyonight}/kitty/tokyonight_night.conf";

@@ -4,22 +4,26 @@
 
   w.desktop =
     { pkgs, ... }:
-    let
-      apple-fonts = inputs.apple-fonts.packages.${pkgs.sys};
-    in
     {
-      fonts = {
-        packages = with pkgs; [
-          maple-mono.variable
-          maple-mono.NF
-          font-awesome_6
-          inter
+      nixpkgs.overlays = [ inputs.apple-fonts.overlays.default ];
 
-          apple-fonts.sf-pro
-          apple-fonts.sf-compact
-          apple-fonts.sf-mono
-          apple-fonts.ny
-        ];
+      fonts = {
+        packages =
+          with pkgs;
+          [
+            maple-mono.variable
+            maple-mono.NF
+            font-awesome_6
+            inter
+          ]
+          ++ (with pkgs.apple-fonts; [
+            sf-pro
+            sf-compact
+            sf-mono
+            ny
+
+          ]);
+
         enableDefaultPackages = true;
 
         fontDir.enable = true;
