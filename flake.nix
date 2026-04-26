@@ -21,14 +21,13 @@
 
   outputs =
     inputs@{ flake-parts, ... }:
-    let
-      inherit (inputs.nixpkgs.lib) hasPrefix fileset;
+    flake-parts.lib.mkFlake { inherit inputs; } {
       imports =
+        with inputs.nixpkgs.lib;
         ./modules
-        |> fileset.fileFilter (file: file.hasExt "nix" && !(hasPrefix "_" file.name))
+        |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name)
         |> fileset.toList;
-    in
-    flake-parts.lib.mkFlake { inherit inputs; } { inherit imports; };
+    };
 
   inputs = {
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
@@ -42,11 +41,6 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    gimp.url = "path:/home/wyspr/Configuration/GIMP";
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,10 +56,7 @@
     };
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.flake-parts.follows = "flake-parts";
     };
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
@@ -81,13 +72,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
-    otterlauncher = {
-      url = "github:kuokuo123/otter-launcher";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     qml-niri = {
       url = "github:imiric/qml-niri/main";
       inputs = {
@@ -95,24 +79,9 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    rabid = {
-      url = "path:/home/wyspr/Configuration/Rabid";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     system76-scheduler-niri = {
       url = "github:Kirottu/system76-scheduler-niri";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    vicinae = {
-      url = "github:vicinaehq/vicinae";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    vicinae-extensions = {
-      url = "github:vicinaehq/extensions";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        vicinae.follows = "vicinae";
-      };
     };
     wrappers = {
       url = "github:BirdeeHub/nix-wrapper-modules";

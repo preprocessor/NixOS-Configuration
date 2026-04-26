@@ -33,24 +33,30 @@
             };
             "Mod+Space" = _: {
               content.spawn = [
-                # "tofi-drun | xargs --no-run-if-empty app2unit"
                 "fuzzel"
               ];
               props.hotkey-overlay-title = "Open application launcher: fuzzel";
             };
-            "Mod+Alt+Space" = _: {
-              content.spawn-sh = [
-                ""
-                # "tofi-run | xargs --no-run-if-empty ghostty -e"
-              ];
-            };
-            "Mod+V" = _: {
+            "Mod+X" = _: {
               content.spawn = [
-                "vicinae"
-                "vicinae://extensions/vicinae/clipboard/history"
+                "kitten"
+                "quick-access-terminal"
               ];
-              props.hotkey-overlay-title = "Open clipboard manager: vicinae";
             };
+            # "Mod+Alt+Space" = _: {
+            #   content.spawn-sh = [
+            #     ""
+            #     # "tofi-run | xargs --no-run-if-empty ghostty -e"
+            #   ];
+            # };
+            #  [INFO] add new clipboard manager
+            # "Mod+V" = _: {
+            #   content.spawn = [
+            #     "vicinae"
+            #     "vicinae://extensions/vicinae/clipboard/history"
+            #   ];
+            #   props.hotkey-overlay-title = "Open clipboard manager: vicinae";
+            # };
             "Super+Alt+L" = _: {
               content.spawn = "swaylock";
               props.hotkey-overlay-title = "Lock the Screen: swaylock";

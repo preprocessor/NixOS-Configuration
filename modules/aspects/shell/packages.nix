@@ -21,8 +21,8 @@
         gum
         jq # parse json
         # custom packages
-        wyspr-eye
-        wyspr-gbc
+        eye
+        gbc
         ocr
         # wyspr_waow
       ];

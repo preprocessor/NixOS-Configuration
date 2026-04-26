@@ -22,7 +22,7 @@ jobs:
       - name: Filter packages against Cachix
         id: set-matrix
         run: |
-          PACKAGES=("amdgpu_top")
+          PACKAGES=("amdgpu_top" "kitty")
           TO_BUILD=()
 
           for pkg in "${PACKAGES[@]}"; do
