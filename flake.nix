@@ -32,7 +32,6 @@
   inputs = {
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
     base16.url = "github:SenchoPens/base16.nix";
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     direnv-instant = {
       url = "github:Mic92/direnv-instant";
       inputs.nixpkgs.follows = "nixpkgs";
