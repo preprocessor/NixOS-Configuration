@@ -1,27 +1,25 @@
 {
+  envoy = {
+    yazi-plugins-repo.github = "yazi-rs/plugins";
+    fuzzy-search-src.github = "onelocked/fuzzy-search.yazi";
+  };
+
   w.shell =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      envoy,
+      ...
+    }:
     let
       inherit (lib) getExe;
-      yazi-plugins-repo = pkgs.fetchFromGitHub {
-        owner = "yazi-rs";
-        repo = "plugins";
-        rev = "442d9080da7524c8e58e10c610b832538c87464d";
-        hash = "sha256-5WxCUf/Lv3wms7IPgkK0lJuJhIPa1E46obOFASS8eZU=";
-      };
-
-      yazi-fuzzy-search = pkgs.fetchFromGitHub {
-        owner = "onelocked";
-        repo = "fuzzy-search.yazi";
-        rev = "16cea088a39c7769fbd22c4810347b04dd38c6b2";
-        hash = "sha256-3YsZQ7SOkJZfUWP2KGzp8fPpT42M+x2aThs/AYmdy0o=";
-      };
+      inherit (envoy) yazi-plugins-repo;
 
       fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
         pname = "fuzzy-search.yazi";
-        version = yazi-fuzzy-search.shortRev or yazi-fuzzy-search.dirtyShortRev or "dirty";
+        version = "unstable";
         src = lib.cleanSourceWith {
-          src = yazi-fuzzy-search;
+          inherit (envoy.fuzzy-search-src) src;
           filter = name: type: (baseNameOf name == "main.lua");
         };
       };

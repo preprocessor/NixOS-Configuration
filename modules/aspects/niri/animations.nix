@@ -1,16 +1,10 @@
 {
+  envoy.niri-shaders-collection.github = "jgarza9788/niri-animation-collection";
+
   w.desktop =
-    { pkgs, ... }:
-    let
-      niri-shaders-collection = pkgs.fetchFromGitHub {
-        owner = "jgarza9788";
-        repo = "niri-animation-collection";
-        rev = "aa26f4e157b818630cb281f6e1968b641c079d69";
-        hash = "sha256-DgoudR6etn+t5eYplPcOISPuWMRAulW6ZOCTsyFHi2w=";
-      };
-    in
+    { pkgs, envoy, ... }:
     {
       custom.programs.niri.settings.extraConfig =
-        ''include "${niri-shaders-collection}/animations/glide.kdl"'';
+        ''include "${envoy.niri-shaders-collection.src}/animations/glide.kdl"'';
     };
 }

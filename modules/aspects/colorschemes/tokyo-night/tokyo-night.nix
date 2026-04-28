@@ -1,54 +1,29 @@
-{ inputs, ... }:
 {
-  flake-file.inputs.colorscheme = {
-    url = "github:tinted-theming/schemes";
-    flake = false;
-    buildTime = true;
+  envoy = {
+    colorscheme.github = "tinted-theming/schemes";
+    tokyonight.github = "folke/tokyonight.nvim";
+    tokyonight-yazi-theme.github = "kalidyasin/yazi-flavors";
+    tokyonight-vesktop-theme.github = "ForRealy/Tokyo-Night-fixed";
   };
 
   w.tokyonight-night =
     {
+      envoy,
+      config,
       pkgs,
       lib,
-      config,
       ...
     }:
     let
-      colorscheme =
-        pkgs.fetchFromGitHub {
-          owner = "tinted-theming";
-          repo = "schemes";
-          rev = "3fa37f7b72d332b406fdc254008ed6d6b50efb4c";
-          hash = "sha256-KIeHXjhlEh1wsyT6rITze7Hvc1L6fhgk30nPpcmrSrc=";
-        }
-        + "/base24/tokyo-night-dark.yaml";
+      colorscheme = envoy.colorscheme.src + "/base24/tokyo-night-dark.yaml";
 
-      tokyonight =
-        pkgs.fetchFromGitHub {
-          owner = "folke";
-          repo = "tokyonight.nvim";
-          rev = "cdc07ac78467a233fd62c493de29a17e0cf2b2b6";
-          hash = "sha256-a9iRWue7DB7s/wNdxqqB51Jya5P9X6sDftqhdmKggU0=";
-        }
-        + "/extras";
+      tokyonight = envoy.tokyonight.src + "/extras";
 
       tmTheme = tokyonight + "/sublime/tokyonight_night.tmTheme";
 
-      tokyonight-yazi-theme =
-        pkgs.fetchFromGitHub {
-          owner = "kalidyasin";
-          repo = "yazi-flavors";
-          rev = "70fe6b4a245a59b546166aae6c45ee2b471869c2";
-          hash = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
-        }
-        + "/tokyonight-night.yazi";
+      tokyonight-yazi-theme = envoy.tokyonight-yazi-theme.src + "/tokyonight-night.yazi";
 
-      tokyonight-vesktop-theme = pkgs.fetchFromGitHub {
-        owner = "ForRealy";
-        repo = "Tokyo-Night-fixed";
-        rev = "585302fe074249eff2212930d26b0153a5ff5102";
-        hash = "sha256-iipzyCRE6XbOERlcxRj8Vdbx0lN66XZ7wNJgexeoAcM=";
-      };
+      tokyonight-vesktop-theme = envoy.tokyonight-vesktop-theme.src;
     in
     {
       scheme = colorscheme; # Set base16 scheme

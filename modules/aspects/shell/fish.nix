@@ -1,19 +1,13 @@
 {
+  envoy.fish-completion-sync.github = "iynaix/fish-completion-sync";
   w.shell =
     {
       pkgs,
       lib,
       config,
+      envoy,
       ...
     }:
-    let
-      fish-completion-sync = pkgs.fetchFromGitHub {
-        owner = "iynaix";
-        repo = "fish-completion-sync";
-        rev = "4f058ad2986727a5f510e757bc82cbbfca4596f0";
-        hash = "sha256-kHpdCQdYcpvi9EFM/uZXv93mZqlk1zCi2DRhWaDyK5g=";
-      };
-    in
     {
       programs.fish = {
         enable = true;
@@ -24,7 +18,7 @@
           set -g fish_greeting # Disable greeting
 
           # setup fish-completion-sync
-          source ${fish-completion-sync}/init.fish
+          source ${envoy.fish-completion-sync.src}/init.fish
 
           bind Z __onelockeds_fuzzy_zox
           bind -M insert Z __onelockeds_fuzzy_zox

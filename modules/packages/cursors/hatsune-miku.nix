@@ -1,18 +1,12 @@
 { self, ... }:
 {
+  envoy.miku.github = "supermariofps/hatsune-miku-windows-linux-cursors";
+
   perSystem =
-    { pkgs, ... }:
+    { pkgs, envoy, ... }:
     {
       packages.hatsune-miku-cursor = pkgs.stdenvNoCC.mkDerivation {
-        pname = "hatsune-miku-cursor";
-        version = "1.2.6";
-
-        src = pkgs.fetchFromGitHub {
-          owner = "supermariofps";
-          repo = "hatsune-miku-windows-linux-cursors";
-          rev = "471ff88156e9a3dc8542d23e8cae4e1c9de6e732";
-          hash = "sha256-HCHo4GwWLvjjnKWNiHb156Z+NQqliqLX1T1qNxMEMfE=";
-        };
+        inherit (envoy.miku) src version pname;
 
         installPhase = ''
           mkdir -p $out/share/icons
