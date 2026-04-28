@@ -6,7 +6,12 @@
   };
 
   w.default =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      constants,
+      ...
+    }:
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];
       environment.systemPackages = [ pkgs.sops ];
@@ -17,9 +22,9 @@
         };
         secrets.private_key = {
           key = "private_key";
-          owner = self.const.username;
+          owner = constants.username;
           format = "yaml";
-          sopsFile = ../../secrets/cachix.yaml;
+          sopsFile = self + /secrets/cachix.yaml;
         };
       };
     };

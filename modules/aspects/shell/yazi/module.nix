@@ -1,10 +1,10 @@
-{ inputs, ... }:
 {
   w.shell =
     {
       pkgs,
       config,
       lib,
+      wrappers,
       ...
     }:
     let
@@ -23,7 +23,7 @@
           }
         );
 
-      yaziWrapped = inputs.wrappers.wrappers.yazi.wrap ({
+      yaziWrapped = wrappers.wrappers.yazi.wrap ({
         inherit pkgs;
         inherit (config.custom.programs.yazi) plugins;
         extraPackages = with pkgs; [

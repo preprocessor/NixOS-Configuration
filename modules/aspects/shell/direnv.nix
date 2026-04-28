@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   ff.direnv-instant = {
     url = "github:Mic92/direnv-instant";
@@ -6,9 +5,14 @@
   };
 
   w.default =
-    { lib, pkgs, ... }:
+    {
+      lib,
+      pkgs,
+      inputs',
+      ...
+    }:
     let
-      direnv-instant = inputs.direnv-instant.packages.${pkgs.sys}.direnv-instant;
+      direnv-instant = inputs'.direnv-instant.packages.direnv-instant;
       package = (
         pkgs.runCommand "direnv-instant"
           {

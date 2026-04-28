@@ -7,7 +7,6 @@
 {
   flake.nixosConfigurations.ramiel = withSystem "x86_64-linux" (
     { self', inputs', ... }:
-
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit self' inputs';

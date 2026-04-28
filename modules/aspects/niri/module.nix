@@ -2,7 +2,6 @@
 # https://github.com/iynaix/dotfiles/blob/7cfd3aec29feec3807206591260e594ad28094f9/modules/gui/niri/default.nix
 # https://github.com/onelocked/NixOS/blob/master/modules/nixos/desktop/niri/niri.nix
 
-{ inputs, ... }:
 {
   ff = {
     niri = {
@@ -23,12 +22,14 @@
       pkgs,
       config,
       lib,
+      inputs',
+      wrappers,
       ...
     }:
     let
-      inherit (inputs.niri.packages.${pkgs.sys}) niri;
+      inherit (inputs'.niri.packages) niri;
 
-      niriWrapped = inputs.wrappers.wrappers.niri.wrap {
+      niriWrapped = wrappers.wrappers.niri.wrap {
         inherit (config.custom.programs.niri) settings;
         inherit pkgs;
         v2-settings = false;

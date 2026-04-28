@@ -68,7 +68,6 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
     qml-niri.url = "github:imiric/qml-niri/main";
     sops-nix = {
       url = "github:Mic92/sops-nix";

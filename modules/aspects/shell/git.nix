@@ -1,9 +1,13 @@
-{ inputs, ... }:
 {
   w.default =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      wrappers,
+      ...
+    }:
     let
-      gitWrapped = inputs.wrappers.wrappers.git.wrap {
+      gitWrapped = wrappers.wrappers.git.wrap {
         inherit pkgs;
         settings = {
           init.defaultBranch = "main";

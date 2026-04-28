@@ -1,14 +1,18 @@
-{ lib, inputs, ... }:
 {
   w.default =
-    { pkgs, ... }:
+    {
+      pkgs,
+      lib,
+      wrappers,
+      ...
+    }:
     let
       tomlFormat = pkgs.formats.toml { };
     in
     {
       nixpkgs.overlays = [
         (_: prev: {
-          worktrunk = inputs.wrappers.lib.wrapPackage {
+          worktrunk = wrappers.lib.wrapPackage {
             pkgs = prev;
             package = prev.worktrunk;
             env.WORKTRUNK_CONFIG_PATH = tomlFormat.generate "worktrunk-config.toml" {

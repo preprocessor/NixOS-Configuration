@@ -1,7 +1,6 @@
-{ self, ... }:
 {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, self', ... }:
     {
       packages.ocr = pkgs.writeShellApplication {
         name = "ocr";
@@ -31,5 +30,9 @@
       };
     };
 
-  w.default.nixpkgs.overlays = [ (_: f: { inherit (self.packages.${f.sys}) ocr; }) ];
+  w.default =
+    { self', ... }:
+    {
+      nixpkgs.overlays = [ (_: f: { inherit (self'.packages) ocr; }) ];
+    };
 }

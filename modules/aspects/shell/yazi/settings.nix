@@ -1,7 +1,6 @@
-{ lib, ... }:
 {
   w.shell =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       environment.systemPackages = [ pkgs.ouch-rar ];
 

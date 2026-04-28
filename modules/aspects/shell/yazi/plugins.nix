@@ -13,18 +13,17 @@
     }:
     let
       inherit (lib) getExe;
-      inherit (envoy) yazi-plugins-repo;
 
       fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
-        pname = "fuzzy-search.yazi";
-        version = "unstable";
+        inherit (envoy.fuzzy-search-src) pname version;
+
         src = lib.cleanSourceWith {
           inherit (envoy.fuzzy-search-src) src;
           filter = name: type: (baseNameOf name == "main.lua");
         };
       };
 
-      zoom = yazi-plugins-repo + "/zoom.yazi";
+      zoom = envoy.yazi-plugins-repo.src + "/zoom.yazi";
     in
     {
       custom.programs.yazi.initLua = /* lua */ ''

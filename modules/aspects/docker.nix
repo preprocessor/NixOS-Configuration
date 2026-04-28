@@ -1,11 +1,10 @@
-{ self, ... }:
 {
   w.default =
-    { pkgs, ... }:
+    { pkgs, constants, ... }:
     {
       virtualisation.docker.enable = true;
       users.groups.docker = { };
-      users.users."${self.const.username}".extraGroups = [ "docker" ];
+      users.users."${constants.username}".extraGroups = [ "docker" ];
       environment.systemPackages = [ pkgs.winboat ];
     };
 }

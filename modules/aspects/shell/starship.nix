@@ -1,15 +1,15 @@
-{ inputs, ... }:
 {
   w.default =
     {
       config,
       pkgs,
       lib,
+      wrappers,
       ...
     }:
     let
       toml = pkgs.formats.toml { };
-      starshipWrapped = inputs.wrappers.lib.wrapPackage {
+      starshipWrapped = wrappers.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.starship;
         env.STARSHIP_CONFIG = toml.generate "starship.toml" {

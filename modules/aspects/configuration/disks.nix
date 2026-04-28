@@ -1,7 +1,6 @@
-{ lib, ... }:
 {
   w.desktop =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       custom.services.udiskie = {
         enable = true;
@@ -14,7 +13,12 @@
     };
 
   w.default =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      lib,
+      ...
+    }:
     let
       inherit (lib) mkOption types;
 

@@ -1,12 +1,32 @@
 {
+  perSystem =
+    { pkgs, ... }:
+    {
+      packages.lla = pkgs.lla.overrideAttrs (oldAttrs: {
+        doCheck = false;
+        postPatch = ''
+          substituteInPlace lla/src/formatter/column_config.rs \
+            --replace-fail '"Permissions".to_string()' '"Perms".to_string()'
+        '';
+      });
+    };
 
   w.default =
-    { pkgs, ... }:
+    { pkgs, self', ... }:
     let
+      lla = self'.packages.lla;
       tomlFormat = pkgs.formats.toml { };
     in
     {
-      hj.packages = [ pkgs.lla ];
+      environment.shellAliases = {
+        l = lla + " -T ";
+        ls = lla;
+        la = lla + " -AT ";
+        ll = lla + " -Al ";
+        lss = lla + " -S ";
+      };
+
+      hj.packages = [ lla ];
 
       hj.xdg.config.files."lla/config.toml".source = tomlFormat.generate "lla-config" {
         default_sort = "name";

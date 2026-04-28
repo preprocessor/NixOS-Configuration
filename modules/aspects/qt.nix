@@ -1,7 +1,11 @@
-{ lib, ... }:
 {
   w.desktop =
-    { config, pkgs, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     let
       tokyonightKvantum =
         {

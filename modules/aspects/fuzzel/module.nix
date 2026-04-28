@@ -1,16 +1,16 @@
-{ inputs, ... }:
 {
   w.desktop =
     {
       pkgs,
       config,
       lib,
+      wrappers,
       ...
     }:
     let
       sysCfg = config;
 
-      fuzzelWrapped = inputs.wrappers.lib.wrapPackage (
+      fuzzelWrapped = wrappers.lib.wrapPackage (
         { config, lib, ... }:
         {
           inherit pkgs;

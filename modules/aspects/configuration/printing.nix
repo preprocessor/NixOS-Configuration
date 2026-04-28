@@ -1,4 +1,3 @@
-{ ... }:
 {
   w.default = {
     # Enable CUPS to print documents.

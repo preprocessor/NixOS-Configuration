@@ -1,7 +1,11 @@
-{ self, lib, ... }:
 {
   w.desktop =
-    { pkgs, config, ... }:
+    {
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
     let
       cursor = {
         package = pkgs.posy-cursors;
@@ -72,7 +76,7 @@
     };
 
   w.default =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       options.custom = {
         gtk = {

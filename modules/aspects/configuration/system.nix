@@ -1,14 +1,17 @@
-{ lib, self, ... }:
 {
   ff = {
     # channel urls are faster and more reliable than github
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    nixpkgs-stable.url = "https://channels.nixos.org/nixos-25.11/nixexprs.tar.xz";
     nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
   };
 
   w.default =
-    { pkgs, ... }:
+    {
+      pkgs,
+      lib,
+      constants,
+      ...
+    }:
     {
       nix.settings = {
         use-xdg-base-directories = true;
@@ -53,7 +56,7 @@
         overlays = [ (f: p: { sys = p.stdenv.hostPlatform.system; }) ];
       };
 
-      system.stateVersion = self.const.stateVersion;
+      system.stateVersion = constants.stateVersion;
 
       services.dbus.implementation = "broker";
 

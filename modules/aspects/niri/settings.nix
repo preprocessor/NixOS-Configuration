@@ -1,19 +1,20 @@
-{ self, ... }:
 {
   w.desktop =
     {
       lib,
       pkgs,
+      constants,
       ...
     }:
     let
       set = _: { };
+      inherit (constants) homedir;
     in
     {
       custom.programs.niri.settings = {
         clipboard.disable-primary = true;
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
-        screenshot-path = self.const.homedir + "/Pictures/Screenshots/%Y-%m-%d %H:%M:%S.png";
+        screenshot-path = homedir + "/Pictures/Screenshots/%Y-%m-%d %H:%M:%S.png";
         gestures.hot-corners.off = set;
 
         outputs."DP-2" = {

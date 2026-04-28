@@ -1,6 +1,5 @@
-{ self, ... }:
 let
-  name = "eye";
+  name = "gbc";
 in
 {
   perSystem =
@@ -14,5 +13,9 @@ in
       });
     };
 
-  w.default.nixpkgs.overlays = [ (_: f: { ${name} = self.packages.${f.sys}.${name}; }) ];
+  w.default =
+    { self', ... }:
+    {
+      nixpkgs.overlays = [ (_: f: { ${name} = self'.packages.${name}; }) ];
+    };
 }

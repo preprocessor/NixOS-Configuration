@@ -214,7 +214,7 @@ in
   };
 
   config = {
-    m.default = injectArg;
+    w.default = injectArg;
 
     perSystem =
       { pkgs, ... }:

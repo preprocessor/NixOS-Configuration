@@ -1,4 +1,3 @@
-{ self, ... }:
 {
 
   w.default =
@@ -6,37 +5,30 @@
       pkgs,
       config,
       lib,
+      constants,
       ...
     }:
+    let
+      inherit (constants) cfgdir;
+    in
     {
       hj.packages = [ pkgs.uutils-coreutils-noprefix ];
 
       programs.fish = {
-        shellAliases =
-          let
-            lla = lib.getExe pkgs.lla;
-          in
-          config.environment.shellAliases
-          // {
-            l = lla + " -T ";
-            ls = lla;
-            la = lla + " -AT ";
-            ll = lla + " -Al ";
-            lss = lla + " -S ";
+        shellAliases = config.environment.shellAliases // {
+          man = "batman";
+          cat = "bat --plain ";
 
-            man = "batman";
-            cat = "bat --plain ";
+          gtop = lib.getExe pkgs.amdgpu_top;
 
-            gtop = lib.getExe pkgs.amdgpu_top;
+          cp = "cp -r ";
+          mkdir = "mkdir -p";
 
-            cp = "cp -r ";
-            mkdir = "mkdir -p";
+          rm = "trash-put ";
+          rmdir = "trash-put ";
 
-            rm = "trash-put ";
-            rmdir = "trash-put ";
-
-            repl = "nix repl --file ${self.const.cfgdir}/repl.nix";
-          };
+          repl = "nix repl --file ${cfgdir}/repl.nix";
+        };
 
         shellAbbrs = {
           ehistory = ''nvim "${config.hj.xdg.data.directory}/fish/fish_history"'';
@@ -52,7 +44,7 @@
 
           ost = "nh os test";
           rb = "nh os switch";
-          wf = "cd ${self.const.cfgdir} && nix run .#write-flake";
+          wf = "cd ${cfgdir} && nix run .#write-flake";
 
           v = "nvim";
           x = "exit";

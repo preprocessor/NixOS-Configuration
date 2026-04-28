@@ -22,9 +22,9 @@
         fd
         jq # parse json
         # custom packages
-        eye
-        gbc
-        ocr
+        # eye
+        # gbc
+        # ocr
         # wyspr_waow
       ];
     };

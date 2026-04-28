@@ -1,7 +1,12 @@
-{ lib, inputs, ... }:
 {
   w.default =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      lib,
+      wrappers,
+      ...
+    }:
     let
       scheme = config.scheme.withHashtag;
 
@@ -28,7 +33,7 @@
             yamlFormat = prev.formats.yaml { };
           in
           {
-            lazygit = inputs.wrappers.lib.wrapPackage {
+            lazygit = wrappers.lib.wrapPackage {
               pkgs = prev;
               package = prev.lazygit;
               env.LG_CONFIG_FILE = yamlFormat.generate "config.yml" {
@@ -76,11 +81,11 @@
                   expandFocusedSidePanel = true;
                   expandedSidePanelWeight = 2;
                   filterMode = "fuzzy";
-                  showBottomLine = false;
                   showNumstatInFilesView = true;
                   showPanelJumps = false;
                   showRandomTip = false;
                   sidePanelWidth = 0.25;
+                  border = "single";
                 };
 
                 keybinding = {

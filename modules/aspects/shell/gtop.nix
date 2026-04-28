@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   perSystem =
     { pkgs, ... }:
@@ -13,11 +12,9 @@
       });
     };
 
-  w.default = {
-    nixpkgs.overlays = [
-      (final: _: {
-        amdgpu_top = self.packages.${final.stdenv.hostPlatform.system}.amdgpu_top;
-      })
-    ];
-  };
+  w.default =
+    { self', ... }:
+    {
+      nixpkgs.overlays = [ (_: _: { amdgpu_top = self'.packages.amdgpu_top; }) ];
+    };
 }

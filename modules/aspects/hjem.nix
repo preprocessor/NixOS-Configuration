@@ -1,4 +1,4 @@
-{ inputs, self, ... }:
+{ inputs, ... }:
 {
   ff.hjem = {
     url = "github:feel-co/hjem";
@@ -6,11 +6,16 @@
   };
 
   w.default =
-    { config, lib, ... }:
+    {
+      config,
+      lib,
+      constants,
+      ...
+    }:
     {
       imports = [
         inputs.hjem.nixosModules.default
-        (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" self.const.username ])
+        (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" constants.username ])
       ];
 
       hjem.clobberByDefault = true;

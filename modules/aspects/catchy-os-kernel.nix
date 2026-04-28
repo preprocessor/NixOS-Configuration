@@ -1,4 +1,4 @@
-{ inputs, self, ... }:
+{ inputs, ... }:
 {
   ff.nix-cachyos-kernel = {
     url = "github:xddxdd/nix-cachyos-kernel/release";
@@ -6,7 +6,12 @@
   };
 
   w.default =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      constants,
+      ...
+    }:
     {
       nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
 
@@ -40,7 +45,7 @@
         script = /* bash */ ''
           set -euo pipefail
 
-          FLAKE_DIR=${self.const.cfgdir}
+          FLAKE_DIR=${constants.cfgdir}
           CACHE_NAME=bazinga
           CACHE_URL=https://bazinga.cachix.org
 

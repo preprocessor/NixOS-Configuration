@@ -1,14 +1,18 @@
-{ inputs, ... }:
 {
   w.default =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      wrappers,
+      ...
+    }:
     let
       toml = pkgs.formats.toml { };
     in
     {
       nixpkgs.overlays = [
         (_: prev: {
-          atuin = inputs.wrappers.lib.wrapPackage (
+          atuin = wrappers.lib.wrapPackage (
             { config, ... }:
             {
               pkgs = prev;

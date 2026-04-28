@@ -1,25 +1,27 @@
-{ inputs, ... }:
 {
   ff.apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
 
   w.desktop =
-    { pkgs, ... }:
-    let
-      apple-fonts = inputs.apple-fonts.packages.${pkgs.sys};
-    in
+    { pkgs, inputs', ... }:
     {
       fonts = {
-        packages = with pkgs; [
-          maple-mono.variable
-          maple-mono.NF
-          font-awesome_6
-          inter
+        packages =
+          with pkgs;
+          [
+            maple-mono.variable
+            maple-mono.NF
+            font-awesome_6
+            inter
+            apple-emoji
 
-          apple-fonts.sf-pro
-          apple-fonts.sf-compact
-          apple-fonts.sf-mono
-          apple-fonts.ny
-        ];
+          ]
+          ++ (with inputs'.apple-fonts.packages; [
+            sf-pro
+            sf-compact
+            sf-mono
+            ny
+          ]);
+
         enableDefaultPackages = true;
 
         fontDir.enable = true;

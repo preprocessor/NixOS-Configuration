@@ -74,7 +74,7 @@
     };
 
   w.desktop =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       environment.systemPackages = [
         # use base tela icon theme that will be replaced by dynamic one at startup

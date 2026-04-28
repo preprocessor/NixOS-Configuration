@@ -1,7 +1,11 @@
-{ self, lib, ... }:
 {
   w.desktop =
-    { pkgs, ... }:
+    {
+      pkgs,
+      lib,
+      constants,
+      ...
+    }:
     {
       custom.programs.niri.settings = {
         binds =
@@ -14,6 +18,7 @@
                 "-e"
               ]
               ++ (lib.flatten cmd);
+            inherit (constants) homedir;
           in
           {
             # Mod-Shift-/, which is usually the same as Mod-?,
@@ -64,11 +69,11 @@
 
             "Mod+E".spawn = [
               "nemo"
-              "${self.const.homedir}/Downloads"
+              "${homedir}/Downloads"
             ];
             "Mod+Shift+E".spawn = termExec [
               "yazi"
-              "${self.const.homedir}/Downloads"
+              "${homedir}/Downloads"
             ];
 
             # Example volume keys mappings for PipeWire & WirePlumber.
