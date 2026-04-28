@@ -1,89 +1,30 @@
 { inputs, self, ... }:
 {
+  envoy.kitty.github = "kovidgoyal/kitty";
+
   perSystem =
-    { pkgs, ... }:
-    let
-      kitty =
-        let
-          go_1_26_2 = pkgs.go_1_26.overrideAttrs (
-            finalAttrs: previousAttrs: {
-              version = "1.26.2";
-              src = pkgs.fetchurl {
-                url = "https://go.dev/dl/go${finalAttrs.version}.src.tar.gz";
-                hash = "sha256-LpHrtpR6lulDb7KzkmqIAu/mOm03Xf/sT4Kqnb1v1Ds=";
-              };
-              doCheck = false;
-              doInstallCheck = false;
-            }
-          );
-
-          buildGo126Module = pkgs.buildGo126Module.override { go = go_1_26_2; };
-        in
-        (pkgs.kitty.override {
-          buildGo126Module = buildGo126Module;
-          go_1_26 = go_1_26_2;
-        }).overrideAttrs
-          (
-            finalAttrs: previousAttrs: {
-              pname = "kitty";
-              version = "f42a5f89c3a17ef914b4e29168b70dc2fe59fb37";
-
-              src = pkgs.fetchFromGitHub {
-                owner = "kovidgoyal";
-                repo = "kitty";
-                rev = finalAttrs.version;
-                hash = "sha256-m8QrxeqIlInoCaj/O7yLQ4Sh1MXTqoDgJVnk29FI5mk=";
-              };
-
-              pyproject = false;
-              doCheck = false;
-              dontCheck = true;
-              checkPhase = "true";
-              installCheckPhase = "true";
-
-              goModules =
-                (buildGo126Module {
-                  pname = "kitty-go-modules";
-                  src = finalAttrs.src;
-                  version = finalAttrs.version;
-                  vendorHash = "sha256-jkWijMZrDapttSOrOjKuXLzZI+Lp6BhS1jWbMHJbniI=";
-                }).goModules;
-            }
-          );
-    in
+    { pkgs, envoy, ... }:
     {
-      packages = { inherit kitty; };
+      packages.kitty = pkgs.kitty.overrideAttrs (finalAttrs: {
+        inherit (envoy.kitty) pname src version;
+        pyproject = false;
+        dontCheck = true;
+        goModules =
+          (pkgs.buildGo126Module {
+            pname = "kitty-go-modules";
+            inherit (finalAttrs) src version;
+            vendorHash = "sha256-FaSWBeQJlvw9vXcHJ/OaFd48K8d7X86X8w7wpG84Ltw=";
+          }).goModules;
+      });
     };
-  w.desktop =
-    { pkgs, config, ... }:
-    {
-      nixpkgs.overlays = [
-        (_: prev: {
-          kitty = inputs.wrappers.wrappers.kitty.wrap (
-            wrapper:
-            let
-              cfg = config.custom.programs.kitty;
-            in
-            {
-              pkgs = prev;
-              package = self.packages.${prev.stdenv.hostPlatform.system}.kitty;
-              inherit (cfg) extraConfig keybindings;
-              settings = cfg.settings // {
-                include = wrapper.config.constructFiles.theme.path;
-              };
-              constructFiles.theme = {
-                relPath = "oneshill.conf";
-                content = cfg.theme;
-              };
-            }
-          );
-        })
-      ];
 
-      hj.packages = [ pkgs.kitty ];
-    };
   w.default =
-    { lib, ... }:
+    {
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
     let
       inherit (lib)
         types
@@ -101,6 +42,33 @@
         ];
     in
     {
+      config = {
+        nixpkgs.overlays = [
+          (_: prev: {
+            kitty = inputs.wrappers.wrappers.kitty.wrap (
+              wrapper:
+              let
+                cfg = config.custom.programs.kitty;
+              in
+              {
+                pkgs = prev;
+                package = self.packages.${prev.stdenv.hostPlatform.system}.kitty;
+                inherit (cfg) extraConfig keybindings;
+                settings = cfg.settings // {
+                  include = wrapper.config.constructFiles.theme.path;
+                };
+                constructFiles.theme = {
+                  relPath = "theme.conf";
+                  content = cfg.theme;
+                };
+              }
+            );
+          })
+        ];
+
+        hj.packages = [ pkgs.kitty ];
+
+      };
       options.custom.programs.kitty = {
         settings = mkOption {
           type = types.attrsOf settingsValueType;
