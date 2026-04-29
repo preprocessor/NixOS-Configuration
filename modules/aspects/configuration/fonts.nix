@@ -13,7 +13,6 @@
             font-awesome_6
             inter
             apple-emoji
-
           ]
           ++ (with inputs'.apple-fonts.packages; [
             sf-pro

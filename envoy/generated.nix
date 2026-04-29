@@ -42,17 +42,13 @@
     };
     date = "2026-03-25";
   };
-  kitty = {
-    pname = "kitty";
-    version = "dc29e102cc44a8d121a90af35637e0b1b642e7c4";
-    src = fetchFromGitHub {
-      owner = "kovidgoyal";
-      repo = "kitty";
-      rev = "dc29e102cc44a8d121a90af35637e0b1b642e7c4";
-      fetchSubmodules = false;
-      sha256 = "sha256-FVMhZsKIeb2WzhqIEQAOy+vhT8r2saFkvxbxbfeeXic=";
+  hand-of-evil = {
+    pname = "hand-of-evil";
+    version = "https://github.com/Grief/hand-of-evil/releases/download/v1.2/hand-of-evil.tar.gz";
+    src = fetchTarball {
+      url = "https://github.com/Grief/hand-of-evil/releases/download/v1.2/hand-of-evil.tar.gz";
+      sha256 = "sha256-tZn+GCKOQqM+EYSzxF2qKHPHa1xgewAnedG/jaoDoVE=";
     };
-    date = "2026-04-27";
   };
   miku = {
     pname = "miku";

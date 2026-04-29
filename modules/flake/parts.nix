@@ -7,6 +7,8 @@
     (lib.mkAliasOptionModule [ "w" ] [ "flake" "modules" "nixos" ])
   ];
 
+  systems = [ "x86_64-linux" ];
+
   perSystem =
     { system, ... }:
     let

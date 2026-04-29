@@ -62,26 +62,19 @@
         },
         "version": "16cea088a39c7769fbd22c4810347b04dd38c6b2"
     },
-    "kitty": {
+    "hand-of-evil": {
         "cargoLock": null,
-        "date": "2026-04-27",
+        "date": null,
         "extract": null,
-        "name": "kitty",
+        "name": "hand-of-evil",
         "passthru": null,
         "pinned": false,
         "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "kovidgoyal",
-            "repo": "kitty",
-            "rev": "dc29e102cc44a8d121a90af35637e0b1b642e7c4",
-            "sha256": "sha256-FVMhZsKIeb2WzhqIEQAOy+vhT8r2saFkvxbxbfeeXic=",
-            "sparseCheckout": [],
-            "type": "github"
+            "sha256": "sha256-tZn+GCKOQqM+EYSzxF2qKHPHa1xgewAnedG/jaoDoVE=",
+            "type": "tarball",
+            "url": "https://github.com/Grief/hand-of-evil/releases/download/v1.2/hand-of-evil.tar.gz"
         },
-        "version": "dc29e102cc44a8d121a90af35637e0b1b642e7c4"
+        "version": "https://github.com/Grief/hand-of-evil/releases/download/v1.2/hand-of-evil.tar.gz"
     },
     "miku": {
         "cargoLock": null,

@@ -1,10 +1,9 @@
 {
-  envoy.apple-emoji.url = "https://github.com/samuelngs/apple-emoji-ttf/releases/download/macos-26-20260219-2aa12422/AppleColorEmoji-Linux.ttf";
+  envoy.apple-emoji.url = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
 
   w.default =
     {
       envoy,
-      nvfetcher,
       lib,
       ...
     }:
