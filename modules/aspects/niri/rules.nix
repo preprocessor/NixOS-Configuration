@@ -34,6 +34,10 @@
           {
             title = "^SteamTinkerLaunch.*$";
           }
+          {
+            app-id = "^zenity$";
+            title = "^ProtonFixes$";
+          }
         ];
         open-floating = true;
       }

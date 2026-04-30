@@ -60,6 +60,7 @@
       };
 
       hj.packages = with pkgs; [
+        protontricks
         prismlauncher # Minecraft
         runelite # Runescape
         bolt-launcher # Runescape
