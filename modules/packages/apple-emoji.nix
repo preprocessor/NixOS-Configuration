@@ -1,7 +1,7 @@
 {
   envoy.apple-emoji.url = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
 
-  w.default =
+  flake.nixos.modules.default =
     {
       envoy,
       lib,
@@ -10,7 +10,7 @@
     {
       nixpkgs.overlays = [
         (_: f: {
-          apple-emoji = f.mkDerivation (finalAttrs: {
+          apple-emoji = f.stdenv.mkDerivation (finalAttrs: {
             inherit (envoy.apple-emoji) pname version src;
 
             dontUnpack = true;

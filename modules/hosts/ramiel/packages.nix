@@ -5,19 +5,20 @@
       environment.systemPackages = with pkgs; [
         qbittorrent-enhanced
         brightnessctl
-        grim
+        overskride
         swaylock
-        slurp
         # wlsunset # or gammastep
         wlogout
-        overskride
+        typora
+        slurp
+        grim
       ];
 
       hj.packages = with pkgs; [
         vivaldi
-        mpv
         qview
         gdmap # similar to WinDirStat
+        mpv
       ];
     };
 }

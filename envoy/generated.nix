@@ -6,6 +6,14 @@
   dockerTools,
 }:
 {
+  apple-emoji = {
+    pname = "apple-emoji";
+    version = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
+    src = fetchurl {
+      url = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
+      sha256 = "sha256-U1oEOvBHBtJEcQWeZHRb/IDWYXraLuo0NdxWINwPUxg=";
+    };
+  };
   colorscheme = {
     pname = "colorscheme";
     version = "5f868b3a338b6904c47f3833b9c411be641983a8";

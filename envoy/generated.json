@@ -1,4 +1,19 @@
 {
+    "apple-emoji": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "apple-emoji",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "name": null,
+            "sha256": "sha256-U1oEOvBHBtJEcQWeZHRb/IDWYXraLuo0NdxWINwPUxg=",
+            "type": "url",
+            "url": "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf"
+        },
+        "version": "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf"
+    },
     "colorscheme": {
         "cargoLock": null,
         "date": "2026-04-24",
