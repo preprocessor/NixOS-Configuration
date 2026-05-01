@@ -54,7 +54,7 @@
         Xcursor.size = ${toString cursor.size};
       '';
 
-      hj.files.".xprofile".text = ''
+      hj.files.".xprofile".text = /* bash */ ''
         if [ -e "$HOME/.profile" ]; then
           . "$HOME/.profile"
         fi

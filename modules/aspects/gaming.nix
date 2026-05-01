@@ -16,9 +16,7 @@
         trusted-public-keys = [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
       };
 
-      environment.systemPackages = with pkgs; [
-        protonup-rs
-      ];
+      environment.systemPackages = [ pkgs.protonup-rs ];
 
       hj.environment.sessionVariables.STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
 
@@ -38,7 +36,7 @@
           "-W 3440"
           "-H 1440"
           "-r 75"
-          # "-O ${hostConfig.primaryDisplay.name}"
+          # "-O ${config.primaryDisplay.name}"
           "-f"
           "--adaptive-sync"
         ];
@@ -56,6 +54,7 @@
         plugins = with pkgs.obs-studio-plugins; [
           obs-pipewire-audio-capture
           input-overlay
+          obs-vaapi # better amd support
         ];
       };
 
