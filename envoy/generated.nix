@@ -82,6 +82,18 @@
     };
     date = "2026-04-07";
   };
+  otter-launcher = {
+    pname = "otter-launcher";
+    version = "ae647cef5b3c3dd52bedd7a8c881988e412a2dca";
+    src = fetchFromGitHub {
+      owner = "kuokuo123";
+      repo = "otter-launcher";
+      rev = "ae647cef5b3c3dd52bedd7a8c881988e412a2dca";
+      fetchSubmodules = false;
+      sha256 = "sha256-ImJeI5xbd/w4nchFwc0tSS8v2vYWx/ttwM5uk2BWsCk=";
+    };
+    date = "2026-04-23";
+  };
   tokyonight = {
     pname = "tokyonight";
     version = "cdc07ac78467a233fd62c493de29a17e0cf2b2b6";

@@ -133,6 +133,27 @@
         },
         "version": "aa26f4e157b818630cb281f6e1968b641c079d69"
     },
+    "otter-launcher": {
+        "cargoLock": null,
+        "date": "2026-04-23",
+        "extract": null,
+        "name": "otter-launcher",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "kuokuo123",
+            "repo": "otter-launcher",
+            "rev": "ae647cef5b3c3dd52bedd7a8c881988e412a2dca",
+            "sha256": "sha256-ImJeI5xbd/w4nchFwc0tSS8v2vYWx/ttwM5uk2BWsCk=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "ae647cef5b3c3dd52bedd7a8c881988e412a2dca"
+    },
     "tokyonight": {
         "cargoLock": null,
         "date": "2026-03-24",
