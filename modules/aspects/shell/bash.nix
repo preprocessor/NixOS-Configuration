@@ -1,11 +1,17 @@
 {
   w.shell =
-    { pkgs, lib, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     {
       programs.bash.interactiveShellInit = /* bash */ ''
         # Auto start wayland session on tty1
         if [[ $(tty) == '/dev/tty1' ]]; then
-          exec uwsm start niri-uwsm.desktop
+          # exec uwsm start niri-uwsm.desktop
+          ${lib.getExe' config.programs.hyprland.package "start-hyprland"}
         fi
 
         # Auto switch to fish while keeping bash as the system shell
