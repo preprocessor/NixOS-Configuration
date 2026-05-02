@@ -1,6 +1,9 @@
 {
   w.default =
     { config, ... }:
+    let
+      esc = (builtins.fromTOML ''value = "\u001b"'').value;
+    in
     {
       custom.programs.otter-launcher = {
         enable = true;
@@ -35,24 +38,24 @@
           interface = {
             move_interface_down = 1;
             header = /* bash */ ''
-              ┌ \u001B[1;34m  $USER@$(echo $HOSTNAME) \u001B[0m───┐
-              │ \u001B[90m󱎘  \u001B[31m󱎘  \u001B[32m󱎘  \u001B[33m󱎘  \u001B[34m󱎘  \u001B[35m󱎘  \u001B[36m󱎘\u001B[0m │
-              └ \u001B[36m󱄅 \u001B[1;36m system\u001B[0m     NixOS ┘
-              ┌ \u001B[33m \u001B[1;36m wm \u001B[0m         $XDG_CURRENT_DESKTOP ┐
-              │ \u001B[31m \u001B[1;36m loads\u001B[0m       $(cat /proc/loadavg | cut -d ' ' -f 1) │
-              │ \u001B[32m \u001B[1;36m memory\u001B[0m     $(free -h | awk 'FNR == 2 {print $3}') │
-              │ \u001B[90m\u001B[0m  '';
-            list_prefix = "    └ \u001B[34m󰅂  ";
-            selection_prefix = "    └ \u001B[31m󱓞  ";
-            default_module_message = "    └ \u001B[34m  \u001B[33msearch\u001B[0m nixpkgs";
+              ┌ ${esc}[1;34m  $USER@$(echo $HOSTNAME) ${esc}[0m───┐
+              │ ${esc}[90m󱎘  ${esc}[31m󱎘  ${esc}[32m󱎘  ${esc}[33m󱎘  ${esc}[34m󱎘  ${esc}[35m󱎘  ${esc}[36m󱎘${esc}[0m │
+              └ ${esc}[36m󱄅 ${esc}[1;36m system${esc}[0m     NixOS ┘
+              ┌ ${esc}[33m ${esc}[1;36m wm ${esc}[0m         $XDG_CURRENT_DESKTOP ┐
+              │ ${esc}[31m ${esc}[1;36m loads${esc}[0m       $(cat /proc/loadavg | cut -d ' ' -f 1) │
+              │ ${esc}[32m ${esc}[1;36m memory${esc}[0m     $(free -h | awk 'FNR == 2 {print $3}') │
+              │ ${esc}[90m${esc}[0m  '';
+            list_prefix = "    └ ${esc}[34m󰅂  ";
+            selection_prefix = "    └ ${esc}[31m󱓞  ";
+            default_module_message = "    └ ${esc}[34m  ${esc}[33msearch${esc}[0m nixpkgs";
 
             place_holder = "type & search";
             suggestion_mode = "list";
             suggestion_lines = 4;
-            prefix_color = "\u001B[33m";
-            description_color = "\u001B[39m";
-            place_holder_color = "\u001B[90m";
-            hint_color = "\u001B[90m";
+            prefix_color = "${esc}[33m";
+            description_color = "${esc}[39m";
+            place_holder_color = "${esc}[90m";
+            hint_color = "${esc}[90m";
           };
 
           modules = [

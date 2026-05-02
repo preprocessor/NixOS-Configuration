@@ -53,7 +53,7 @@
         functions = {
           mcd = "mkdir -p $argv[1]; and cd $argv[1]"; # mkdir + cd
 
-          store = ''y (string match -r "/nix/store/[^/]*" (builtin realpath (type -fP yazi)))'';
+          store = ''y (string match -r "/nix/store/[^/]*" (builtin realpath (type -fP $argv[1])))'';
 
           ncp = ''echo "pkgs.$(nurl $(wl-paste));" | wl-copy'';
 

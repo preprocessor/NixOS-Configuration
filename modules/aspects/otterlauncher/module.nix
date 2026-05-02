@@ -58,7 +58,7 @@
               flags."--config" = config.constructFiles.otter-config.path;
               constructFiles.otter-config = {
                 relPath = "config.toml";
-                content = cfg |> toml.generate "config.toml" |> builtins.readFile;
+                content = cfg.settings |> toml.generate "config.toml" |> builtins.readFile;
               };
             }
           ))
