@@ -46,8 +46,7 @@
 
       config = lib.mkIf (cfg.enable) {
         hj.packages = [
-          wrappers.lib.wrapPackage
-          (
+          (wrappers.lib.wrapPackage (
             { config, ... }:
             {
               inherit pkgs;
@@ -59,10 +58,10 @@
               flags."--config" = config.constructFiles.otter-config.path;
               constructFiles.otter-config = {
                 relPath = "config.toml";
-                content = toml.generate "config.toml" cfg;
+                content = cfg |> toml.generate "config.toml" |> builtins.readFile;
               };
             }
-          )
+          ))
         ];
       };
     };
