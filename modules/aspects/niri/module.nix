@@ -1,20 +1,15 @@
 # Sources:
 # https://github.com/iynaix/dotfiles/blob/7cfd3aec29feec3807206591260e594ad28094f9/modules/gui/niri/default.nix
 # https://github.com/onelocked/NixOS/blob/master/modules/nixos/desktop/niri/niri.nix
-
 {
-  ff = {
-    niri = {
-      url = "github:niri-wm/niri";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    qml-niri = {
-      url = "github:imiric/qml-niri/main";
-    };
-    wrappers = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  lib,
+  inputs,
+  ...
+}:
+{
+  ff.niri = {
+    url = "github:niri-wm/niri";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   w.desktop =
@@ -53,26 +48,6 @@
         enable = true;
         useNautilus = false;
         package = niriWrapped;
-      };
-
-      # restart niri with new settings on rebuild
-      system.userActivationScripts = {
-        niri-reload-config = {
-          text = lib.getExe (
-            pkgs.writeShellApplication {
-              name = "niri-reload-config";
-              runtimeInputs = [
-                niriWrapped
-                pkgs.procps
-              ];
-              text = ''
-                if pgrep -x "niri" > /dev/null; then
-                  niri msg action load-config-file --path "${niriWrapped.configuration.constructFiles.generatedConfig.outPath}"
-                fi
-              '';
-            }
-          );
-        };
       };
 
       programs.uwsm.waylandCompositors.niri = {

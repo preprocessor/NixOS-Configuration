@@ -193,6 +193,8 @@ let
   );
 in
 {
+  _file = "envoy.nix";
+
   options.envoy = lib.mkOption {
     type = lib.types.attrsOf sourceType;
     default = { };

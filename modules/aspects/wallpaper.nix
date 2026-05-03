@@ -12,4 +12,6 @@
         "waypaper --restore"
       ];
     };
+
+  _file = "wallpaper.nix";
 }

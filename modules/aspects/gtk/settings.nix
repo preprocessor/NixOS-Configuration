@@ -90,4 +90,6 @@
         ];
       };
     };
+
+  _file = "gtk/settings.nix";
 }

@@ -1,5 +1,4 @@
 {
-
   w.default =
     {
       pkgs,
@@ -28,6 +27,8 @@
           rmdir = "trash-put ";
 
           repl = "nix repl --file ${cfgdir}/repl.nix";
+
+          ils = "mcat ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
         };
 
         shellAbbrs = {

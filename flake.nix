@@ -38,6 +38,7 @@
     };
     flake-file.url = "github:preprocessor/flake-file-dn";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    fsel.url = "github:Mjoyufull/fsel";
     gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
     hjem = {
       url = "github:feel-co/hjem";
@@ -72,7 +73,6 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
-    qml-niri.url = "github:imiric/qml-niri/main";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";

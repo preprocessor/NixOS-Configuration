@@ -55,11 +55,16 @@
       packages = { inherit kitty; };
     };
   w.desktop =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      config,
+      wrappers,
+      ...
+    }:
     {
       nixpkgs.overlays = [
         (_: prev: {
-          kitty = inputs.wrappers.wrappers.kitty.wrap (
+          kitty = wrappers.wrappers.kitty.wrap (
             wrapper:
             let
               cfg = config.custom.programs.kitty;
