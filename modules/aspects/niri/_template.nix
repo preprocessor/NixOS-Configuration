@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.niri.settings = {
+    wrappers.niri.settings = {
 
     };
   };

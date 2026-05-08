@@ -4,6 +4,7 @@
       lib,
       pkgs,
       constants,
+      config,
       ...
     }:
     let
@@ -11,7 +12,8 @@
       inherit (constants) homedir;
     in
     {
-      custom.programs.niri.settings = {
+
+      wrappers.niri.settings = {
         clipboard.disable-primary = true;
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
         screenshot-path = homedir + "/Pictures/Screenshots/%Y-%m-%d %H:%M:%S.png";

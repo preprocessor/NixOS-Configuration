@@ -6,7 +6,7 @@
       set = _: { };
     in
     {
-      custom.programs.niri.settings = {
+      wrappers.niri.settings = {
         layout = {
           center-focused-column = "on-overflow";
           always-center-single-column = set;

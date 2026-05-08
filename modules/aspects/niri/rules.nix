@@ -1,5 +1,5 @@
 {
-  w.desktop.custom.programs.niri.settings = {
+  w.desktop.wrappers.niri.settings = {
     window-rules = [
       {
         # Floating windows

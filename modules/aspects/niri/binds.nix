@@ -7,7 +7,7 @@
       ...
     }:
     {
-      custom.programs.niri.settings = {
+      wrappers.niri.settings = {
         binds =
           let
             set = _: { };
