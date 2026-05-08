@@ -20,8 +20,6 @@
         APP2UNIT_TYPE = "service";
       };
 
-      xdg.terminal-exec.enable = true;
-
       programs.uwsm.enable = true;
     };
 }
