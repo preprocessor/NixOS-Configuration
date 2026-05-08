@@ -22,22 +22,10 @@
 
       formatter = pkgs.alejandra;
 
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          nixd
-          cachix
-          lorri
-          niv
-          nixfmt
-          statix
-          vulnix
-          haskellPackages.dhall-nix
-          lua51Packages.lua
-          lua51Packages.luarocks
-          lua-language-server
-        ];
-      };
+      _file = ./parts.nix;
     };
+
+  _file = ./parts.nix;
 
   # https://github.com/iynaix/dotfiles/blob/main/modules/flake-parts.nix
   # flake = {

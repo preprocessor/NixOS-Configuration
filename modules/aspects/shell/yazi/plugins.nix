@@ -26,7 +26,7 @@
       zoom = envoy.yazi-plugins-repo.src + "/zoom.yazi";
     in
     {
-      custom.programs.yazi.initLua = /* lua */ ''
+      wrappers.yazi.initLua = /* lua */ ''
         require("starship"):setup()
 
         require("git"):setup {
@@ -38,7 +38,7 @@
         }
       '';
 
-      custom.programs.yazi.plugins = {
+      wrappers.yazi.plugins = {
         inherit (pkgs.yaziPlugins)
           lazygit
           bypass
@@ -55,7 +55,7 @@
         inherit zoom fuzzy-search;
       };
 
-      custom.programs.yazi.settings = {
+      wrappers.yazi.settings = {
         plugin.prepend_previewers =
           let
             bat = "${getExe pkgs.bat} -p --color=always";

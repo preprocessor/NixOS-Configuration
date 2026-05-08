@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# Approximates the phase of the moon using a known new-moon time and a fixed lunar phase of 2551443 seconds.
+# Outputs the phase as an emoji in UTF-8
+
+CHARS=(
+	"" #  0 - NEW
+
+  "" #  1 - WAXING CRESCENT
+	"" #  2 - WAXING CRESCENT
+	"" #  3 - WAXING CRESCENT
+	"" #  4 - WAXING CRESCENT
+	"" #  5 - WAXING CRESCENT
+  "" #  6 - WAXING CRESCENT
+
+	"" #  7 - FIRST QUARTER
+
+  "" #  8 - WAXING GIBBOUS
+  "" #  9 - WAXING GIBBOUS
+	"" # 10 - WAXING GIBBOUS
+	"" # 11 - WAXING GIBBOUS
+	"" # 12 - WAXING GIBBOUS
+	"" # 13 - WAXING GIBBOUS
+
+	"" # 14 - FULL
+  "" # 15 - FULL
+
+	"" # 16 - WANING GIBBOUS
+	"" # 17 - WANING GIBBOUS
+	"" # 18 - WANING GIBBOUS
+	"" # 19 - WANING GIBBOUS
+	"" # 20 - WANING GIBBOUS
+	"" # 21 - WANING GIBBOUS
+
+	"" # 22 - LAST QUARTER
+
+	"" # 23 - WANING CRESCENT
+	"" # 24 - WANING CRESCENT
+	"" # 25 - WANING CRESCENT
+	"" # 26 - WANING CRESCENT
+	"" # 27 - WANING CRESCENT
+	"" # 28 - WANING CRESCENT
+
+	"" # 29 - NEW
+)
+
+PHASE=$(( ( ( $( date --date='00:00' +%s ) - 1386030360 ) % 2551443 ) / 86400 ))
+echo -ne "${CHARS[$PHASE]}"
+if [ -z "$NONEWLINE" ]
+then
+	echo
+fi

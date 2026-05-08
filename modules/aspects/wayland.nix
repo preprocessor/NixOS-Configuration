@@ -12,7 +12,6 @@
         app2unit
         wl-clipboard
         wl-clip-persist
-        cliphist
       ];
 
       hj.environment.sessionVariables = {
@@ -21,5 +20,7 @@
       };
 
       programs.uwsm.enable = true;
+
+      _file = ./wayland.nix;
     };
 }

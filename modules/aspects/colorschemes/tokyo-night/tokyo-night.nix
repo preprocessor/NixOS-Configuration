@@ -39,7 +39,7 @@
 
       programs.fish.interactiveShellInit = builtins.readFile (tokyonight + "/fish/tokyonight_night.fish");
 
-      custom.programs.yazi = {
+      wrappers.yazi = {
         flavors.tokyonight = tokyonight-yazi-theme;
 
         theme.flavor = {
@@ -48,14 +48,11 @@
         };
       };
 
-      custom.programs.fuzzel.moreCfg = builtins.readFile "${tokyonight}/fuzzel/tokyonight_night.ini";
-
       hj.xdg.config.files."vesktop/themes/tokyonight.css".source =
         tokyonight-vesktop-theme + "/themes/tokyo-night.theme.css";
       custom.programs.vesktop.vencord.settings.enabledThemes = [ "tokyonight.css" ];
 
-      custom.programs.kitty.settings.theme =
-        builtins.readFile "${tokyonight}/kitty/tokyonight_night.conf";
+      wrappers.kitty.settings.theme = builtins.readFile "${tokyonight}/kitty/tokyonight_night.conf";
     };
 }
 

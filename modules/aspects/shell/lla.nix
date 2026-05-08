@@ -12,18 +12,24 @@
     };
 
   w.default =
-    { pkgs, self', ... }:
+    {
+      pkgs,
+      self',
+      lib,
+      ...
+    }:
     let
       lla = self'.packages.lla;
+      _ = lib.getExe;
       tomlFormat = pkgs.formats.toml { };
     in
     {
       environment.shellAliases = {
-        l = lla + " -T ";
-        ls = lla;
-        la = lla + " -AT ";
-        ll = lla + " -Al ";
-        lss = lla + " -S ";
+        l = "${_ lla} -T ";
+        ls = "${_ lla}";
+        la = "${_ lla} -AT ";
+        ll = "${_ lla} -Al ";
+        lss = "${_ lla} -s ";
       };
 
       hj.packages = [ lla ];

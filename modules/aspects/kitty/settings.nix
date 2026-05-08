@@ -1,8 +1,8 @@
 {
   w.desktop = {
-    custom.programs.kitty = {
+    wrappers.kitty = {
       settings = {
-        text_composition_strategy = "legacy";
+        # text_composition_strategy = "legacy";
         font_family = ''family="Maple Mono NF" style="Medium"'';
         bold_font = ''family="Maple Mono NF" style="ExtraBold"'';
         italic_font = ''family="Maple Mono NF" style="Italic"'';
@@ -49,6 +49,7 @@
         # Match foot's hollow cursor when unfocused
         focus_follows_mouse = "no"; # if you don't already have FFM
         cursor_shape_unfocused = "hollow"; # kitty 0.36+
+
       };
 
       keybindings = {
@@ -72,7 +73,7 @@
 
       extraConfig =
         let
-          font-features = "+cv01 +cv02 +cv03 +cv04 +cv06 +cv09 +cv10 +cv31 +cv38 +cv40 +cv42 +cv43 +cv64 +cv66 +ss03 +ss07 +ss08 +ss09 +ss10 +ss11";
+          font-features = "+cv01 +cv02 +cv03 +cv09 +cv10 +cv38 +cv40 +cv41 +cv42 +cv43 +cv64 +cv66 +ss03 +ss07 +ss08 +ss09 +ss10 +ss11";
         in
         ''
           font_features MapleMono-NF-Medium ${font-features}
@@ -81,6 +82,8 @@
           font_features MapleMono-NF-ExtraBoldItalic ${font-features}
           mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection
           mouse_map left press ungrabbed mouse_selection drag_or_normal_select
+
+          env TERMINAL=kitty
         '';
     };
   };

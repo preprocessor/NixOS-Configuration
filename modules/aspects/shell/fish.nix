@@ -17,6 +17,8 @@
 
           set -g fish_greeting # Disable greeting
 
+          set -g SHELL_PROGRAM fish
+
           # setup fish-completion-sync
           source ${envoy.fish-completion-sync.src}/init.fish
 

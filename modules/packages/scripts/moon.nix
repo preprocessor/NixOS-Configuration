@@ -1,5 +1,5 @@
 let
-  name = "eye";
+  name = "moon";
 in
 {
   w.default =

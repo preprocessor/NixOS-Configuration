@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # vim: set nowrap:
 
 CNAMES=(BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE)
@@ -43,7 +43,7 @@ SW_INFO=$(gum style \
   --border-foreground 10 \
   --border thick "\
 ${LYELLOW}  Arch Linux
-${LBLUE}  ${WM}
+${LBLUE}  $XDG_CURRENT_DESKTOP
 ${LMAGENTA}󰏗  ${PACKAGES}
 ${LCYAN}  ${TERMINAL}
 ${LRED}  ${SHELL}")

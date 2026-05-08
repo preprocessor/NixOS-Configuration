@@ -1,15 +1,20 @@
 {
-  w.shell =
+  w.default =
     {
       pkgs,
-      config,
       lib,
+      config,
       wrappers,
       ...
     }:
     let
+      inherit (pkgs.formats.toml { }) type;
+      default = { };
+      mkMapOption = description: lib.mkOption { inherit type description default; };
+      cfg = config.wrappers.yazi;
+
       flavorsObject =
-        config.custom.programs.yazi.flavors
+        config.wrappers.yazi.flavors
         |> lib.concatMapAttrs (
           name: repo: {
             "flavor-${name}-toml" = {
@@ -23,51 +28,50 @@
           }
         );
 
-      yaziWrapped = wrappers.wrappers.yazi.wrap ({
-        inherit pkgs;
-        inherit (config.custom.programs.yazi) plugins;
-        extraPackages = with pkgs; [
-          ouch-rar
-          ripgrep
-          glow
-          git
-        ];
-        settings = with config.custom.programs.yazi; {
-          inherit keymap theme;
-          yazi = settings;
-        };
-        constructFiles = {
-          initLua = {
-            relPath = "yazi-config/init.lua";
-            content = config.custom.programs.yazi.initLua;
-          };
-        }
-        // flavorsObject;
-      });
-    in
-    {
-      environment.systemPackages = [ yaziWrapped ];
-
-      programs.fish.functions.y = /* fish */ ''
-        set -l tmp (mktemp -t "yazi-cwd.XXXXX")
-        command yazi $argv --cwd-file="$tmp"
-        if read cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-          builtin cd -- "$cwd"
-        end
-        rm -f -- "$tmp"
-      '';
-    };
-
-  w.default =
-    { pkgs, lib, ... }:
-    let
-      inherit (pkgs.formats.toml { }) type;
-      default = { };
-      mkMapOption = description: lib.mkOption { inherit type description default; };
     in
     with lib;
     {
-      options.custom.programs.yazi = {
+      config = mkIf (cfg.enable) {
+        hj.packages = [ cfg.package ];
+
+        programs.fish.functions.y = /* fish */ ''
+          set -l tmp (mktemp -t "yazi-cwd.XXXXX")
+          command yazi $argv --cwd-file="$tmp"
+          if read cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+            builtin cd -- "$cwd"
+          end
+          rm -f -- "$tmp"
+        '';
+      };
+
+      options.wrappers.yazi = {
+        package = mkOption {
+          type = types.package;
+          default = wrappers.wrappers.yazi.wrap ({
+            inherit pkgs;
+            inherit (config.wrappers.yazi) plugins;
+            extraPackages = with pkgs; [
+              ouch-rar
+              ripgrep
+              glow
+              git
+            ];
+            settings = with config.wrappers.yazi; {
+              inherit keymap theme;
+              yazi = settings;
+            };
+            constructFiles = {
+              initLua = {
+                relPath = "yazi-config/init.lua";
+                content = config.wrappers.yazi.initLua;
+              };
+            }
+            // flavorsObject;
+          });
+        };
+
+        enable = lib.mkEnableOption { };
+
         initLua = mkOption {
           type = with types; nullOr (either path lines);
           default = "";

@@ -2,20 +2,20 @@ let
   name = "gbc";
 in
 {
-  perSystem =
+  w.default =
     { pkgs, ... }:
     {
-      packages.${name} = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-        inherit name;
-        version = "1.0";
-        src = ./bin;
-        installPhase = "install $src/${name} -Dm0755 $out/bin/${name}";
-      });
-    };
+      nixpkgs.overlays = [
+        (_: f: {
+          ${name} = f.stdenvNoCC.mkDerivation (finalAttrs: {
+            inherit name;
+            version = "1.0";
+            src = ./bin;
+            installPhase = "install $src/${name} -Dm0755 $out/bin/${name}";
+          });
+        })
+      ];
 
-  w.default =
-    { self', ... }:
-    {
-      nixpkgs.overlays = [ (_: f: { ${name} = self'.packages.${name}; }) ];
+      hj.packages = [ pkgs.${name} ];
     };
 }

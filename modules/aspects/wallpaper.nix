@@ -7,11 +7,11 @@
         awww
       ];
 
-      custom.programs.niri.settings.spawn-at-startup = [
+      wrappers.niri.settings.spawn-at-startup = [
         "awww-daemon"
         "waypaper --restore"
       ];
-    };
 
-  _file = "wallpaper.nix";
+      _file = "wallpaper.nix";
+    };
 }

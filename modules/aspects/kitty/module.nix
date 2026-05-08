@@ -67,7 +67,7 @@
           kitty = wrappers.wrappers.kitty.wrap (
             wrapper:
             let
-              cfg = config.custom.programs.kitty;
+              cfg = config.wrappers.kitty;
             in
             {
               pkgs = prev;
@@ -106,7 +106,7 @@
         ];
     in
     {
-      options.custom.programs.kitty = {
+      options.wrappers.kitty = {
         settings = mkOption {
           type = types.attrsOf settingsValueType;
           default = { };

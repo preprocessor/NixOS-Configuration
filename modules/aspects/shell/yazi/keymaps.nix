@@ -1,9 +1,17 @@
 {
   w.shell =
-    { constants, ... }:
+    { constants, pkgs, ... }:
     {
-      custom.programs.yazi.keymap = {
+      wrappers.yazi.keymap = {
         mgr.prepend_keymap = [
+          {
+            on = [
+              "i"
+              "c"
+            ];
+            run = ''shell --block -- ${pkgs.mcat}/bin/mcat ls "$PWD" --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'; echo -e "\nPress Enter to return to Yazi..."; read '';
+            desc = "mcat preview of cwd";
+          }
           {
             on = [
               "g"
