@@ -11,8 +11,8 @@
             maple-mono.variable
             maple-mono.NF
             font-awesome_6
-            inter
             apple-emoji
+            lucide
           ]
           ++ (with inputs'.apple-fonts.packages; [
             sf-pro
