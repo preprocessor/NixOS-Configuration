@@ -35,8 +35,7 @@
             title = "^SteamTinkerLaunch.*$";
           }
           {
-            app-id = "^zenity$";
-            title = "^ProtonFixes$";
+            app-id = "^com.interversehq.qView$";
           }
         ];
         open-floating = true;
@@ -84,7 +83,6 @@
           };
         };
       }
-
     ];
 
     layer-rules = [
@@ -92,6 +90,14 @@
         # Background for switcher
         matches = [ { namespace = "^awww-daemon$"; } ];
         place-within-backdrop = true;
+      }
+      {
+        # Background for switcher
+        matches = [ { namespace = "^kitty-quick-access$"; } ];
+        background-effect = {
+          xray = false;
+          blur = true;
+        };
       }
     ];
   };

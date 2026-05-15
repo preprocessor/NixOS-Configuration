@@ -4,7 +4,8 @@
   w.desktop =
     { pkgs, envoy, ... }:
     {
-      config.wrappers.niri.settings.extraConfig =
-        ''include "${envoy.niri-shaders-collection.src}/animations/glide.kdl"'';
+      config.wrappers.niri.settings.extraConfig = ''
+        include "${envoy.niri-shaders-collection.src}/animations/glide.kdl"
+      '';
     };
 }

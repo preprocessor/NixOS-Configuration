@@ -1,13 +1,25 @@
+From 1ffb754b5abb020e72d4f82efe2ad42a134247ea Mon Sep 17 00:00:00 2001
+From: wyspr <wyspr@wyspr.xyz>
+Date: Mon, 11 May 2026 20:14:32 -0400
+Subject: [PATCH] transparent-fullscreen
+
+---
+ src/layout/tile.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/src/layout/tile.rs b/src/layout/tile.rs
-index 15de6bd..17e8b0a 100644
+index ddd6f091..c576bbb3 100644
 --- a/src/layout/tile.rs
 +++ b/src/layout/tile.rs
-@@ -197,7 +197,7 @@ impl<W: LayoutElement> Tile<W> {
+@@ -210,7 +210,7 @@ impl<W: LayoutElement> Tile<W> {
              focus_ring: FocusRing::new(focus_ring_config),
              shadow: Shadow::new(shadow_config),
              sizing_mode,
 -            fullscreen_backdrop: SolidColorBuffer::new((0., 0.), [0., 0., 0., 1.]),
 +            fullscreen_backdrop: SolidColorBuffer::new((0., 0.), [0., 0., 0., 0.]),
-             background_effect: BackgroundEffect::new(options.blur),
              restore_to_floating: false,
              floating_window_size: None,
+             floating_pos: None,
+-- 
+2.53.0
+

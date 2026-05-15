@@ -36,12 +36,6 @@
                 repeat = false;
               };
             };
-            # "Mod+Space" = _: {
-            #   content.spawn = [
-            #     "fuzzel"
-            #   ];
-            #   props.hotkey-overlay-title = "Open application launcher: fuzzel";
-            # };
 
             "Mod+X" = _: {
               content.spawn = [
@@ -50,18 +44,24 @@
               ];
             };
 
-            "Super+Alt+L" = _: {
+            "Mod+Alt+L" = _: {
               content.spawn = "swaylock";
               props.hotkey-overlay-title = "Lock the Screen: swaylock";
             };
 
-            "Mod+E".spawn = [
+            "Mod+E" = _: {
+              content.spawn = termExec [
+                "yazi"
+                homedir
+              ];
+              props = {
+
+              };
+            };
+
+            "Mod+Shift+E".spawn = [
               "nemo"
-              "${homedir}/Downloads"
-            ];
-            "Mod+Shift+E".spawn = termExec [
-              "yazi"
-              "${homedir}/Downloads"
+              homedir
             ];
 
             # Example volume keys mappings for PipeWire & WirePlumber.
@@ -223,24 +223,24 @@
             #
             # For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
             # will all refer to the 3rd workspace.
-            "Mod+1".focus-workspace = 1;
-            "Mod+2".focus-workspace = 2;
-            "Mod+3".focus-workspace = 3;
-            "Mod+4".focus-workspace = 4;
-            "Mod+5".focus-workspace = 5;
-            "Mod+6".focus-workspace = 6;
-            "Mod+7".focus-workspace = 7;
-            "Mod+8".focus-workspace = 8;
-            "Mod+9".focus-workspace = 9;
-            "Mod+Ctrl+1".move-window-to-workspace = 1;
-            "Mod+Ctrl+2".move-window-to-workspace = 2;
-            "Mod+Ctrl+3".move-window-to-workspace = 3;
-            "Mod+Ctrl+4".move-window-to-workspace = 4;
-            "Mod+Ctrl+5".move-window-to-workspace = 5;
-            "Mod+Ctrl+6".move-window-to-workspace = 6;
-            "Mod+Ctrl+7".move-window-to-workspace = 7;
-            "Mod+Ctrl+8".move-window-to-workspace = 8;
-            "Mod+Ctrl+9".move-window-to-workspace = 9;
+            "Mod+1".focus-workspace = "browser";
+            "Mod+2".focus-workspace = "code";
+            "Mod+3".focus-workspace = "social";
+            "Mod+4".focus-workspace = "games";
+            "Mod+5".focus-workspace = "media";
+            # "Mod+6".focus-workspace = 6;
+            # "Mod+7".focus-workspace = 7;
+            # "Mod+8".focus-workspace = 8;
+            # "Mod+9".focus-workspace = 9;
+            "Mod+Ctrl+1".move-window-to-workspace = "browser";
+            "Mod+Ctrl+2".move-window-to-workspace = "code";
+            "Mod+Ctrl+3".move-window-to-workspace = "social";
+            "Mod+Ctrl+4".move-window-to-workspace = "games";
+            "Mod+Ctrl+5".move-window-to-workspace = "media";
+            # "Mod+Ctrl+6".move-window-to-workspace = 6;
+            # "Mod+Ctrl+7".move-window-to-workspace = 7;
+            # "Mod+Ctrl+8".move-window-to-workspace = 8;
+            # "Mod+Ctrl+9".move-window-to-workspace = 9;
 
             "Mod+Tab" = _: {
               content.toggle-overview = set;

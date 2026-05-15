@@ -7,23 +7,26 @@
   perSystem =
     { pkgs, inputs', ... }:
     {
-      packages.niri = inputs'.niri.packages.niri.overrideAttrs (o: ({
-        # patches = [
-        #   (pkgs.fetchpatch2 {
-        #     name = "focus_ring_fade_animation_and_gradient_rotation.patch";
-        #     url = "https://github.com/niri-wm/niri/pull/3838.patch";
-        #     hash = "sha256-I6ZrfeWUFYB+USP3qOkLvONJyQQVxybFZp6m4cJcDFw=";
-        #   })
-        # ];
+      packages.niri = inputs'.niri.packages.niri.overrideAttrs (o: {
+        patches = [
+          # (pkgs.fetchpatch2 {
+          #   name = "feat-layer-animations";
+          #   url = "https://github.com/niri-wm/niri/pull/3481.patch";
+          #   hash = "sha256-O3TNnppkT4ZsXkXHSzRzWj6k4nzLomjxNIz07GTnTOg=";
+          # })
+          ./patches/feat-add-focus-ring-fade-animation-and-gradient-rotation.patch # https://github.com/niri-wm/niri/pull/3577.patch
+          ./patches/transparent-fullscreen.patch
+        ];
 
         doCheck = false; # faster builds
-      }));
+      });
 
+      _file = ./package.nix;
     };
 
   w.default =
     {
-      wrappers,
+      birdee,
       self',
       config,
       pkgs,
@@ -33,12 +36,13 @@
     {
       programs.niri = {
         enable = true;
-        package = wrappers.wrappers.niri.wrap {
+        package = birdee.wrappers.niri.wrap {
           inherit (config.wrappers.niri) settings;
           inherit pkgs;
-          v2-settings = false;
           package = lib.mkForce self'.packages.niri;
         };
       };
+
+      _file = ./package.nix;
     };
 }
