@@ -3,21 +3,19 @@
     { pkgs, ... }:
     {
       hj.packages = with pkgs; [
+        nix-output-monitor
         imagemagick
-        fetchutils
-        xrandr
         trash-cli
         ripgrep
         nix-init
-        nvim-pkg # neovim
-        silicon
+        mdfried
+        gowall
         chafa
         nurl
         just # a command runner
         wget
         tree
         isd # inspect system d
-        btop-rocm
         mcat
         gum
         fd
