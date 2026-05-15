@@ -33,6 +33,7 @@
 
         confirm_os_window_close = "0";
 
+        cursor = "none";
         cursor_trail = "1";
         cursor_trail_decay = "0.1 0.2";
         cursor_shape = "block";

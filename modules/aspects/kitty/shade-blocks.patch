@@ -1,0 +1,135 @@
+diff --git a/kitty/decorations.c b/kitty/decorations.c
+index 5279cce62..5be38259e 100644
+--- a/kitty/decorations.c
++++ b/kitty/decorations.c
+@@ -1076,105 +1076,37 @@ typedef struct Shade {
+
+ static void
+ shade(Canvas *self, Shade s) {
+-    const uint square_width = max(1, self->width / s.xnum);
+-    const uint square_height = max(1, s.ynum ? (self->height / s.ynum) : square_width);
+-    uint number_of_rows = self->height / square_height;
+-    uint number_of_cols = self->width / square_width;
++    uint8_t alpha = 128;
++    if (s.light) alpha = s.invert ? 191 : 64;
+
+-    // Make sure the parity is correct
+-    // (except when that would cause division by zero)
+-    if (number_of_cols > 1 && is_odd(number_of_cols) != is_odd(s.xnum)) number_of_cols--;
+-    if (number_of_rows > 1 && is_odd(number_of_rows) != is_odd(s.ynum)) number_of_rows--;
++    uint r_start = 0, r_end = self->height;
++    uint c_start = 0, c_end = self->width;
+
+-    // Calculate how much space remains unused, and how frequently
+-    // to insert an extra column/row to fill all of it
+-    uint excess_cols = minus(self->width, square_width * number_of_cols);
+-    double square_width_extension = (double)excess_cols / number_of_cols;
+-
+-    uint excess_rows = minus(self->height, square_height * number_of_rows);
+-    double square_height_extension = (double)excess_rows / number_of_rows;
+-
+-    Range rows = {.end=number_of_rows}, cols = {.end=number_of_cols};
+     switch(s.which_half) {
+-        // this is to remove gaps between half-filled characters
+-        case TOP_EDGE: rows.end /= 2; square_height_extension *= 2; break;
+-        case BOTTOM_EDGE: rows.start = number_of_rows / 2; square_height_extension *= 2; break;
+-        case LEFT_EDGE: cols.end /= 2; square_width_extension *= 2; break;
+-        case RIGHT_EDGE: cols.start = number_of_cols / 2; square_width_extension *= 2; break;
+-    }
+-
+-    bool extra_row = false;
+-    uint ey = 0, old_ey = 0, drawn_rows = 0;
+-
+-    for (uint r = rows.start; r < rows.end; r++) {
+-        // Keep track of how much extra height has accumulated, and add an extra row at every passed integer, including 0
+-        old_ey = ey;
+-        ey = (uint)ceil(drawn_rows * square_height_extension);
+-        extra_row = ey != old_ey;
+-        drawn_rows += 1;
+-        bool extra_col = false;
+-        uint ex = 0, old_ex = 0, drawn_cols = 0;
+-        for (uint c = cols.start; c < cols.end; c++) {
+-            old_ex = ex;
+-            ex = (uint)ceil(drawn_cols * square_width_extension);
+-            extra_col = ex != old_ex;
+-            drawn_cols += 1;
+-
+-            // Fill extra rows with semi-transparent pixels that match the pattern
+-            if (extra_row) {
+-                uint y = r * square_height + old_ey;
+-                uint offset = self->width * y;
+-                for (uint xc = 0; xc < square_width; xc++) {
+-                    uint x = c * square_width + xc + ex;
+-                    if (s.light) {
+-                        if (s.invert) self->mask[offset + x] = is_odd(c) ? 255 : 70;
+-                        else self->mask[offset + x] = is_odd(c) ? 0 : 70;
+-                    } else self->mask[offset + x] = is_odd(c) == s.invert ? 120 : 30;
+-                }
+-            }
+-            // Do the same for the extra columns
+-            if (extra_col) {
+-                uint x = c * square_width + old_ex;
+-                for (uint yr = 0; yr < square_height; yr++) {
+-                    uint y = r * square_height + yr + ey;
+-                    uint offset = self->width * y;
+-                    if (s.light) {
+-                        if (s.invert) self->mask[offset + x] = is_odd(r) ? 255 : 70;
+-                        else self->mask[offset + x] = is_odd(r) ? 0 : 70;
+-                    } else self->mask[offset + x] = is_odd(r) == s.invert ? 120 : 30;
+-                }
+-            }
+-            // And in case they intersect, set the corner pixel too
+-            if (extra_row && extra_col) {
+-                uint x = c * square_width + old_ex;
+-                uint y = r * square_height + old_ey;
+-                uint offset = self->width * y;
+-                self->mask[offset + x] = 50;
+-            }
++        case TOP_EDGE: r_end = self->height / 2; break;
++        case BOTTOM_EDGE: r_start = self->height / 2; break;
++        case LEFT_EDGE: c_end = self->width / 2; break;
++        case RIGHT_EDGE: c_start = self->width / 2; break;
++        default: break;
++    }
+
+-            const bool is_blank = s.invert ^ (is_odd(r) != is_odd(c) || (s.light && is_odd(r)));
+-            if (!is_blank) {
+-                // Fill the square
+-                for (uint yr = 0; yr < square_height; yr++) {
+-                    uint y = r * square_height + yr + ey;
+-                    uint offset = self->width * y;
+-                    for (uint xc = 0; xc < square_width; xc++) {
+-                        uint x = c * square_width + xc + ex;
+-                        self->mask[offset + x] = 255;
+-                    }
+-                }
+-            }
+-        }
++    for (uint y = r_start; y < r_end; y++) {
++        memset(self->mask + y * self->width + c_start, alpha, c_end - c_start);
+     }
++
+     if (!s.fill_blank) return;
+-    cols = (Range){.end=self->width}; rows = (Range){.end=self->height};
++    uint br_start = 0, br_end = self->height;
++    uint bc_start = 0, bc_end = self->width;
+     switch(s.which_half) {
+-        case BOTTOM_EDGE: rows.end = self->height / 2; break;
+-        case TOP_EDGE: rows.start = minus(self->height / 2, 1); break;
+-        case RIGHT_EDGE: cols.end = self->width / 2; break;
+-        case LEFT_EDGE: cols.start = minus(self->width / 2, 1); break;
++        case BOTTOM_EDGE: br_end = self->height / 2; break;
++        case TOP_EDGE: br_start = minus(self->height / 2, 1); break;
++        case RIGHT_EDGE: bc_end = self->width / 2; break;
++        case LEFT_EDGE: bc_start = minus(self->width / 2, 1); break;
++        default: break;
++    }
++    for (uint y = br_start; y < br_end; y++) {
++        memset(self->mask + y * self->width + bc_start, 255, bc_end - bc_start);
+     }
+-    for (uint r = rows.start; r < rows.end; r++) memset(self->mask + r * self->width + cols.start, 255, cols.end - cols.start);
+ }
+
+ static void
+--
+2.53.0
