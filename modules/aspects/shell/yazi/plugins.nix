@@ -49,6 +49,7 @@
           starship
           ouch
           restore
+          toggle-pane
           piper
           chmod
           ;

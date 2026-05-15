@@ -128,6 +128,35 @@
             run = "plugin fuzzy-search -- zoxide --TL=3";
             desc = "Zoxide Search";
           }
+
+          {
+            on = [
+              "["
+            ];
+            run = "plugin toggle-pane min-parent";
+            desc = "Minimize left pane";
+          }
+          {
+            on = [
+              "]"
+            ];
+            run = "plugin toggle-pane min-preview";
+            desc = "Minimize right pane";
+          }
+          {
+            on = [
+              "{"
+            ];
+            run = "plugin toggle-pane max-parent";
+            desc = "Mazimize left pane";
+          }
+          {
+            on = [
+              "}"
+            ];
+            run = "plugin toggle-pane max-preview";
+            desc = "Mazimize right pane";
+          }
         ];
       };
     };
