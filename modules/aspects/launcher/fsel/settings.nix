@@ -1,5 +1,31 @@
+{ config, ... }:
+let
+  resize = config.utils.otterResize;
+in
 {
   w.desktop = {
+    wrappers.otter-launcher.settings = {
+      modules = [
+        {
+          description = "search apps";
+          prefix = "find";
+          cmd = resize 500 1000 ''fsel -d -r -ss "{}"'';
+          with_argument = true;
+        }
+        {
+          description = "launch apps";
+          prefix = "app";
+          cmd = resize 500 1000 ''fsel -d -r -p "{}"'';
+          with_argument = true;
+        }
+      ];
+
+      general = {
+        empty_module = "find";
+        default_module = "app";
+      };
+    };
+
     wrappers.fsel = {
       enable = true;
       settings = {

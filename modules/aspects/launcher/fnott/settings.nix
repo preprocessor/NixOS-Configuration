@@ -1,79 +1,97 @@
+{ ... }@top:
+let
+  resize = top.config.utils.otterResize;
+in
 {
-  w.desktop = {
-    wrappers.fnott = {
-      enable = true;
-      settings = {
-        # For documentation on these options, see `man fnott.ini`
+  w.desktop =
+    { config, lib, ... }:
+    {
+      wrappers.otter-launcher.settings.modules =
+        let
+          fnott = lib.getExe' config.wrappers.fnott.package "fnottctl";
+        in
+        [
+          {
+            description = "notifications";
+            prefix = "noti";
+            cmd = resize 600 1200 "${fnott} list;read -p 'Press ENTER to exit. '";
+          }
+        ];
 
-        # Global values
-        globalSection = {
-          output = null;
-          min-width = 0;
-          max-width = 0;
-          max-height = 0;
-          stacking-order = "bottom-up";
-          anchor = "top-right";
-          edge-margin-vertical = 10;
-          edge-margin-horizontal = 10;
-          notification-margin = 10;
-          icon-theme = "hicolor";
-          max-icon-size = 32;
-          selection-helper = "dmenu";
-          selection-helper-uses-null-separator = "no";
-          play-sound = "aplay \${filename}";
+      wrappers.fnott = {
+        enable = true;
+        settings = {
+          # For documentation on these options, see `man fnott.ini`
 
-          # Default values, may be overridden in 'urgency' specific sections
-          layer = "top";
-          background = "3f5f3fff";
+          # Global values
+          globalSection = {
+            output = null;
+            min-width = 0;
+            max-width = 0;
+            max-height = 0;
+            stacking-order = "bottom-up";
+            anchor = "top-right";
+            edge-margin-vertical = 10;
+            edge-margin-horizontal = 10;
+            notification-margin = 10;
+            icon-theme = "hicolor";
+            max-icon-size = 32;
+            selection-helper = "dmenu";
+            selection-helper-uses-null-separator = "no";
+            play-sound = "aplay \${filename}";
 
-          border-color = "909090ff";
-          border-radius = 0;
-          border-size = 1;
+            # Default values, may be overridden in 'urgency' specific sections
+            layer = "top";
+            background = "3f5f3fff";
 
-          padding-vertical = 20;
-          padding-horizontal = 20;
+            border-color = "909090ff";
+            border-radius = 0;
+            border-size = 1;
 
-          dpi-aware = "no";
+            padding-vertical = 20;
+            padding-horizontal = 20;
 
-          title-font = "sans serif";
-          title-color = "ffffffff";
-          title-format = "<i>%a%A</i>";
+            dpi-aware = "no";
 
-          summary-font = "sans serif";
-          summary-color = "ffffffff";
-          summary-format = "<b>%s</b>\n";
+            title-font = "sans serif";
+            title-color = "ffffffff";
+            title-format = "<i>%a%A</i>";
 
-          body-font = "sans serif";
-          body-color = "ffffffff";
-          body-format = "%b";
+            summary-font = "sans serif";
+            summary-color = "ffffffff";
+            summary-format = "<b>%s</b>\n";
 
-          progress-bar-height = 20;
-          progress-color = "ffffffff";
-          progress-style = "bar";
+            body-font = "sans serif";
+            body-color = "ffffffff";
+            body-format = "%b";
 
-          sound-file = null;
-          icon = null;
+            progress-bar-height = 20;
+            progress-color = "ffffffff";
+            progress-style = "bar";
 
-          # Timeout values are in seconds. 0 to disable
-          max-timeout = 0;
-          default-timeout = 0;
-          idle-timeout = 0;
-        };
-        sections = {
-          low = {
-            background = "2b2b2bff";
-            title-color = "888888ff";
-            summary-color = "888888ff";
-            body-color = "888888ff";
+            sound-file = null;
+            icon = null;
+
+            # Timeout values are in seconds. 0 to disable
+            max-timeout = 0;
+            default-timeout = 0;
+            idle-timeout = 0;
           };
+          sections = {
+            low = {
+              background = "2b2b2bff";
+              title-color = "888888ff";
+              summary-color = "888888ff";
+              body-color = "888888ff";
+            };
 
-          normal = { };
+            normal = { };
 
-          critical = {
-            background = "6c3333ff";
+            critical = {
+              background = "6c3333ff";
+            };
           };
         };
       };
     };
-  };
 }

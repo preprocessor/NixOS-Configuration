@@ -1,0 +1,113 @@
+{ config, ... }:
+let
+  resize = config.utils.otterResize;
+in
+{
+  w.default =
+    { pkgs, lib, ... }:
+    let
+      toml = pkgs.formats.toml { };
+    in
+    {
+      wrappers.otter-launcher.settings.modules = [
+        {
+          description = "system tray";
+          prefix = "tray";
+          cmd = resize 1200 1200 (lib.getExe pkgs.tray-tui);
+        }
+      ];
+
+      hj.xdg.config.files."tray-tui/config.toml".source = toml.generate "tray-tui-config" {
+        # whether to sort tray items by their titles
+        sorting = false;
+
+        # max amount of columns in layout
+        columns = 3;
+
+        # minimum height of tray items
+        min_height = 4;
+
+        # whether to show scrollbar
+        scrollbar = true;
+
+        # enable mouse support
+        mouse = false;
+
+        key_map = {
+          # move item focus
+          left = "focus_left";
+          h = "focus_left";
+
+          right = "focus_right";
+          l = "focus_right";
+
+          up = "focus_up";
+          j = "focus_up";
+
+          down = "focus_down";
+          k = "focus_down";
+
+          # move focus inside menu tree
+          shift-down = "menu_down";
+          shift-up = "menu_up";
+
+          q = "quit";
+          ctrl-c = "quit";
+          esc = "quit";
+
+          # activate the focused item inside menu tree
+          enter = "activate";
+        };
+
+        # Colors used by the elements
+        colors =
+          # background color for menu
+          {
+            bg = "reset";
+
+            # background color for focused menu
+            bg_focused = "reset";
+
+            # foreground color for menu
+            fg = "white";
+
+            # foreground color for focused menu
+            fg_focused = "white";
+
+            # background color for highlighted item in menu
+            bg_highlighted = "green";
+
+            # foreground color for highlighted item in menu
+            fg_highlighted = "black";
+
+            # foreground color for border
+            border_fg = "white";
+
+            # foreground color for focused border
+            border_fg_focused = "green";
+
+            # backrgound color for border
+            border_bg = "reset";
+
+            # backrgound color for focused border
+            border_bg_focused = "reset";
+          };
+
+        # Symbols used by tree widget
+        symbols =
+          # symbol before currently selected item in menu
+          {
+            highlight_symbol = "";
+
+            # symbol used when item with submenus is opened
+            node_open_symbol = " ▶ ";
+
+            # symbol used when item with submenus is closed
+            node_closed_symbol = " ⏷ ";
+
+            # symbol before items with no submenus
+            node_no_children_symbol = " ";
+          };
+      };
+    };
+}
