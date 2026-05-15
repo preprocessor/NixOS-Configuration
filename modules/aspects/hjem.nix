@@ -10,6 +10,7 @@
       config,
       lib,
       constants,
+      inputs',
       ...
     }:
     {
@@ -17,6 +18,8 @@
         inputs.hjem.nixosModules.default
         (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" constants.username ])
       ];
+
+      nixpkgs.overlays = [ (_: _: { inherit (inputs'.hjem.packages) smfh; }) ];
 
       hjem.clobberByDefault = true;
 

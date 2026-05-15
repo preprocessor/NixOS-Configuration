@@ -2,16 +2,23 @@
   ff.apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
 
   w.desktop =
-    { pkgs, inputs', ... }:
+    {
+      inputs',
+      envoy,
+      pkgs,
+      lib,
+      ...
+    }:
     {
       fonts = {
         packages =
           with pkgs;
           [
+            noto-fonts-emoji-blob-bin
             maple-mono.variable
             maple-mono.NF
             font-awesome_6
-            apple-emoji
+            corefonts
             lucide
           ]
           ++ (with inputs'.apple-fonts.packages; [
@@ -41,7 +48,7 @@
             serif = [ "New York" ];
             sansSerif = [ "SF Pro" ];
             monospace = [ "SF Mono Regular" ];
-            emoji = [ "Noto Color Emoji" ];
+            emoji = [ "Blobmoji" ];
           };
         };
       };
