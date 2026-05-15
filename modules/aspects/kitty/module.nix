@@ -35,6 +35,8 @@
                 hash = "sha256-m8QrxeqIlInoCaj/O7yLQ4Sh1MXTqoDgJVnk29FI5mk=";
               };
 
+              patches = (previousAttrs.patches or [ ]) ++ [ ./shade-blocks.patch ];
+
               pyproject = false;
               doCheck = false;
               dontCheck = true;
@@ -58,13 +60,13 @@
     {
       pkgs,
       config,
-      wrappers,
+      birdee,
       ...
     }:
     {
       nixpkgs.overlays = [
         (_: prev: {
-          kitty = wrappers.wrappers.kitty.wrap (
+          kitty = birdee.wrappers.kitty.wrap (
             wrapper:
             let
               cfg = config.wrappers.kitty;

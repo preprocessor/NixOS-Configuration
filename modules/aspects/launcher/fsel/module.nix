@@ -31,7 +31,7 @@
 
   w.default =
     {
-      wrappers,
+      birdee,
       config,
       self',
       pkgs,
@@ -65,7 +65,7 @@
 
         package = mkOption {
           type = types.package;
-          default = wrappers.lib.wrapPackage (
+          default = birdee.lib.wrapPackage (
             { config, lib, ... }:
             {
               inherit pkgs;
@@ -75,7 +75,11 @@
               };
               constructFiles.generatedConfig = {
                 relPath = "config.toml";
-                content = (cfg.settings |> toml.generate "config.toml" |> builtins.readFile) + cfg.moreCfg;
+                builder = /* bash */ ''
+                  mkdir -p "$(dirname "$2")"
+                  cat ${toml.generate "config.toml" cfg.settings} > "$2"
+                  printf '\n%s' "${cfg.moreCfg}" >> "$2"
+                '';
               };
             }
           );

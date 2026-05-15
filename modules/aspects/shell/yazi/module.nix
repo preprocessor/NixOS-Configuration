@@ -4,7 +4,7 @@
       pkgs,
       lib,
       config,
-      wrappers,
+      birdee,
       ...
     }:
     let
@@ -47,7 +47,7 @@
       options.wrappers.yazi = {
         package = mkOption {
           type = types.package;
-          default = wrappers.wrappers.yazi.wrap ({
+          default = birdee.wrappers.yazi.wrap ({
             inherit pkgs;
             inherit (config.wrappers.yazi) plugins;
             extraPackages = with pkgs; [

@@ -3,11 +3,11 @@
     {
       pkgs,
       config,
-      wrappers,
+      birdee,
       ...
     }:
     let
-      gitWrapped = wrappers.wrappers.git.wrap {
+      gitWrapped = birdee.wrappers.git.wrap {
         inherit pkgs;
         settings = {
           init.defaultBranch = "main";

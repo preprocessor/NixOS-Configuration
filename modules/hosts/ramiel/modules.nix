@@ -10,7 +10,7 @@
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit self' inputs';
-        inherit (inputs) wrappers;
+        inherit (inputs) birdee;
       };
       modules = with self.modules.nixos; [
         default

@@ -3,7 +3,7 @@
     {
       pkgs,
       lib,
-      wrappers,
+      birdee,
       ...
     }:
     let
@@ -12,7 +12,7 @@
     {
       nixpkgs.overlays = [
         (_: prev: {
-          atuin = wrappers.lib.wrapPackage (
+          atuin = birdee.lib.wrapPackage (
             { config, ... }:
             {
               pkgs = prev;

@@ -4,7 +4,7 @@
       pkgs,
       config,
       lib,
-      wrappers,
+      birdee,
       ...
     }:
     let
@@ -33,7 +33,7 @@
             yamlFormat = prev.formats.yaml { };
           in
           {
-            lazygit = wrappers.lib.wrapPackage {
+            lazygit = birdee.lib.wrapPackage {
               pkgs = prev;
               package = prev.lazygit;
               env.LG_CONFIG_FILE = yamlFormat.generate "config.yml" {

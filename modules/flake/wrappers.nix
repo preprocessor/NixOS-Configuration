@@ -1,5 +1,5 @@
 {
-  ff.wrappers = {
+  ff.birdee = {
     url = "github:BirdeeHub/nix-wrapper-modules";
     inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -30,6 +30,6 @@
         };
       };
 
-      _file = "wrappers.nix";
+      _file = ./wrappers.nix;
     };
 }

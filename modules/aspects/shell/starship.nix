@@ -4,12 +4,12 @@
       config,
       pkgs,
       lib,
-      wrappers,
+      birdee,
       ...
     }:
     let
       toml = pkgs.formats.toml { };
-      starshipWrapped = wrappers.lib.wrapPackage {
+      starshipWrapped = birdee.lib.wrapPackage {
         inherit pkgs;
         package = pkgs.starship;
         env.STARSHIP_CONFIG = toml.generate "starship.toml" {

@@ -5,7 +5,6 @@
       environment.systemPackages = with pkgs; [
         qbittorrent-enhanced
         brightnessctl
-        overskride
         swaylock
         # wlsunset # or gammastep
         wlogout

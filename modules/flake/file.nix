@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  config,
   ...
 }:
 {
@@ -9,8 +10,29 @@
     (lib.mkAliasOptionModule [ "ff" ] [ "flake-file" "inputs" ])
   ];
 
+  disabledModules = [ (inputs.flake-file + "/modules/flake-parts.nix") ];
+
+  perSystem =
+    { pkgs, ... }:
+    {
+      apps =
+        config.flake-file.apps
+        |> lib.mapAttrs (
+          _: f:
+          let
+            pkg = f pkgs;
+          in
+          {
+            type = "app";
+            program = lib.getExe pkg;
+          }
+        );
+
+      checks.check-flake-file = config.flake-file.check-flake-file pkgs;
+    };
+
   flake-file = {
-    inputs.flake-file.url = "github:preprocessor/flake-file-dn";
+    inputs.flake-file.url = "github:denful/flake-file";
 
     description = "wyspr's Terrible NixOS Configuration";
 

@@ -1,17 +1,17 @@
+{ lib, ... }:
 {
   envoy.otter-launcher.github = "kuokuo123/otter-launcher";
 
   perSystem =
     {
       pkgs,
-      lib,
       envoy,
       ...
     }:
     {
       packages.otter-launcher = pkgs.rustPlatform.buildRustPackage {
         inherit (envoy.otter-launcher) pname version src;
-        cargoHash = "sha256-AlzCrK6DivOfCMGXQsiMJ+7Ahtd/9qoJ0MKZrez6xyM=";
+        cargoHash = "sha256-uDIUN2/EvMvEUWlIvgAOy9NLkpGI0CGs+QXnDiUtFxc=";
         meta = {
           description = "A hackable cli/tui launcher built for keyboard-centric wm users, featuring vi & emacs keybinds, ansi decoration, etc";
           homepage = "https://github.com/kuokuo123/otter-launcher";
@@ -23,11 +23,10 @@
 
   w.default =
     {
-      self',
-      wrappers,
-      pkgs,
+      birdee,
       config,
-      lib,
+      self',
+      pkgs,
       ...
     }:
     let
@@ -52,7 +51,7 @@
         };
 
         package = lib.mkOption {
-          default = wrappers.lib.wrapPackage (
+          default = birdee.lib.wrapPackage (
             { config, ... }:
             {
               inherit pkgs;

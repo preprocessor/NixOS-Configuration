@@ -3,7 +3,7 @@
     {
       pkgs,
       lib,
-      wrappers,
+      birdee,
       ...
     }:
     let
@@ -12,7 +12,7 @@
     {
       nixpkgs.overlays = [
         (_: prev: {
-          worktrunk = wrappers.lib.wrapPackage {
+          worktrunk = birdee.lib.wrapPackage {
             pkgs = prev;
             package = prev.worktrunk;
             env.WORKTRUNK_CONFIG_PATH = tomlFormat.generate "worktrunk-config.toml" {

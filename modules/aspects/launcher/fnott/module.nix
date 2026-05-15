@@ -1,7 +1,7 @@
 {
   w.default =
     {
-      wrappers,
+      birdee,
       config,
       pkgs,
       lib,
@@ -34,7 +34,7 @@
         package = mkOption {
           type = types.package;
           description = "The ${config.binName} package to use.";
-          default = wrappers.lib.wrapPackage (
+          default = birdee.lib.wrapPackage (
             { config, lib, ... }:
             {
               inherit pkgs;

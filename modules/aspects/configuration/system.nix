@@ -66,10 +66,5 @@
       hj.environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
       gtk.iconCache.enable = true;
-
-      environment.variables = {
-        EDITOR = "nvim";
-        VISUAL = "nvim";
-      };
     };
 }
