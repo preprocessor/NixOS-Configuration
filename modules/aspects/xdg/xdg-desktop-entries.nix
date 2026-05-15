@@ -1,80 +1,30 @@
 {
-  w.desktop =
+  w.desktop = {
+    custom.xdg.desktopEntries = {
+      "yazi".noDisplay = true;
+      "isd".noDisplay = true;
+      "uuctl".noDisplay = true;
+      "Fnott".noDisplay = true;
+      "fnott".noDisplay = true;
+      "cups".noDisplay = true;
+      "input-remapper-autoload".noDisplay = true;
+      "qt5ct".noDisplay = true;
+      "qt6ct".noDisplay = true;
+      "nixos-manual".noDisplay = true;
+      "btop".noDisplay = true;
+      "umpv".noDisplay = true;
+      "org.openrgb.OpenRGB.desktop".noDisplay = true;
+      "kvantummanager".noDisplay = true;
+    };
+  };
+
+  w.default =
     {
       config,
-      lib,
       pkgs,
+      lib,
       ...
     }:
-    let
-      makeFile =
-        name: cfg:
-        pkgs.makeDesktopItem {
-          inherit name;
-          inherit (cfg)
-            type
-            exec
-            icon
-            comment
-            terminal
-            genericName
-            startupNotify
-            noDisplay
-            prefersNonDefaultGPU
-            actions
-            ;
-          desktopName = cfg.name;
-          mimeTypes = lib.optionals (cfg.mimeType != null) cfg.mimeType;
-          categories = lib.optionals (cfg.categories != null) cfg.categories;
-          extraConfig = cfg.settings;
-        };
-    in
-    {
-      config = {
-        hj.packages = config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
-        custom.xdg.desktopEntries = {
-          "yazi" = {
-            name = "Yazi";
-            noDisplay = true;
-          };
-          "qt5ct" = {
-            name = "Qt5 Configuration Tool";
-            noDisplay = true;
-          };
-          "qt6ct" = {
-            name = "Qt6 Configuration Tool";
-            noDisplay = true;
-          };
-          "nixos-manual" = {
-            name = "NixOS Manual";
-            noDisplay = true;
-          };
-          "btop" = {
-            name = "btop++";
-            noDisplay = true;
-          };
-          "umpv" = {
-            name = "umpv Media Player";
-            noDisplay = true;
-          };
-          "nvim" = {
-            name = "Neovim Wrapper";
-            noDisplay = true;
-          };
-          "org.jellyfin.JellyfinDesktop" = {
-            name = "Jellyfin";
-            icon = "org.jellyfin.JellyfinDesktop";
-            exec = "${pkgs.jellyfin-desktop}/bin/jellyfin-desktop --platform xcb";
-          };
-          "jellyfin-tui" = {
-            name = "jellyfin-tui";
-            noDisplay = true;
-          };
-        };
-      };
-    };
-  w.default =
-    { lib, ... }:
     let
       inherit (lib) mkOption types;
 
@@ -111,6 +61,7 @@
           };
           name = mkOption {
             description = "Specific name of the application.";
+            default = "";
             type = types.str;
           };
           genericName = mkOption {
@@ -178,8 +129,37 @@
           };
         };
       };
+
+      makeFile =
+        name: cfg:
+        pkgs.makeDesktopItem {
+          inherit name;
+          inherit (cfg)
+            type
+            exec
+            icon
+            comment
+            terminal
+            genericName
+            startupNotify
+            noDisplay
+            prefersNonDefaultGPU
+            actions
+            ;
+          desktopName = cfg.name;
+          mimeTypes = lib.optionals (cfg.mimeType != null) cfg.mimeType;
+          categories = lib.optionals (cfg.categories != null) cfg.categories;
+          extraConfig = cfg.settings;
+        };
     in
     {
+      config = lib.fix (f: {
+        environment.systemPackages =
+          config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
+
+        hj.packages = f.environment.systemPackages;
+      });
+
       options.custom.xdg.desktopEntries = mkOption {
         description = "Custom Desktop Entries";
         default = { };
