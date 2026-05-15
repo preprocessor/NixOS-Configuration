@@ -6,25 +6,25 @@
   dockerTools,
 }:
 {
-  apple-emoji = {
-    pname = "apple-emoji";
-    version = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
+  btop-patch = {
+    pname = "btop-patch";
+    version = "https://raw.githubusercontent.com/NotAShelf/nyxexprs/refs/heads/main/pkgs/btop/patches/normalize_processes.patch";
     src = fetchurl {
-      url = "https://github.com/samuelngs/apple-emoji-linux/releases/latest/download/AppleColorEmoji-Linux.ttf";
-      sha256 = "sha256-U1oEOvBHBtJEcQWeZHRb/IDWYXraLuo0NdxWINwPUxg=";
+      url = "https://raw.githubusercontent.com/NotAShelf/nyxexprs/refs/heads/main/pkgs/btop/patches/normalize_processes.patch";
+      sha256 = "sha256-Gw/nPTWagybeR8zcYgHFB+BS6wCip0ItNhqR5Bcpn6k=";
     };
   };
   colorscheme = {
     pname = "colorscheme";
-    version = "5f868b3a338b6904c47f3833b9c411be641983a8";
+    version = "0c94645546f4f3ddac77a1a5fce54eb95bf50795";
     src = fetchFromGitHub {
       owner = "tinted-theming";
       repo = "schemes";
-      rev = "5f868b3a338b6904c47f3833b9c411be641983a8";
+      rev = "0c94645546f4f3ddac77a1a5fce54eb95bf50795";
       fetchSubmodules = false;
-      sha256 = "sha256-BAGZ7ObFV/9Z61OJZun7ifPyhkuHqNuW1QIhQ8LuzCo=";
+      sha256 = "sha256-PDF0/wObw4nIsSBeXVYLsloXOiphXCgIdsrNcVXguKs=";
     };
-    date = "2026-04-24";
+    date = "2026-05-03";
   };
   fish-completion-sync = {
     pname = "fish-completion-sync";
@@ -84,15 +84,15 @@
   };
   otter-launcher = {
     pname = "otter-launcher";
-    version = "ae647cef5b3c3dd52bedd7a8c881988e412a2dca";
+    version = "332850257a5f33198f96ed2d308b31bb4c95c497";
     src = fetchFromGitHub {
       owner = "kuokuo123";
       repo = "otter-launcher";
-      rev = "ae647cef5b3c3dd52bedd7a8c881988e412a2dca";
+      rev = "332850257a5f33198f96ed2d308b31bb4c95c497";
       fetchSubmodules = false;
-      sha256 = "sha256-ImJeI5xbd/w4nchFwc0tSS8v2vYWx/ttwM5uk2BWsCk=";
+      sha256 = "sha256-qcfN5FZTP8kdNRiY0FkSoPvuzD4aHCYnFxi1RYCUyrM=";
     };
-    date = "2026-04-23";
+    date = "2026-05-03";
   };
   tokyonight = {
     pname = "tokyonight";
@@ -132,14 +132,14 @@
   };
   yazi-plugins-repo = {
     pname = "yazi-plugins-repo";
-    version = "ac82af3e10f9a32cecd9f87ac64b3f9de7c7aea7";
+    version = "5d5c4803dd12bab4e4f19d606f8db0c871e6bec5";
     src = fetchFromGitHub {
       owner = "yazi-rs";
       repo = "plugins";
-      rev = "ac82af3e10f9a32cecd9f87ac64b3f9de7c7aea7";
+      rev = "5d5c4803dd12bab4e4f19d606f8db0c871e6bec5";
       fetchSubmodules = false;
-      sha256 = "sha256-svc7I2E+tVMEUWUvIS6i3oTGfLq13eaI61T0c1MQ8qQ=";
+      sha256 = "sha256-cZlnrlgv8+SFeNgIW69q//i/apcpvAv41q5W8bJwVaI=";
     };
-    date = "2026-04-23";
+    date = "2026-05-14";
   };
 }
