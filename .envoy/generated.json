@@ -1,0 +1,247 @@
+{
+    "colorscheme": {
+        "cargoLock": null,
+        "date": "2026-05-03",
+        "extract": null,
+        "name": "colorscheme",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "tinted-theming",
+            "repo": "schemes",
+            "rev": "0c94645546f4f3ddac77a1a5fce54eb95bf50795",
+            "sha256": "sha256-PDF0/wObw4nIsSBeXVYLsloXOiphXCgIdsrNcVXguKs=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "0c94645546f4f3ddac77a1a5fce54eb95bf50795"
+    },
+    "fish-completion-sync": {
+        "cargoLock": null,
+        "date": "2025-03-09",
+        "extract": null,
+        "name": "fish-completion-sync",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "iynaix",
+            "repo": "fish-completion-sync",
+            "rev": "4f058ad2986727a5f510e757bc82cbbfca4596f0",
+            "sha256": "sha256-kHpdCQdYcpvi9EFM/uZXv93mZqlk1zCi2DRhWaDyK5g=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "4f058ad2986727a5f510e757bc82cbbfca4596f0"
+    },
+    "fsel": {
+        "cargoLock": null,
+        "date": "2026-05-17",
+        "extract": null,
+        "name": "fsel",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "Mjoyufull",
+            "repo": "fsel",
+            "rev": "6b6ae52e3a2c254007e8a2c332a8d5de99428ba5",
+            "sha256": "sha256-7YoRc6jOuQUI0yv3qBHFhc60G/RG0LwVsKkN90UkPn4=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "6b6ae52e3a2c254007e8a2c332a8d5de99428ba5"
+    },
+    "fuzzy-search-src": {
+        "cargoLock": null,
+        "date": "2026-05-22",
+        "extract": null,
+        "name": "fuzzy-search-src",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "onelocked",
+            "repo": "fuzzy-search.yazi",
+            "rev": "8adfa1778e51c6b42867836304c9af74a0c41b58",
+            "sha256": "sha256-4z1FpHlzm+YFHlvZYJGWXp7AQlOwkF9d+rsP4BgTReY=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "8adfa1778e51c6b42867836304c9af74a0c41b58"
+    },
+    "hand-of-evil": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "hand-of-evil",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "sha256": "sha256-tZn+GCKOQqM+EYSzxF2qKHPHa1xgewAnedG/jaoDoVE=",
+            "type": "tarball",
+            "url": "https://github.com/Grief/hand-of-evil/releases/download/v1.2/hand-of-evil.tar.gz"
+        },
+        "version": "https://github.com/Grief/hand-of-evil/releases/download/v1.2/hand-of-evil.tar.gz"
+    },
+    "miku": {
+        "cargoLock": null,
+        "date": "2025-03-13",
+        "extract": null,
+        "name": "miku",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "supermariofps",
+            "repo": "hatsune-miku-windows-linux-cursors",
+            "rev": "471ff88156e9a3dc8542d23e8cae4e1c9de6e732",
+            "sha256": "sha256-HCHo4GwWLvjjnKWNiHb156Z+NQqliqLX1T1qNxMEMfE=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "471ff88156e9a3dc8542d23e8cae4e1c9de6e732"
+    },
+    "niri-shaders-collection": {
+        "cargoLock": null,
+        "date": "2026-04-07",
+        "extract": null,
+        "name": "niri-shaders-collection",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "jgarza9788",
+            "repo": "niri-animation-collection",
+            "rev": "aa26f4e157b818630cb281f6e1968b641c079d69",
+            "sha256": "sha256-DgoudR6etn+t5eYplPcOISPuWMRAulW6ZOCTsyFHi2w=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "aa26f4e157b818630cb281f6e1968b641c079d69"
+    },
+    "otter-launcher": {
+        "cargoLock": null,
+        "date": "2026-05-19",
+        "extract": null,
+        "name": "otter-launcher",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "kuokuo123",
+            "repo": "otter-launcher",
+            "rev": "b1c2c0992403f52dff1f5754cc250ee6e121e342",
+            "sha256": "sha256-D3wp7vR3+ktTNJ54rUWHIK6Y5tGeNXDD4FBO785wl0E=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "b1c2c0992403f52dff1f5754cc250ee6e121e342"
+    },
+    "tokyonight": {
+        "cargoLock": null,
+        "date": "2026-03-24",
+        "extract": null,
+        "name": "tokyonight",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "folke",
+            "repo": "tokyonight.nvim",
+            "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+            "sha256": "sha256-a9iRWue7DB7s/wNdxqqB51Jya5P9X6sDftqhdmKggU0=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6"
+    },
+    "tokyonight-vesktop-theme": {
+        "cargoLock": null,
+        "date": "2025-06-22",
+        "extract": null,
+        "name": "tokyonight-vesktop-theme",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "ForRealy",
+            "repo": "Tokyo-Night-fixed",
+            "rev": "585302fe074249eff2212930d26b0153a5ff5102",
+            "sha256": "sha256-iipzyCRE6XbOERlcxRj8Vdbx0lN66XZ7wNJgexeoAcM=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "585302fe074249eff2212930d26b0153a5ff5102"
+    },
+    "tokyonight-yazi-theme": {
+        "cargoLock": null,
+        "date": "2026-01-26",
+        "extract": null,
+        "name": "tokyonight-yazi-theme",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "kalidyasin",
+            "repo": "yazi-flavors",
+            "rev": "70fe6b4a245a59b546166aae6c45ee2b471869c2",
+            "sha256": "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "70fe6b4a245a59b546166aae6c45ee2b471869c2"
+    },
+    "yazi-plugins-repo": {
+        "cargoLock": null,
+        "date": "2026-05-23",
+        "extract": null,
+        "name": "yazi-plugins-repo",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "yazi-rs",
+            "repo": "plugins",
+            "rev": "be524fb140206cc59b3e51037ba6148935263975",
+            "sha256": "sha256-QacgLcTG8uFqEyRQdyIUt4QKZOc81vV5iXKmR8sqV3c=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "be524fb140206cc59b3e51037ba6148935263975"
+    }
+}

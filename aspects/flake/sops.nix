@@ -1,0 +1,31 @@
+{ inputs, rootPath, ... }:
+{
+  ff.sops-nix = {
+    url = "github:Mic92/sops-nix";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  w.default =
+    {
+      pkgs,
+      config,
+      constants,
+      ...
+    }:
+    {
+      imports = [ inputs.sops-nix.nixosModules.sops ];
+      environment.systemPackages = [ pkgs.sops ];
+      sops = {
+        age = {
+          keyFile = "${config.hj.xdg.config.directory}/sops/age/keys.txt";
+          generateKey = true;
+        };
+        secrets.private_key = {
+          key = "private_key";
+          owner = constants.username;
+          format = "yaml";
+          sopsFile = rootPath + /.secrets/cachix.yaml;
+        };
+      };
+    };
+}

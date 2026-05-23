@@ -22,16 +22,24 @@
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
+      # Import all *.nix files in the ./aspects directory
+      # Except ones that start with '_'
       imports =
         with inputs.nixpkgs.lib;
-        ./modules
+        ./aspects
         |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name)
         |> fileset.toList;
+
+      _module.args.rootPath = ./.;
     };
 
   inputs = {
     apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
     base16.url = "github:SenchoPens/base16.nix";
+    birdee = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     direnv-instant = {
       url = "github:Mic92/direnv-instant";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +47,6 @@
     flake-file.url = "github:denful/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
     fsel.url = "github:Mjoyufull/fsel";
-    gen-luarc.url = "github:mrcjkb/nix-gen-luarc-json";
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -73,10 +80,6 @@
     pixprint.url = "github:preprocessor/pixprint";
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    birdee = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
