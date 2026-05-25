@@ -164,6 +164,18 @@ in
             prefix = "time";
             cmd = resize 1660 330 "worldclocks";
           }
+          {
+            description = "color picker";
+            prefix = "cc";
+            cmd = "niri msg action spawn -- ${pkgs.writeShellScript "color-picker" ''
+              sleep 0.25
+              PICKED=$(${pkgs.hyprpicker}/bin/hyprpicker --radius=70 --scale=3 --autocopy --no-fancy --format=hex)
+              if [ -n "$PICKED" ]; then
+                kitty --app-id=color-picker -e sh -c "${pkgs.pastel}/bin/pastel color '$PICKED'; echo; read -n 1 -s -r -p 'Press any key to close...'"
+              fi
+            ''}; exit";
+          }
+
         ];
       };
 
