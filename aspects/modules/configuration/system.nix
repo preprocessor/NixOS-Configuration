@@ -48,13 +48,9 @@
 
       services.speechd.enable = lib.mkForce false; # Disable tts
 
-      nixpkgs = {
-        config = {
-          allowUnfree = true;
-          rocmSupport = true;
-        };
-
-        overlays = [ (f: p: { sys = p.stdenv.hostPlatform.system; }) ];
+      nixpkgs.config = {
+        allowUnfree = true;
+        rocmSupport = true;
       };
 
       system.stateVersion = constants.stateVersion;
