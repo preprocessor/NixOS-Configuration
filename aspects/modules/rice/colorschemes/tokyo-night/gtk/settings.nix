@@ -1,5 +1,5 @@
 {
-  w.desktop =
+  w.tokyonight-night =
     { lib, ... }:
     let
       cursor-theme = "Posy_Cursor_Black";

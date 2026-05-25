@@ -16,7 +16,7 @@
         default
         ramiel
         desktop
-        tokyonight-night
+        # tokyonight-night
         gruvbox-dark-hard
         shell
       ];

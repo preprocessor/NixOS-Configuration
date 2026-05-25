@@ -1,14 +1,11 @@
 { lib, ... }:
 {
   perSystem =
-    { pkgs, config, ... }:
-    let
-      scheme = config.scheme.withHashtag;
-    in
+    { pkgs, ... }:
     {
       packages =
         let
-          tela-blue = scheme.blue;
+          tela-blue = "#0a2ebb";
           # copy the generated theme directly
           tela-template = pkgs.runCommand "tela-template" { } /* sh */ ''
             # copy the nix icon
@@ -39,7 +36,7 @@
               runtimeInputs = [
                 pkgs.dconf
               ];
-              text = /* sh */ ''
+              text = /* bash */ ''
                 if [[ -z "''${1:-}" ]]; then
                     echo "ERROR: A hex color is required. (e.g. #FFFFFF)"
                     exit 1

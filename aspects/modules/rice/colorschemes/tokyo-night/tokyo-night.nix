@@ -25,7 +25,7 @@
       # tokyonight-vesktop-theme = envoy.tokyonight-vesktop-theme.src;
     in
     {
-      # scheme = colorscheme; # Set base16 scheme
+      scheme = colorscheme; # Set base16 scheme
 
       hj.xdg.config.files = {
         "bat/themes/tokyonight.tmTheme".source = tmTheme;

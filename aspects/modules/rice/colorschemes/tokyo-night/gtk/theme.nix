@@ -1,11 +1,12 @@
 {
-  w.desktop =
+  w.tokyonight-night =
     { pkgs, ... }:
     let
       tokyonight-theme = pkgs.tokyonight-gtk-theme.override {
         colorVariants = [ "dark" ];
         sizeVariants = [ "compact" ];
         themeVariants = [ "default" ];
+        iconVariants = [ "dark" ];
       };
       tokyonight-template = pkgs.runCommand "tokyonight-template" { } /* sh */ ''
         mkdir -p $out/share/themes
