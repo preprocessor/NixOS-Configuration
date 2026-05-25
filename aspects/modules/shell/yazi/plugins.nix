@@ -1,7 +1,9 @@
 {
   envoy = {
-    yazi-plugins-repo.github = "yazi-rs/plugins";
     fuzzy-search-src.github = "onelocked/fuzzy-search.yazi";
+    extra-metadata = {
+      github = "boydaihungst/file-extra-metadata.yazi";
+    };
   };
 
   w.shell =
@@ -14,8 +16,6 @@
     let
       inherit (lib) getExe;
 
-      zoom = envoy.yazi-plugins-repo.src + "/zoom.yazi";
-
       fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
         inherit (envoy.fuzzy-search-src) pname version;
 
@@ -25,52 +25,55 @@
         };
       };
 
+      extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {
+        inherit (envoy.extra-metadata) pname version src;
+      };
+
       confirm-dialog = pkgs.yaziPlugins.mkYaziPlugin {
         pname = "confirm-dialog";
         version = "1.0";
         src = pkgs.writeTextFile {
           name = "confirm-dialog-src";
           destination = "/main.lua";
-          text = # lua
-            ''
-              local get_hovered = ya.sync(function()
-                  local h = cx.active.current.hovered
-                  if not h then return nil end
-                  return {
-                      url     = tostring(h.url),
-                      is_dir  = h.cha.is_dir,
-                      exists  = h.cha.len ~= nil,
-                  }
-              end)
+          text = /* lua */ ''
+            local get_hovered = ya.sync(function()
+                local h = cx.active.current.hovered
+                if not h then return nil end
+                return {
+                    url     = tostring(h.url),
+                    is_dir  = h.cha.is_dir,
+                    exists  = h.cha.len ~= nil,
+                }
+            end)
 
-              local function entry()
-                  if not os.getenv("YAZI_CHOOSER_SAVE") then
-                      return ya.emit("open", { hovered = true })
-                  end
+            local function entry()
+                if not os.getenv("YAZI_CHOOSER_SAVE") then
+                    return ya.emit("open", { hovered = true })
+                end
 
-                  local h = get_hovered()
-                  if not h then return end
+                local h = get_hovered()
+                if not h then return end
 
-                  if h.is_dir then
-                      return ya.emit("enter", {})
-                  end
+                if h.is_dir then
+                    return ya.emit("enter", {})
+                end
 
-                  if h.exists then
-                      local yes = ya.confirm({
-                          pos   = { "center", w = 62, h = 10 },
-                          title = "Overwrite file?",
-                          body  = ui.Text(
-                              h.url .. "\n\nThis file already exists and will be overwritten."
-                          ):wrap(ui.Wrap.YES),
-                      })
-                      if not yes then return end
-                  end
+                if h.exists then
+                    local yes = ya.confirm({
+                        pos = { "center", w = 62, h = 10 },
+                        title = "Overwrite file?",
+                        body = ui.Text(
+                            h.url .. "\n\nThis file already exists and will be overwritten."
+                        ):wrap(ui.Wrap.YES),
+                    })
+                    if not yes then return end
+                end
 
-                  ya.emit("open", { hovered = true })
-              end
+                ya.emit("open", { hovered = true })
+            end
 
-              return { entry = entry }
-            '';
+            return { entry = entry }
+          '';
         };
       };
 
@@ -93,7 +96,6 @@
           lazygit
           bypass
           git
-          jump-to-char
           smart-filter
           smart-enter
           starship
@@ -101,9 +103,12 @@
           restore
           toggle-pane
           piper
-          chmod
           ;
-        inherit zoom fuzzy-search confirm-dialog;
+        inherit
+          fuzzy-search
+          confirm-dialog
+          extra-metadata
+          ;
       };
 
       wrappers.yazi.settings = {
@@ -161,6 +166,13 @@
             group = "git";
             url = "*/";
             run = "git";
+          }
+        ];
+
+        spotters = [
+          {
+            url = "*";
+            run = "extra-metadata";
           }
         ];
       };

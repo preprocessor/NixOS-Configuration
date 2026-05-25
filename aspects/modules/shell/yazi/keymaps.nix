@@ -54,16 +54,6 @@
           }
           # [INFO] Plugin keymaps below
           {
-            on = "+";
-            run = "plugin zoom 1";
-            desc = "Zoom in hovered file";
-          }
-          {
-            on = "-";
-            run = "plugin zoom -1";
-            desc = "Zoom out hovered file";
-          }
-          {
             on = [ "h" ];
             run = "plugin bypass reverse";
             desc = "Enter the child directory, or open the file";
