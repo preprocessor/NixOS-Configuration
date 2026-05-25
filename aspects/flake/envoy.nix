@@ -193,8 +193,6 @@ let
   );
 in
 {
-  _file = "envoy.nix";
-
   options.envoy = lib.mkOption {
     type = lib.types.attrsOf sourceType;
     default = { };
@@ -236,40 +234,31 @@ in
           meta.description = "Update sources. Usage: write-sources [name-regex]. Without a filter, locked sources are skipped; with an explicit filter, locked sources matching the filter are updated too.";
           program = pkgs.writeShellApplication {
             name = "write-sources";
-            runtimeInputs = with pkgs; [
-              nvfetcher
-              ripgrep
-              gum
+            runtimeInputs = [
+              pkgs.nvfetcher
+              pkgs.ripgrep
             ];
             text = ''
-                          if [ $# -eq 0 ]; then
-                            matched=$(printf '%s\n' ${lib.escapeShellArg unlockedNamesStr} \
-                              | gum filter --no-limit --height 10 --placeholder "filter sources…") || exit 0
-                          else
-                            user_filter="$1"
-                            matched=$(printf '%s\n' ${lib.escapeShellArg allNamesStr} \
-                              | rg -e "$user_filter" || true)
-                          fi
-
-                          if [ -z "$matched" ]; then
-                            gum log --level warn "No sources match; nothing to update."
-                            exit 0
-                          fi
-
-                          gum log --level info "Update sources?:"
-                          printf '%s\n' "$matched" | gum format --type="template" \
-                            '{{ range . }}  • {{ . }}{{ "\n" }}{{ end }}' 2>/dev/null \
-                            || printf '%s\n' "$matched" | sed 's/^/  • /'
-
-                          gum confirm "Proceed?" || exit 0
-
-                          regex="^($(printf '%s\n' "$matched" | paste -sd'|' -))$"
-                          gum spin --title "Fetching sources…" -- \
-                            nvfetcher -c ${tomlFile} -o .envoy -f "$regex" \
-              --commit-changes \
-              --commit-summary "nvfetcher: update sources"
-
-                          gum log --level info "Done."
+              # Without a filter: update unlocked only (safe default).
+              # With an explicit filter: match against all sources, so users
+              # can force-update a locked entry by naming it.
+              if [ $# -eq 0 ]; then
+                user_filter="."
+                candidates=${lib.escapeShellArg unlockedNamesStr}
+              else
+                user_filter="$1"
+                candidates=${lib.escapeShellArg allNamesStr}
+              fi
+              # nvfetcher's -f matches by full source name, so we build an
+              # alternation of just the names we want to update.
+              matched=$(printf '%s\n' "$candidates" \
+                | rg -e "$user_filter" || true)
+              if [ -z "$matched" ]; then
+                echo "No sources match '$user_filter'; nothing to update." >&2
+                exit 0
+              fi
+              regex="^($(echo "$matched" | paste -sd'|' -))$"
+              nvfetcher -c ${tomlFile} -o .envoy -f "$regex"
             '';
           };
         };

@@ -6,6 +6,18 @@
   dockerTools,
 }:
 {
+  extra-metadata = {
+    pname = "extra-metadata";
+    version = "044274ca2e473f18910d03ca7392dff5ef028deb";
+    src = fetchFromGitHub {
+      owner = "boydaihungst";
+      repo = "file-extra-metadata.yazi";
+      rev = "044274ca2e473f18910d03ca7392dff5ef028deb";
+      fetchSubmodules = false;
+      sha256 = "sha256-Yq8nv/MSxOy0xTyeIQac/Gu8j1tLL6m7glFicjJ3fIs=";
+    };
+    date = "2026-04-22";
+  };
   eza-themes = {
     pname = "eza-themes";
     version = "add4c72c546992b8db674d6d3eea315bf2111b9a";
@@ -65,6 +77,14 @@
       sha256 = "sha256-9rYLbnQZV+sTJdYwEZlqJzGHC2w/z9MUWzJr474B834=";
     };
     date = "2023-09-11";
+  };
+  gruvbox-discord = {
+    pname = "gruvbox-discord";
+    version = "https://raw.githubusercontent.com/round-panda/gruvbox-sharp/main/GruvboxSharp.theme.css";
+    src = fetchurl {
+      url = "https://raw.githubusercontent.com/round-panda/gruvbox-sharp/main/GruvboxSharp.theme.css";
+      sha256 = "sha256-fRj80A/foM6Bc6odECU2JuYrLhxuknbqot7QL3TUqWo=";
+    };
   };
   gruvbox-fish = {
     pname = "gruvbox-fish";
@@ -181,17 +201,5 @@
       sha256 = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
     };
     date = "2026-01-26";
-  };
-  yazi-plugins-repo = {
-    pname = "yazi-plugins-repo";
-    version = "be524fb140206cc59b3e51037ba6148935263975";
-    src = fetchFromGitHub {
-      owner = "yazi-rs";
-      repo = "plugins";
-      rev = "be524fb140206cc59b3e51037ba6148935263975";
-      fetchSubmodules = false;
-      sha256 = "sha256-QacgLcTG8uFqEyRQdyIUt4QKZOc81vV5iXKmR8sqV3c=";
-    };
-    date = "2026-05-23";
   };
 }

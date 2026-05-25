@@ -1,4 +1,25 @@
 {
+    "extra-metadata": {
+        "cargoLock": null,
+        "date": "2026-04-22",
+        "extract": null,
+        "name": "extra-metadata",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "boydaihungst",
+            "repo": "file-extra-metadata.yazi",
+            "rev": "044274ca2e473f18910d03ca7392dff5ef028deb",
+            "sha256": "sha256-Yq8nv/MSxOy0xTyeIQac/Gu8j1tLL6m7glFicjJ3fIs=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "044274ca2e473f18910d03ca7392dff5ef028deb"
+    },
     "eza-themes": {
         "cargoLock": null,
         "date": "2026-03-04",
@@ -103,6 +124,21 @@
             "type": "github"
         },
         "version": "5bfe85a961d144376f9f9460f2b2a85343a0f0b3"
+    },
+    "gruvbox-discord": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "gruvbox-discord",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "name": null,
+            "sha256": "sha256-fRj80A/foM6Bc6odECU2JuYrLhxuknbqot7QL3TUqWo=",
+            "type": "url",
+            "url": "https://raw.githubusercontent.com/round-panda/gruvbox-sharp/main/GruvboxSharp.theme.css"
+        },
+        "version": "https://raw.githubusercontent.com/round-panda/gruvbox-sharp/main/GruvboxSharp.theme.css"
     },
     "gruvbox-fish": {
         "cargoLock": null,
@@ -306,26 +342,5 @@
             "type": "github"
         },
         "version": "70fe6b4a245a59b546166aae6c45ee2b471869c2"
-    },
-    "yazi-plugins-repo": {
-        "cargoLock": null,
-        "date": "2026-05-23",
-        "extract": null,
-        "name": "yazi-plugins-repo",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "yazi-rs",
-            "repo": "plugins",
-            "rev": "be524fb140206cc59b3e51037ba6148935263975",
-            "sha256": "sha256-QacgLcTG8uFqEyRQdyIUt4QKZOc81vV5iXKmR8sqV3c=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "be524fb140206cc59b3e51037ba6148935263975"
     }
 }

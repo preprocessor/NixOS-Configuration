@@ -73,6 +73,10 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     nsticky.url = "github:lonerOrz/nsticky";
+    nvfetcher = {
+      url = "github:berberman/nvfetcher";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     pixprint.url = "github:preprocessor/pixprint";
     sops-nix = {
       url = "github:Mic92/sops-nix";
