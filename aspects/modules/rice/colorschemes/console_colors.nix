@@ -1,8 +1,8 @@
 {
   w.default =
-    { config, ... }:
+    { scheme, ... }:
     {
-      console.colors = with config.scheme; [
+      console.colors = with scheme; [
         base00-hex
         red
         green

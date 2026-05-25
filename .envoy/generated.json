@@ -1,4 +1,25 @@
 {
+    "eza-themes": {
+        "cargoLock": null,
+        "date": "2026-03-04",
+        "extract": null,
+        "name": "eza-themes",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "eza-community",
+            "repo": "eza-themes",
+            "rev": "add4c72c546992b8db674d6d3eea315bf2111b9a",
+            "sha256": "sha256-toqj3bv2kCC2FHbGfeFpS3g9DoxQeZ7cwPYVpD8cfgg=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "add4c72c546992b8db674d6d3eea315bf2111b9a"
+    },
     "fish-completion-sync": {
         "cargoLock": null,
         "date": "2025-03-09",
@@ -61,6 +82,69 @@
             "type": "github"
         },
         "version": "8adfa1778e51c6b42867836304c9af74a0c41b58"
+    },
+    "gruvbox": {
+        "cargoLock": null,
+        "date": "2023-09-11",
+        "extract": null,
+        "name": "gruvbox",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "gruvbox-community",
+            "repo": "gruvbox-contrib",
+            "rev": "5bfe85a961d144376f9f9460f2b2a85343a0f0b3",
+            "sha256": "sha256-9rYLbnQZV+sTJdYwEZlqJzGHC2w/z9MUWzJr474B834=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "5bfe85a961d144376f9f9460f2b2a85343a0f0b3"
+    },
+    "gruvbox-fish": {
+        "cargoLock": null,
+        "date": "2019-06-01",
+        "extract": null,
+        "name": "gruvbox-fish",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "gruvbox-community",
+            "repo": "fish-gruvbox",
+            "rev": "b3c8fd52e6d3860123cc1c3a8b72e12d887596ba",
+            "sha256": "sha256-LhBerkaPfKMmmb29EoYdpMxWc3ckFesaty15M2SCO7Y=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "b3c8fd52e6d3860123cc1c3a8b72e12d887596ba"
+    },
+    "gruvbox-lazygit": {
+        "cargoLock": null,
+        "date": "2025-12-27",
+        "extract": null,
+        "name": "gruvbox-lazygit",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "im-AMS",
+            "repo": "gruvbox-material-lazygit",
+            "rev": "2ed4a23ca050987e6283a2a9bce348b3288591d7",
+            "sha256": "sha256-jfVgHetavAr1jTjA+Ivg/LXDWQBqqmc3mtNBi1w0C/0=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "2ed4a23ca050987e6283a2a9bce348b3288591d7"
     },
     "hand-of-evil": {
         "cargoLock": null,

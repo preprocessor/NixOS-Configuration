@@ -94,7 +94,7 @@
         };
 
         theme = lib.mkOption {
-          inherit type;
+          inherit (toml) type;
           default = { };
           description = "Theme settings";
         };
@@ -113,7 +113,7 @@
           '';
 
           type = types.submodule {
-            freeformType = (toml) type;
+            freeformType = toml.type;
             options = {
               mgr = mkMapOption ''
                 Manager settings
@@ -172,7 +172,7 @@
           '';
 
           type = types.submodule {
-            freeformType = (toml) type;
+            freeformType = toml.type;
             options = {
               mgr = mkMapOption ''
                 Keymap mgr settings
@@ -217,5 +217,7 @@
           };
         };
       };
+
+      _file = ./module.nix;
     };
 }

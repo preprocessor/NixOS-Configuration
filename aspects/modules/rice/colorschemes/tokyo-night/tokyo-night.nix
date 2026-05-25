@@ -1,6 +1,5 @@
 {
   envoy = {
-    colorscheme.github = "tinted-theming/schemes";
     tokyonight.github = "folke/tokyonight.nvim";
     tokyonight-yazi-theme.github = "kalidyasin/yazi-flavors";
     tokyonight-vesktop-theme.github = "ForRealy/Tokyo-Night-fixed";
@@ -15,7 +14,7 @@
       ...
     }:
     let
-      colorscheme = envoy.colorscheme.src + "/base24/tokyo-night-dark.yaml";
+      colorscheme = envoy.schemes.src + "/base24/tokyo-night-dark.yaml";
 
       tokyonight = envoy.tokyonight.src + "/extras";
 
@@ -26,10 +25,9 @@
       # tokyonight-vesktop-theme = envoy.tokyonight-vesktop-theme.src;
     in
     {
-      scheme = colorscheme; # Set base16 scheme
+      # scheme = colorscheme; # Set base16 scheme
 
       hj.xdg.config.files = {
-        "ghostty/config".text = "theme = TokyoNight Night";
         "bat/themes/tokyonight.tmTheme".source = tmTheme;
         "bat/config".text = "--theme=tokyonight";
         "eza/theme.yml".source = tokyonight + "/eza/tokyonight_night.yml";

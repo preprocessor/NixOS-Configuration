@@ -31,6 +31,8 @@
           hash = "sha256-wjgE9aladixbGfMXVdkvxEBJHKS2BEepbwILZro7d0A=";
         };
       });
+
+      _file = ./clipboard.nix;
     };
 
   w.default =
@@ -80,5 +82,7 @@
             cmd = resize 800 1000 "cliphist-tui";
           }
         ];
+
+      _file = ./clipboard.nix;
     };
 }

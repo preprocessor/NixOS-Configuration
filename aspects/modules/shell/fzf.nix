@@ -1,10 +1,10 @@
 {
   w.desktop =
-    { schemeHash, ... }:
+    { scheme, ... }:
     {
       custom.programs.fzf = {
         enable = true;
-        colors = with schemeHash; {
+        colors = with scheme.withHashtag; {
           "bg+" = base02; # selection background
           "fg+" = base07; # current item text
           "hl" = base0B; # match chars, unselected
@@ -70,6 +70,8 @@
           ${lib.getExe cfg.package} --fish | source
         '';
       };
+
+      _file = ./fzf.nix;
     };
 
 }

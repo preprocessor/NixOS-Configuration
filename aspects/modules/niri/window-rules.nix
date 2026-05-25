@@ -1,12 +1,11 @@
 {
   w.desktop =
-    { schemeHash, ... }:
+    { scheme, ... }:
     {
       wrappers.niri.settings =
         let
           set = _: { };
         in
-        with schemeHash;
         {
           window-rules = [
             { draw-border-with-background = false; }
@@ -19,10 +18,6 @@
                   title = "^Vivaldi Settings";
                 }
                 # Steam rules
-                {
-                  app-id = "^steam$";
-                  title = "^Steam Settings$";
-                }
                 {
                   app-id = "^steam$";
                   title = "^Friends List$";
@@ -54,27 +49,33 @@
               matches = [
                 { title = "login"; }
                 { title = "signin"; }
+                { title = "log in"; }
+                { title = "sign in"; }
+                { title = "mail"; }
                 { app-id = "org.keepassxc.KeePassXC"; }
-                { app-id = "equibop"; }
-                # { app-id = "discord"; }
-                { app-id = "thunderbird"; }
+                { app-id = "vesktop"; }
+                {
+                  app-id = "^steam$";
+                  title = "^Steam Settings$";
+                }
+
               ];
+
               block-out-from = "screencast";
+
               focus-ring = {
-                active.color = "#f38ba8";
+                width = 3;
+                active-color = "#ff2b28";
               };
 
               border = {
-                inactive.color = "#7d0d2d";
+                on = set;
+                active-color = "#ff0d2d";
+                inactive-color = "#ff0d2d";
                 width = 3;
               };
 
               shadow.off = set;
-
-              tab-indicator = {
-                active.color = "#f38ba8";
-                inactive.color = "#7d0d2d";
-              };
             }
             {
               matches = [

@@ -17,6 +17,7 @@
         ramiel
         desktop
         tokyonight-night
+        gruvbox-dark-hard
         shell
       ];
     }

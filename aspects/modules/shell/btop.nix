@@ -11,6 +11,8 @@
           })
         ];
       };
+
+      _file = ./btop.nix;
     };
 
   w.default =
@@ -21,5 +23,7 @@
       systemd.tmpfiles.rules = [
         "Z /sys/class/powercap/intel-rapl:0/energy_uj 0444 root root - -"
       ];
+
+      _file = ./btop.nix;
     };
 }

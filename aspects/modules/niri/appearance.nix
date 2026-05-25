@@ -1,13 +1,13 @@
 {
   w.desktop =
-    { config, schemeHash, ... }:
+    { config, scheme, ... }:
     let
       set = _: { };
     in
     {
       wrappers.niri.settings = {
 
-        layout = with schemeHash; {
+        layout = with scheme.withHashtag; {
           center-focused-column = "on-overflow";
           always-center-single-column = set;
           empty-workspace-above-first = set;
@@ -44,8 +44,8 @@
               };
             };
 
-            color = base00;
-            inactive-color = base00;
+            color = "${base00}dd";
+            inactive-color = "${base00}dd";
           };
         };
 

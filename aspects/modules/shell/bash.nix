@@ -7,7 +7,7 @@
       ...
     }:
     {
-      programs.bash.interactiveShellInit = lib.mkAfter /* bash */ ''
+      programs.bash.interactiveShellInit = /* bash */ ''
         # Auto switch to fish while keeping bash as the system shell
         # See: https://fishshell.com/docs/current/index.html#default-shell
         PARENT_PROCESS=$(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm)
@@ -19,5 +19,7 @@
           exec ${lib.getExe pkgs.fish} $LOGIN_OPTION
         fi
       '';
+
+      _file = ./bash.nix;
     };
 }

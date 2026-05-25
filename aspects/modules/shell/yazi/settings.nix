@@ -4,8 +4,6 @@
     {
       environment.systemPackages = [ pkgs.ouch-rar ]; # general de/compression utility
 
-      nixpkgs.overlays = [ { ouch = pkgs.ouch-rar; } ];
-
       wrappers.yazi = {
         enable = true;
 
@@ -91,5 +89,7 @@
           };
         };
       };
+
+      _file = ./settings.nix;
     };
 }

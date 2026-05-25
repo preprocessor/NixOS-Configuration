@@ -6,6 +6,18 @@
   dockerTools,
 }:
 {
+  eza-themes = {
+    pname = "eza-themes";
+    version = "add4c72c546992b8db674d6d3eea315bf2111b9a";
+    src = fetchFromGitHub {
+      owner = "eza-community";
+      repo = "eza-themes";
+      rev = "add4c72c546992b8db674d6d3eea315bf2111b9a";
+      fetchSubmodules = false;
+      sha256 = "sha256-toqj3bv2kCC2FHbGfeFpS3g9DoxQeZ7cwPYVpD8cfgg=";
+    };
+    date = "2026-03-04";
+  };
   fish-completion-sync = {
     pname = "fish-completion-sync";
     version = "4f058ad2986727a5f510e757bc82cbbfca4596f0";
@@ -41,6 +53,42 @@
       sha256 = "sha256-4z1FpHlzm+YFHlvZYJGWXp7AQlOwkF9d+rsP4BgTReY=";
     };
     date = "2026-05-22";
+  };
+  gruvbox = {
+    pname = "gruvbox";
+    version = "5bfe85a961d144376f9f9460f2b2a85343a0f0b3";
+    src = fetchFromGitHub {
+      owner = "gruvbox-community";
+      repo = "gruvbox-contrib";
+      rev = "5bfe85a961d144376f9f9460f2b2a85343a0f0b3";
+      fetchSubmodules = false;
+      sha256 = "sha256-9rYLbnQZV+sTJdYwEZlqJzGHC2w/z9MUWzJr474B834=";
+    };
+    date = "2023-09-11";
+  };
+  gruvbox-fish = {
+    pname = "gruvbox-fish";
+    version = "b3c8fd52e6d3860123cc1c3a8b72e12d887596ba";
+    src = fetchFromGitHub {
+      owner = "gruvbox-community";
+      repo = "fish-gruvbox";
+      rev = "b3c8fd52e6d3860123cc1c3a8b72e12d887596ba";
+      fetchSubmodules = false;
+      sha256 = "sha256-LhBerkaPfKMmmb29EoYdpMxWc3ckFesaty15M2SCO7Y=";
+    };
+    date = "2019-06-01";
+  };
+  gruvbox-lazygit = {
+    pname = "gruvbox-lazygit";
+    version = "2ed4a23ca050987e6283a2a9bce348b3288591d7";
+    src = fetchFromGitHub {
+      owner = "im-AMS";
+      repo = "gruvbox-material-lazygit";
+      rev = "2ed4a23ca050987e6283a2a9bce348b3288591d7";
+      fetchSubmodules = false;
+      sha256 = "sha256-jfVgHetavAr1jTjA+Ivg/LXDWQBqqmc3mtNBi1w0C/0=";
+    };
+    date = "2025-12-27";
   };
   hand-of-evil = {
     pname = "hand-of-evil";

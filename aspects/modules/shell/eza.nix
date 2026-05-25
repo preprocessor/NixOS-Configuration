@@ -4,6 +4,8 @@
     {
       hj.packages = [ pkgs.eza ];
 
-      hj.xdg.config.files.""
+      # hj.xdg.config.files.""
+
+      _file = ./eza.nix;
     };
 }
