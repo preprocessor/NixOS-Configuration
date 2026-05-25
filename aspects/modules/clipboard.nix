@@ -78,7 +78,7 @@
         [
           {
             description = "clipboard manager";
-            prefix = "cc";
+            prefix = "cb";
             cmd = resize 800 1000 "cliphist-tui";
           }
         ];
