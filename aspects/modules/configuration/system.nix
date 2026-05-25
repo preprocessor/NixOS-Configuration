@@ -63,6 +63,8 @@
 
       programs.nano.enable = lib.mkForce false; # Take out the trash
 
+      services.power-profiles-daemon.enable = true;
+
       # This is a workaround to set NIXOS_OZONE_WL as described in https://wiki.nixos.org/wiki/Wayland#Electron_and_Chromium
       hj.environment.sessionVariables.NIXOS_OZONE_WL = "1";
 

@@ -21,9 +21,9 @@
 
       tmTheme = tokyonight + "/sublime/tokyonight_night.tmTheme";
 
-      tokyonight-yazi-theme = envoy.tokyonight-yazi-theme.src + "/tokyonight-night.yazi";
+      # tokyonight-yazi-theme = envoy.tokyonight-yazi-theme.src + "/tokyonight-night.yazi";
 
-      tokyonight-vesktop-theme = envoy.tokyonight-vesktop-theme.src;
+      # tokyonight-vesktop-theme = envoy.tokyonight-vesktop-theme.src;
     in
     {
       scheme = colorscheme; # Set base16 scheme
@@ -39,18 +39,18 @@
 
       programs.fish.interactiveShellInit = builtins.readFile (tokyonight + "/fish/tokyonight_night.fish");
 
-      wrappers.yazi = {
-        flavors.tokyonight = tokyonight-yazi-theme;
+      # wrappers.yazi = {
+      #   flavors.tokyonight = tokyonight-yazi-theme;
+      #
+      #   theme.flavor = {
+      #     dark = "tokyonight";
+      #     light = "tokyonight";
+      #   };
+      # };
 
-        theme.flavor = {
-          dark = "tokyonight";
-          light = "tokyonight";
-        };
-      };
-
-      hj.xdg.config.files."vesktop/themes/tokyonight.css".source =
-        tokyonight-vesktop-theme + "/themes/tokyo-night.theme.css";
-      custom.programs.vesktop.vencord.settings.enabledThemes = [ "tokyonight.css" ];
+      # hj.xdg.config.files."vesktop/themes/tokyonight.css".source =
+      #   tokyonight-vesktop-theme + "/themes/tokyo-night.theme.css";
+      # custom.programs.vesktop.vencord.settings.enabledThemes = [ "tokyonight.css" ];
 
       wrappers.kitty.settings.theme = builtins.readFile "${tokyonight}/kitty/tokyonight_night.conf";
     };

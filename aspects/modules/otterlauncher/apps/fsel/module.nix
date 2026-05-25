@@ -1,8 +1,15 @@
-{ ... }@top:
-let
-  resize = top.config.utils.otterResize;
-in
 {
+  envoy.fsel.github = "Mjoyufull/fsel";
+
+  perSystem =
+    { pkgs, envoy, ... }:
+    {
+      packages.fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+        inherit (envoy.fsel) pname version src;
+        cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+      });
+    };
+
   w.default =
     {
       birdee,
@@ -39,12 +46,6 @@ in
             {
               inherit pkgs;
               package = self'.packages.fsel;
-              extraPackages = with pkgs; [
-                pulsemixer
-                fetchutils
-                xrandr
-                chafa
-              ];
               flags = {
                 "--config" = config.constructFiles.generatedConfig.path;
               };
@@ -59,22 +60,6 @@ in
 
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
-
-        otter-launcher.settings.modules = [
-          {
-            cmd = resize 500 1000 ''fsel -d -r -ss "{}"'';
-            description = "search apps";
-            prefix = "find";
-            with_argument = true;
-          }
-
-          {
-            cmd = resize 500 1000 ''fsel -d -r -p "{}"'';
-            description = "launch apps";
-            prefix = "app";
-            with_argument = true;
-          }
-        ];
       };
 
       _file = ./module.nix;
@@ -84,22 +69,9 @@ in
     { lib, config, ... }:
     {
       config = lib.mkIf (config.wrappers.fsel.enable) {
-        wrappers.otter-launcher.settings.modules = [
-          {
-            cmd = resize 500 1000 ''fsel -d -r -ss "{}"'';
-            description = "search apps";
-            prefix = "find";
-            with_argument = true;
-          }
-
-          {
-            cmd = resize 500 1000 ''fsel -d -r -p "{}"'';
-            description = "launch apps";
-            prefix = "app";
-            with_argument = true;
-          }
-        ];
       };
+
+      _file = ./module.nix;
 
     };
 }

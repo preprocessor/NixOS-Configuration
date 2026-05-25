@@ -69,7 +69,7 @@
         CLIPHIST_MAX_STORE_SIZE = "1GB";
       };
 
-      wrappers.otter-launcher.settings.modules =
+      wrappers.otter-launcher.modules =
         let
           resize = config.utils.otterResize;
         in

@@ -2,6 +2,16 @@
 {
   envoy.otter-launcher.github = "kuokuo123/otter-launcher";
 
+  utils.otterResize =
+    width: height: app:
+    "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};sleep 0.02;niri msg action center-window;kitten icat --clear-all;${app}";
+
+  # utils.tomlBuild = ''
+  #   mkdir -p "$(dirname "$2")"
+  #   cat ${toml.generate "config.toml" cfg.settings} > "$2"
+  #   printf '%s\n' "${cfg.moreCfg}" >> "$2"
+  # '';
+
   perSystem =
     {
       pkgs,
@@ -47,13 +57,12 @@
   w.default =
     {
       birdee,
-      config,
       self',
       pkgs,
       ...
-    }:
+    }@args:
     let
-      cfg = config.wrappers.otter-launcher;
+      cfg = args.config.wrappers.otter-launcher;
       toml = pkgs.formats.toml { };
     in
     {
@@ -64,6 +73,11 @@
           inherit (toml) type;
           default = { };
           description = "Options to go into otter-launcher's toml config";
+        };
+
+        modules = lib.mkOption {
+          type = lib.types.listOf (lib.types.attrsOf lib.types.anything);
+          default = [ ];
         };
 
         moreCfg = lib.mkOption {
@@ -79,18 +93,28 @@
             {
               inherit pkgs;
               package = self'.packages.otter-launcher;
-              extraPackages = with pkgs; [
-                pulsemixer
-                fetchutils
-                xrandr
-                chafa
-              ];
+              runtimePkgs =
+                with pkgs;
+                [
+                  pulsemixer
+                  fetchutils
+                  xrandr
+                  chafa
+                ]
+                ++ (with args.config.wrappers; [
+                  fsel.package
+                  tray-tui.package
+                ]);
               flags = {
                 "--config" = config.constructFiles.generatedConfig.path;
               };
               constructFiles.generatedConfig = {
                 relPath = "config.toml";
-                content = (cfg.settings |> toml.generate "config.toml" |> builtins.readFile) + cfg.moreCfg;
+                builder = ''
+                  mkdir -p "$(dirname "$2")"
+                  cat ${toml.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })} > "$2"
+                  printf '%s\n' "${cfg.moreCfg}" >> "$2"
+                '';
               };
             }
           );

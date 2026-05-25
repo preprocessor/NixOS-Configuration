@@ -1,9 +1,7 @@
 {
   w.desktop = {
     custom.xdg.desktopEntries = {
-      "yazi".noDisplay = true;
       "isd".noDisplay = true;
-      "uuctl".noDisplay = true;
       "Fnott".noDisplay = true;
       "fnott".noDisplay = true;
       "cups".noDisplay = true;

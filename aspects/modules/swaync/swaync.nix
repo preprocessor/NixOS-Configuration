@@ -40,7 +40,7 @@
             "text-empty": "No Notifications",
             "scripts": {
               "sound-script": {
-                "exec": "paplay ~/.config/swaync/notification.ogg",
+                "exec": "mpv ${./new-notification.mp3}",
                 "app-name": ".*"
               }
             },

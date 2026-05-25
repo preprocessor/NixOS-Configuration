@@ -1,25 +1,4 @@
 {
-    "colorscheme": {
-        "cargoLock": null,
-        "date": "2026-05-03",
-        "extract": null,
-        "name": "colorscheme",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "tinted-theming",
-            "repo": "schemes",
-            "rev": "0c94645546f4f3ddac77a1a5fce54eb95bf50795",
-            "sha256": "sha256-PDF0/wObw4nIsSBeXVYLsloXOiphXCgIdsrNcVXguKs=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "0c94645546f4f3ddac77a1a5fce54eb95bf50795"
-    },
     "fish-completion-sync": {
         "cargoLock": null,
         "date": "2025-03-09",
@@ -159,6 +138,27 @@
             "type": "github"
         },
         "version": "b1c2c0992403f52dff1f5754cc250ee6e121e342"
+    },
+    "schemes": {
+        "cargoLock": null,
+        "date": "2026-05-03",
+        "extract": null,
+        "name": "schemes",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "tinted-theming",
+            "repo": "schemes",
+            "rev": "0c94645546f4f3ddac77a1a5fce54eb95bf50795",
+            "sha256": "sha256-PDF0/wObw4nIsSBeXVYLsloXOiphXCgIdsrNcVXguKs=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "0c94645546f4f3ddac77a1a5fce54eb95bf50795"
     },
     "tokyonight": {
         "cargoLock": null,

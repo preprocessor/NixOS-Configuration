@@ -1,3 +1,7 @@
+{ ... }@top:
+let
+  resize = top.config.utils.otterResize;
+in
 {
   w.default =
     {
@@ -55,6 +59,14 @@
           };
         };
       };
+
+      wrappers.otter-launcher.modules = [
+        {
+          cmd = resize 1200 1200 (lib.getExe config.wrappers.tray-tui.package);
+          description = "system tray";
+          prefix = "tray";
+        }
+      ];
 
       _file = ./settings.nix;
     };

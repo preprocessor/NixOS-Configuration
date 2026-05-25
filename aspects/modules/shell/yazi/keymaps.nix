@@ -9,6 +9,7 @@
             run = "plugin confirm-dialog";
             desc = "Safe open in chooser mode";
           }
+
           {
             on = [
               "i"
@@ -61,11 +62,6 @@
             on = "-";
             run = "plugin zoom -1";
             desc = "Zoom out hovered file";
-          }
-          {
-            on = [ "<C-d>" ];
-            run = "plugin drag";
-            desc = "Drag Files";
           }
           {
             on = [ "h" ];

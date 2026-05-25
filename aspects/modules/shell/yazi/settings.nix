@@ -4,8 +4,18 @@
     {
       environment.systemPackages = [ pkgs.ouch-rar ]; # general de/compression utility
 
+      nixpkgs.overlays = [ { ouch = pkgs.ouch-rar; } ];
+
       wrappers.yazi = {
         enable = true;
+
+        theme.flavor = lib.genAttrs [ "dark" "light" ] (_: "wyspr");
+
+        flavorContent = ''
+          [indicator]
+          padding = { open = "▐", close = "▌" }
+        '';
+
         settings = {
           open = {
             prepend_rules = [
@@ -55,7 +65,7 @@
               ];
               ouch = [
                 {
-                  run = ''${getExe ouch} d -y "$@"'';
+                  run = ''${getExe ouch-rar} d -y "$@"'';
                   desc = "Extract here with ouch";
                 }
               ];

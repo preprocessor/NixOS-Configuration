@@ -46,7 +46,6 @@
     };
     flake-file.url = "github:denful/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    fsel.url = "github:Mjoyufull/fsel";
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -63,12 +62,9 @@
       url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs.flake-parts.follows = "flake-parts";
     };
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
+    nix-gaming-edge = {
+      url = "github:powerofthe69/nix-gaming-edge";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -82,5 +78,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    tray-tui.url = "github:Levizor/tray-tui";
   };
 }

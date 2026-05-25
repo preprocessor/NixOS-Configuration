@@ -1,7 +1,4 @@
 { ... }@top:
-let
-  resize = top.config.utils.otterResize;
-in
 {
   ff.tray-tui.url = "github:Levizor/tray-tui";
 
@@ -41,12 +38,6 @@ in
             {
               inherit pkgs;
               package = inputs'.tray-tui.packages.tray-tui;
-              extraPackages = with pkgs; [
-                pulsemixer
-                fetchutils
-                xrandr
-                chafa
-              ];
               flags = {
                 "--config" = config.constructFiles.generatedConfig.path;
               };
@@ -61,14 +52,6 @@ in
 
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
-
-        wrappers.otter-launcher.settings.modules = [
-          {
-            cmd = resize 1200 1200 (lib.getExe cfg.package);
-            description = "system tray";
-            prefix = "tray";
-          }
-        ];
       };
 
       _file = ./module.nix;

@@ -14,6 +14,8 @@
     let
       inherit (lib) getExe;
 
+      zoom = envoy.yazi-plugins-repo.src + "/zoom.yazi";
+
       fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
         inherit (envoy.fuzzy-search-src) pname version;
 
@@ -23,8 +25,6 @@
         };
       };
 
-      zoom = envoy.yazi-plugins-repo.src + "/zoom.yazi";
-
       confirm-dialog = pkgs.yaziPlugins.mkYaziPlugin {
         pname = "confirm-dialog";
         version = "1.0";
@@ -33,27 +33,36 @@
           destination = "/main.lua";
           text = # lua
             ''
-              --- @sync entry
+              local get_hovered = ya.sync(function()
+                  local h = cx.active.current.hovered
+                  if not h then return nil end
+                  return {
+                      url     = tostring(h.url),
+                      is_dir  = h.cha.is_dir,
+                      exists  = h.cha.len ~= nil,
+                  }
+              end)
+
               local function entry()
                   if not os.getenv("YAZI_CHOOSER_SAVE") then
                       return ya.emit("open", { hovered = true })
                   end
 
-                  local h = cx.active.current.hovered
+                  local h = get_hovered()
                   if not h then return end
 
-                  if h.cha.is_dir then
+                  if h.is_dir then
                       return ya.emit("enter", {})
                   end
 
-                  if h.cha.len ~= nil then
-                      local yes = ya.confirm {
+                  if h.exists then
+                      local yes = ya.confirm({
                           pos   = { "center", w = 62, h = 10 },
                           title = "Overwrite file?",
                           body  = ui.Text(
-                              tostring(h.url) .. "\n\nThis file already exists and will be overwritten."
+                              h.url .. "\n\nThis file already exists and will be overwritten."
                           ):wrap(ui.Wrap.YES),
-                      }
+                      })
                       if not yes then return end
                   end
 
@@ -64,6 +73,7 @@
             '';
         };
       };
+
     in
     {
       wrappers.yazi.initLua = /* lua */ ''
@@ -122,7 +132,7 @@
             }
             {
               url = "*/";
-              run = ''piper -- ${getExe eza} --color=always --icons=always --no-quotes -TL=3 "$1"'';
+              run = ''piper -- ${getExe eza} --color=always --icons=always --no-quotes -TL=3 -l --git --no-permissions --no-user --group-directories-first --no-filesize --no-time "$1"'';
             }
             {
               url = "*.txt.gz";
@@ -143,17 +153,16 @@
 
         plugin.prepend_fetchers = [
           {
-            id = "git";
+            group = "git";
             url = "*";
             run = "git";
           }
           {
-            id = "git";
+            group = "git";
             url = "*/";
             run = "git";
           }
         ];
-
       };
     };
 }

@@ -6,18 +6,6 @@
   dockerTools,
 }:
 {
-  colorscheme = {
-    pname = "colorscheme";
-    version = "0c94645546f4f3ddac77a1a5fce54eb95bf50795";
-    src = fetchFromGitHub {
-      owner = "tinted-theming";
-      repo = "schemes";
-      rev = "0c94645546f4f3ddac77a1a5fce54eb95bf50795";
-      fetchSubmodules = false;
-      sha256 = "sha256-PDF0/wObw4nIsSBeXVYLsloXOiphXCgIdsrNcVXguKs=";
-    };
-    date = "2026-05-03";
-  };
   fish-completion-sync = {
     pname = "fish-completion-sync";
     version = "4f058ad2986727a5f510e757bc82cbbfca4596f0";
@@ -97,6 +85,18 @@
       sha256 = "sha256-D3wp7vR3+ktTNJ54rUWHIK6Y5tGeNXDD4FBO785wl0E=";
     };
     date = "2026-05-19";
+  };
+  schemes = {
+    pname = "schemes";
+    version = "0c94645546f4f3ddac77a1a5fce54eb95bf50795";
+    src = fetchFromGitHub {
+      owner = "tinted-theming";
+      repo = "schemes";
+      rev = "0c94645546f4f3ddac77a1a5fce54eb95bf50795";
+      fetchSubmodules = false;
+      sha256 = "sha256-PDF0/wObw4nIsSBeXVYLsloXOiphXCgIdsrNcVXguKs=";
+    };
+    date = "2026-05-03";
   };
   tokyonight = {
     pname = "tokyonight";

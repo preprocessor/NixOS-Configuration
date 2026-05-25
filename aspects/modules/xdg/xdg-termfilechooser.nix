@@ -32,9 +32,10 @@
             path="$4"
             out="$5"
 
-            command="${lib.getExe pkgs.kitty} --app-id=FileChooser -e ${lib.getExe pkgs.yazi}"
+            command="${lib.getExe pkgs.kitty} --app-id=FileChooser -e ${lib.getExe config.wrappers.yazi.package}"
 
             if [ "$save" = "1" ]; then
+                export YAZI_CHOOSER_SAVE=1
                 set -- --chooser-file="$out" "$path"
             elif [ "$directory" = "1" ]; then
                 set -- --chooser-file="$out" --cwd-file="$out"".1" "$path"
@@ -68,7 +69,6 @@
               default_dir = "${config.hj.directory}/Downloads";
               open_mode = "default";
               save_mode = "default";
-              env = "YAZI_CHOOSER_SAVE=1";
               create_help_file = 1;
             };
           };

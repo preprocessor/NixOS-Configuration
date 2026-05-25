@@ -8,30 +8,22 @@
       ...
     }:
     let
-      inherit (pkgs.formats.toml { }) type;
-      default = { };
-      mkMapOption = description: lib.mkOption { inherit type description default; };
+      mkMapOption =
+        description:
+        lib.mkOption {
+          inherit description;
+          inherit (toml) type;
+          default = { };
+        };
+
+      toml = pkgs.formats.toml { };
       cfg = config.wrappers.yazi;
-
-      flavorsObject =
-        config.wrappers.yazi.flavors
-        |> lib.concatMapAttrs (
-          name: repo: {
-            "flavor-${name}-toml" = {
-              relPath = "yazi-config/flavors/${name}.yazi/flavor.toml";
-              content = builtins.readFile "${repo}/flavor.toml";
-            };
-            "flavor-${name}-tmtheme" = {
-              relPath = "yazi-config/flavors/${name}.yazi/tmtheme.xml";
-              content = builtins.readFile "${repo}/tmtheme.xml";
-            };
-          }
-        );
-
     in
     with lib;
     {
       config = mkIf (cfg.enable) {
+        custom.xdg.desktopEntries."yazi".noDisplay = true;
+
         hj.packages = [ cfg.package ];
 
         programs.fish.functions.y = /* fish */ ''
@@ -49,24 +41,28 @@
           type = types.package;
           default = birdee.wrappers.yazi.wrap ({
             inherit pkgs;
-            inherit (config.wrappers.yazi) plugins;
+            inherit (cfg) plugins;
             runtimePkgs = with pkgs; [
               ouch-rar
               ripgrep
               glow
               git
             ];
-            settings = with config.wrappers.yazi; {
-              inherit keymap theme;
-              yazi = settings;
+            settings = {
+              inherit (cfg) keymap theme;
+              yazi = cfg.settings;
             };
             constructFiles = {
               initLua = {
                 relPath = "yazi-config/init.lua";
-                content = config.wrappers.yazi.initLua;
+                content = cfg.initLua;
               };
-            }
-            // flavorsObject;
+
+              flavor = {
+                relPath = "yazi-config/flavors/wyspr.yazi/flavor.toml";
+                content = cfg.flavorContent;
+              };
+            };
           });
         };
 
@@ -97,45 +93,16 @@
           '';
         };
 
-        flavors = mkOption {
-          type = with types; attrsOf path;
+        theme = lib.mkOption {
+          inherit type;
           default = { };
-          description = ''
-            Pre-made themes.
-            Values should be a package or path containing the required files.
-            Will be linked to {file}`$XDG_CONFIG_HOME/yazi/flavors/<name>.yazi`.
-
-            See <https://yazi-rs.github.io/docs/flavors/overview/> for documentation.
-          '';
-          example = literalExpression ''
-            {
-              foo = ./foo;
-              bar = pkgs.bar;
-            }
-          '';
+          description = "Theme settings";
         };
 
-        theme = mkOption {
-          inherit type default;
-          example = literalExpression ''
-            {
-              filetype = {
-                rules = [
-                  { fg = "#7AD9E5"; mime = "image/*"; }
-                  { fg = "#F3D398"; mime = "video/*"; }
-                  { fg = "#F35A98"; mime = "audio/*"; }
-                  { fg = "#CD9EFC"; mime = "application/bzip"; }
-                ];
-              };
-            }
-          '';
-          description = ''
-            Configuration written to
-            {file}`$XDG_CONFIG_HOME/yazi/theme.toml`.
-
-            See <https://yazi-rs.github.io/docs/configuration/theme>
-            for the full list of options
-          '';
+        flavorContent = lib.mkOption {
+          type = with lib.types; nullOr lines;
+          default = "";
+          description = "Raw TOML content for the flavor file";
         };
 
         settings = mkOption {
@@ -146,7 +113,7 @@
           '';
 
           type = types.submodule {
-            freeformType = type;
+            freeformType = (toml) type;
             options = {
               mgr = mkMapOption ''
                 Manager settings
@@ -205,7 +172,7 @@
           '';
 
           type = types.submodule {
-            freeformType = type;
+            freeformType = (toml) type;
             options = {
               mgr = mkMapOption ''
                 Keymap mgr settings

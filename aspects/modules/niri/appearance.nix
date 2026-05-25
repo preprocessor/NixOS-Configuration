@@ -1,20 +1,20 @@
 {
   w.desktop =
-    { config, ... }:
+    { config, schemeHash, ... }:
     let
-      scheme = config.scheme.withHashtag;
       set = _: { };
     in
     {
       wrappers.niri.settings = {
 
-        layout = {
+        layout = with schemeHash; {
           center-focused-column = "on-overflow";
           always-center-single-column = set;
           empty-workspace-above-first = set;
 
           default-column-width.proportion = 0.5;
           preset-column-widths = [
+            { proportion = 0.25; }
             { proportion = 0.33333; }
             { proportion = 0.5; }
             { proportion = 0.66667; }
@@ -29,7 +29,7 @@
           focus-ring = {
             on = set;
             width = 1;
-            active-color = scheme.base05;
+            active-color = base0A;
             fade-duration-ms = 300;
           };
 
@@ -44,9 +44,8 @@
               };
             };
 
-            # You can also change the shadow color and opacity.
-            color = scheme.base11;
-            inactive-color = scheme.base11;
+            color = base00;
+            inactive-color = base00;
           };
         };
 
@@ -83,5 +82,6 @@
 
         prefer-no-csd = set;
       };
+      _file = ./appearance.nix;
     };
 }

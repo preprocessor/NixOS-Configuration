@@ -1,3 +1,7 @@
+{ ... }@top:
+let
+  resize = top.config.utils.otterResize;
+in
 {
   w.default =
     { self', ... }:
@@ -40,6 +44,28 @@
             show_line_numbers = true;
           };
         };
+      };
+
+      wrappers.otter-launcher = {
+        settings.general = {
+          empty_module = "find";
+          default_module = "app";
+        };
+
+        modules = [
+          {
+            cmd = resize 500 1000 ''fsel -d -r -ss "{}"'';
+            description = "search apps";
+            prefix = "find";
+            with_argument = true;
+          }
+          {
+            cmd = resize 500 1000 ''fsel -d -r -p "{}"'';
+            description = "launch apps";
+            prefix = "app";
+            with_argument = true;
+          }
+        ];
       };
 
       _file = ./settings.nix;

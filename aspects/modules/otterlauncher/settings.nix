@@ -3,17 +3,6 @@ let
   resize = top.config.utils.otterResize;
 in
 {
-  envoy.fsel.github = "Mjoyufull/fsel";
-
-  perSystem =
-    { pkgs, envoy, ... }:
-    {
-      packages.fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-        inherit (envoy.fsel) pname version src;
-        cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
-      });
-    };
-
   w.default =
     {
       config,
@@ -63,6 +52,7 @@ in
 
       wrappers.otter-launcher = {
         enable = true;
+
         settings = {
           general = {
             callback = "";
@@ -106,75 +96,75 @@ in
             indicator_with_arg_module = "${esc}[35m󰈽 ${esc}[90m";
             move_interface_right = 27;
           };
-
-          modules = [
-            {
-              description = "run commands";
-              prefix = "sh";
-              cmd = ''$(printf $TERM | sed 's/xterm-//g') -e sh -c " { } "'';
-              with_argument = true;
-              unbind_proc = true;
-            }
-            {
-              description = "nix packages";
-              prefix = "np";
-              cmd = "xdg-open 'https://search.nixos.org/packages?channel=unstable&query={}'";
-              with_argument = true;
-              url_encode = true;
-              unbind_proc = true;
-            }
-            {
-              description = "nix options";
-              prefix = "no";
-              cmd = "xdg-open 'https://search.nixos.org/options?channel=unstable&include_home_manager_options=0&include_modular_service_options=0&include_nixos_options=1&query={}'";
-              with_argument = true;
-              url_encode = true;
-              unbind_proc = true;
-            }
-            {
-              description = "system monitor";
-              prefix = "btop";
-              cmd = resize 2100 1200 "btop";
-            }
-            {
-              description = "interactive systemd";
-              prefix = "isd";
-              cmd = resize 2100 1200 "isd";
-            }
-            {
-              description = "volume mixer";
-              prefix = "mix";
-              cmd = resize 800 500 "pulsemixer";
-            }
-            {
-              description = "open yazi";
-              prefix = "y";
-              cmd = resize 2100 1200 "yazi";
-            }
-            {
-              description = "list USB devices";
-              prefix = "usb";
-              cmd =
-                resize 720 500
-                  "${lib.getExe pkgs.cyme} --headings --tree --hide-buses;read -p 'Press ENTER to exit. '";
-            }
-            {
-              description = "view wifi networks";
-              prefix = "wifi";
-              cmd = resize 1200 1200 (lib.getExe pkgs.wifitui);
-            }
-            {
-              description = "manage bluetooth";
-              prefix = "blue";
-              cmd = resize 1200 600 (lib.getExe pkgs.bluetuith);
-            }
-            {
-              description = "world clocks";
-              prefix = "time";
-              cmd = resize 1660 330 "worldclocks";
-            }
-          ];
         };
+
+        modules = [
+          {
+            description = "run commands";
+            prefix = "sh";
+            cmd = ''$(printf $TERM | sed 's/xterm-//g') -e sh -c " { } "'';
+            with_argument = true;
+            unbind_proc = true;
+          }
+          {
+            description = "nix packages";
+            prefix = "np";
+            cmd = "xdg-open 'https://search.nixos.org/packages?channel=unstable&query={}'";
+            with_argument = true;
+            url_encode = true;
+            unbind_proc = true;
+          }
+          {
+            description = "nix options";
+            prefix = "no";
+            cmd = "xdg-open 'https://search.nixos.org/options?channel=unstable&include_home_manager_options=0&include_modular_service_options=0&include_nixos_options=1&query={}'";
+            with_argument = true;
+            url_encode = true;
+            unbind_proc = true;
+          }
+          {
+            description = "system monitor";
+            prefix = "btop";
+            cmd = resize 2100 1200 "btop";
+          }
+          {
+            description = "interactive systemd";
+            prefix = "isd";
+            cmd = resize 2100 1200 "isd";
+          }
+          {
+            description = "volume mixer";
+            prefix = "mix";
+            cmd = resize 800 500 "pulsemixer";
+          }
+          {
+            description = "open yazi";
+            prefix = "y";
+            cmd = resize 2100 1200 "yazi";
+          }
+          {
+            description = "list USB devices";
+            prefix = "usb";
+            cmd =
+              resize 720 500
+                "${lib.getExe pkgs.cyme} --headings --tree --hide-buses;read -p 'Press ENTER to exit. '";
+          }
+          {
+            description = "view wifi networks";
+            prefix = "wifi";
+            cmd = resize 1200 1200 (lib.getExe pkgs.wifitui);
+          }
+          {
+            description = "manage bluetooth";
+            prefix = "blue";
+            cmd = resize 1200 600 (lib.getExe pkgs.bluetuith);
+          }
+          {
+            description = "world clocks";
+            prefix = "time";
+            cmd = resize 1660 330 "worldclocks";
+          }
+        ];
       };
 
       _file = ./settings.nix;
