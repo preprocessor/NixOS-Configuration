@@ -1,0 +1,49 @@
+From beb8807ec79a7179bc44278c9e07f61975937470 Mon Sep 17 00:00:00 2001
+From: wyspr <wyspr@wyspr.xyz>
+Date: Tue, 26 May 2026 00:58:58 -0400
+Subject: [PATCH] custom icons
+
+custom icons
+---
+ src/output/render/git.rs | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/src/output/render/git.rs b/src/output/render/git.rs
+index 019de38c..7c3da42c 100644
+--- a/src/output/render/git.rs
++++ b/src/output/render/git.rs
+@@ -12,7 +12,7 @@ use crate::output::cell::{DisplayWidth, TextCell};
+ impl f::Git {
+     pub fn render(self, colours: &dyn Colours) -> TextCell {
+         TextCell {
+-            width: DisplayWidth::from(2),
++            width: DisplayWidth::from(3),
+             contents: vec![self.staged.render(colours), self.unstaged.render(colours)].into(),
+         }
+     }
+@@ -22,14 +22,14 @@ impl f::GitStatus {
+     fn render(self, colours: &dyn Colours) -> ANSIString<'static> {
+         #[rustfmt::skip]
+         return match self {
+-            Self::NotModified  => colours.not_modified().paint("-"),
+-            Self::New          => colours.new().paint("N"),
+-            Self::Modified     => colours.modified().paint("M"),
+-            Self::Deleted      => colours.deleted().paint("D"),
+-            Self::Renamed      => colours.renamed().paint("R"),
+-            Self::TypeChange   => colours.type_change().paint("T"),
+-            Self::Ignored      => colours.ignored().paint("I"),
+-            Self::Conflicted   => colours.conflicted().paint("U"),
++            Self::NotModified  => colours.not_modified().paint("  "),
++            Self::New          => colours.new().paint(" "),
++            Self::Modified     => colours.modified().paint(" "),
++            Self::Deleted      => colours.deleted().paint(" "),
++            Self::Renamed      => colours.renamed().paint(" "),
++            Self::TypeChange   => colours.type_change().paint("󱅅 "),
++            Self::Ignored      => colours.ignored().paint(" "),
++            Self::Conflicted   => colours.conflicted().paint("󰅘 "),
+         };
+     }
+ }
+-- 
+2.54.0
+
