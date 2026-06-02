@@ -37,8 +37,8 @@
     description = "wyspr's Terrible NixOS Configuration";
 
     outputs = /* nix */ ''
-      inputs@{ flake-parts, ... }:
-      flake-parts.lib.mkFlake { inherit inputs; } {
+      inputs:
+      inputs.flake-parts.lib.mkFlake { inherit inputs; } {
         # Import all *.nix files in the ./aspects directory
         # Except ones that start with '_'
         imports =
