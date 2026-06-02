@@ -56,15 +56,15 @@
   };
   fuzzy-search-src = {
     pname = "fuzzy-search-src";
-    version = "8adfa1778e51c6b42867836304c9af74a0c41b58";
+    version = "7be2437b45be1da9b3be0ed2f244709c9b9be242";
     src = fetchFromGitHub {
       owner = "onelocked";
       repo = "fuzzy-search.yazi";
-      rev = "8adfa1778e51c6b42867836304c9af74a0c41b58";
+      rev = "7be2437b45be1da9b3be0ed2f244709c9b9be242";
       fetchSubmodules = false;
-      sha256 = "sha256-4z1FpHlzm+YFHlvZYJGWXp7AQlOwkF9d+rsP4BgTReY=";
+      sha256 = "sha256-vW6o5vbYXr++cFAcyvl7E2tYHQMV5lGK2rEOG5iiRPg=";
     };
-    date = "2026-05-22";
+    date = "2026-05-25";
   };
   gruvbox = {
     pname = "gruvbox";
@@ -142,6 +142,18 @@
     };
     date = "2026-04-07";
   };
+  no-header = {
+    pname = "no-header";
+    version = "dd34339092b7cdc1f8213017f939e55e0b47a008";
+    src = fetchFromGitHub {
+      owner = "onelocked";
+      repo = "no-header-prompt.yazi";
+      rev = "dd34339092b7cdc1f8213017f939e55e0b47a008";
+      fetchSubmodules = false;
+      sha256 = "sha256-dHJNk3o9vMGUnO/KAl7R6UdEq1giyp2DNXzxmAKBZP0=";
+    };
+    date = "2026-05-25";
+  };
   otter-launcher = {
     pname = "otter-launcher";
     version = "b1c2c0992403f52dff1f5754cc250ee6e121e342";
@@ -153,6 +165,14 @@
       sha256 = "sha256-D3wp7vR3+ktTNJ54rUWHIK6Y5tGeNXDD4FBO785wl0E=";
     };
     date = "2026-05-19";
+  };
+  retrowave-light-kitty = {
+    pname = "retrowave-light-kitty";
+    version = "https://github.com/BrokenSideViewMirror/kitty-themes/blob/master/themes/retrowave-light.conf";
+    src = fetchurl {
+      url = "https://github.com/BrokenSideViewMirror/kitty-themes/blob/master/themes/retrowave-light.conf";
+      sha256 = "sha256-aznDMBrV3qemQsgEDjRlveo1SGqeG3g16nIJ3BwEyVs=";
+    };
   };
   schemes = {
     pname = "schemes";
@@ -201,5 +221,17 @@
       sha256 = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
     };
     date = "2026-01-26";
+  };
+  yaziline = {
+    pname = "yaziline";
+    version = "25161c18e61339b6a79f29f8948e3c360e3f9ace";
+    src = fetchFromGitHub {
+      owner = "llanosrocas";
+      repo = "yaziline.yazi";
+      rev = "25161c18e61339b6a79f29f8948e3c360e3f9ace";
+      fetchSubmodules = false;
+      sha256 = "sha256-gF21K8Sn9VFh6nKcM5dhTiAH1sOE9D/Gmc8i3J8m+S4=";
+    };
+    date = "2026-05-09";
   };
 }

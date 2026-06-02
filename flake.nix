@@ -20,8 +20,8 @@
   description = "wyspr's Terrible NixOS Configuration";
 
   outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       # Import all *.nix files in the ./aspects directory
       # Except ones that start with '_'
       imports =
@@ -70,13 +70,10 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-core.url = "github:manic-systems/nixos-core/";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nsticky.url = "github:lonerOrz/nsticky";
-    nvfetcher = {
-      url = "github:berberman/nvfetcher";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     pixprint.url = "github:preprocessor/pixprint";
     sops-nix = {
       url = "github:Mic92/sops-nix";

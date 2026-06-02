@@ -85,7 +85,7 @@
     },
     "fuzzy-search-src": {
         "cargoLock": null,
-        "date": "2026-05-22",
+        "date": "2026-05-25",
         "extract": null,
         "name": "fuzzy-search-src",
         "passthru": null,
@@ -97,12 +97,12 @@
             "name": null,
             "owner": "onelocked",
             "repo": "fuzzy-search.yazi",
-            "rev": "8adfa1778e51c6b42867836304c9af74a0c41b58",
-            "sha256": "sha256-4z1FpHlzm+YFHlvZYJGWXp7AQlOwkF9d+rsP4BgTReY=",
+            "rev": "7be2437b45be1da9b3be0ed2f244709c9b9be242",
+            "sha256": "sha256-vW6o5vbYXr++cFAcyvl7E2tYHQMV5lGK2rEOG5iiRPg=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "8adfa1778e51c6b42867836304c9af74a0c41b58"
+        "version": "7be2437b45be1da9b3be0ed2f244709c9b9be242"
     },
     "gruvbox": {
         "cargoLock": null,
@@ -238,6 +238,27 @@
         },
         "version": "aa26f4e157b818630cb281f6e1968b641c079d69"
     },
+    "no-header": {
+        "cargoLock": null,
+        "date": "2026-05-25",
+        "extract": null,
+        "name": "no-header",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "onelocked",
+            "repo": "no-header-prompt.yazi",
+            "rev": "dd34339092b7cdc1f8213017f939e55e0b47a008",
+            "sha256": "sha256-dHJNk3o9vMGUnO/KAl7R6UdEq1giyp2DNXzxmAKBZP0=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "dd34339092b7cdc1f8213017f939e55e0b47a008"
+    },
     "otter-launcher": {
         "cargoLock": null,
         "date": "2026-05-19",
@@ -258,6 +279,21 @@
             "type": "github"
         },
         "version": "b1c2c0992403f52dff1f5754cc250ee6e121e342"
+    },
+    "retrowave-light-kitty": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "retrowave-light-kitty",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "name": null,
+            "sha256": "sha256-aznDMBrV3qemQsgEDjRlveo1SGqeG3g16nIJ3BwEyVs=",
+            "type": "url",
+            "url": "https://github.com/BrokenSideViewMirror/kitty-themes/blob/master/themes/retrowave-light.conf"
+        },
+        "version": "https://github.com/BrokenSideViewMirror/kitty-themes/blob/master/themes/retrowave-light.conf"
     },
     "schemes": {
         "cargoLock": null,
@@ -342,5 +378,26 @@
             "type": "github"
         },
         "version": "70fe6b4a245a59b546166aae6c45ee2b471869c2"
+    },
+    "yaziline": {
+        "cargoLock": null,
+        "date": "2026-05-09",
+        "extract": null,
+        "name": "yaziline",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "llanosrocas",
+            "repo": "yaziline.yazi",
+            "rev": "25161c18e61339b6a79f29f8948e3c360e3f9ace",
+            "sha256": "sha256-gF21K8Sn9VFh6nKcM5dhTiAH1sOE9D/Gmc8i3J8m+S4=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "25161c18e61339b6a79f29f8948e3c360e3f9ace"
     }
 }
