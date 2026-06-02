@@ -28,7 +28,7 @@
       wrappers.otter-launcher.modules = [
         {
           cmd = "niri msg action spawn -- kitty --app-id=CliampMusic -e ${pkgs.cliamp}/bin/cliamp; exit";
-          description = "youtube player";
+          description = "music player";
           prefix = "amp";
         }
       ];

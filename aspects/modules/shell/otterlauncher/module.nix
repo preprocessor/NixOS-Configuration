@@ -113,7 +113,7 @@
                 builder = ''
                   mkdir -p "$(dirname "$2")"
                   cat ${toml.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })} > "$2"
-                  printf '%s\n' "${cfg.moreCfg}" >> "$2"
+                  printf '\n%s\n' "${cfg.moreCfg}" >> "$2"
                 '';
               };
             }

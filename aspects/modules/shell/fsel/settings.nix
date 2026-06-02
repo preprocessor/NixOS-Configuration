@@ -60,7 +60,7 @@ in
             with_argument = true;
           }
           {
-            cmd = resize 500 1000 ''fsel -d -r -p "{}"'';
+            cmd = resize 0 0 ''fsel -d -r -p "{}"'';
             description = "launch apps";
             prefix = "app";
             with_argument = true;

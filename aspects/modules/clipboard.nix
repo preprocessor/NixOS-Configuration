@@ -41,6 +41,8 @@
       hj.packages = [
         self'.packages.cliphist
         self'.packages.cliphist-tui
+        pkgs.wl-clipboard
+        pkgs.wl-clip-persist
       ];
 
       wrappers.niri.settings.spawn-at-startup = [
@@ -77,7 +79,7 @@
         in
         [
           {
-            description = "clipboard manager";
+            description = "clipboard";
             prefix = "cb";
             cmd = resize 800 1000 "cliphist-tui";
           }
