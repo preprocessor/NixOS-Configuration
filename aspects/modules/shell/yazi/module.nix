@@ -24,6 +24,8 @@
       config = mkIf (cfg.enable) {
         custom.xdg.desktopEntries."yazi".noDisplay = true;
 
+        utils.yaziKeymap = on: run: desc: { inherit on run desc; };
+
         hj.packages = [ cfg.package ];
 
         programs.fish.functions.y = /* fish */ ''
@@ -102,6 +104,8 @@
         flavorContent = lib.mkOption {
           type = with lib.types; nullOr lines;
           default = "";
+          # inherit (toml) type;
+          # default = { };
           description = "Raw TOML content for the flavor file";
         };
 
