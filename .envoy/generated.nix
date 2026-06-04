@@ -156,22 +156,22 @@
   };
   otter-launcher = {
     pname = "otter-launcher";
-    version = "b1c2c0992403f52dff1f5754cc250ee6e121e342";
+    version = "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1";
     src = fetchFromGitHub {
       owner = "kuokuo123";
       repo = "otter-launcher";
-      rev = "b1c2c0992403f52dff1f5754cc250ee6e121e342";
+      rev = "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1";
       fetchSubmodules = false;
-      sha256 = "sha256-D3wp7vR3+ktTNJ54rUWHIK6Y5tGeNXDD4FBO785wl0E=";
+      sha256 = "sha256-Ye0COc1J5YnP+90fOdsQqPw9Ni4Lu0y63HwG0duSpeI=";
     };
-    date = "2026-05-19";
+    date = "2026-06-02";
   };
   retrowave-light-kitty = {
     pname = "retrowave-light-kitty";
-    version = "https://github.com/BrokenSideViewMirror/kitty-themes/blob/master/themes/retrowave-light.conf";
+    version = "https://raw.githubusercontent.com/BrokenSideViewMirror/kitty-themes/refs/heads/master/themes/retrowave-light.conf";
     src = fetchurl {
-      url = "https://github.com/BrokenSideViewMirror/kitty-themes/blob/master/themes/retrowave-light.conf";
-      sha256 = "sha256-aznDMBrV3qemQsgEDjRlveo1SGqeG3g16nIJ3BwEyVs=";
+      url = "https://raw.githubusercontent.com/BrokenSideViewMirror/kitty-themes/refs/heads/master/themes/retrowave-light.conf";
+      sha256 = "sha256-bbWTE6fANBt2IEPdpqzK6Nqx3GlD65mPJjJ7P4pHiP0=";
     };
   };
   schemes = {

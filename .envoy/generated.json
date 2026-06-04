@@ -261,7 +261,7 @@
     },
     "otter-launcher": {
         "cargoLock": null,
-        "date": "2026-05-19",
+        "date": "2026-06-02",
         "extract": null,
         "name": "otter-launcher",
         "passthru": null,
@@ -273,12 +273,12 @@
             "name": null,
             "owner": "kuokuo123",
             "repo": "otter-launcher",
-            "rev": "b1c2c0992403f52dff1f5754cc250ee6e121e342",
-            "sha256": "sha256-D3wp7vR3+ktTNJ54rUWHIK6Y5tGeNXDD4FBO785wl0E=",
+            "rev": "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1",
+            "sha256": "sha256-Ye0COc1J5YnP+90fOdsQqPw9Ni4Lu0y63HwG0duSpeI=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "b1c2c0992403f52dff1f5754cc250ee6e121e342"
+        "version": "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1"
     },
     "retrowave-light-kitty": {
         "cargoLock": null,
@@ -289,11 +289,11 @@
         "pinned": false,
         "src": {
             "name": null,
-            "sha256": "sha256-aznDMBrV3qemQsgEDjRlveo1SGqeG3g16nIJ3BwEyVs=",
+            "sha256": "sha256-bbWTE6fANBt2IEPdpqzK6Nqx3GlD65mPJjJ7P4pHiP0=",
             "type": "url",
-            "url": "https://github.com/BrokenSideViewMirror/kitty-themes/blob/master/themes/retrowave-light.conf"
+            "url": "https://raw.githubusercontent.com/BrokenSideViewMirror/kitty-themes/refs/heads/master/themes/retrowave-light.conf"
         },
-        "version": "https://github.com/BrokenSideViewMirror/kitty-themes/blob/master/themes/retrowave-light.conf"
+        "version": "https://raw.githubusercontent.com/BrokenSideViewMirror/kitty-themes/refs/heads/master/themes/retrowave-light.conf"
     },
     "schemes": {
         "cargoLock": null,
