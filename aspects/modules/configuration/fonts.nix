@@ -10,46 +10,25 @@
       ...
     }:
     {
-      fonts = {
-        packages =
-          with pkgs;
-          [
-            noto-fonts-emoji-blob-bin
-            maple-mono.variable
-            maple-mono.NF
-            font-awesome_6
-            corefonts
-            lucide
-          ]
-          ++ (with inputs'.apple-fonts.packages; [
-            sf-pro
-            sf-compact
-            sf-mono
-            ny
-          ]);
+      custom.gtk.fonts = {
+        serif = {
+          name = "New York";
+          package = inputs'.apple-fonts.packages.ny;
+        };
 
-        enableDefaultPackages = true;
+        sans = {
+          name = "SF Pro Display";
+          package = inputs'.apple-fonts.packages.sf-pro;
+        };
 
-        fontDir.enable = true;
+        mono = {
+          name = "SF Mono Regular";
+          package = inputs'.apple-fonts.packages.sf-mono;
+        };
 
-        fontconfig = {
-          enable = true;
-          antialias = true;
-          hinting = {
-            enable = true;
-            style = "full";
-            autohint = false;
-          };
-          subpixel = {
-            rgba = "rgb";
-            lcdfilter = "light";
-          };
-          defaultFonts = {
-            serif = [ "New York" ];
-            sansSerif = [ "SF Pro" ];
-            monospace = [ "SF Mono Regular" ];
-            emoji = [ "Blobmoji" ];
-          };
+        emoji = {
+          name = "Blobmoji";
+          package = pkgs.noto-fonts-emoji-blob-bin;
         };
       };
     };
