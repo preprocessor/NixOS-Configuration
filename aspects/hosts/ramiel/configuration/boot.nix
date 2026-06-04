@@ -2,7 +2,28 @@
   w.ramiel =
     { pkgs, ... }:
     {
-      environment.etc.issue.text = "";
+      environment.etc.issue.source = pkgs.writeText "etc/issue" ''
+                              :::!~!!!!!:.
+                          .xUHWH!! !!?M88WHX:.
+                        .X*#M@$!!  !X!M$$$$$$WWx:.
+                       :!!!!!!?H! :!$!$$$$$$$$$$8X:
+                      !!~  ~:~!! :~!$!#$$$$$$$$$$8X:
+                     :!~::!H!<   ~.U$X!?R$$$$$$$$MM!
+                     ~!~!!!!~~ .:XW$$$U!!?$$$$$$RMM!
+                       !:~~~ .:!M"T#$$$$WX??#MRRMMM!
+                       ~?WuxiW*`   `"#$$$$8!!!!??!!!
+                     :X- M$$$$    .  `"T#$T~!8$WUXU~
+                    :%`  ~#$$$m:        ~!~ ?$$$$$$
+                  :!`.-   ~T$$$$8xx.  .xWW- ~""##*"
+        .....   -~~:<` !    ~?T#$$@@W@*?$$  .   /`
+        W$@@M!!! .!~~ !!     .:XUW$W!~ `"~:    :
+        #"~~`.:x%`!!  !H:   !WM$$$$Ti.: .!WUn+!`
+        :::~:!!`:X~ .: ?H.!u "$$$B$$$!W:U!T$$M~
+        .~~   :X@!.-~   ?@WTWo("*$$$W$TH$! `
+        Wi.~!X$?!-~    : ?$$$B$Wu("**$RM!
+        $R@i.~~ !     :   ~$$$$$B$$en:``
+        ?MXT@Wx.~    :     ~"##*$$$$M~
+      '';
 
       boot = {
         loader = {
@@ -11,22 +32,8 @@
         };
 
         initrd.systemd.enable = true;
-        # plymouth =
-        #   let
-        #     theme = "pixels";
-        #   in
-        #   {
-        #     inherit theme;
-        #     enable = true;
-        #     themePackages = with pkgs; [
-        #       # By default we would install all themes
-        #       (adi1090x-plymouth-themes.override {
-        #         selected_themes = [ theme ];
-        #       })
-        #     ];
-        #   };
         consoleLogLevel = 3;
-        loader.timeout = 2;
+        loader.timeout = 1;
         kernelParams = [
           "quiet"
           "udev.log_level=3"
