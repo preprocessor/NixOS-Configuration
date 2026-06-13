@@ -61,37 +61,6 @@
         };
       };
 
-      hardware.steam-hardware.enable = true; # controller / Steam Deck input udev rules
-      programs.steam =
-        let
-          compatToolsDir = pkgs.linkFarm "me3-compat-tools" [
-            {
-              name = "proton-cachyos"; # me3 looks for the proton by this name
-              path = pkgs.proton-cachyos.steamcompattool; # or whichever variant
-            }
-          ];
-        in
-        {
-          enable = true;
-          remotePlay.openFirewall = true;
-          localNetworkGameTransfers.openFirewall = true;
-          # extraPackages = [ pkgs.latencyflex-vulkan ];
-          extraCompatPackages = with pkgs; [
-            steamtinkerlaunch
-            proton-cachyos
-          ];
-          package = pkgs.steam.override {
-            extraPkgs = fpkgs: [ pkgs.modengine3 ];
-            extraEnv = {
-              STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.concatStringsSep ":" [
-                "${compatToolsDir}" # for ME3 / modengine3
-                "\${HOME}/.steam/root/compatibilitytools.d"
-                (lib.makeSearchPathOutput "steamcompattool" "" [ pkgs.proton-cachyos ])
-              ];
-            };
-          };
-        };
-
       programs.gamemode.enable = true;
       programs.gamescope = {
         enable = true;

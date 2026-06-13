@@ -1,11 +1,23 @@
 {
   w.desktop =
-    { config, pkgs, ... }:
-    let
-      scheme = config.scheme.withHashtag;
-    in
+    { scheme, ... }:
     {
-      custom.programs.vesktop = {
+      wrappers.hyprland.lua.files."window_rules".content = /* lua */ ''
+        hl.window_rule({
+          name = "hide vesktop",
+          match = {
+            class = "^vesktop$"
+          },
+
+          workspace = "name:chat silent",
+
+          no_screen_share = true,
+          border_color = "rgb(ff0d2d)",
+          border_size = 3,
+        })
+      '';
+
+      custom.programs.vesktop = with scheme.withHashtag; {
         settings = {
           appBadge = false;
           arRPC = true;
@@ -16,13 +28,13 @@
           discordBranch = "stable";
           autoStartMinimized = false;
           customTitleBar = false;
-          splashBackground = scheme.base00;
-          splashColor = scheme.base05;
+          splashBackground = base00;
+          splashColor = base05;
           splashTheming = true;
         };
 
         vencord.settings = {
-          autoUpdate = true;
+          autoUpdate = false;
           autoUpdateNotification = false;
           disableMinSize = true;
           notifyAboutUpdates = false;
@@ -56,42 +68,6 @@
             WebKeybinds.enabled = true;
             WebScreenShareFixes.enabled = true;
           };
-        };
-      };
-    };
-
-  w.default =
-    {
-      pkgs,
-      lib,
-      config,
-      ...
-    }:
-    let
-      json = pkgs.formats.json { };
-      cfg = config.custom.programs.vesktop;
-    in
-    {
-      options.custom.programs.vesktop = {
-        settings = lib.mkOption {
-          inherit (json) type;
-          description = "Vesktop settings";
-          default = { };
-        };
-
-        vencord.settings = lib.mkOption {
-          inherit (json) type;
-          default = { };
-          description = "Vencord settings";
-        };
-      };
-
-      config = lib.mkIf (cfg != { }) {
-        hj.packages = [ pkgs.vesktop ];
-
-        hj.xdg.config.files = {
-          "vesktop/settings.json".source = json.generate "vesktop-settings" cfg.settings;
-          "vesktop/settings/settings.json".source = json.generate "vencord-settings" cfg.vencord.settings;
         };
       };
     };
