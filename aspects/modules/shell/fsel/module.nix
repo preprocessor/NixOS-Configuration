@@ -6,7 +6,7 @@
     {
       packages.fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
         inherit (envoy.fsel) pname version src;
-        cargoLock.lockFile = finalAttrs.src + "/Cargo.lock";
+        cargoHash = "sha256-G1wfue1Q+3NMH/5NqPVKeO0NpU0WJlwWkh51r3TM5IM=";
       });
     };
 

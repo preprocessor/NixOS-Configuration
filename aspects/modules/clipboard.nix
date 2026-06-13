@@ -23,7 +23,7 @@
         pname = "cliphist-tui";
         version = "0-unstable-2026-04-26";
 
-        cargoLock.lockFile = final.src + "/Cargo.lock";
+        cargoHash = "sha256-KHlEw5RZNeCYeNngPvgDFvBFMKD2OZrx8sg2QWdwjQ8=";
         src = pkgs.fetchFromGitHub {
           owner = "SHORiN-KiWATA";
           repo = "cliphist-tui";
