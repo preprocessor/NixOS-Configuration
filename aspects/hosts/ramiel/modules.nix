@@ -1,7 +1,7 @@
 {
+  withSystem,
   inputs,
   self,
-  withSystem,
   ...
 }:
 {
@@ -17,7 +17,9 @@
         ramiel
         desktop
         # tokyonight-night
-        gruvbox-dark-hard
+        # gruvbox-dark-hard
+        wyspr-theme
+        base16
         shell
       ];
     }
