@@ -1,15 +1,32 @@
 {
   ff.apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
+  envoy = {
+    chicago-font.github = "nikdog/chicago-font";
+    helvetica-font.github = "Kyles-World/Helvetica-Font";
+  };
 
   w.desktop =
     {
       inputs',
       envoy,
       pkgs,
-      lib,
       ...
     }:
     {
+      fonts.packages = [
+        (pkgs.stdenv.mkDerivation {
+          inherit (envoy.chicago-font) src pname version;
+          doCheck = false;
+          buildCommand = ''install -m444 -Dt $out/share/fonts/truetype "$src/Chicago v0.5.5.ttf"'';
+        })
+        (pkgs.stdenv.mkDerivation {
+          inherit (envoy.helvetica-font) src pname version;
+          doCheck = false;
+          buildCommand = ''install -m444 -Dt $out/share/fonts/truetype $src/Helvetica\ World\ \(Unicode\)/*.ttf'';
+        })
+
+      ];
+
       custom.gtk.fonts = {
         serif = {
           name = "New York";
