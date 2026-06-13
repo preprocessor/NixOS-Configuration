@@ -1,12 +1,23 @@
 {
   w.desktop =
-    { config, pkgs, ... }:
     {
-      hj.packages = [ pkgs.waybar ];
+      scheme,
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      systemd.user.services.waybar = {
+        description = "waybar";
+        after = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
 
-      wrappers.niri.settings.spawn-at-startup = [
-        "waybar"
-      ];
+        serviceConfig = {
+          ExecStart = lib.getExe pkgs.waybar;
+          Restart = "on-failure";
+        };
+      };
 
       hj.xdg.config.files = {
         "waybar/config.jsonc".text = /* jsonc */ ''
@@ -16,18 +27,17 @@
               "position": "left",
               "exclusive": false,
               "reload_style_on_change": true,
-              "modules-center": [ "niri/workspaces" ],
-              "niri/workspaces":{
+              "modules-center": [ "hyprland/workspaces" ],
+              "hyprland/workspaces":{
                 "disable-click": true,
                 "format": "{icon}",
                 "format-icons": {
-                  "1": "☾",
 
-                  "browser": "󰖟",
-                  "code": "",
-                  "social": "󰭹",
+                  "web": "󰖟",
+                  "dev": "",
+                  "chat": "󰭹",
                   "media": "󰐎",
-                  "games":"󰊖",
+                  "games": "󰊖",
 
                   // "active": "",
                   "default": "󱥐"
@@ -36,14 +46,14 @@
           }
         '';
 
-        "waybar/style.css".text = /* css */ ''
+        "waybar/style.css".text = with scheme.withHashtag; /* css */ ''
           window#waybar {
               background-color: transparent;
           }
 
           /* non-empty workspaces */
           #workspaces button, #workspaces button:hover {
-              color: #000;
+              color: ${base05};
 
               font-size: 12pt;
 
@@ -54,37 +64,18 @@
               padding-right: 2px;
 
               min-width: 38px;
-              text-shadow:0 0 2px #444;
               box-shadow: none;
 
               transition:
-                color 0.3s ease,
-                text-shadow 0.3s ease;
+                color 0.3s ease;
           }
 
-          #workspaces button.focused {
-              color: #fff;
-              text-shadow:
-                0 0 1px #000,
-                0 0 2px #111,
-                0 0 3px #222,
-                0 0 4px #333
-              ;
-          }
-
-          /* moon reposition */
-          #workspaces button:first-child {
-            padding-left: 3px;
-            padding-right: 0px;
-          }
-
-          /* moon selected color */
-          #workspaces button:first-child.focused {
-              color: #ff0;
+          #workspaces button.active {
+              color: ${base09};
           }
 
           #workspaces button.urgent {
-              color: #ff7a93;
+              color: ${bright-red};
           }
         '';
       };

@@ -6,60 +6,37 @@ in
   w.default =
     {
       config,
-      scheme,
-      self',
       pkgs,
       lib,
       ...
     }:
     let
       theme = config.theme.variant;
-      set = _: { };
     in
     {
-      wrappers.niri.settings = {
-        binds."Mod+Space" = _: {
-          content.spawn-sh = "pkill otter-launcher || kitty -1 --app-id=otter -e otter-launcher";
-          props.repeat = false;
-        };
+      wrappers.hyprland.lua.files = {
+        "keybinds".content = /* lua */ ''
+          -- otter-launcher
+          hl.bind("SUPER + Space", function()
+            utils.toggle_window("otter-launcher", "kitty --app-id=otter-launcher -e otter-launcher", {
+              size         = { 444, 1108 },
+              center       = true,
+              float        = true,
+              stay_focused = true,
+              pin          = true,
+            })
+          end)
+        '';
 
-        window-rules = [
-          (
-            {
-              matches = [ { app-id = "^otter$"; } ];
-              open-floating = true;
-              default-column-width.fixed = 768;
-              default-window-height.fixed = 351;
-              focus-ring.off = set;
-              border =
-                let
-                  gradient = _: {
-                    props = {
-                      to = scheme.withHashtag.bright-cyan;
-                      from = "#f3f0e7";
-                      angle = 70;
-                    };
-                  };
-                in
-                {
-                  on = set;
-                  width = 3;
-                  active-gradient = gradient;
-                  inactive-gradient = gradient;
-                };
-            }
-            // lib.optionalAttrs (theme == "dark") {
-              default-column-width.fixed = 444;
-              default-window-height.fixed = 1108;
-            }
-          )
-          {
-            matches = [ { app-id = "^color-picker$"; } ];
-            open-floating = true;
-            default-column-width.fixed = 730;
-            default-window-height.fixed = 330;
-          }
-        ];
+        "window_rules".content = /* lua */ ''
+          hl.window_rule({
+            name = "float color-picker",
+            match = {
+              class = "^color-picker$"
+            },
+            float = true,
+          })
+        '';
       };
 
       wrappers.otter-launcher = {
@@ -87,10 +64,10 @@ in
           interface =
             let
               a = string: builtins.fromJSON ''"\u001B[${string}m"'';
-              s = string: builtins.fromJSON ''"${string}"'';
 
               cpu = "i9 10900K";
               gpu = "RX 6700 XT";
+
               host = "$(echo $HOSTNAME)";
               res = "$(res '\${width}x\${height}')";
               mem = "$(mem '\${gb_used}G󰿟\${gb_total}G')";
@@ -101,20 +78,20 @@ in
               header = ''
                 ${a "96"}▐${a "3;30;106"}$USER @ ${host} 󱥐 $(date "+%a %m/%d %I:%M%P")${a "0"}${a "96"}▌
                 ${a "96"}┏━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┓
-                ${a "96"}┃${a "94"}   ${cpu}  ${a "96"}┃ ${a "94"}  ${kernel}${a "96"}┃
-                ${a "96"}┃${a "93"} 󰾲  ${gpu} ${a "96"}┃ ${a "93"}  ${osver}   ${a "96"}┃
-                ${a "96"}┃${a "95"}   $(printf "%-10s" ${mem})    ${a "96"}┃ ${a "95"}  $XDG_CURRENT_DESKTOP          ${a "96"}┃
-                ${a "96"}┃${a "92"} 󰹑  ${res}  ${a "96"}┃ ${a "92"}  $TERMINAL         ${a "96"}┃
-                ${a "96"}┃${a "91"} 󰄉  $(printf "%-10s" "$(upt)") ${a "96"}┃ ${a "91"}  fish          ${a "96"}┃
-                ${a "96"}┗━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━┛
-                ${a "97"} ${a "92"}'';
-              hint_color = "${a "90"}";
-              list_prefix = "  ${a "94"}";
+                ${a "96"}┃${a "34"}   ${cpu}  ${a "96"}┃ ${a "34"}  $(printf "%-14s" "${kernel}")${a "96"}┃
+                ${a "96"}┃${a "33"} 󰾲  ${gpu} ${a "96"}┃ ${a "33"}  ${osver}   ${a "96"}┃
+                ${a "96"}┃${a "35"}   $(printf "%-10s" ${mem})    ${a "96"}┃ ${a "35"}  $XDG_CURRENT_DESKTOP          ${a "96"}┃
+                ${a "96"}┃${a "32"} 󰹑  ${res}  ${a "96"}┃ ${a "32"}  $TERMINAL         ${a "96"}┃
+                ${a "96"}┃${a "31"} 󰄉  $(printf "%-10s" "$(upt)") ${a "93"}┃ ${a "91"}  fish          ${a "96"}┃
+                ${a "96"}┣━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━┛
+                ${a "97"}┗━  ${a "92"}'';
+              hint_color = "${a "91"}";
+              list_prefix = "     ${a "94"}";
               place_holder = "Search...";
               place_holder_color = "${a "1;90"}";
               prefix_color = "${a "93"}";
-              default_module_message = "  ${a "3;1;93"} Launch app";
-              selection_prefix = "${a "91"} ";
+              default_module_message = "   ${a "1;93"} Launch app";
+              selection_prefix = "   ${a "91"} ";
               prefix_padding = 4;
               suggestion_lines = 4;
               suggestion_mode = "list";
@@ -134,7 +111,7 @@ in
                 ${a "96"}   ${osver} ────── 󰾲 ${gpu}
                 ${a "36"}   ${cpu} $(echo " 󰹑  ${res}" | sed -e :a -r -e 's/^.{1,20}$/─&/;ta')
                 ${a "91"}   ${mem} ────────────────  $TERMINAL
-                ${a "31"}   $XDG_CURRENT_DESKTOP ───────────────────  fish
+                ${a "31"}   $XDG_CURRENT_DESKTOP ───────────────  fish
                 ${a "90"}        ${a "3;97"}'';
               list_prefix = "         ";
               selection_prefix = "       -> ";
@@ -215,15 +192,18 @@ in
           {
             description = "color picker";
             prefix = "cc";
-            cmd = "niri msg action spawn -- ${pkgs.writeShellScript "color-picker" ''
-              sleep 0.25
-              PICKED=$(${pkgs.hyprpicker}/bin/hyprpicker --radius=70 --scale=3 --autocopy --no-fancy --format=hex)
-              if [ -n "$PICKED" ]; then
-                kitty --app-id=color-picker -e sh -c "${pkgs.pastel}/bin/pastel color '$PICKED'; echo; read -n 1 -s -r -p 'Press any key to close...'"
-              fi
-            ''}; exit";
+            cmd =
+              let
+                bin = pkgs.writeShellScript "color-picker" ''
+                  sleep 0.25
+                  PICKED=$(${pkgs.hyprpicker}/bin/hyprpicker --radius=70 --scale=3 --autocopy --no-fancy --format=hex)
+                  if [ -n "$PICKED" ]; then
+                    kitty --app-id=color-picker -e sh -c "${pkgs.pastel}/bin/pastel color '$PICKED'; echo; read -n 1 -s -r -p 'Press any key to close...'"
+                  fi
+                '';
+              in
+              ''hyprctl dispatch exec_cmd("${bin}; exit")'';
           }
-
         ];
       };
 

@@ -1,18 +1,15 @@
 {
-  w.default =
-    {
-      config,
-      pkgs,
-      lib,
-      birdee,
-      ...
-    }:
+  w.desktop =
+    { config, ... }:
     let
-      toml = pkgs.formats.toml { };
-      starshipWrapped = birdee.lib.wrapPackage {
-        inherit pkgs;
-        package = pkgs.starship;
-        env.STARSHIP_CONFIG = toml.generate "starship.toml" {
+      theme = config.theme.variant;
+    in
+    {
+      wrappers.starship = {
+        enable = true;
+        enableFishIntegration = true;
+
+        settings = {
           add_newline = false;
 
           right_format = "$nix_shell";
@@ -35,13 +32,12 @@
             format = "[$path]($style)";
             truncation_length = 3;
             truncation_symbol = "…/";
-            home_symbol = "🐸";
+            home_symbol = if (theme == "dark ") then "🐸" else "󰜥";
           };
 
-          # directory.substitutions = {
-          #   ".config" = "⚙︎ ";
-          #   "nvim" = "  ";
-          # };
+          directory.substitutions = {
+            "NixOS" = " ";
+          };
 
           git_branch = {
             symbol = "";
@@ -53,15 +49,5 @@
           };
         };
       };
-    in
-    {
-      hj.packages = [ starshipWrapped ];
-
-      programs.fish.interactiveShellInit = ''
-        if test "$TERM" != "dumb"
-          ${lib.getExe starshipWrapped} init fish | source
-          enable_transience
-        end
-      '';
     };
 }

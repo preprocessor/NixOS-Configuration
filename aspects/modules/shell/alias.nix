@@ -14,6 +14,11 @@
     {
       hj.packages = [ pkgs.uutils-coreutils-noprefix ];
 
+      environment.shellAliases = {
+        shutdown = ''hyprshutdown -t "Shutting down..." --post-cmd "shutdown -P 0"'';
+        reboot = ''hyprshutdown -t "Restarting..." --post-cmd "reboot"'';
+      };
+
       programs.fish = {
         shellAliases = config.environment.shellAliases // {
           man = "batman";
@@ -30,13 +35,14 @@
           repl = "nix repl --file ${cfgdir}/repl.nix";
 
           ils = "mcat ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
+
+          wf = "cd ${cfgdir} && nix run .#write-flake";
+          ws = "cd ${cfgdir} && nix run .#write-sources";
         };
 
         shellAbbrs = {
           ehistory = ''nvim "${config.hj.xdg.data.directory}/fish/fish_history"'';
           ppath = "echo $PATH | tr ' ' '\n'";
-
-          nos = "cd /home/wyspr/Configuration/NixOS/ && yazi";
 
           clone = "git clone";
           cls = "clear";
@@ -44,9 +50,9 @@
           ga = "git add .";
           gr = "cd (git rev-parse --show-toplevel)"; # cd to git root
 
+          osto = "nh os test --offline";
           ost = "nh os test";
           rb = "nh os switch";
-          wf = "cd ${cfgdir} && nix run .#write-flake";
 
           v = "nvim";
           x = "exit";
@@ -64,7 +70,7 @@
             , smem -c "pid command pss" -nkP $argv[1] | tail -n+3
           '';
 
-          starship_transient_prompt_func = ''printf " \e[1;96m  \e[0m"'';
+          starship_transient_prompt_func = ''printf " \e[94m  \e[0m"'';
 
           __onelockeds_fuzzy_zox = /* fish */ ''
             set -l dir (

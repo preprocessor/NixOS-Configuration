@@ -7,27 +7,21 @@
         yt-dlp
       ];
 
-      wrappers.niri.settings.window-rules = [
-        {
-          matches = [ { app-id = "^CliampMusic$"; } ];
-
-          open-floating = true;
-
-          default-column-width.fixed = 1000;
-          default-window-height.fixed = 1000;
-
-          default-floating-position = _: {
-            props = {
-              x = 2150;
-              y = 300;
-            };
-          };
-        }
-      ];
+      wrappers.hyprland.lua.files."window_rules".content = /* lua */ ''
+        hl.window_rule({
+          name = "float cliamp",
+          match = {
+            class = "^CliampMusic$"
+          },
+          float = true,
+          center = true,
+          size = "1000 1000"
+        })
+      '';
 
       wrappers.otter-launcher.modules = [
         {
-          cmd = "niri msg action spawn -- kitty --app-id=CliampMusic -e ${pkgs.cliamp}/bin/cliamp; exit";
+          cmd = ''hyprctl dispatch exec_sh("kitty --app-id=CliampMusic -e ${pkgs.cliamp}/bin/cliamp; exit")'';
           description = "music player";
           prefix = "amp";
         }

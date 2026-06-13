@@ -4,14 +4,6 @@
       url = "github:quickshell-mirror/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    qml-niri = {
-      url = "github:imiric/qml-niri/main";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        quickshell.follows = "quickshell";
-        flake-parts.follows = "flake-parts";
-      };
-    };
   };
   perSystem =
     { inputs', ... }:
@@ -36,8 +28,6 @@
   w.desktop =
     {
       pkgs,
-      lib,
-      config,
       self',
       birdee,
       ...

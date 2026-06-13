@@ -6,6 +6,18 @@
   dockerTools,
 }:
 {
+  chicago-font = {
+    pname = "chicago-font";
+    version = "ad613ccf9e356035187a377618f0f552963e18b7";
+    src = fetchFromGitHub {
+      owner = "nikdog";
+      repo = "chicago-font";
+      rev = "ad613ccf9e356035187a377618f0f552963e18b7";
+      fetchSubmodules = false;
+      sha256 = "sha256-M49oTUSc1jTmO2npx96wGYEopZU3+ql9L7mGm2rbzzM=";
+    };
+    date = "2025-07-27";
+  };
   extra-metadata = {
     pname = "extra-metadata";
     version = "044274ca2e473f18910d03ca7392dff5ef028deb";
@@ -118,6 +130,18 @@
       sha256 = "sha256-tZn+GCKOQqM+EYSzxF2qKHPHa1xgewAnedG/jaoDoVE=";
     };
   };
+  helvetica-font = {
+    pname = "helvetica-font";
+    version = "26bef19d2b9f3a8d1194629760ca1c0e14185d93";
+    src = fetchFromGitHub {
+      owner = "Kyles-World";
+      repo = "Helvetica-Font";
+      rev = "26bef19d2b9f3a8d1194629760ca1c0e14185d93";
+      fetchSubmodules = false;
+      sha256 = "sha256-EyqFPfjPGvQ1GIo3/4aTYum1tJRgVYqTmypgzj9T0BI=";
+    };
+    date = "2026-06-02";
+  };
   miku = {
     pname = "miku";
     version = "471ff88156e9a3dc8542d23e8cae4e1c9de6e732";
@@ -129,18 +153,6 @@
       sha256 = "sha256-HCHo4GwWLvjjnKWNiHb156Z+NQqliqLX1T1qNxMEMfE=";
     };
     date = "2025-03-13";
-  };
-  niri-shaders-collection = {
-    pname = "niri-shaders-collection";
-    version = "aa26f4e157b818630cb281f6e1968b641c079d69";
-    src = fetchFromGitHub {
-      owner = "jgarza9788";
-      repo = "niri-animation-collection";
-      rev = "aa26f4e157b818630cb281f6e1968b641c079d69";
-      fetchSubmodules = false;
-      sha256 = "sha256-DgoudR6etn+t5eYplPcOISPuWMRAulW6ZOCTsyFHi2w=";
-    };
-    date = "2026-04-07";
   };
   no-header = {
     pname = "no-header";
@@ -156,15 +168,15 @@
   };
   otter-launcher = {
     pname = "otter-launcher";
-    version = "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1";
+    version = "764a38d1de308da3268222692652a0a85bb71eee";
     src = fetchFromGitHub {
       owner = "kuokuo123";
       repo = "otter-launcher";
-      rev = "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1";
+      rev = "764a38d1de308da3268222692652a0a85bb71eee";
       fetchSubmodules = false;
-      sha256 = "sha256-Ye0COc1J5YnP+90fOdsQqPw9Ni4Lu0y63HwG0duSpeI=";
+      sha256 = "sha256-vlNT2248Oxg3++bk8ZkozsU4wDbxOkh6dl3GeoBmmXE=";
     };
-    date = "2026-06-02";
+    date = "2026-06-09";
   };
   retrowave-light-kitty = {
     pname = "retrowave-light-kitty";
@@ -221,6 +233,18 @@
       sha256 = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
     };
     date = "2026-01-26";
+  };
+  yazi-plugins = {
+    pname = "yazi-plugins";
+    version = "6206bae4c7887915db1cdf3b353a044578763195";
+    src = fetchFromGitHub {
+      owner = "AminurAlam";
+      repo = "yazi-plugins";
+      rev = "6206bae4c7887915db1cdf3b353a044578763195";
+      fetchSubmodules = false;
+      sha256 = "sha256-xTYYLbrqb1cZeQzaWPzldBfpx3r5s2XyeRTYBA8jbq4=";
+    };
+    date = "2026-06-02";
   };
   yaziline = {
     pname = "yaziline";

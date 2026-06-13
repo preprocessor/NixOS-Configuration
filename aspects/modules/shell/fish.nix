@@ -1,5 +1,6 @@
 {
   envoy.fish-completion-sync.github = "iynaix/fish-completion-sync";
+
   w.shell =
     {
       pkgs,
@@ -25,6 +26,8 @@
           bind Z __onelockeds_fuzzy_zox
           bind -M insert Z __onelockeds_fuzzy_zox
         '';
+
+        extraCompletionPackages = config.hj.packages;
       };
 
       hj.xdg.config.files =
@@ -79,19 +82,12 @@
     };
 
   w.default =
+    { lib, ... }:
     {
-      lib,
-      pkgs,
-      config,
-      ...
-    }:
-    {
-      options.programs.fish = {
-        functions = lib.mkOption {
-          default = { };
-          type = with lib.types; attrsOf (either lines functionModule);
-          description = "Set custom fish functions.";
-        };
+      options.programs.fish.functions = lib.mkOption {
+        default = { };
+        type = with lib.types; attrsOf (either lines functionModule);
+        description = "Set custom fish functions.";
       };
     };
 }

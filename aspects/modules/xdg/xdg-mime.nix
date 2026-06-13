@@ -73,10 +73,9 @@
         |> listToAttrs;
     in
     {
-      xdg.mime = {
-        enable = true;
-        defaultApplications = associations;
-        addedAssociations = {
+      hj.xdg.mime-apps = {
+        default-applications = associations;
+        added-associations = {
           "x-scheme-handler/mpv-handler" = [ "mpv-handler.desktop" ];
           "x-scheme-handler/mpv-handler-debug" = [ "mpv-handler-debug.desktop" ];
           "x-scheme-handler/discord" = [ "vesktop.desktop" ];

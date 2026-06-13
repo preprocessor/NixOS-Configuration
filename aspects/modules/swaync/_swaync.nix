@@ -1,17 +1,26 @@
 {
   w.desktop =
-    { pkgs, ... }:
+    { pkgs, scheme, ... }:
     {
-      hj.packages = [ pkgs.swaynotificationcenter ];
-
-      wrappers.niri.settings = {
-        spawn-at-startup = [ "swaync" ];
-
-        binds."Mod+A" = _: {
-          content.spawn-sh = "swaync-client -t";
-          props.repeat = false;
-        };
-      };
+      # hj.packages = [ pkgs.swaynotificationcenter ];
+      #
+      # wrappers.niri.settings = {
+      #   spawn-at-startup = [ "swaync" ];
+      #
+      #   binds."Mod+A" = _: {
+      #     content.spawn-sh = "swaync-client -t";
+      #     props.repeat = false;
+      #   };
+      #
+      #   layer-rules = [
+      #     {
+      #       matches = [
+      #         { namespace = "^swaync-notification-window$"; }
+      #       ];
+      #       block-out-from = "screencast";
+      #     }
+      #   ];
+      # };
 
       hj.xdg.config.files = {
         "swaync/config.json".text = /* json */ ''
@@ -61,23 +70,23 @@
           }
         '';
 
-        "swaync/style.css".text = /* css */ ''
-          @define-color cc-bg #16161d;
-          @define-color noti-border-color #dcd7ba;
-          @define-color noti-bg #11111b;
-          @define-color noti-bg-darker #2b2b39;
-          @define-color noti-bg-hover #1b1b2b;
-          @define-color noti-bg-focus #1b1b1b;
-          @define-color noti-close-bg #dcd7ba;
-          @define-color noti-close-bg-hover #dcd7ba;
-          @define-color text-color #dcd7ba;
-          @define-color text-color-disabled #828282;
-          @define-color bg-selected #7e9cd8;
-          @define-color border-green #76946a;
-          @define-color red-base #c34043;
-          @define-color red-hover #e46876;
-          @define-color green-base #98bb6c;
-          @define-color blue-base #7e9cd8;
+        "swaync/style.css".text = with scheme.withHashtag; /* css */ ''
+          @define-color cc-bg ${base00};
+          @define-color noti-border-color ${base05};
+          @define-color noti-bg ${base00};
+          @define-color noti-bg-darker ${base11};
+          @define-color noti-bg-hover ${base02};
+          @define-color noti-bg-focus ${base01};
+          @define-color noti-close-bg ${base09};
+          @define-color noti-close-bg-hover ${base09};
+          @define-color text-color ${base09};
+          @define-color text-color-disabled ${base01};
+          @define-color bg-selected ${blue};
+          @define-color border-green ${green};
+          @define-color red-base ${red};
+          @define-color red-hover ${bright-red};
+          @define-color green-base ${green};
+          @define-color blue-base ${blue};
 
           * {
             font-family: "Maple Mono Regular", monospace;
@@ -121,7 +130,7 @@
 
           .notification {
             background: @cc-bg;
-            border: 2px solid @border-green;
+            border: 2px solid @noti-border-color;
             margin: 3px -2px 3px 0;
           }
 
@@ -149,7 +158,7 @@
           }
 
           .notification-action {
-            border: 2px solid @border-green;
+            border: 2px solid @noti-border-color;
           }
 
           .notification-default-action:hover,
@@ -210,7 +219,7 @@
 
           .control-center {
             background: @cc-bg;
-            border: 2px solid @border-green;
+            border: 2px solid @noti-border-color;
           }
 
           .widget-title {
@@ -317,7 +326,7 @@
           }
 
           .notification-action>button:hover {
-            background-color: @border-green;
+            background-color: @noti-border-color;
             color: @cc-bg;
           }
         '';

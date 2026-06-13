@@ -39,7 +39,7 @@
               inherit pkgs;
               package = inputs'.tray-tui.packages.tray-tui;
               flags = {
-                "--config" = config.constructFiles.generatedConfig.path;
+                "--config-path" = config.constructFiles.generatedConfig.path;
               };
               constructFiles.generatedConfig = {
                 relPath = "config.toml";

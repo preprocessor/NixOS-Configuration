@@ -2,9 +2,10 @@
 {
   envoy.otter-launcher.github = "kuokuo123/otter-launcher";
 
-  utils.otterResize =
-    width: height: app:
-    "niri msg action set-window-width ${toString width};niri msg action set-window-height ${toString height};sleep 0.02;niri msg action center-window;kitten icat --clear-all;${app}";
+  utils.otterResize = width: height: app: ''
+    hyprctl --batch "dispatch hl.dsp.window.resize({ x = ${toString width}, y = ${toString height} }); dispatch hl.dsp.window.center()" \
+    && kitty -e ${app}
+  '';
 
   # utils.tomlBuild = ''
   #   mkdir -p "$(dirname "$2")"
@@ -21,7 +22,8 @@
     {
       packages.otter-launcher = pkgs.rustPlatform.buildRustPackage {
         inherit (envoy.otter-launcher) pname version src;
-        cargoHash = "sha256-uDIUN2/EvMvEUWlIvgAOy9NLkpGI0CGs+QXnDiUtFxc=";
+        cargoHash = "sha256-GORp/ok5RNgwAePhtZeLlvhsQZRELIRYwFRROiUjQ1o=";
+        doCheck = false;
         patches = [
           (pkgs.writeText "selection.patch" # rust
             ''

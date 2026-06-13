@@ -40,10 +40,6 @@
       url = "github:BirdeeHub/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    direnv-instant = {
-      url = "github:Mic92/direnv-instant";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-file.url = "github:denful/flake-file";
     flake-parts.url = "github:hercules-ci/flake-parts";
     hjem = {
@@ -52,10 +48,6 @@
     };
     neovim = {
       url = "path:/home/wyspr/Configuration/Neovim/";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    niri = {
-      url = "github:niri-wm/niri";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-cachyos-kernel = {
@@ -73,7 +65,6 @@
     nixos-core.url = "github:manic-systems/nixos-core/";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nsticky.url = "github:lonerOrz/nsticky";
     pixprint.url = "github:preprocessor/pixprint";
     sops-nix = {
       url = "github:Mic92/sops-nix";

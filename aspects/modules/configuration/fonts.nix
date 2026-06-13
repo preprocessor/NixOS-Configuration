@@ -7,8 +7,8 @@
 
   w.desktop =
     {
-      inputs',
       envoy,
+      self',
       pkgs,
       ...
     }:
@@ -24,28 +24,28 @@
           doCheck = false;
           buildCommand = ''install -m444 -Dt $out/share/fonts/truetype $src/Helvetica\ World\ \(Unicode\)/*.ttf'';
         })
-
       ];
 
       custom.gtk.fonts = {
         serif = {
           name = "New York";
-          package = inputs'.apple-fonts.packages.ny;
+          package = self'.packages.apple-font;
         };
 
         sans = {
           name = "SF Pro Display";
-          package = inputs'.apple-fonts.packages.sf-pro;
+          package = self'.packages.apple-font;
         };
 
         mono = {
           name = "SF Mono Regular";
-          package = inputs'.apple-fonts.packages.sf-mono;
+          package = self'.packages.apple-font;
+
         };
 
         emoji = {
           name = "Blobmoji";
-          package = pkgs.noto-fonts-emoji-blob-bin;
+          package = self'.packages.apple-font;
         };
       };
     };

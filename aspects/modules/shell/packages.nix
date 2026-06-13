@@ -1,11 +1,18 @@
 {
   w.default =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
+      programs.nano.enable = lib.mkForce false; # Take out the trash
+
       hj.packages = with pkgs; [
         imagemagick
         trash-cli
         ripgrep
+        (gnuplot.override {
+          withTeXLive = true;
+          withLua = true;
+          withQt = true;
+        })
         mdfried
         chafa
         wget

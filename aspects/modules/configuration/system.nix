@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   ff = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -13,6 +14,8 @@
       ...
     }:
     {
+      imports = [ inputs.nixos-core.nixosModules.default ];
+
       nix.settings = {
         use-xdg-base-directories = true;
         warn-dirty = false;
@@ -39,13 +42,6 @@
 
       };
 
-      # services.scx = {
-      #   enable = true;
-      #   package = pkgs.scx.rustscheds;
-      #   # [INFO] https://github.com/sched-ext/scx/blob/main/scheds/rust/scx_lavd/README.md
-      #   scheduler = "scx_lavd";
-      # };
-
       services.speechd.enable = lib.mkForce false; # Disable tts
 
       nixpkgs.config = {
@@ -57,13 +53,8 @@
 
       services.dbus.implementation = "broker";
 
-      programs.nano.enable = lib.mkForce false; # Take out the trash
-
       services.power-profiles-daemon.enable = true;
 
-      # This is a workaround to set NIXOS_OZONE_WL as described in https://wiki.nixos.org/wiki/Wayland#Electron_and_Chromium
-      hj.environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-      gtk.iconCache.enable = true;
+      system.nixos-core.enable = true;
     };
 }

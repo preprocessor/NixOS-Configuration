@@ -9,16 +9,30 @@
 
           filekinds = {
             normal.foreground = base05;
-            directory.foreground = base07;
+            directory.foreground = base0A;
             symlink.foreground = base0D;
             pipe.foreground = base04;
             block_device.foreground = base08;
             char_device.foreground = base08;
             socket.foreground = base04;
             special.foreground = base0E;
-            executable.foreground = base0B;
+            executable.foreground = bright-red;
             mount_point.foreground = base0C;
           };
+
+          file_type = {
+            image.foreground = base0A;
+            video.foreground = base08;
+            music.foreground = base0B;
+            lossless.foreground = base0C;
+            crypto.foreground = base03;
+            document.foreground = base05;
+            compressed.foreground = base0E;
+            temp.foreground = base08;
+            compiled.foreground = base0D;
+            source.foreground = base0D;
+          };
+
           perms = {
             user_read = {
               foreground = base08;
@@ -93,18 +107,6 @@
             role.foreground = base0E;
             typ.foreground = base02;
             range.foreground = base0E;
-          };
-          file_type = {
-            image.foreground = base0A;
-            video.foreground = base08;
-            music.foreground = base0B;
-            lossless.foreground = base0C;
-            crypto.foreground = base03;
-            document.foreground = base05;
-            compressed.foreground = base0E;
-            temp.foreground = base08;
-            compiled.foreground = base0D;
-            source.foreground = base0D;
           };
           punctuation.foreground = base02;
           date.foreground = base0A;

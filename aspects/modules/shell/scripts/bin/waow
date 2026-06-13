@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # vim: set nowrap:
 
 CNAMES=(BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE)
@@ -12,15 +12,21 @@ for i in {0..7}; do
   printf -v L${CNAMES[$i]}BG %b "\e[${BB}${i}m"
 done
 
-
 MEM=$(mem '${mb_used} ${mb_total}' | xargs printf "%'dM / %'dM")
+
+CPU="i9 10900K"
+GPU="RX 6700 XT"
+
+HOST=$(cat /etc/hostname)
+RES=$(res '${width}x${height}' 2>/dev/null)
+MEM=$(mem '${gb_used}G󰿟${gb_total}G')
+OSVER=$(grep '^VERSION_ID=' /etc/os-release | cut -d'"' -f2)
+KERNEL=$(uname -r | sd 'os-lto' '')
 
 WM=$(wm)
 UPTIME=$(upt)
-PACKAGES=$(pkgs '${pkgs_total}')
-TERMINAL=$(echo $TERM | sd ^xterm- '')
-SHELL=$(basename "$SHELL")
-HOSTNAME=$(cat /etc/hostname)
+TERMINAL=$(echo $TERMINAL)
+SHELL="fish"
 
 USER_INFO_LEN=$((${#HOSTNAME} + ${#USER} + 1))
 
@@ -32,24 +38,26 @@ HW_INFO=$(gum style \
   --padding "0 1" \
   --border-foreground 10 \
   --border thick "\
-${LYELLOW}󰌢  Lenovo ThinkPad X1 Yoga 4
-${LBLUE}  Intel Core i5-8265U
+${LYELLOW}  ${CPU}
+${LBLUE}󱡜  ${GPU}
 ${LMAGENTA}  ${MEM}
-${LCYAN}󰹑  1920x1080
+${LCYAN}󰹑  ${RES}
 ${LRED}󰄉  ${UPTIME}")
 
 SW_INFO=$(gum style \
   --padding "0 1" \
   --border-foreground 10 \
   --border thick "\
-${LYELLOW}  Arch Linux
-${LBLUE}  $XDG_CURRENT_DESKTOP
-${LMAGENTA}󰏗  ${PACKAGES}
+${LYELLOW}  ${KERNEL}
+${LBLUE}  ${OSVER}
+${LMAGENTA}󰧨  $XDG_CURRENT_DESKTOP
 ${LCYAN}  ${TERMINAL}
 ${LRED}  ${SHELL}")
 
 INFO=$(gum join --horizontal "${HW_INFO}" "${SW_INFO}")
 COLOR=$(gbc)
+
+ART=$(gum style --margin "0 0 0 7" "$(eye)")
 
 RIGHT=$(gum style \
   --margin "0 0 0 2" \
@@ -59,10 +67,9 @@ ${USER_INFO_UNDERLINE}
 ${INFO}
 ${COLOR}")
 
-ART=$(eye)
 
-OUT=$(gum join --horizontal --align center "${ART}" "${RIGHT}")
+OUT=$(gum join --vertical "${ART}" "${RIGHT}")
 
-gum style --padding "0 0 1 0" "${OUT}"
+gum style --align center --padding "0 0 1 0" "${OUT}"
 
 exit 0

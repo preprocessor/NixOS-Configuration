@@ -36,38 +36,50 @@
     };
 
   w.default =
-    { self', pkgs, ... }:
     {
-      hj.packages = [
-        self'.packages.cliphist
-        self'.packages.cliphist-tui
-        pkgs.wl-clipboard
-        pkgs.wl-clip-persist
-      ];
+      self',
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      systemd.user.services = {
+        cliphist-text = {
+          description = "Clipboard history service (Text)";
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
 
-      wrappers.niri.settings.spawn-at-startup = [
-        [
-          "wl-paste"
-          "--type"
-          "text"
-          "--watch"
-          "cliphist"
-          "store"
-        ]
-        [
-          "wl-paste"
-          "--type"
-          "image"
-          "--watch"
-          "cliphist"
-          "store"
-        ]
-        [
-          "wl-clip-persist"
-          "--clipboard"
-          "regular"
-        ]
-      ];
+          serviceConfig = {
+            ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${self'.packages.cliphist}/bin/cliphist store";
+            Restart = "on-failure";
+          };
+        };
+
+        cliphist-image = {
+          description = "Clipboard history service (Images)";
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+
+          serviceConfig = {
+            ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${self'.packages.cliphist}/bin/cliphist store";
+            Restart = "on-failure";
+          };
+        };
+
+        clip-persist = {
+          description = "Persistent clipboard";
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+
+          serviceConfig = {
+            ExecStart = "${pkgs.wl-clip-persist}/bin/wl-clip-persis --clipboard regular";
+            Restart = "on-failure";
+          };
+        };
+      };
 
       environment.variables = {
         CLIPHIST_MAX_STORE_SIZE = "1GB";
@@ -81,7 +93,7 @@
           {
             description = "clipboard";
             prefix = "cb";
-            cmd = resize 800 1000 "cliphist-tui";
+            cmd = resize 800 1000 (lib.getExe' self'.packages.cliphist-tui "cliphist-tui");
           }
         ];
 

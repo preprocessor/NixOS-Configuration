@@ -1,4 +1,25 @@
 {
+    "chicago-font": {
+        "cargoLock": null,
+        "date": "2025-07-27",
+        "extract": null,
+        "name": "chicago-font",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "nikdog",
+            "repo": "chicago-font",
+            "rev": "ad613ccf9e356035187a377618f0f552963e18b7",
+            "sha256": "sha256-M49oTUSc1jTmO2npx96wGYEopZU3+ql9L7mGm2rbzzM=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "ad613ccf9e356035187a377618f0f552963e18b7"
+    },
     "extra-metadata": {
         "cargoLock": null,
         "date": "2026-04-22",
@@ -196,6 +217,27 @@
         },
         "version": "https://github.com/Grief/hand-of-evil/releases/download/v1.2/hand-of-evil.tar.gz"
     },
+    "helvetica-font": {
+        "cargoLock": null,
+        "date": "2026-06-02",
+        "extract": null,
+        "name": "helvetica-font",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "Kyles-World",
+            "repo": "Helvetica-Font",
+            "rev": "26bef19d2b9f3a8d1194629760ca1c0e14185d93",
+            "sha256": "sha256-EyqFPfjPGvQ1GIo3/4aTYum1tJRgVYqTmypgzj9T0BI=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "26bef19d2b9f3a8d1194629760ca1c0e14185d93"
+    },
     "miku": {
         "cargoLock": null,
         "date": "2025-03-13",
@@ -216,27 +258,6 @@
             "type": "github"
         },
         "version": "471ff88156e9a3dc8542d23e8cae4e1c9de6e732"
-    },
-    "niri-shaders-collection": {
-        "cargoLock": null,
-        "date": "2026-04-07",
-        "extract": null,
-        "name": "niri-shaders-collection",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "jgarza9788",
-            "repo": "niri-animation-collection",
-            "rev": "aa26f4e157b818630cb281f6e1968b641c079d69",
-            "sha256": "sha256-DgoudR6etn+t5eYplPcOISPuWMRAulW6ZOCTsyFHi2w=",
-            "sparseCheckout": [],
-            "type": "github"
-        },
-        "version": "aa26f4e157b818630cb281f6e1968b641c079d69"
     },
     "no-header": {
         "cargoLock": null,
@@ -261,7 +282,7 @@
     },
     "otter-launcher": {
         "cargoLock": null,
-        "date": "2026-06-02",
+        "date": "2026-06-09",
         "extract": null,
         "name": "otter-launcher",
         "passthru": null,
@@ -273,12 +294,12 @@
             "name": null,
             "owner": "kuokuo123",
             "repo": "otter-launcher",
-            "rev": "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1",
-            "sha256": "sha256-Ye0COc1J5YnP+90fOdsQqPw9Ni4Lu0y63HwG0duSpeI=",
+            "rev": "764a38d1de308da3268222692652a0a85bb71eee",
+            "sha256": "sha256-vlNT2248Oxg3++bk8ZkozsU4wDbxOkh6dl3GeoBmmXE=",
             "sparseCheckout": [],
             "type": "github"
         },
-        "version": "4700e2f9e45e29eaed1fd5d0b51ccb35859a7cc1"
+        "version": "764a38d1de308da3268222692652a0a85bb71eee"
     },
     "retrowave-light-kitty": {
         "cargoLock": null,
@@ -378,6 +399,27 @@
             "type": "github"
         },
         "version": "70fe6b4a245a59b546166aae6c45ee2b471869c2"
+    },
+    "yazi-plugins": {
+        "cargoLock": null,
+        "date": "2026-06-02",
+        "extract": null,
+        "name": "yazi-plugins",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "AminurAlam",
+            "repo": "yazi-plugins",
+            "rev": "6206bae4c7887915db1cdf3b353a044578763195",
+            "sha256": "sha256-xTYYLbrqb1cZeQzaWPzldBfpx3r5s2XyeRTYBA8jbq4=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "6206bae4c7887915db1cdf3b353a044578763195"
     },
     "yaziline": {
         "cargoLock": null,
