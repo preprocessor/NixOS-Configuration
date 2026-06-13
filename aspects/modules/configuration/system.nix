@@ -1,7 +1,7 @@
 {
   ff = {
-    # channel urls are faster and more reliable than github
-    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-core.url = "github:manic-systems/nixos-core/";
     nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
   };
 
