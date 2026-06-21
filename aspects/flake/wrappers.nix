@@ -1,11 +1,16 @@
+{ inputs, ... }:
 {
-  ff.birdee = {
+  inputs.birdee = {
     url = "github:BirdeeHub/nix-wrapper-modules";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  perSystem = {
+    _module.args = { inherit (inputs) birdee; };
+  };
+
   w.default =
-    { config, lib, ... }:
+    { lib, ... }:
     let
       inherit (lib) mkOption types;
     in

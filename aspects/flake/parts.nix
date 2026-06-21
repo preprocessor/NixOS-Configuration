@@ -1,11 +1,8 @@
 { inputs, lib, ... }:
 {
-  ff.flake-parts.url = "github:hercules-ci/flake-parts";
+  inputs.flake-parts.url = "github:hercules-ci/flake-parts";
 
-  imports = [
-    inputs.flake-parts.flakeModules.modules
-    (lib.mkAliasOptionModule [ "w" ] [ "flake" "modules" "nixos" ])
-  ];
+  imports = [ (lib.mkAliasOptionModule [ "w" ] [ "nixos" "modules" ]) ];
 
   systems = [ "x86_64-linux" ];
 
@@ -26,28 +23,4 @@
     };
 
   _file = ./parts.nix;
-
-  # https://github.com/iynaix/dotfiles/blob/main/modules/flake-parts.nix
-  # flake = {
-  #   # expose top level flake options
-  #   options = {
-  #     patches = lib.mkOption {
-  #       type = lib.types.anything;
-  #       default = [ ];
-  #       description = "Patches to be applied onto nixpkgs";
-  #     };
-  #
-  #     wrapperModules = lib.mkOption {
-  #       type = lib.types.attrs;
-  #       default = { };
-  #       description = "Wrapper modules";
-  #     };
-  #
-  #     libCustom = lib.mkOption {
-  #       type = lib.types.attrsOf lib.types.anything;
-  #       default = { };
-  #       description = "Custom library functions / utilities";
-  #     };
-  #   };
-  # };
 }

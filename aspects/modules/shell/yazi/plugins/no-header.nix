@@ -1,19 +1,23 @@
+{ inputs, ... }:
 {
-  envoy.no-header.github = "onelocked/no-header-prompt.yazi";
+  inputs.yazi-no-header = {
+    url = "github:onelocked/no-header-prompt.yazi";
+    flake = false;
+  };
 
   w.shell =
     {
-      envoy,
       pkgs,
       lib,
       ...
     }:
     let
       no-header = pkgs.yaziPlugins.mkYaziPlugin {
-        inherit (envoy.no-header) pname version;
+        pname = "no-header";
+        version = "0.67";
 
         src = lib.cleanSourceWith {
-          inherit (envoy.no-header) src;
+          src = inputs.yazi-no-header;
           filter = name: type: (baseNameOf name == "main.lua");
         };
       };

@@ -1,6 +1,5 @@
-{ ... }@top:
 {
-  ff.tray-tui.url = "github:Levizor/tray-tui";
+  inputs.tray-tui.url = "github:Levizor/tray-tui";
 
   w.default =
     {
@@ -43,7 +42,10 @@
               };
               constructFiles.generatedConfig = {
                 relPath = "config.toml";
-                content = (cfg.settings |> toml.generate "config.toml" |> builtins.readFile) + cfg.moreCfg;
+                builder = ''
+                  install -m655 -DT "${toml.generate "theme.yaml" cfg.settings}" "$2"
+                  echo -e "\n${cfg.moreCfg}" >> "$2"
+                '';
               };
             }
           );

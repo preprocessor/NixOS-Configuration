@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  ff.hjem = {
+  inputs.hjem = {
     url = "github:feel-co/hjem";
     inputs.nixpkgs.follows = "nixpkgs";
   };

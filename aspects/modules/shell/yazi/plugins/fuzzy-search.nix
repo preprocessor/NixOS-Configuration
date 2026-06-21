@@ -1,20 +1,24 @@
+{ inputs, ... }:
 {
-  envoy.fuzzy-search-src.github = "onelocked/fuzzy-search.yazi";
+  inputs.yazi-fuzzy-search = {
+    url = "github:onelocked/fuzzy-search.yazi";
+    flake = false;
+  };
 
   w.shell =
     {
       config,
-      envoy,
       pkgs,
       lib,
       ...
     }:
     let
       fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
-        inherit (envoy.fuzzy-search-src) pname version;
+        pname = "onelocks-fuzzy-zox";
+        version = "4.20";
 
         src = lib.cleanSourceWith {
-          inherit (envoy.fuzzy-search-src) src;
+          src = inputs.yazi-fuzzy-search;
           filter = name: type: (baseNameOf name == "main.lua");
         };
       };

@@ -9,7 +9,11 @@
       wrappers.yazi.settings = {
         plugin.prepend_previewers = [
           {
-            mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}";
+            mime = "application/{tar,bzip2,7z*,rar,xz,zstd,java-archive}";
+            run = "ouch --show-file-icons";
+          }
+          {
+            url = "*.{zip,gzip}";
             run = "ouch --show-file-icons";
           }
         ];

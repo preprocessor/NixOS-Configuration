@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
-  ff.nix-gaming-edge = {
-    url = "github:powerofthe69/nix-gaming-edge";
+  inputs.nix-gaming-edge = {
+    url = "path:/home/wyspr/Configuration/nix-gaming-edge";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -24,40 +24,12 @@
 
       drivers.mesa-git = {
         enable = true;
+        steamOrphanCleanup.enable = true;
+        enableCache = false;
         cacheCleanup = {
           # protonPackage is null by default - thus Proton caches are not cleaned by default. Must define a protonPackage to clear Proton / engine caches
           enable = true;
           protonPackage = pkgs.proton-cachyos;
-
-          mesaCacheDirs = [
-            # optional - default lists pre-configured
-            "mesa_shader_cache*"
-            "radv_builtin_shaders*"
-            # etc.
-          ];
-
-          protonCacheFiles = [
-            # optional - default lists pre-configured
-            "vkd3d-proton.cache*"
-            "shader*.cache"
-            # etc.
-          ];
-
-          protonCacheDirs = [
-            # optional - default lists pre-configured
-            "*ShaderCache*"
-            "D3DSCache*"
-            # etc.
-          ];
-        };
-        steamOrphanCleanup = {
-          enable = true;
-          protectedFolders = [
-            # folders to not treat as orphans for deletion ( optional, pre-configured with smart defaults )
-            "Proton*"
-            "Steam Controller Configs"
-            # etc.
-          ];
         };
       };
 
@@ -88,7 +60,6 @@
         "kernel.split_lock_mitigate" = 0;
         # 30-vm.conf
         # USE MAX_INT - MAPCOUNT_ELF_CORE_MARGIN.
-        # see comment i
       };
 
       services = {

@@ -27,7 +27,7 @@
           current = {fg = "${base11}", bg = "${bright-yellow}"}
 
           [status]
-          overall = {  bg = "${base02}", fg = "${bright-blue}" }
+          overall = {  bg = "${base10}", fg = "${bright-blue}" }
           sep_left  = { open = "", close = "" }
           sep_right = { open = "", close = "" }
 

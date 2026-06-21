@@ -41,12 +41,14 @@
       options.wrappers.yazi = {
         package = mkOption {
           type = types.package;
-          default = birdee.wrappers.yazi.wrap ({
+          default = birdee.wrappers.yazi.wrap {
             inherit pkgs;
             inherit (cfg) plugins;
             runtimePkgs = with pkgs; [
               ouch-rar
               ripgrep
+              unrar
+              unzip
               glow
               git
             ];
@@ -65,7 +67,7 @@
                 content = cfg.flavorContent;
               };
             };
-          });
+          };
         };
 
         enable = lib.mkEnableOption { };

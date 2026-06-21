@@ -1,7 +1,7 @@
 {
   withSystem,
   inputs,
-  self,
+  config,
   ...
 }:
 {
@@ -12,7 +12,7 @@
         inherit self' inputs';
         inherit (inputs) birdee;
       };
-      modules = with self.modules.nixos; [
+      modules = with config.w; [
         default
         ramiel
         desktop

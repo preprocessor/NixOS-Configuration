@@ -1,14 +1,12 @@
 { inputs, ... }:
 {
-  ff = {
+  inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-core.url = "github:manic-systems/nixos-core/";
-    nixos-hardware.url = "github:NixOS/nixos-hardware"; # NixOS modules covering hardware quirks
+    nixos-core.url = "github:manic-systems/nixos-core/refs/tags/v1.0.1"; # NixOS modules covering hardware quirks
   };
 
   w.default =
     {
-      pkgs,
       lib,
       constants,
       ...
@@ -20,6 +18,7 @@
         use-xdg-base-directories = true;
         warn-dirty = false;
         auto-optimise-store = true;
+        allow-import-from-derivation = false;
         experimental-features = [
           "pipe-operators"
           "nix-command"

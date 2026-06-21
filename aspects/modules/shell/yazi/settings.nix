@@ -3,12 +3,10 @@
     {
       pkgs,
       lib,
-      scheme,
-      constants,
       ...
     }:
     {
-      environment.systemPackages = [ pkgs.ouch-rar ]; # general de/compression utility
+      hj.packages = [ pkgs.ouch-rar ]; # general de/compression utility
 
       wrappers.hyprland.lua.files."keybinds".content = /* lua */ ''
         hl.bind("SUPER + E", function()
@@ -47,7 +45,11 @@
                 ];
               }
               {
-                mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}";
+                url = "*.cb{r,z}";
+                use = [ "open" ];
+              }
+              {
+                mime = "application/{x-zip*,zip*,tar,bzip2,7z*,rar,xz,zstd,java-archive}";
                 use = [ "ouch" ];
               }
             ];

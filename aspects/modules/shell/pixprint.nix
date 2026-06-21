@@ -1,5 +1,5 @@
 {
-  ff.pixprint.url = "github:preprocessor/pixprint";
+  inputs.pixprint.url = "github:preprocessor/pixprint";
 
   w.default =
     { pkgs, inputs', ... }:
