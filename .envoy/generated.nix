@@ -30,18 +30,6 @@
     };
     date = "2026-04-22";
   };
-  eza-themes = {
-    pname = "eza-themes";
-    version = "add4c72c546992b8db674d6d3eea315bf2111b9a";
-    src = fetchFromGitHub {
-      owner = "eza-community";
-      repo = "eza-themes";
-      rev = "add4c72c546992b8db674d6d3eea315bf2111b9a";
-      fetchSubmodules = false;
-      sha256 = "sha256-toqj3bv2kCC2FHbGfeFpS3g9DoxQeZ7cwPYVpD8cfgg=";
-    };
-    date = "2026-03-04";
-  };
   fish-completion-sync = {
     pname = "fish-completion-sync";
     version = "4f058ad2986727a5f510e757bc82cbbfca4596f0";
@@ -56,71 +44,15 @@
   };
   fsel = {
     pname = "fsel";
-    version = "6b6ae52e3a2c254007e8a2c332a8d5de99428ba5";
+    version = "8a12d4f35e78297f3e2d55e026185710bff38338";
     src = fetchFromGitHub {
       owner = "Mjoyufull";
       repo = "fsel";
-      rev = "6b6ae52e3a2c254007e8a2c332a8d5de99428ba5";
+      rev = "8a12d4f35e78297f3e2d55e026185710bff38338";
       fetchSubmodules = false;
-      sha256 = "sha256-7YoRc6jOuQUI0yv3qBHFhc60G/RG0LwVsKkN90UkPn4=";
+      sha256 = "sha256-XGKD/DId5Eont4ytPV7LfGvykDRalMWx4pbkRVUNzxY=";
     };
-    date = "2026-05-17";
-  };
-  fuzzy-search-src = {
-    pname = "fuzzy-search-src";
-    version = "7be2437b45be1da9b3be0ed2f244709c9b9be242";
-    src = fetchFromGitHub {
-      owner = "onelocked";
-      repo = "fuzzy-search.yazi";
-      rev = "7be2437b45be1da9b3be0ed2f244709c9b9be242";
-      fetchSubmodules = false;
-      sha256 = "sha256-vW6o5vbYXr++cFAcyvl7E2tYHQMV5lGK2rEOG5iiRPg=";
-    };
-    date = "2026-05-25";
-  };
-  gruvbox = {
-    pname = "gruvbox";
-    version = "5bfe85a961d144376f9f9460f2b2a85343a0f0b3";
-    src = fetchFromGitHub {
-      owner = "gruvbox-community";
-      repo = "gruvbox-contrib";
-      rev = "5bfe85a961d144376f9f9460f2b2a85343a0f0b3";
-      fetchSubmodules = false;
-      sha256 = "sha256-9rYLbnQZV+sTJdYwEZlqJzGHC2w/z9MUWzJr474B834=";
-    };
-    date = "2023-09-11";
-  };
-  gruvbox-discord = {
-    pname = "gruvbox-discord";
-    version = "https://raw.githubusercontent.com/round-panda/gruvbox-sharp/main/GruvboxSharp.theme.css";
-    src = fetchurl {
-      url = "https://raw.githubusercontent.com/round-panda/gruvbox-sharp/main/GruvboxSharp.theme.css";
-      sha256 = "sha256-fRj80A/foM6Bc6odECU2JuYrLhxuknbqot7QL3TUqWo=";
-    };
-  };
-  gruvbox-fish = {
-    pname = "gruvbox-fish";
-    version = "b3c8fd52e6d3860123cc1c3a8b72e12d887596ba";
-    src = fetchFromGitHub {
-      owner = "gruvbox-community";
-      repo = "fish-gruvbox";
-      rev = "b3c8fd52e6d3860123cc1c3a8b72e12d887596ba";
-      fetchSubmodules = false;
-      sha256 = "sha256-LhBerkaPfKMmmb29EoYdpMxWc3ckFesaty15M2SCO7Y=";
-    };
-    date = "2019-06-01";
-  };
-  gruvbox-lazygit = {
-    pname = "gruvbox-lazygit";
-    version = "2ed4a23ca050987e6283a2a9bce348b3288591d7";
-    src = fetchFromGitHub {
-      owner = "im-AMS";
-      repo = "gruvbox-material-lazygit";
-      rev = "2ed4a23ca050987e6283a2a9bce348b3288591d7";
-      fetchSubmodules = false;
-      sha256 = "sha256-jfVgHetavAr1jTjA+Ivg/LXDWQBqqmc3mtNBi1w0C/0=";
-    };
-    date = "2025-12-27";
+    date = "2026-06-14";
   };
   hand-of-evil = {
     pname = "hand-of-evil";
@@ -154,18 +86,6 @@
     };
     date = "2025-03-13";
   };
-  no-header = {
-    pname = "no-header";
-    version = "dd34339092b7cdc1f8213017f939e55e0b47a008";
-    src = fetchFromGitHub {
-      owner = "onelocked";
-      repo = "no-header-prompt.yazi";
-      rev = "dd34339092b7cdc1f8213017f939e55e0b47a008";
-      fetchSubmodules = false;
-      sha256 = "sha256-dHJNk3o9vMGUnO/KAl7R6UdEq1giyp2DNXzxmAKBZP0=";
-    };
-    date = "2026-05-25";
-  };
   otter-launcher = {
     pname = "otter-launcher";
     version = "764a38d1de308da3268222692652a0a85bb71eee";
@@ -178,73 +98,17 @@
     };
     date = "2026-06-09";
   };
-  retrowave-light-kitty = {
-    pname = "retrowave-light-kitty";
-    version = "https://raw.githubusercontent.com/BrokenSideViewMirror/kitty-themes/refs/heads/master/themes/retrowave-light.conf";
-    src = fetchurl {
-      url = "https://raw.githubusercontent.com/BrokenSideViewMirror/kitty-themes/refs/heads/master/themes/retrowave-light.conf";
-      sha256 = "sha256-bbWTE6fANBt2IEPdpqzK6Nqx3GlD65mPJjJ7P4pHiP0=";
-    };
-  };
   schemes = {
     pname = "schemes";
-    version = "0c94645546f4f3ddac77a1a5fce54eb95bf50795";
+    version = "2ccef2f4b22e3cab5a9292811f7133a07eeba4a7";
     src = fetchFromGitHub {
       owner = "tinted-theming";
       repo = "schemes";
-      rev = "0c94645546f4f3ddac77a1a5fce54eb95bf50795";
+      rev = "2ccef2f4b22e3cab5a9292811f7133a07eeba4a7";
       fetchSubmodules = false;
-      sha256 = "sha256-PDF0/wObw4nIsSBeXVYLsloXOiphXCgIdsrNcVXguKs=";
+      sha256 = "sha256-yYO3Vw2M0y3TAUqt+9+Mj0zwP3XDTF5/PXcPhhFQ1ZM=";
     };
-    date = "2026-05-03";
-  };
-  tokyonight = {
-    pname = "tokyonight";
-    version = "cdc07ac78467a233fd62c493de29a17e0cf2b2b6";
-    src = fetchFromGitHub {
-      owner = "folke";
-      repo = "tokyonight.nvim";
-      rev = "cdc07ac78467a233fd62c493de29a17e0cf2b2b6";
-      fetchSubmodules = false;
-      sha256 = "sha256-a9iRWue7DB7s/wNdxqqB51Jya5P9X6sDftqhdmKggU0=";
-    };
-    date = "2026-03-24";
-  };
-  tokyonight-vesktop-theme = {
-    pname = "tokyonight-vesktop-theme";
-    version = "585302fe074249eff2212930d26b0153a5ff5102";
-    src = fetchFromGitHub {
-      owner = "ForRealy";
-      repo = "Tokyo-Night-fixed";
-      rev = "585302fe074249eff2212930d26b0153a5ff5102";
-      fetchSubmodules = false;
-      sha256 = "sha256-iipzyCRE6XbOERlcxRj8Vdbx0lN66XZ7wNJgexeoAcM=";
-    };
-    date = "2025-06-22";
-  };
-  tokyonight-yazi-theme = {
-    pname = "tokyonight-yazi-theme";
-    version = "70fe6b4a245a59b546166aae6c45ee2b471869c2";
-    src = fetchFromGitHub {
-      owner = "kalidyasin";
-      repo = "yazi-flavors";
-      rev = "70fe6b4a245a59b546166aae6c45ee2b471869c2";
-      fetchSubmodules = false;
-      sha256 = "sha256-9I6NWIlNi4y0mNuqX8AbjfIK9vrC3+fzP0dJdh6QAic=";
-    };
-    date = "2026-01-26";
-  };
-  yazi-plugins = {
-    pname = "yazi-plugins";
-    version = "6206bae4c7887915db1cdf3b353a044578763195";
-    src = fetchFromGitHub {
-      owner = "AminurAlam";
-      repo = "yazi-plugins";
-      rev = "6206bae4c7887915db1cdf3b353a044578763195";
-      fetchSubmodules = false;
-      sha256 = "sha256-xTYYLbrqb1cZeQzaWPzldBfpx3r5s2XyeRTYBA8jbq4=";
-    };
-    date = "2026-06-02";
+    date = "2026-06-20";
   };
   yaziline = {
     pname = "yaziline";
