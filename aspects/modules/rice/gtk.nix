@@ -104,6 +104,7 @@
               # Default packages from: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/config/fonts/packages.nix
               corefonts
               freefont_ttf
+              vista-fonts-chs # Chinese
               gyre-fonts # TrueType substitutes for standard PostScript fonts
               liberation_ttf
               unifont

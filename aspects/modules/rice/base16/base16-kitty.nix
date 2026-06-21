@@ -1,6 +1,6 @@
 {
   w.base16 =
-    { wrappers, scheme, ... }:
+    { scheme, ... }:
     {
       wrappers.kitty.theme = with scheme.withHashtag; ''
         background ${base11}

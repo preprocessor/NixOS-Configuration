@@ -1,5 +1,5 @@
 {
-  w.default =
+  w.base16 =
     { scheme, ... }:
     {
       console.colors = with scheme; [

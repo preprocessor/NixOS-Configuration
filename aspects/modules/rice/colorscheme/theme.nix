@@ -1,17 +1,6 @@
 {
-  envoy = {
-    retrowave-light-kitty.url = "https://raw.githubusercontent.com/BrokenSideViewMirror/kitty-themes/refs/heads/master/themes/retrowave-light.conf";
-  };
-
   w.wyspr-theme =
-    {
-      config,
-      scheme,
-      envoy,
-      pkgs,
-      lib,
-      ...
-    }:
+    { pkgs, ... }:
     {
       # hj.xdg.config.files = {
       #   "eza/theme.yml".source = envoy.eza-themes.src + "/themes/gruvbox-dark.yml";

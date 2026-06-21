@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  ff.base16.url = "github:SenchoPens/base16.nix";
+  inputs.base16.url = "github:senchopens/base16.nix";
 
   envoy.schemes.github = "tinted-theming/schemes";
   # Browse themes at: https://tinted-theming.github.io/tinted-gallery/
