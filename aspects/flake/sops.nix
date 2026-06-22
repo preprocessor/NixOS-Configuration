@@ -16,15 +16,14 @@
       imports = [ inputs.sops-nix.nixosModules.sops ];
       environment.systemPackages = [ pkgs.sops ];
       sops = {
+        defaultSopsFile = rootPath + /.secrets/encrypted.ymal;
         age = {
           keyFile = "${config.hj.xdg.config.directory}/sops/age/keys.txt";
           generateKey = true;
         };
-        secrets.private_key = {
-          key = "private_key";
-          owner = constants.username;
-          format = "yaml";
-          sopsFile = rootPath + /.secrets/cachix.yaml;
+        secrets = {
+          cachix_key.owner = constants.username;
+          email1.owner = constants.username;
         };
       };
     };
