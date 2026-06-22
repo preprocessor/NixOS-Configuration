@@ -10,8 +10,8 @@
         ---@type FloatRule[]
         local rules = {
           {
-            width = 30,
-            height = 54,
+            width = 1000,
+            height = 1000,
             patterns = {
               "%(Bitwarden.*Password Manager%) %- Bitwarden",
               "^Bitwarden$",

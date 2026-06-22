@@ -18,17 +18,24 @@
         }) do
           hl.bind("SUPER + " .. key, utils.focus(key))
           hl.bind("SUPER + CTRL + " .. key, utils.move(key))
-          hl.bind("SUPER + mouse_" .. dir, utils.focus(key))
-          hl.bind("SUPER + CTRL + mouse_" .. dir, utils.move(key))
+          hl.bind("SUPER + mouse_" .. dir, utils.focus(key), { non_consuming = false })
+          hl.bind("SUPER + CTRL + mouse_" .. dir, utils.move(key), { non_consuming = false })
         end
 
         -- Switch workspaces with SUPER + [0-9]
         -- Move active window to a workspace with SUPER + CTRL + [0-9]
+        -- Special workspaces with number pad keys
         for i = 1, 10 do
           local key = i % 10 -- 10 maps to key 0
           hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = i }))
           hl.bind("SUPER + CTRL + " .. key, hl.dsp.window.move({ workspace = i }))
+          hl.bind("SUPER + KP_" .. key, hl.dsp.focus({ workspace = "special:" .. i }))
+          hl.bind("SUPER + CTRL + KP_" .. key, hl.dsp.window.move({ workspace = "special:" .. i }))
         end
+
+        -- Consume/Expel
+        hl.bind("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
+        hl.bind("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
 
         -- Scratch pad
         hl.bind("SUPER + X", hl.dsp.workspace.toggle_special("scratch"))
@@ -146,6 +153,17 @@
             end
           })
         end)
+
+        hl.bind("ALT + TAB", function()
+          local window = hl.get_active_window()
+          if not window then return end
+
+          if window.floating then
+              hl.dispatch(hl.dsp.window.cycle_next({ next = true, tiled = true, floating = false }))
+          else
+              hl.dispatch(hl.dsp.window.cycle_next({ next = true, tiled = false, floating = true }))
+          end
+        end, {release = true})
       '';
     };
   };

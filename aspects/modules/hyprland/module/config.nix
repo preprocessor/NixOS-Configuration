@@ -78,6 +78,23 @@
                   end
                 ''
               ];
+
+              "hypr/.luarc.json".text = /* json */ ''
+                {
+                  "workspace": {
+                    "library": [
+                      "${cfg.package}/share/hypr/stubs"
+                    ]
+                  }
+                }
+              '';
+
+              "hypr/xdph.conf".text = /* kdl */ ''
+                screencopy {
+                    max_fps = 60
+                    allow_token_by_default = true
+                }
+              '';
             };
           }
           {
@@ -95,6 +112,7 @@
           {
             hj.packages = with pkgs; [
               hyprshutdown
+              wayfreeze
               slurp
               grim
 
@@ -121,9 +139,9 @@
               configPackages = lib.mkDefault [ cfg.package ];
             };
 
-            systemd.user.extraConfig = ''
-              DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH"
-            '';
+            systemd.user.settings.Manager = {
+              DefaultEnvironment = "PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH";
+            };
 
             programs.xwayland.enable = cfg.withXwayland;
             programs.uwsm.enable = cfg.withUWSM;
