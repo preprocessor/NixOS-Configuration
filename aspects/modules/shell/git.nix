@@ -3,26 +3,58 @@
     {
       pkgs,
       config,
-      birdee,
+      constants,
       ...
     }:
-    let
-      gitWrapped = birdee.wrappers.git.wrap {
-        inherit pkgs;
-        settings = {
-          init.defaultBranch = "main";
-          user = {
-            name = "wyspr";
-            email = "wyspr@wyspr.xyz";
+    {
+      hj.packages = [ pkgs.gh ];
+
+      sops.templates."git-email" = {
+        owner = constants.username;
+        content = ''
+          [user]
+            email = ${config.sops.placeholder."email1"}
+        '';
+      };
+
+      programs.git = {
+        config = {
+          include = {
+            path = config.sops.templates."git-email".path;
           };
-          pager.diff = pkgs.diffnav;
+          core = {
+            editor = "$EDITOR";
+            pager = "delta";
+            excludesfile = "${pkgs.writeText "gitignore-global" ''
+              .envrc
+              .direnv
+              result*
+            ''}";
+          };
+          delta = {
+            navigate = true;
+            light = true;
+            line-numbers = true;
+            hyperlinks = true;
+          };
+          merge = {
+            conflictStyle = "zdiff3";
+          };
+          diff = {
+            colorMoved = "default";
+          };
+          pager = {
+            diff = "diffnav";
+            show = "diffnav";
+            log = "diffnav";
+          };
+          user.name = "wyspr";
+          interactive.diffFilter = "delta --color-only";
+          init.defaultBranch = "main";
+          advice.objectNameWarning = false;
+          pull.rebase = true;
+          safe.directory = "/tmp";
         };
       };
-    in
-    {
-      hj.packages = with pkgs; [
-        gitWrapped
-        gh
-      ];
     };
 }
