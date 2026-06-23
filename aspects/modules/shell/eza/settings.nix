@@ -1,6 +1,6 @@
 {
   w.default =
-    { self', scheme, ... }:
+    { scheme, ... }:
     {
       wrappers.eza = {
         enable = true;

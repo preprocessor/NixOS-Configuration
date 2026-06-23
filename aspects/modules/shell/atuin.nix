@@ -20,13 +20,15 @@
               env.ATUIN_CONFIG_DIR = dirOf config.constructFiles.atuin-config.path;
               constructFiles.atuin-config = {
                 relPath = "atuin-config/config.toml";
-                content = builtins.readFile (
-                  toml.generate "config.toml" {
-                    enter_accept = true;
-                    filter_mode = "session-preload";
-                    search_mode = "fuzzy";
-                  }
-                );
+                builder = ''
+                  install -m655 -DT "${
+                    toml.generate "config.toml" {
+                      enter_accept = true;
+                      filter_mode = "session-preload";
+                      search_mode = "fuzzy";
+                    }
+                  }" "$2"
+                '';
               };
             }
           );
