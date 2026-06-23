@@ -9,6 +9,8 @@
 
       wrappers.hyprland.lua.files."keybinds".content = /* lua */ ''
         hl.bind("SUPER + Return", hl.dsp.exec_raw("kitty -1"), { release = true })
+
+        hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_raw("kitty -1"), { float = true, release = true })
       '';
 
       wrappers.kitty = {
@@ -33,7 +35,7 @@
           update_check_interval = "24";
           allow_hyperlinks = "yes";
 
-          background_opacity = "0.25";
+          background_opacity = "0.5";
 
           scrollback_lines = "10000";
           wheel_scroll_multiplier = "5.0";
