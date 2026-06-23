@@ -39,9 +39,8 @@
               constructFiles.generatedConfig = {
                 relPath = "starship.toml";
                 builder = ''
-                  mkdir -p "$(dirname "$2")"
-                  cat ${toml.generate "starship.toml" cfg.settings} > "$2"
-                  printf '\n%s\n' "${cfg.moreCfg}" >> "$2"
+                  install -m655 -DT "${toml.generate "starship.toml" cfg.settings}" "$2"
+                  echo -e "\n${cfg.moreCfg}" >> "$2"
                 '';
               };
             }

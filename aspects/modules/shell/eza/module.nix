@@ -49,9 +49,8 @@
               constructFiles.generatedConfig = {
                 relPath = "theme.yml";
                 builder = ''
-                  mkdir -p "$(dirname "$2")"
-                  cat ${yaml.generate "theme.yaml" cfg.settings} > "$2"
-                  printf '\n%s\n' "${cfg.moreCfg}" >> "$2"
+                  install -m655 -DT "${yaml.generate "theme.yml" cfg.settings}" "$2"
+                  echo -e "\n${cfg.moreCfg}" >> "$2"
                 '';
               };
             }

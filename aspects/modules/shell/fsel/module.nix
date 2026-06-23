@@ -51,7 +51,10 @@
               };
               constructFiles.generatedConfig = {
                 relPath = "config.toml";
-                content = (cfg.settings |> toml.generate "config.toml" |> builtins.readFile) + cfg.moreCfg;
+                builder = ''
+                  install -m655 -DT "${toml.generate "config.toml" cfg.settings}" "$2"
+                  echo -e "\n${cfg.moreCfg}" >> "$2"
+                '';
               };
             }
           );
