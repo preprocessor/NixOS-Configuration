@@ -4,10 +4,10 @@
   perSystem =
     { pkgs, envoy, ... }:
     {
-      packages.fsel = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+      packages.fsel = pkgs.rustPlatform.buildRustPackage {
         inherit (envoy.fsel) pname version src;
-        cargoHash = "sha256-G1wfue1Q+3NMH/5NqPVKeO0NpU0WJlwWkh51r3TM5IM=";
-      });
+        cargoHash = "sha256-SAQnY0VgRPLjkjmEgZcyjp6hFXxp54PB1j52qwAy9yI=";
+      };
     };
 
   w.default =

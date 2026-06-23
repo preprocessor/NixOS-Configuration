@@ -17,9 +17,24 @@ in
       wrappers.hyprland.lua.files = {
         "keybinds".content = /* lua */ ''
           -- otter-launcher
+          -- hl.bind("SUPER + Space", function()
+          --   utils.toggle_window("otter-launcher", "kitty --app-id=otter-launcher -e otter-launcher", {
+          --     size         = { 444, 1108 },
+          --     center       = true,
+          --     float        = true,
+          --     stay_focused = true,
+          --     pin          = true,
+          --   })
+          -- end)
+
+          -- otter-launcher
           hl.bind("SUPER + Space", function()
-            utils.toggle_window("otter-launcher", "kitty --app-id=otter-launcher -e otter-launcher", {
-              size         = { 444, 1108 },
+            utils.toggle_window("otter.launcher", "ghostty --class=otter.launcher -e otter-launcher", {
+              size         = { 1010, 510 },
+              border_size  = 0,
+              no_shadow    = true,
+              no_blur      = true,
+
               center       = true,
               float        = true,
               stay_focused = true,
@@ -45,7 +60,7 @@ in
         settings = {
           general = {
             callback = "";
-            cheatsheet_entry = "?";
+            cheatsheet_entry = "";
             cheatsheet_viewer = "less -R; clear";
             clear_screen_after_execution = true;
             delay_startup = 0;
@@ -75,6 +90,12 @@ in
               kernel = ''$(uname -r | sd "os-lto" "")'';
             in
             {
+              suggestion_mode = "list";
+              # indicator_no_arg_module = "${a "94"} ${a "90"}";
+              # indicator_with_arg_module = "${a "95"}󰈽 ${a "90"}";
+            }
+            // lib.optionalAttrs (theme == "light") {
+              move_interface_right = 27;
               header = ''
                 ${a "96"}▐${a "3;30;106"}$USER @ ${host} 󱥐 $(date "+%a %m/%d %I:%M%P")${a "0"}${a "96"}▌
                 ${a "96"}┏━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┓
@@ -90,35 +111,24 @@ in
               place_holder = "Search...";
               place_holder_color = "${a "1;90"}";
               prefix_color = "${a "93"}";
-              default_module_message = "   ${a "1;93"} Launch app";
+              default_module_message = "${a "93"} Launch app";
               selection_prefix = "   ${a "91"} ";
               prefix_padding = 4;
               suggestion_lines = 4;
-              suggestion_mode = "list";
-              indicator_no_arg_module = "${a "94"} ${a "90"}";
-              indicator_with_arg_module = "${a "95"}󰈽 ${a "90"}";
-            }
-            // lib.optionalAttrs (theme == "light") {
-              move_interface_right = 27;
+
             }
             // lib.optionalAttrs (theme == "dark") {
-              header_cmd = "chafa -s x26 $HOME/Pictures/asuka/ao1ifh7efgd61.jpg";
-              header = ''
-                ${a "31"}  ██${a "91"}▄${a "0"}  ${a "32"}██${a "92"}▄${a "0"}  ${a "33"}██${a "93"}▄${a "0"}  ${a "34"}██${a "94"}▄${a "0"}  ${a "35"}██${a "95"}▄${a "0"}  ${a "36"}██${a "96"}▄${a "0"}  ${a "37"}██${a "97"}▄${a "0"}
-                ${a "91"}   ▀▀   ${a "92"}▀▀   ${a "93"}▀▀   ${a "94"}▀▀   ${a "95"}▀▀   ${a "96"}▀▀   ${a "97"}▀▀${a "0"}
-                ${a "94"}   $(date "+%a %m/%d 󰥔 %I:%M") $(echo " $(upt)" | sed -e :a -r -e 's/^.{1,12}$/ &/;ta')
-                ${a "34"}   $USER@${host} $(echo "  ${kernel}" | sed -e :a -r -e 's/^.{1,17}$/─&/;ta')
-                ${a "96"}   ${osver} ────── 󰾲 ${gpu}
-                ${a "36"}   ${cpu} $(echo " 󰹑  ${res}" | sed -e :a -r -e 's/^.{1,20}$/─&/;ta')
-                ${a "91"}   ${mem} ────────────────  $TERMINAL
-                ${a "31"}   $XDG_CURRENT_DESKTOP ───────────────  fish
-                ${a "90"}        ${a "3;97"}'';
-              list_prefix = "         ";
-              selection_prefix = "       -> ";
-              default_module_message = "       ${a "3;1;93"} Launch app";
-              footer = " ";
-              place_holder_color = "${a "3;1;90"}";
-              suggestion_lines = 4;
+              place_holder = "${a "1"}LOCATE";
+              default_module_message = "${a "93"}EXECUTE";
+              header = "${a "34"} ${a "37"}";
+              list_prefix = "  ";
+              selection_prefix = "${a "31;1"}▌ ";
+              prefix_color = "${a "33"}";
+              description_color = "${a "39"}";
+              place_holder_color = "${a "30"}";
+              hint_color = "${a "30"}";
+              prefix_padding = 3;
+              suggestion_lines = 14;
             };
 
         };
@@ -160,12 +170,7 @@ in
           {
             description = "volume mixer";
             prefix = "mix";
-            cmd = resize 800 500 "pulsemixer";
-          }
-          {
-            description = "open yazi";
-            prefix = "y";
-            cmd = resize 2100 1200 "yazi";
+            cmd = resize 800 500 (lib.getExe pkgs.pulsemixer);
           }
           {
             description = if (theme == "light") then "list USB devices" else "USB devices";

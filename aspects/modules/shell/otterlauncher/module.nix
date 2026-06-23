@@ -3,15 +3,8 @@
   envoy.otter-launcher.github = "kuokuo123/otter-launcher";
 
   utils.otterResize = width: height: app: ''
-    hyprctl --batch "dispatch hl.dsp.window.resize({ x = ${toString width}, y = ${toString height} }); dispatch hl.dsp.window.center()" \
-    && kitty -e ${app}
+    hyprctl dispatch "hl.dsp.exec_cmd('kitty -e ${app}', {size = {${toString width}, ${toString height}}, float = true, center = true})"
   '';
-
-  # utils.tomlBuild = ''
-  #   mkdir -p "$(dirname "$2")"
-  #   cat ${toml.generate "config.toml" cfg.settings} > "$2"
-  #   printf '%s\n' "${cfg.moreCfg}" >> "$2"
-  # '';
 
   perSystem =
     {
@@ -95,18 +88,6 @@
             {
               inherit pkgs;
               package = self'.packages.otter-launcher;
-              runtimePkgs =
-                with pkgs;
-                [
-                  pulsemixer
-                  fetchutils
-                  xrandr
-                  chafa
-                ]
-                ++ (with args.config.wrappers; [
-                  fsel.package
-                  tray-tui.package
-                ]);
               flags = {
                 "--config" = config.constructFiles.generatedConfig.path;
               };
