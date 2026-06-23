@@ -8,15 +8,12 @@
         imagemagick
         trash-cli
         ripgrep
-        (gnuplot.override {
-          withTeXLive = true;
-          withLua = true;
-          withQt = true;
-        })
+        (gnuplot.override { withQt = true; })
         mdfried
         chafa
         wget
         tree
+        just # a command runnner
         isd # inspect system d
         mcat
         gum
