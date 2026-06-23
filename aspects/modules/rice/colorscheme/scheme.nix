@@ -2,36 +2,6 @@
   w.wyspr-theme = {
     theme = {
       variant = "dark";
-      light = {
-        slug = "wysprlight";
-        scheme = "Theme for wyspr";
-        author = "wyspr";
-
-        base00 = "#b89c7a"; # Default background
-        base01 = "#a4896a"; # Lighter bg / status bars
-        base02 = "#90775b"; # Selection background (color0)
-        base03 = "#7b664b"; # Comments, invisibles (color8)
-        base04 = "#66543b"; # Dark bg highlight (tab_bar_background)
-        base05 = "#1F0F22"; # Default foreground
-        base06 = "#180810"; # Light foreground (color15)
-        base07 = "#100002"; # Lightest foreground
-        base08 = "#cc241d"; # Red — variables, errors
-        base09 = "#d65d0e"; # Orange — integers, booleans
-        base0A = "#d79921"; # Yellow — classes
-        base0B = "#98971a"; # Green — strings
-        base0C = "#689d6a"; # Cyan — escape chars, regex
-        base0D = "#458588"; # Blue — functions
-        base0E = "#b16286"; # Magenta — keywords
-        base0F = "#3f0f00"; # Brown — deprecated
-        base10 = "#bda382"; # Darker background (base00 stepped down)
-        base11 = "#c7af93"; # Darkest background (stepped further)
-        base12 = "#9d0006"; # Bright red
-        base13 = "#b57614"; # Bright yellow
-        base14 = "#79740e"; # Bright green
-        base15 = "#427b58"; # Bright blue
-        base16 = "#076678"; # Bright magenta
-        base17 = "#8f3f71"; # Bright cyan
-      };
       dark = {
         slug = "wysprdark";
         scheme = "Theme for wyspr";
@@ -61,6 +31,37 @@
         base15 = "#8faea2"; # Bright blue
         base16 = "#d792a5"; # Bright magenta
         base17 = "#99c689"; # Bright cyan
+      };
+
+      light = {
+        slug = "wysprlight";
+        scheme = "Theme for wyspr";
+        author = "wyspr";
+
+        base00 = "#b89c7a"; # Default background
+        base01 = "#a4896a"; # Lighter bg / status bars
+        base02 = "#90775b"; # Selection background (color0)
+        base03 = "#7b664b"; # Comments, invisibles (color8)
+        base04 = "#66543b"; # Dark bg highlight (tab_bar_background)
+        base05 = "#1F0F22"; # Default foreground
+        base06 = "#180810"; # Light foreground (color15)
+        base07 = "#100002"; # Lightest foreground
+        base08 = "#cc241d"; # Red — variables, errors
+        base09 = "#d65d0e"; # Orange — integers, booleans
+        base0A = "#d79921"; # Yellow — classes
+        base0B = "#98971a"; # Green — strings
+        base0C = "#689d6a"; # Cyan — escape chars, regex
+        base0D = "#458588"; # Blue — functions
+        base0E = "#b16286"; # Magenta — keywords
+        base0F = "#3f0f00"; # Brown — deprecated
+        base10 = "#bda382"; # Darker background (base00 stepped down)
+        base11 = "#c7af93"; # Darkest background (stepped further)
+        base12 = "#9d0006"; # Bright red
+        base13 = "#b57614"; # Bright yellow
+        base14 = "#79740e"; # Bright green
+        base15 = "#427b58"; # Bright blue
+        base16 = "#076678"; # Bright magenta
+        base17 = "#8f3f71"; # Bright cyan
       };
     };
 
