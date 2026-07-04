@@ -13,9 +13,11 @@
       ...
     }:
     let
-      fragment-mono = pkgs.fetchzip {
-        url = "https://github.com/weiweihuanghuang/fragment-mono/releases/download/1.21/fragment-mono-1.21.zip";
-        hash = "sha256-H5s4rYDN2d0J+zVRgBzg8vfZXCA/jjHrGBV8o8Dxutc=";
+      fragment-mono = pkgs.fetchFromGitHub {
+        owner = "dtinth";
+        repo = "fragment-mono-weights";
+        rev = "ab47063dc6b2d2040071173ce87ec84d6d5997ed";
+        hash = "sha256-TF0LW+4axEQvmNRvRL7zZACkALA7SgM2EKZiqJQj7x0=";
       };
     in
     {
@@ -55,7 +57,9 @@
           dontUnpack = true;
           dontBuild = true;
           dontConfigure = true;
-          buildCommand = "install -m444 -Dt $out/share/fonts/truetype $src/fonts/ttf/*.ttf";
+          buildCommand = "
+            install -m444 -Dt $out/share/fonts/truetype $src/fonts/ttf/*.ttf $src/weights/*.ttf
+          ";
         })
       ];
 

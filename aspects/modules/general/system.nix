@@ -13,6 +13,7 @@
     }:
     {
       imports = [ inputs.nixos-core.nixosModules.default ];
+      system.nixos-core.enable = true;
 
       nix.settings = {
         use-xdg-base-directories = true;
@@ -38,7 +39,6 @@
           "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU="
           "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg="
         ];
-
       };
 
       services.speechd.enable = lib.mkForce false; # Disable tts
@@ -54,6 +54,5 @@
 
       services.power-profiles-daemon.enable = true;
 
-      system.nixos-core.enable = true;
     };
 }

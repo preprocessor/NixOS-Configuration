@@ -123,21 +123,17 @@
         hj.systemd.services.udiskie = {
           description = "udiskie mount daemon";
           requires = lib.optional (cfg.tray != "never") "tray.target";
-          after = [ "graphical-session.target" ] ++ lib.optional (cfg.tray != "never") "tray.target";
+          after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
 
           serviceConfig = {
             Type = "simple";
             ExecStart = lib.getExe' cfg.package "udiskie";
-            # ExecStart = toString ([ (lib.getExe' cfg.package "udiskie") ]
-            #   # ++ lib.optional config.xsession.preferStatusNotifierItems "--appindicator"
-            # );
             Restart = "on-failure";
             RestartSec = 1;
             TimeoutStopSec = 10;
           };
-
-          wantedBy = [ "graphical-session.target" ];
         };
       };
     };
