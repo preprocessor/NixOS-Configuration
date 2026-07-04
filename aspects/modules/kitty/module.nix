@@ -14,7 +14,7 @@
     { pkgs, config, ... }:
     {
       nixpkgs.overlays = [
-        (_: prev: { kitty = config.wrappers.kitty.package; })
+        (_: prev: { kitty = config.custom.programs.kitty.package; })
       ];
 
       hj.packages = [ pkgs.kitty ];
@@ -46,7 +46,7 @@
         ];
     in
     {
-      options.wrappers.kitty = {
+      options.custom.programs.kitty = {
         settings = mkOption {
           type = types.attrsOf settingsValueType;
           default = { };
@@ -86,7 +86,7 @@
           default = birdee.wrappers.kitty.wrap (
             wrapper:
             let
-              cfg = config.wrappers.kitty;
+              cfg = config.custom.programs.kitty;
             in
             {
               inherit pkgs;
@@ -100,23 +100,11 @@
                 relPath = "oneshill.conf";
                 content = cfg.theme;
               };
-
-              constructFiles.quickAccessTerminal = {
-                relPath = "quick-access-terminal.conf";
-                content = cfg.overlayCfg;
-              };
-              env.KITTY_CONFIG_DIRECTORY = dirOf wrapper.config.constructFiles.quickAccessTerminal.path;
             }
           );
         };
 
         extraCfg = mkOption {
-          type = types.lines;
-          default = "";
-          description = "Additional configuration appended verbatim to kitty.conf.";
-        };
-
-        overlayCfg = mkOption {
           type = types.lines;
           default = "";
           description = "Additional configuration appended verbatim to kitty.conf.";

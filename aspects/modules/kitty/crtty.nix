@@ -43,10 +43,10 @@
 
       hj.xdg.config.files."crtty/kitty.conf".text = ''
         enabled=1
-        scanline_intensity=0.25
-        phosphor_strength=2.0
-        curvature=0.03
-        vignette=0.10
+        scanline_intensity=0.0
+        phosphor_strength=3.0
+        curvature=0.00
+        vignette=0.00
         aberration=0.007
       '';
     };

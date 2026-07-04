@@ -1,19 +1,33 @@
 {
   w.desktop =
-    { pkgs, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     {
       fonts.packages = with pkgs; [
         maple-mono.variable
         maple-mono.NF
       ];
 
-      wrappers.hyprland.lua.files."keybinds".content = /* lua */ ''
+      custom.programs.hyprland.startup =
+        let
+          cfg = config.custom.programs.kitty;
+        in
+        [
+          ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev" })''
+          ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev" })''
+        ];
+
+      custom.programs.hyprland.lua.files."keybinds.kitty".content = /* lua */ ''
         hl.bind("SUPER + Return", hl.dsp.exec_raw("kitty -1"), { release = true })
 
         hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_raw("kitty -1"), { float = true, release = true })
       '';
 
-      wrappers.kitty = {
+      custom.programs.kitty = {
         settings = {
           # text_composition_strategy = "legacy";
           font_family = ''family="Maple Mono NF" style="Medium"'';
@@ -70,9 +84,9 @@
 
         keybindings = {
           # Splits
-          "ctrl+shift+\\" = "launch --location=vsplit";
-          "ctrl+\\" = "combine : launch --location=hsplit : layout_action bias 25";
-          "ctrl+n" = "launch --location=vsplit";
+          "ctrl+shift+\\" = "launch --cwd=current --location=vsplit";
+          "ctrl+\\" = "combine : launch --cwd=current --location=hsplit : layout_action bias 25";
+          "ctrl+n" = "launch --cwd=current --location=vsplit";
           # Navigation with Alt + arrows
           "alt+left" = "neighboring_window left";
           "alt+right" = "neighboring_window right";
@@ -83,8 +97,6 @@
           "ctrl+shift+l" = "neighboring_window right";
           "ctrl+shift+k" = "neighboring_window up";
           "ctrl+shift+j" = "neighboring_window down";
-
-          "ctrl+x" = "close_window";
         };
 
         extraCfg =
@@ -103,4 +115,5 @@
           '';
       };
     };
+
 }
