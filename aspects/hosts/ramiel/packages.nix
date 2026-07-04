@@ -8,7 +8,6 @@
       ];
 
       hj.packages = with pkgs; [
-        vivaldi
         gdmap # similar to WinDirStat
         mpv
       ];
