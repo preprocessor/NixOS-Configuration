@@ -9,14 +9,12 @@
         trash-cli
         ripgrep
         (gnuplot.override { withQt = true; })
-        mdfried
         chafa
         wget
         tree
         just # a command runnner
         isd # inspect system d
         mcat
-        gum
         fd
         sd
         jq # parse json
