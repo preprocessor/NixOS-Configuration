@@ -37,8 +37,7 @@
         '';
 
         installPhase = ''
-          install -m755 -Dt $out/bin histui
-          install -m755 -Dt $out/bin histuid
+          install -m755 -Dt $out/bin histui histuid
         '';
 
         meta = {
@@ -52,8 +51,26 @@
     };
 
   w.desktop =
-    { self', ... }:
+    { self', pkgs, ... }:
     {
-      hj.packages = [ self'.packages.histui ];
+      hj.packages = [
+        pkgs.libnotify # notify-send
+        self'.packages.histui
+      ];
+
+      custom.programs.hyprland.startup = [
+        ''hl.exec_cmd("${self'.packages.histui}/bin/histuid")''
+      ];
+
+      custom.programs.hyprland.lua.files."window_rules.histui".content = /* lua */ ''
+        hl.layer_rule({
+          match        = { namespace = "^histui-notification$" },
+          no_screen_share = true,
+          ignore_alpha = 0.3,
+          blur         = true,
+          blur_popups  = true,
+          animation    = "slide bottom"
+        })
+      '';
     };
 }
