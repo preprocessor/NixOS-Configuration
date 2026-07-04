@@ -1,6 +1,6 @@
 {
   w.desktop =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       hj.packages = with pkgs; [
         lutgen-studio
@@ -16,29 +16,17 @@
           wantedBy = [ "graphical-session.target" ];
 
           serviceConfig = {
-            ExecStart = "${pkgs.awww}/bin/awww-daemon";
+            ExecStart = lib.getExe' pkgs.awww "awww-daemon";
             Restart = "on-failure";
-          };
-        };
-
-        wallpaper-restore = {
-          description = "Waytrogen";
-          after = [ "graphical-session.target" ];
-          partOf = [ "graphical-session.target" ];
-          wantedBy = [ "graphical-session.target" ];
-
-          serviceConfig = {
-            ExecStart = "${pkgs.waypaper}/bin/waypaper --restore";
-            Type = "oneshot";
           };
         };
       };
 
-      wrappers.hyprland.startup = [
-        "${pkgs.waypaper}/bin/waypaper --restore"
+      custom.programs.hyprland.startup = [
+        ''hl.exec_cmd("${lib.getExe pkgs.waypaper} --restore")''
       ];
 
-      wrappers.hyprland.lua.files."window_rules".content = /* lua */ ''
+      custom.programs.hyprland.lua.files."window_rules.waypaper".content = /* lua */ ''
         hl.window_rule({
           name = "float waypaper",
           match = {
