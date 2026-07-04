@@ -1,7 +1,11 @@
-{ config, ... }:
 {
   perSystem =
-    { pkgs, birdee, ... }:
+    {
+      pkgs,
+      self',
+      birdee,
+      ...
+    }:
     {
       packages.cliphist = birdee.lib.wrapPackage {
         inherit pkgs;
@@ -58,40 +62,52 @@
         });
       };
 
-      packages.cliphist-tui = pkgs.rustPlatform.buildRustPackage (final: {
-        pname = "cliphist-tui";
-        version = "0-unstable-2026-04-26";
-        cargoHash = "sha256-KHlEw5RZNeCYeNngPvgDFvBFMKD2OZrx8sg2QWdwjQ8=";
-        src = pkgs.fetchFromGitHub {
-          owner = "SHORiN-KiWATA";
-          repo = "cliphist-tui";
-          rev = "fd4a47baaba60598603d6c760512d2169479872b";
-          hash = "sha256-wjgE9aladixbGfMXVdkvxEBJHKS2BEepbwILZro7d0A=";
-        };
-      });
+      packages.cliphist-tui = birdee.lib.wrapPackage {
+        inherit pkgs;
+        package = pkgs.rustPlatform.buildRustPackage (final: {
+          pname = "cliphist-tui";
+          version = "0-unstable-2026-04-26";
+          cargoHash = "sha256-KHlEw5RZNeCYeNngPvgDFvBFMKD2OZrx8sg2QWdwjQ8=";
+          src = pkgs.fetchFromGitHub {
+            owner = "SHORiN-KiWATA";
+            repo = "cliphist-tui";
+            rev = "fd4a47baaba60598603d6c760512d2169479872b";
+            hash = "sha256-wjgE9aladixbGfMXVdkvxEBJHKS2BEepbwILZro7d0A=";
+          };
+        });
+        runtimePkgs = [
+          self'.packages.cliphist
+          pkgs.ffmpegthumbnailer
+          pkgs.chafa
+        ];
+      };
 
       _file = ./clipboard.nix;
     };
 
   w.default =
     {
+      config,
       self',
       pkgs,
       lib,
       ...
     }:
     {
-      hj.packages = [ pkgs.wl-clipboard ];
+      hj.packages = [
+        self'.packages.cliphist-tui
+        pkgs.wl-clipboard
+      ];
 
-      wrappers.otter-launcher.modules =
+      custom.programs.otter-launcher.modules =
         let
-          resize = config.utils.otterResize;
+          spawn = config.utils.hyprSpawn;
         in
         [
           {
-            description = "clipboard";
-            prefix = "cb";
-            cmd = resize 800 1000 (lib.getExe' self'.packages.cliphist-tui "cliphist-tui");
+            description = "board";
+            prefix = "clip";
+            cmd = spawn 800 1000 "cliphist-tui" (lib.getExe' self'.packages.cliphist-tui "cliphist-tui");
           }
         ];
 
@@ -121,8 +137,8 @@
         };
       };
 
-      wrappers.hyprland.startup = [
-        "${pkgs.wl-clip-persist}/bin/wl-clip-persis --clipboard regular"
+      custom.programs.hyprland.startup = [
+        ''hl.exec_cmd("${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular")''
       ];
 
       _file = ./clipboard.nix;
