@@ -5,7 +5,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  w.desktop =
+  w.gaming =
     { lib, pkgs, ... }:
     {
       imports = [ inputs.nix-gaming-edge.nixosModules.default ];
@@ -17,7 +17,6 @@
 
       nixpkgs.overlays = with inputs.nix-gaming-edge.overlays; [
         proton-cachyos
-        modengine3
         default
         pokemmo
       ];
@@ -47,6 +46,8 @@
       hardware.amdgpu.overdrive.enable = true;
 
       # platformOptimizations.enable = true; from: https://github.com/fufexan/nix-gaming/blob/master/modules/platformOptimizations.nix
+      boot.kernelModules = [ "ntsync" ];
+
       boot.kernel.sysctl = {
         # 20-shed.conf
         "kernel.sched_cfs_bandwidth_slice_us" = 3000;
@@ -92,7 +93,7 @@
         dualsensectl # Dualsense Controller
         ckan # KSP mod loader
         pokemmo
-        modengine3
+        me3
       ];
 
       _file = ./gaming.nix;

@@ -1,37 +1,77 @@
 {
-  w.desktop =
-    { pkgs, lib, ... }:
+  w.gaming =
     {
-      wrappers.hyprland.lua.files."window_rules".content = /* lua */ ''
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    {
+      custom.programs.hyprland.startup =
+        let
+          cfg = config.programs.steam;
+        in
+        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:steam" })'' ];
+
+      custom.programs.hyprland.lua.files."window_rules.steam".content = /* lua */ ''
         hl.window_rule({
-          name = "games-workspace-move",
-          match = { class = "^steam$" },
+          name = "games-workspace-move-steam",
+          match = {
+            class = "^steam$",
+            title = "negative:^(notificationtoasts_.*_desktop)$",
+          },
+          workspace = "special:steam",
+        })
+
+        hl.window_rule({
+          name = "float-games-workspace",
+          match = {
+            title = "negative:^(Steam|Friends List)$",
+            workspace = "special:steam",
+          },
+
+          size = { 1700, 1300 },
+          center = true,
+          float = true,
+        })
+
+        hl.window_rule({
+          name = "hide-steam-settings-from-stream",
+          match = {
+            title = "^Steam Settings$",
+            class = "^steam$",
+          },
+
+          tag = "+hidden"
+        })
+
+        hl.window_rule({
+          name = "games-workspace-move-tag",
+          match = { xdg_tag = "^proton-game$" },
           workspace = "name:games silent",
+          fullscreen = true,
+          content = "game",
         })
 
         hl.window_rule({
-          name = "float-steam-sub-windows",
-          match = {
-            title = "^(Friends List|Controller Layout|Steam Controller Configs|SteamTinkerLaunch.*)$",
-            class = "^steam$",
-          },
-
-          float = true,
+          name = "games-workspace-move-class",
+          match = { class = "^steam_app_.*" },
+          workspace = "name:games silent",
+          fullscreen = true,
+          content = "game",
         })
 
         hl.window_rule({
-          name = "hide-steam-windows",
-          match = {
-              title = "^Steam Settings$",
-            class = "^steam$",
-          },
-          border_color = "rgb(fede22)",
-          border_size = 3,
-
-          float = true,
-          no_screen_share = true,
+          name = "games-workspace-move-content",
+          match = { content = "^game$" },
+          workspace = "name:games silent",
+          fullscreen = true,
         })
       '';
+
+      environment.variables = {
+        PROTON_ENABLE_WAYLAND = 1;
+      };
 
       hardware.steam-hardware.enable = true; # controller / Steam Deck input udev rules
       programs.steam =
