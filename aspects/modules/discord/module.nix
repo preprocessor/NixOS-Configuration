@@ -12,6 +12,10 @@
     in
     {
       options.custom.programs.vesktop = {
+        enable = lib.mkEnableOption { };
+
+        package = lib.mkPackageOption pkgs "vesktop" { };
+
         settings = lib.mkOption {
           inherit (json) type;
           description = "Vesktop settings";
@@ -25,8 +29,8 @@
         };
       };
 
-      config = lib.mkIf (cfg != { }) {
-        hj.packages = [ pkgs.vesktop ];
+      config = lib.mkIf cfg.enable {
+        hj.packages = [ cfg.package ];
 
         hj.xdg.config.files = {
           "vesktop/settings.json".source = json.generate "vesktop-settings" cfg.settings;

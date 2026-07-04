@@ -1,23 +1,32 @@
 {
   w.desktop =
-    { scheme, ... }:
     {
-      wrappers.hyprland.lua.files."window_rules".content = /* lua */ ''
+      scheme,
+      config,
+      lib,
+      ...
+    }:
+    {
+      custom.programs.hyprland.startup =
+        let
+          cfg = config.custom.programs.vesktop;
+        in
+        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:chat" })'' ];
+
+      custom.programs.hyprland.lua.files."window_rules.vesktop".content = /* lua */ ''
         hl.window_rule({
           name = "hide vesktop",
-          match = {
-            class = "^vesktop$"
-          },
+          match = { class = "^vesktop$" },
 
           workspace = "name:chat silent",
 
-          no_screen_share = true,
-          border_color = "rgb(ff0d2d)",
-          border_size = 3,
+          tag = "+hidden"
         })
       '';
 
       custom.programs.vesktop = with scheme.withHashtag; {
+        enable = true;
+
         settings = {
           appBadge = false;
           arRPC = true;
