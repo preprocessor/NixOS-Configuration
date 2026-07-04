@@ -5,14 +5,24 @@
   };
 
   w.default =
-    { inputs', ... }:
+    {
+      constants,
+      inputs',
+      pkgs,
+      lib,
+      ...
+    }:
     {
       environment.variables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
       };
 
-      hj.packages = [ inputs'.neovim.packages.default ];
+      hj.packages = [
+        inputs'.neovim.packages.nvim
+        (pkgs.writeShellScriptBin "mdvim" (lib.getExe inputs'.neovim.packages.mdvim))
+        (pkgs.writeShellScriptBin "todo" "${lib.getExe inputs'.neovim.packages.mdvim} ${constants.homedir}/todo.md")
+      ];
 
       custom.xdg.desktopEntries = {
         nvim = {
