@@ -55,6 +55,10 @@
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     neovim = {
       url = "path:/home/wyspr/Configuration/Neovim/";
       inputs.nixpkgs.follows = "nixpkgs";
