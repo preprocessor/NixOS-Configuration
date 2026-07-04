@@ -12,8 +12,6 @@ for i in {0..7}; do
   printf -v L${CNAMES[$i]}BG %b "\e[${BB}${i}m"
 done
 
-MEM=$(mem '${mb_used} ${mb_total}' | xargs printf "%'dM / %'dM")
-
 CPU="i9 10900K"
 GPU="RX 6700 XT"
 
