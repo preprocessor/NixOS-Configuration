@@ -16,7 +16,7 @@
       imports = [ inputs.sops-nix.nixosModules.sops ];
       environment.systemPackages = [ pkgs.sops ];
       sops = {
-        defaultSopsFile = rootPath + /.secrets/encrypted.ymal;
+        defaultSopsFile = rootPath + /.secrets/encrypted.yaml;
         age = {
           keyFile = "${config.hj.xdg.config.directory}/sops/age/keys.txt";
           generateKey = true;
