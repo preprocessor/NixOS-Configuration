@@ -63,7 +63,7 @@
 
         hl.window_rule({
           name = "games-workspace-move-content",
-          match = { content = "^game$" },
+          match = { content = "game" },
           workspace = "name:games silent",
           fullscreen = true,
         })
