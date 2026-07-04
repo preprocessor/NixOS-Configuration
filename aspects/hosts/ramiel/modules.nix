@@ -14,10 +14,9 @@
       };
       modules = with config.w; [
         default
+        gaming
         ramiel
         desktop
-        # tokyonight-night
-        # gruvbox-dark-hard
         wyspr-theme
         base16
         shell
