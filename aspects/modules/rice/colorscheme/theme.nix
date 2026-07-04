@@ -2,12 +2,6 @@
   w.wyspr-theme =
     { pkgs, ... }:
     {
-      # hj.xdg.config.files = {
-      #   "eza/theme.yml".source = envoy.eza-themes.src + "/themes/gruvbox-dark.yml";
-      #   "lazygit/config.yml".text =
-      #     builtins.readFile "${envoy.gruvbox-lazygit.src}/themes/dark_hard_original.yml";
-      # };
-
       custom.gtk = {
         enable = true;
 
@@ -28,5 +22,4 @@
 
       _file = ./wyspr.nix;
     };
-
 }

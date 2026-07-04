@@ -3,8 +3,8 @@
     theme = {
       variant = "dark";
       dark = {
-        slug = "wysprdark";
-        scheme = "Theme for wyspr";
+        slug = "wyspr-evangelion";
+        scheme = "MAGI";
         author = "wyspr";
 
         base00 = "#111111"; # Default background
@@ -34,8 +34,8 @@
       };
 
       light = {
-        slug = "wysprlight";
-        scheme = "Theme for wyspr";
+        slug = "wyspr-scp";
+        scheme = "FOUNDATION";
         author = "wyspr";
 
         base00 = "#b89c7a"; # Default background
