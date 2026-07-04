@@ -19,9 +19,9 @@
       };
     in
     {
-      wrappers.yazi.plugins = { inherit preview-cbz; };
+      custom.programs.yazi.plugins = { inherit preview-cbz; };
 
-      wrappers.yazi.settings = {
+      custom.programs.yazi.settings = {
         plugin.prepend_previewers = [
           {
             url = "*.cb{z,r}";

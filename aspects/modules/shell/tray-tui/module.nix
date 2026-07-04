@@ -11,11 +11,11 @@
       ...
     }:
     let
-      cfg = config.wrappers.tray-tui;
+      cfg = config.custom.programs.tray-tui;
       toml = pkgs.formats.toml { };
     in
     {
-      options.wrappers.tray-tui = {
+      options.custom.programs.tray-tui = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {

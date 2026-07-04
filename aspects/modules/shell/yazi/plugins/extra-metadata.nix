@@ -3,17 +3,14 @@
 
   w.shell =
     { envoy, pkgs, ... }:
-    let
-      extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {
-        inherit (envoy.extra-metadata) pname version src;
-      };
-    in
     {
-      wrappers.yazi.plugins = {
-        inherit extra-metadata;
+      custom.programs.yazi.plugins = {
+        extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {
+          inherit (envoy.extra-metadata) pname version src;
+        };
       };
 
-      wrappers.yazi.settings = {
+      custom.programs.yazi.settings = {
         spotters = [
           {
             url = "*";

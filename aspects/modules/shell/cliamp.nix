@@ -7,7 +7,7 @@
         yt-dlp
       ];
 
-      wrappers.hyprland.lua.files."window_rules".content = /* lua */ ''
+      custom.programs.hyprland.lua.files."window_rules.cliamp".content = /* lua */ ''
         hl.window_rule({
           name = "float cliamp",
           match = {
@@ -15,15 +15,15 @@
           },
           float = true,
           center = true,
-          size = "1000 1000"
+          size = { 1000, 1000 }
         })
       '';
 
-      wrappers.otter-launcher.modules = [
+      custom.programs.otter-launcher.modules = [
         {
-          cmd = ''hyprctl dispatch exec_sh("kitty --app-id=CliampMusic -e ${pkgs.cliamp}/bin/cliamp; exit")'';
-          description = "music player";
-          prefix = "amp";
+          cmd = ''hyprctl dispatch hl.dsp.exec_sh("kitty --app-id=CliampMusic -e ${pkgs.cliamp}/bin/cliamp; exit")'';
+          description = "amp";
+          prefix = "cli";
         }
       ];
     };

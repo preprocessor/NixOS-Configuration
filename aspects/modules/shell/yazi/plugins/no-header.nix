@@ -23,11 +23,11 @@
       };
     in
     {
-      wrappers.yazi.initLua = /* lua */ ''
+      custom.programs.yazi.initLua = /* lua */ ''
         require("no-header"):setup()
       '';
 
-      wrappers.yazi.plugins = {
+      custom.programs.yazi.plugins = {
         inherit no-header;
       };
     };

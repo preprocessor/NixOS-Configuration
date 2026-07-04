@@ -2,11 +2,11 @@
   w.shell =
     { pkgs, ... }:
     {
-      wrappers.yazi.plugins = {
+      custom.programs.yazi.plugins = {
         inherit (pkgs.yaziPlugins) smart-filter;
       };
 
-      wrappers.yazi.keymap = {
+      custom.programs.yazi.keymap = {
         mgr.prepend_keymap = [
           {
             on = "f";

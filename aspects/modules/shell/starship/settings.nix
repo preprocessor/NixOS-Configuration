@@ -5,7 +5,7 @@
       theme = config.theme.variant;
     in
     {
-      wrappers.starship = {
+      custom.programs.starship = {
         enable = true;
         enableFishIntegration = true;
 

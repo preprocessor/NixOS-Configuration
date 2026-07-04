@@ -1,7 +1,3 @@
-{ ... }@top:
-let
-  resize = top.config.utils.otterResize;
-in
 {
   w.default =
     {
@@ -14,36 +10,29 @@ in
       theme = config.theme.variant;
     in
     {
-      wrappers.hyprland.lua.files = {
-        "keybinds".content = /* lua */ ''
-          -- otter-launcher
-          -- hl.bind("SUPER + Space", function()
-          --   utils.toggle_window("otter-launcher", "kitty --app-id=otter-launcher -e otter-launcher", {
-          --     size         = { 444, 1108 },
-          --     center       = true,
-          --     float        = true,
-          --     stay_focused = true,
-          --     pin          = true,
-          --   })
-          -- end)
-
+      custom.programs.hyprland.lua.files = {
+        "keybinds.otter".content = /* lua */ ''
           -- otter-launcher
           hl.bind("SUPER + Space", function()
-            utils.toggle_window("otter.launcher", "ghostty --class=otter.launcher -e otter-launcher", {
-              size         = { 1010, 510 },
-              border_size  = 0,
-              no_shadow    = true,
-              no_blur      = true,
+            utils.toggle_window(
+              "otter.launcher",
+              "ghostty --class=otter.launcher " ..
+              "-e otter-launcher", {
+                size         = { 1010, 510 },
+                border_size  = 0,
+                no_shadow    = true,
+                no_blur      = true,
 
-              center       = true,
-              float        = true,
-              stay_focused = true,
-              pin          = true,
-            })
+                center       = true,
+                float        = true,
+                stay_focused = true,
+                pin          = true,
+              }
+            )
           end)
         '';
 
-        "window_rules".content = /* lua */ ''
+        "window_rules.general".content = /* lua */ ''
           hl.window_rule({
             name = "float color-picker",
             match = {
@@ -54,7 +43,7 @@ in
         '';
       };
 
-      wrappers.otter-launcher = {
+      custom.programs.otter-launcher = {
         enable = true;
 
         settings = {
@@ -118,11 +107,11 @@ in
 
             }
             // lib.optionalAttrs (theme == "dark") {
-              place_holder = "${a "1"}LOCATE";
+              place_holder = "${a "30"}LOCATE";
               default_module_message = "${a "93"}EXECUTE";
-              header = "${a "34"} ${a "37"}";
+              header = "${a "32"}手${a "37"}";
               list_prefix = "  ";
-              selection_prefix = "${a "31;1"}▌ ";
+              selection_prefix = "${a "31;1"}辵";
               prefix_color = "${a "33"}";
               description_color = "${a "39"}";
               place_holder_color = "${a "30"}";
@@ -130,86 +119,89 @@ in
               prefix_padding = 3;
               suggestion_lines = 14;
             };
-
         };
 
-        modules = [
-          {
-            description = "run commands";
-            prefix = "sh";
-            cmd = ''$(printf $TERM | sd 'xterm-' "") -e sh -c " { } "'';
-            with_argument = true;
-            unbind_proc = true;
-          }
-          {
-            description = "nix packages";
-            prefix = "np";
-            cmd = "xdg-open 'https://search.nixos.org/packages?channel=unstable&query={}'";
-            with_argument = true;
-            url_encode = true;
-            unbind_proc = true;
-          }
-          {
-            description = "nix options";
-            prefix = "no";
-            cmd = "xdg-open 'https://search.nixos.org/options?channel=unstable&include_home_manager_options=0&include_modular_service_options=0&include_nixos_options=1&query={}'";
-            with_argument = true;
-            url_encode = true;
-            unbind_proc = true;
-          }
-          {
-            description = if (theme == "light") then "system monitor" else "sys monitor";
-            prefix = "btop";
-            cmd = resize 2100 1200 "btop";
-          }
-          {
-            description = if (theme == "light") then "interactive systemd" else "iSystemd";
-            prefix = "isd";
-            cmd = resize 2100 1200 "isd";
-          }
-          {
-            description = "volume mixer";
-            prefix = "mix";
-            cmd = resize 800 500 (lib.getExe pkgs.pulsemixer);
-          }
-          {
-            description = if (theme == "light") then "list USB devices" else "USB devices";
-            prefix = "usb";
-            cmd =
-              resize 720 500
-                "${lib.getExe pkgs.cyme} --headings --tree --hide-buses;read -p 'Press ENTER to exit. '";
-          }
-          {
-            description = if (theme == "light") then "view wifi networks" else "wifi networks";
-            prefix = "wifi";
-            cmd = resize 1200 1200 (lib.getExe pkgs.wifitui);
-          }
-          {
-            description = if (theme == "light") then "manage bluetooth" else "bluetooth";
-            prefix = "blue";
-            cmd = resize 1200 600 (lib.getExe pkgs.bluetuith);
-          }
-          {
-            description = "world clocks";
-            prefix = "time";
-            cmd = resize 1660 330 "worldclocks";
-          }
-          {
-            description = "color picker";
-            prefix = "cc";
-            cmd =
-              let
-                bin = pkgs.writeShellScript "color-picker" ''
-                  sleep 0.25
-                  PICKED=$(${pkgs.hyprpicker}/bin/hyprpicker --radius=70 --scale=3 --autocopy --no-fancy --format=hex)
-                  if [ -n "$PICKED" ]; then
-                    kitty --app-id=color-picker -e sh -c "${pkgs.pastel}/bin/pastel color '$PICKED'; echo; read -n 1 -s -r -p 'Press any key to close...'"
-                  fi
-                '';
-              in
-              ''hyprctl dispatch exec_cmd("${bin}; exit")'';
-          }
-        ];
+        modules =
+          let
+            spawn = config.utils.hyprSpawn;
+          in
+          [
+            {
+              description = "bash";
+              prefix = "sh";
+              cmd = ''$(printf $TERM | sd 'xterm-' "") -e sh -c " { } "'';
+              with_argument = true;
+              unbind_proc = true;
+            }
+            {
+              description = "nixpkgs";
+              prefix = "np";
+              cmd = "xdg-open 'https://search.nixos.org/packages?channel=unstable&query={}'";
+              with_argument = true;
+              url_encode = true;
+              unbind_proc = true;
+            }
+            {
+              description = "nixopts";
+              prefix = "no";
+              cmd = "xdg-open 'https://search.nixos.org/options?channel=unstable&include_home_manager_options=0&include_modular_service_options=0&include_nixos_options=1&query={}'";
+              with_argument = true;
+              url_encode = true;
+              unbind_proc = true;
+            }
+            {
+              description = "monitor";
+              prefix = "btop";
+              cmd = spawn 2100 1200 "btop" "btop";
+            }
+            {
+              description = "systemd";
+              prefix = "isd";
+              cmd = spawn 2100 1200 "isd" "isd";
+            }
+            {
+              description = "mixer";
+              prefix = "vol";
+              cmd = spawn 800 500 "mixer" (lib.getExe pkgs.pulsemixer);
+            }
+            {
+              description = "devices";
+              prefix = "usb";
+              cmd =
+                spawn 720 500 "usb"
+                  "${lib.getExe pkgs.cyme} --headings --tree --hide-buses;read -p 'Press ENTER to exit. '";
+            }
+            {
+              description = "networks";
+              prefix = "wifi";
+              cmd = spawn 1200 1200 "wifi" (lib.getExe pkgs.wifitui);
+            }
+            {
+              description = "tooth";
+              prefix = "blue";
+              cmd = spawn 1200 600 "bluetooth" (lib.getExe pkgs.bluetuith);
+            }
+            {
+              description = "zones";
+              prefix = "time";
+              cmd = spawn 1660 330 "worldclocks" "worldclocks";
+            }
+            {
+              description = "color";
+              prefix = "pick";
+              cmd =
+                let
+                  bin = pkgs.writeShellScript "color-picker" ''
+                    sleep 0.25
+                    PICKED=$(${pkgs.hyprpicker}/bin/hyprpicker --radius=70 --scale=3 --autocopy --no-fancy --format=hex)
+                    if [ -n "$PICKED" ]; then
+                      kitty --app-id=color-picker -e sh -c "${pkgs.pastel}/bin/pastel color '$PICKED'; echo; read -n 1 -s -r -p 'Press any key to close...'"
+                    fi
+                  '';
+                in
+                ''hyprctl dispatch "hl.dsp.exec_cmd('${bin}; exit')"'';
+            }
+          ];
       };
 
       _file = ./settings.nix;

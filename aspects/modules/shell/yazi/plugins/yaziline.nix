@@ -15,7 +15,7 @@
       };
     in
     {
-      wrappers.yazi.initLua = /* lua */ ''
+      custom.programs.yazi.initLua = /* lua */ ''
         require("yaziline"):setup({
           separator_style = "empty",
           secondary_color = "${scheme.withHashtag.base00}",
@@ -24,6 +24,6 @@
         })
       '';
 
-      wrappers.yazi.plugins = { inherit yaziline; };
+      custom.programs.yazi.plugins = { inherit yaziline; };
     };
 }

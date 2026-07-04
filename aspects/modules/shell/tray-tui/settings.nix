@@ -1,17 +1,8 @@
-{ ... }@top:
-let
-  resize = top.config.utils.otterResize;
-in
 {
   w.default =
+    { config, lib, ... }:
     {
-      self',
-      config,
-      lib,
-      ...
-    }:
-    {
-      wrappers.tray-tui = {
+      custom.programs.tray-tui = {
         enable = true;
         settings = {
 
@@ -60,13 +51,17 @@ in
         };
       };
 
-      wrappers.otter-launcher.modules = [
-        {
-          cmd = resize 1200 1200 (lib.getExe config.wrappers.tray-tui.package);
-          description = "system tray";
-          prefix = "tray";
-        }
-      ];
+      custom.programs.otter-launcher.modules =
+        let
+          spawn = config.utils.hyprSpawn;
+        in
+        [
+          {
+            cmd = spawn 1200 1200 "tray-tui" (lib.getExe config.custom.programs.tray-tui.package);
+            description = "systray";
+            prefix = "tray";
+          }
+        ];
 
       _file = ./settings.nix;
     };

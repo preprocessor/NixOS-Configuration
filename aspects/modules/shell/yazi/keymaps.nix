@@ -7,7 +7,7 @@
       ...
     }:
     {
-      wrappers.yazi.keymap = {
+      custom.programs.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
           (yaziKeymap [ "g" "m" ] "cd /run/media/wyspr/" "Go to Media")
           (yaziKeymap [ "g" "r" ] ''shell -- ya emit cd "$(git rev-parse --show-toplevel)"'' "Go to git root")

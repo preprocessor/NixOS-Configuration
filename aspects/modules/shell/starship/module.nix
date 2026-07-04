@@ -8,11 +8,11 @@
       ...
     }:
     let
-      cfg = config.wrappers.starship;
+      cfg = config.custom.programs.starship;
       toml = pkgs.formats.toml { };
     in
     {
-      options.wrappers.starship = {
+      options.custom.programs.starship = {
         enable = lib.mkEnableOption { };
 
         enableFishIntegration = lib.mkEnableOption { };

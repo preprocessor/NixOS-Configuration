@@ -17,7 +17,7 @@
         };
 
       toml = pkgs.formats.toml { };
-      cfg = config.wrappers.yazi;
+      cfg = config.custom.programs.yazi;
     in
     with lib;
     {
@@ -38,7 +38,7 @@
         '';
       };
 
-      options.wrappers.yazi = {
+      options.custom.programs.yazi = {
         package = mkOption {
           type = types.package;
           default = birdee.wrappers.yazi.wrap {

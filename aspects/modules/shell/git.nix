@@ -18,6 +18,7 @@
       };
 
       programs.git = {
+        enable = true;
         config = {
           include = {
             path = config.sops.templates."git-email".path;

@@ -2,7 +2,7 @@
   w.shell =
     { scheme, ... }:
     {
-      wrappers.yazi = {
+      custom.programs.yazi = {
         flavorContent = with scheme.withHashtag; /* toml */ ''
           [mgr]
           cwd = { fg = "${base05}" }

@@ -10,11 +10,11 @@
       inherit (lib) getExe;
     in
     {
-      wrappers.yazi.plugins = {
+      custom.programs.yazi.plugins = {
         inherit (pkgs.yaziPlugins) piper;
       };
 
-      wrappers.yazi.settings = {
+      custom.programs.yazi.settings = {
         plugin.prepend_previewers =
           let
 
@@ -41,7 +41,7 @@
             }
             {
               url = "*/";
-              run = ''piper -- ${getExe config.wrappers.eza.package} --color=always --icons=always --no-quotes -TL=3 -l --git --no-permissions --no-user --group-directories-first --no-filesize --no-time "$1"/'';
+              run = ''piper -- ${getExe config.custom.programs.eza.package} --color=always --icons=always --no-quotes -TL=3 -l --git --no-permissions --no-user --group-directories-first --no-filesize --no-time "$1"/'';
             }
             {
               url = "*.txt.gz";

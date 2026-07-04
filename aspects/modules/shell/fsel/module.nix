@@ -20,11 +20,11 @@
       ...
     }:
     let
-      cfg = config.wrappers.fsel;
+      cfg = config.custom.programs.fsel;
       toml = pkgs.formats.toml { };
     in
     {
-      options.wrappers.fsel = {
+      options.custom.programs.fsel = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {
@@ -66,15 +66,5 @@
       };
 
       _file = ./module.nix;
-    };
-
-  w.desktop =
-    { lib, config, ... }:
-    {
-      config = lib.mkIf (config.wrappers.fsel.enable) {
-      };
-
-      _file = ./module.nix;
-
     };
 }

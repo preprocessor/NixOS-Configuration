@@ -2,17 +2,17 @@
   w.shell =
     { config, pkgs, ... }:
     {
-      wrappers.yazi.initLua = /* lua */ ''
+      custom.programs.yazi.initLua = /* lua */ ''
         require("smart-enter"):setup {
           open_multi = true, -- Allow open to target multiple selected files
         }
       '';
 
-      wrappers.yazi.plugins = {
+      custom.programs.yazi.plugins = {
         inherit (pkgs.yaziPlugins) smart-enter;
       };
 
-      wrappers.yazi.keymap = {
+      custom.programs.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
           (yaziKeymap [ "l" ] "plugin bypass smart-enter" "Enter the child directory, or open the file")
         ];

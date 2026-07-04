@@ -24,17 +24,14 @@
       };
     in
     {
-      wrappers.yazi.plugins = {
+      custom.programs.yazi.plugins = {
         inherit fuzzy-search;
       };
 
-      wrappers.yazi.keymap = {
+      custom.programs.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
           (yaziKeymap [ "<S-f>" ] "plugin fuzzy-search -- fd --TL=3" "Fuzzy Find Files")
-          (yaziKeymap [
-            "g"
-            "/"
-          ] "plugin fuzzy-search -- rg --TL=3" "Ripgrep Search")
+          (yaziKeymap [ "<S-s>" ] "plugin fuzzy-search -- rg --TL=3" "Ripgrep Search")
           (yaziKeymap [ "<S-z>" ] "plugin fuzzy-search -- zoxide --TL=3" "Zoxide Search")
         ];
       };

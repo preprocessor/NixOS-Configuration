@@ -8,26 +8,28 @@
       ...
     }:
     let
-      cfg = config.wrappers.waybar;
+      cfg = config.custom.programs.waybar;
       json = pkgs.formats.json { };
     in
     {
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
 
-        systemd.user.services.waybar = {
-          description = "waybar";
-          after = [ "graphical-session.target" ];
-          partOf = [ "graphical-session.target" ];
-          wantedBy = [ "graphical-session.target" ];
-          serviceConfig = {
-            ExecStart = lib.getExe cfg.package;
-            Restart = "on-failure";
-          };
-        };
+        custom.programs.hyprland.startup = [ ''hl.exec_cmd("${lib.getExe cfg.package}")'' ];
+
+        # systemd.user.services.waybar = {
+        #   description = "waybar";
+        #   after = [ "graphical-session.target" ];
+        #   partOf = [ "graphical-session.target" ];
+        #   wantedBy = [ "graphical-session.target" ];
+        #   serviceConfig = {
+        #     ExecStart = lib.getExe cfg.package;
+        #     Restart = "on-failure";
+        #   };
+        # };
       };
 
-      options.wrappers.waybar = {
+      options.custom.programs.waybar = {
         enable = lib.mkEnableOption { };
 
         config = lib.mkOption {

@@ -2,10 +2,6 @@
 {
   envoy.otter-launcher.github = "kuokuo123/otter-launcher";
 
-  utils.otterResize = width: height: app: ''
-    hyprctl dispatch "hl.dsp.exec_cmd('kitty -e ${app}', {size = {${toString width}, ${toString height}}, float = true, center = true})"
-  '';
-
   perSystem =
     {
       pkgs,
@@ -57,11 +53,11 @@
       ...
     }@args:
     let
-      cfg = args.config.wrappers.otter-launcher;
+      cfg = args.config.custom.programs.otter-launcher;
       toml = pkgs.formats.toml { };
     in
     {
-      options.wrappers.otter-launcher = {
+      options.custom.programs.otter-launcher = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {

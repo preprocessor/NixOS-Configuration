@@ -20,11 +20,11 @@
       ...
     }:
     let
-      cfg = config.wrappers.eza;
+      cfg = config.custom.programs.eza;
       yaml = pkgs.formats.yaml { };
     in
     {
-      options.wrappers.eza = {
+      options.custom.programs.eza = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {
