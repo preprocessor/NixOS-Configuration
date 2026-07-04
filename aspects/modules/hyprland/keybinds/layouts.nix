@@ -1,11 +1,7 @@
 {
   w.desktop = {
-    wrappers.hyprland.lua.files = {
-      "keybinds".content = /* lua */ ''
-        -- ░█▀█░█░█░█▀▀░█▀▄░█░█░▀█▀░█▀▀░█░█
-        -- ░█░█░▀▄▀░█▀▀░█▀▄░▀▄▀░░█░░█▀▀░█▄█
-        -- ░▀▀▀░░▀░░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░▀░▀
-
+    custom.programs.hyprland.lua.files = {
+      "keybinds.overview".content = /* lua */ ''
         local overview = {
           origin_window = nil,
           origin_layout = nil
@@ -61,6 +57,23 @@
         end)
 
         hl.bind("SUPER + TAB", function() overview.open() end)
+
+        -- switch/cycle layouts
+        hl.bind("SUPER + N", function()
+          utils.layout_cycle( {
+            ["dwindle"] = "lua:centercol",
+            ["lua:centercol"] = "scrolling",
+            ["scrolling"] = "dwindle",
+          })
+        end)
+
+        hl.bind("SUPER + SHIFT + N", function()
+          utils.layout_cycle( {
+            ["lua:centercol"] = "dwindle",
+            ["scrolling"] = "lua:centercol",
+            ["dwindle"] = "scrolling",
+          })
+        end)
       '';
     };
   };

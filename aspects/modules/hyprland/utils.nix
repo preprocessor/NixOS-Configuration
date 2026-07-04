@@ -1,8 +1,8 @@
 {
   w.desktop = {
-    wrappers.hyprland.lua.pre = "utils = require('utils')";
+    custom.programs.hyprland.lua.pre = ''utils = require("files.utils")'';
 
-    wrappers.hyprland.lua.files."utils" = {
+    custom.programs.hyprland.lua.files."utils" = {
       autoLoad = false;
       content = /* lua */ ''
         local utils = {}
@@ -76,7 +76,8 @@
           return function()
             local win = hl.get_active_window()
             if not win then return false end
-            local space = hl.get_active_workspace()
+            local space = hl.get_active_special_workspace() or hl.get_active_workspace()
+            if not space then return false end
             if not space then return false end
 
             if win.floating and space.windows > 1 then
@@ -221,11 +222,29 @@
         end
 
         utils.layout_exec = function(case)
-          local space = hl.get_active_workspace()
+          local space = hl.get_active_special_workspace() or hl.get_active_workspace()
           if not space then return false end
+
           local fn = case[space.tiled_layout]
           if not fn then return false end
           fn()
+        end
+
+        utils.layout_cycle = function(layout_map)
+          local workspace   = hl.get_active_workspace()
+          if not workspace then return end
+
+          local next_layout = layout_map[workspace.tiled_layout] or "lua:centercol"
+
+          hl.workspace_rule({ workspace = "name:" .. workspace.name, layout = next_layout })
+
+          if next_layout == "scrolling" then
+            local prev = hl.get_config("scrolling.focus_fit_method")
+            hl.config({ scrolling = { focus_fit_method = 0 } })
+            hl.timer(function()
+              hl.config({ scrolling = { focus_fit_method = prev } })
+            end, { timeout = 50, type = "oneshot" })
+          end
         end
 
         utils.does_file_exist = function(path)
@@ -236,6 +255,10 @@
           else
               return false
           end
+        end
+
+        utils.clamp = function(x, min, max)
+            return math.max(min, math.min(max, x))
         end
 
         return utils

@@ -1,7 +1,7 @@
 {
   w.desktop = {
-    wrappers.hyprland.lua.files = {
-      "keybinds".content = /* lua */ ''
+    custom.programs.hyprland.lua.files = {
+      "keybinds.windowing.base".content = /* lua */ ''
         -- ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░▀█▀░█▀█░█▀▀
         -- ░█▄█░░█░░█░█░█░█░█░█░█▄█░░█░░█░█░█░█
         -- ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀
@@ -12,8 +12,8 @@
         -- Same maps for MOD + scroll
         for dir, key in pairs({
           ["left"] = "h",
-          ["up"] = "j",
-          ["down"] = "k", -- i know j/k are reversed but for mouse motions this makes the most sense
+          ["down"] = "j",
+          ["up"] = "k",
           ["right"] = "l"
         }) do
           hl.bind("SUPER + " .. key, utils.focus(key))
@@ -24,52 +24,41 @@
 
         -- Switch workspaces with SUPER + [0-9]
         -- Move active window to a workspace with SUPER + CTRL + [0-9]
-        -- Special workspaces with number pad keys
+        -- Special workspaces with F1-10
         for i = 1, 10 do
           local key = i % 10 -- 10 maps to key 0
           hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = i }))
           hl.bind("SUPER + CTRL + " .. key, hl.dsp.window.move({ workspace = i }))
-          hl.bind("SUPER + KP_" .. key, hl.dsp.focus({ workspace = "special:" .. i }))
+          hl.bind("SUPER + KP_" .. key, hl.dsp.workspace.toggle_special(i))
           hl.bind("SUPER + CTRL + KP_" .. key, hl.dsp.window.move({ workspace = "special:" .. i }))
         end
 
+        -- Named special workspaces
+        for key, name in pairs({
+          ["X"] = "scratch",
+          ["S"] = "steam",
+          ["A"] = "rice",
+          ["D"] = "dashboard"
+        }) do
+          hl.bind("SUPER + " .. key, hl.dsp.workspace.toggle_special(name))
+          hl.bind("SUPER + CTRL + " .. key, hl.dsp.window.move({ workspace = "special:" .. name }))
+        end
+      '';
+
+      "keybinds.windowing.management".content = /* lua */ ''
         -- Consume/Expel
         hl.bind("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
         hl.bind("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
 
-        -- Scratch pad
-        hl.bind("SUPER + X", hl.dsp.workspace.toggle_special("scratch"))
-        hl.bind("SUPER + CTRL + X", hl.dsp.window.move({ workspace = "special:scratch" }))
-
         -- Move/resize windows with mainMod + LMB/RMB and dragging
-        hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
+        hl.bind("SUPER + mouse:272", function()
+          local win = hl.get_active_window()
+          if not win then return end
+          if not win.floating then return end
+          hl.dispatch(hl.dsp.window.drag())
+        end, { mouse = true })
+
         hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
-
-        -- switch/cycle layouts
-        hl.bind("SUPER + N", function()
-          local workspace   = hl.get_active_workspace()
-          if not workspace then return end
-
-          -- local layouts     = { "scrolling", "dwindle" }
-          local layouts = {
-            ["lua:grid"] = "scrolling",
-            ["scrolling"] = "dwindle",
-            ["dwindle"] = "lua:grid",
-          }
-
-          local next_layout = layouts[workspace.tiled_layout]
-          if not next_layout then return end
-
-          hl.workspace_rule({ workspace = "name:" .. workspace.name, layout = next_layout })
-
-          if next_layout == "scrolling" then
-            local prev = hl.get_config("scrolling.focus_fit_method")
-            hl.config({ scrolling = { focus_fit_method = 0 } })
-            hl.timer(function()
-              hl.config({ scrolling = { focus_fit_method = prev } })
-            end, { timeout = 50, type = "oneshot" })
-          end
-        end)
 
         hl.bind("CTRL + Space", hl.dsp.submap("layout"))
 
@@ -93,25 +82,11 @@
         end)
 
         hl.bind("SUPER + F", function()
-          utils.layout_exec({
-            ["scrolling"] = function()
-              hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 3, action = "toggle" }))
-            end,
-            ["dwindle"] = function()
-              hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 1, client = 3, action = "toggle" }))
-            end
-          })
+          hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 3, action = "toggle" }))
         end)
 
         hl.bind("SUPER + SHIFT + F", function()
-          utils.layout_exec({
-            ["scrolling"] = function()
-              hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 2, client = 3, action = "toggle" }))
-            end,
-            ["dwindle"] = function()
-              hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 3, client = 3, action = "toggle" }))
-            end
-          })
+          hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 2, client = 3, action = "toggle" }))
         end)
 
         hl.bind("SUPER + R", function()
@@ -122,7 +97,11 @@
 
             ["dwindle"] = function()
               hl.dispatch(hl.dsp.layout("splitratio +0.25"))
-            end
+            end,
+
+            ["lua:centercol"] = function()
+              hl.dispatch(hl.dsp.layout("ratio +0.10"))
+            end,
           })
         end)
 
@@ -134,7 +113,11 @@
 
             ["dwindle"] = function()
               hl.dispatch(hl.dsp.layout("splitratio -0.25"))
-            end
+            end,
+
+            ["lua:centercol"] = function()
+              hl.dispatch(hl.dsp.layout("ratio -0.10"))
+            end,
           })
         end)
 
@@ -150,9 +133,14 @@
 
             ["dwindle"] = function()
               hl.dispatch(hl.dsp.layout("togglesplit"))
-            end
+            end,
+
+            ["lua:centercol"] = function()
+              hl.dispatch(hl.dsp.layout("swap"))
+            end,
           })
         end)
+
 
         hl.bind("ALT + TAB", function()
           local window = hl.get_active_window()

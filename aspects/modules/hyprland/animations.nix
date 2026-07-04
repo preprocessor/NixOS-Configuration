@@ -1,11 +1,6 @@
 {
   w.desktop = {
-    wrappers.hyprland = {
-      enable = true;
-      withAutostart = true;
-    };
-
-    wrappers.hyprland.lua.files."animations".content = /* lua */ ''
+    custom.programs.hyprland.lua.files."animations".content = /* lua */ ''
       hl.config({
         animations = {
           enabled = true,
@@ -22,26 +17,25 @@
       hl.curve("smoothOut", { type = "bezier", points = { { 0.36, 0 }, { 0.66, -0.56 } } })
       hl.curve("smoothIn", { type = "bezier", points = { { 0.25, 1 }, { 0.5, 1 } } })
 
+      hl.curve("easeOutExpo", { type = "bezier", points = { { 0.16, 1 }, { 0.3, 1 } } })
+      hl.curve("easeOutQuad", { type = "bezier", points = { { 0.5, 1.0 }, { 0.89, 1.0 } } })
+
+      hl.curve("easeInOutCubic", { type = "bezier", points = { { 0.65, 0 }, { 0.35, 1.0 } } })
       hl.curve("border_angle", { type = "bezier", points = { { 0.25, 0 }, { 1, 1 } } })
 
-      -- Animations
-      hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, bezier = "winIn", style = "gnomed" })
-      hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "winOut", style = "gnomed" })
+      hl.animation({ leaf = "windows", enabled = true, speed = 3, bezier = "easeOutExpo", style = "gnomed" })
+
       hl.animation({ leaf = "windowsMove", enabled = true, speed = 3.5, bezier = "slow", style = "slide" })
 
       hl.animation({ leaf = "border", enabled = true, speed = 5, bezier = "linear" })
       hl.animation({ leaf = "borderangle", enabled = true, speed = 20, bezier = "border_angle" })
 
-      hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "overshot" })
-      hl.animation({ leaf = "workspacesIn", enabled = true, speed = 3, bezier = "slow", style = "slidevert" })
-      hl.animation({ leaf = "workspacesOut", enabled = true, speed = 3, bezier = "slow", style = "slidevert" })
-      hl.animation({ leaf = "windows", enabled = true, speed = 3, bezier = "bounce", style = "popin" })
+      hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "slow" })
 
-      hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 3, bezier = "overshot", style = "slide top" })
-      hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3, bezier = "overshot", style = "slide bottom" })
+      hl.animation({ leaf = "workspaces", enabled = true, speed = 3, bezier = "easeInOutCubic", style = "fade" })
 
-      hl.animation({ leaf = "layersIn", enabled = true, speed = 3, bezier = "smoothIn", style = "slide top" })
-      hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "wind", style = "slide top" })
+      hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 3, bezier = "smoothIn", style = "slide top" })
+      hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3, bezier = "easeOutQuad", style = "slide bottom" })
     '';
   };
 }

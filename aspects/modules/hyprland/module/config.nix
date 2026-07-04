@@ -7,15 +7,15 @@
       ...
     }:
     let
-      cfg = config.wrappers.hyprland;
+      cfg = config.custom.programs.hyprland;
 
       hasStartup = cfg.startup != [ ];
       hasPlugins = cfg.plugins != [ ];
 
-      toLua = lib.generators.toLua { };
-
+      # filename.lua -> filename
       requireName = name: lib.removeSuffix ".lua" name;
 
+      # folder.filename.lua -> folder/filename.lua
       luaFileName = name: builtins.replaceStrings [ "." ] [ "/" ] (requireName name) + ".lua";
 
       autoLoadFiles = lib.filterAttrs (_: file: file.autoLoad) cfg.lua.files;
@@ -29,14 +29,13 @@
         '')
 
         (lib.optionalString hasPlugins ''
-          -- wrappers.hyprland.plugins
-          ${cfg.plugins |> map (entry: "hyprctl plugin load ${pluginPath entry}")}
+            -- custom.programs.hyprland.plugins
+          ${cfg.plugins |> map (entry: "  hyprctl plugin load ${pluginPath entry}")}
         '')
 
         (lib.optionalString hasStartup ''
-          -- wrappers.hyprland.startup
-          ${cfg.startup |> lib.concatMapStrings (command: "  hl.exec_cmd(${toLua command})\n")}
-        '')
+            -- custom.programs.hyprland.startup
+          ${cfg.startup |> lib.concatMapStrings (command: "  ${command}\n")}'')
 
         (lib.optionalString (hasPlugins || hasStartup) ''
           end)
@@ -47,34 +46,41 @@
       config = lib.mkIf cfg.enable (
         lib.mkMerge [
           {
+            utils.hyprSpawn = width: height: class: app: ''
+              hyprctl dispatch "hl.dsp.exec_cmd('kitty --class ${class} -e ${app}', {size = {${toString width}, ${toString height}}, float = true, center = true})"
+            '';
+
             hj.xdg.config.files = {
               "hypr/hyprland.lua".text = lib.concatStrings [
                 (lib.optionalString (cfg.lua.pre != "") ''
-                  -- wrappers.hyprland.lua.pre
+                  -- custom.programs.hyprland.lua.pre
                   ${cfg.lua.pre}
 
                 '')
 
                 (lib.optionalString (hasStartup || hasPlugins) startupSection)
 
-                (lib.optionalString (autoLoadFiles != { }) ''
-                  -- wrappers.hyprland.lua.files {autoLoad = true}
-                  ${
-                    autoLoadFiles |> lib.mapAttrsToList (name: _: ''require("${requireName name}")'') |> lib.concatLines
-                  }
+                (lib.optionalString (autoLoadFiles != { }) /* lua */ ''
 
+                  local load = function(path)
+                    require("files." .. path)
+                  end
+
+                  -- custom.programs.hyprland.lua.files."...".autoLoad = true
+                  ${autoLoadFiles |> lib.mapAttrsToList (name: _: ''load("${requireName name}")'') |> lib.concatLines}
                 '')
 
                 (lib.optionalString (cfg.lua.post != "") ''
-                  -- wrappers.hyprland.lua.post
+                  -- custom.programs.hyprland.lua.post
                   ${cfg.lua.post}
 
                 '')
 
+                # lua
                 ''
                   -- dynamic code
                   if utils.does_file_exist("${config.hj.xdg.config.directory}/hypr/dynamic.lua") then
-                      require("dynamic")
+                    require("dynamic")
                   end
                 ''
               ];
@@ -102,7 +108,7 @@
               cfg.lua.files
               |> lib.mapAttrs' (
                 fileName: file: {
-                  name = "hypr/${luaFileName fileName}";
+                  name = "hypr/files/${luaFileName fileName}";
                   value = {
                     text = file.content;
                   };

@@ -2,7 +2,7 @@
   w.default =
     { lib, pkgs, ... }:
     {
-      options.wrappers.hyprland =
+      options.custom.programs.hyprland =
         let
           inherit (lib) mkEnableOption mkOption;
         in
