@@ -1,0 +1,78 @@
+[shorturls]
+gh = "github:{path}"
+
+[all_follow]
+nixpkgs = "nixpkgs"
+systems = "systems"
+flake-parts = "flake-parts"
+flake-compat = "flake-compat"
+flake-utils = "flake-utils"
+rust-overlay = "rust-overlay"
+treefmt-nix = "treefmt-nix"
+
+[inputs.apple-fonts]
+url = "gh:Lyndeno/apple-fonts.nix"
+
+[inputs.base16]
+url = "gh:senchopens/base16.nix"
+
+[inputs.birdee]
+url = "gh:BirdeeHub/nix-wrapper-modules"
+
+[inputs.flake-file]
+url = "gh:denful/flake-file"
+
+[inputs.flake-parts]
+url = "gh:hercules-ci/flake-parts"
+
+[inputs.hjem]
+url = "gh:feel-co/hjem"
+
+[inputs.hyprland]
+url = "gh:hyprwm/Hyprland"
+
+[inputs.neovim]
+url = "path:/home/wyspr/Configuration/Neovim/"
+
+[inputs.nix-cachyos-kernel]
+url = "gh:xddxdd/nix-cachyos-kernel/release"
+
+[inputs.nix-gaming-edge]
+url = "path:/home/wyspr/Configuration/nix-gaming-edge"
+
+[inputs.nix-index-database]
+url = "gh:nix-community/nix-index-database"
+
+[inputs.nixos-core]
+url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1"
+
+[inputs.nixpkgs]
+url = "gh:nixos/nixpkgs/nixos-unstable"
+
+[inputs.pixprint]
+url = "gh:preprocessor/pixprint"
+
+[inputs.sops-nix]
+url = "gh:Mic92/sops-nix"
+
+[inputs.tray-tui]
+url = "gh:Levizor/tray-tui"
+
+[inputs.yazi]
+url = "gh:sxyazi/yazi"
+
+[inputs.crtty ]
+url = "gh:kosa12/CRTty"
+type = "fetch"
+
+[inputs.yazi-fuzzy-search]
+url = "gh:onelocked/fuzzy-search.yazi"
+type = "fetch"
+
+[inputs.yazi-no-header]
+url = "gh:onelocked/no-header-prompt.yazi"
+type = "fetch"
+
+[inputs.yazi-plugins]
+url = "gh:AminurAlam/yazi-plugins"
+type = "fetch"
