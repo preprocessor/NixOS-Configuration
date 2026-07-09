@@ -44,7 +44,7 @@
           bold_font = ''family="Maple Mono NF" style="ExtraBold"'';
           italic_font = ''family="Maple Mono NF" style="Italic"'';
           bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
-          font_size = "15";
+          font_size = "14";
 
           resize_debounce_time = "0 0";
 
