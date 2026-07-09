@@ -1,10 +1,39 @@
 {
   w.desktop =
-    { config, ... }:
+    { config, lib, ... }:
     {
-      wrappers.mpv = {
+      hj.xdg.mime-apps.default-applications =
+        [
+          "audio/aac"
+          "audio/mpeg"
+          "audio/ogg"
+          "audio/opus"
+          "audio/wav"
+          "audio/webm"
+          "audio/x-matroska"
+          "video/mp2t"
+          "video/mp4"
+          "video/mpeg"
+          "video/ogg"
+          "video/webm"
+          "video/x-flv"
+          "video/x-matroska"
+          "video/x-msvideo"
+        ]
+        |> map (mime: lib.nameValuePair mime [ "mpv.desktop" ])
+        |> lib.listToAttrs;
+
+      custom.programs.hyprland.lua.files."window_rules.mpv".content = /* lua */ ''
+        hl.window_rule({
+          name         = "mpv",
+          match        = { class = "mpv" },
+          center       = true,
+          float        = true,
+        })
+      '';
+
+      custom.programs.mpv = {
         enable = true;
-        with-wlpaste = true;
 
         conf = # ini
           ''
@@ -107,14 +136,5 @@
             STOP stop
           '';
       };
-      custom.xdg.desktopEntries."umpv".noDisplay = true;
-      wrappers.niri.settings.window-rules = [
-        {
-          matches = [ { app-id = "mpv"; } ];
-          open-focused = true;
-          open-fullscreen = false;
-          open-floating = true;
-        }
-      ];
     };
 }
