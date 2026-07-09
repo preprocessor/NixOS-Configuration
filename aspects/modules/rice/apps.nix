@@ -71,29 +71,6 @@
           };
         });
 
-        terminal-toys = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
-          pname = "terminal-toys";
-          version = "0.7.0";
-          __structuredAttrs = true;
-
-          src = pkgs.fetchFromGitHub {
-            owner = "seebass22";
-            repo = "terminal-toys";
-            tag = "v${finalAttrs.version}";
-            hash = "sha256-WIgi1rW2FH+WfHqloSXD2qbz9x8AWLm/wuucTY/jPHQ=";
-          };
-
-          cargoHash = "sha256-QgwDRVzIS/pc5wb/M6asl6yjERCdDqh4VuyYI0eL+3g=";
-
-          meta = {
-            description = "Screensavers for your terminal";
-            homepage = "https://github.com/seebass22/terminal-toys";
-            changelog = "https://github.com/seebass22/terminal-toys/blob/${finalAttrs.src.rev}/CHANGELOG.md";
-            license = lib.licenses.mit;
-            maintainers = with lib.maintainers; [ wyspr ];
-            mainProgram = "terminal-toys";
-          };
-        });
       };
 
       devShells.wyce = pkgs.mkShell {
@@ -102,16 +79,13 @@
           [
             asciiquarium-transparent
             astroterm
-            peaclock
             cbonsai
             pipes-rs
             drift
             neo
           ]
           ++ (with self'.packages; [
-            terminal-toys
             voxcii
-            goterm
             pond
           ]);
       };
