@@ -83,6 +83,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     tray-tui.url = "github:Levizor/tray-tui";
+    yazi = {
+      url = "github:sxyazi/yazi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     yazi-fuzzy-search = {
       url = "github:onelocked/fuzzy-search.yazi";
       flake = false;

@@ -1,11 +1,6 @@
 {
   w.default =
-    {
-      pkgs,
-      config,
-      lib,
-      ...
-    }:
+    { pkgs, lib, ... }:
     {
       environment.systemPackages = with pkgs; [
         app2unit
