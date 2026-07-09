@@ -11,7 +11,7 @@
         let
           cfg = config.programs.steam;
         in
-        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:steam" })'' ];
+        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:steam silent" })'' ];
 
       custom.programs.hyprland.lua.files."window_rules.steam".content = /* lua */ ''
         hl.window_rule({
@@ -24,15 +24,34 @@
         })
 
         hl.window_rule({
+          name = "more-move-steam",
+          match = {
+            class = "^steam$",
+            title = "^$",
+          },
+          workspace = "special:steam",
+        })
+
+        hl.window_rule({
           name = "float-games-workspace",
           match = {
             title = "negative:^(Steam|Friends List)$",
             workspace = "special:steam",
           },
 
+          float = true,
+        })
+
+        hl.window_rule({
+          name = "float-games-workspace",
+          match = {
+            title = "negative:^(Steam|Friends List)$",
+            class = "negative:^steam$",
+            workspace = "special:steam",
+          },
+
           size = { 1700, 1300 },
           center = true,
-          float = true,
         })
 
         hl.window_rule({
@@ -75,14 +94,13 @@
 
       hardware.steam-hardware.enable = true; # controller / Steam Deck input udev rules
       programs.steam =
-        let
-          compatToolsDir = pkgs.linkFarm "me3-compat-tools" [
-            {
-              name = "proton-cachyos"; # me3 looks for the proton by this name
-              path = pkgs.proton-cachyos.steamcompattool; # or whichever variant
-            }
-          ];
-        in
+        # let
+        #   compatToolsDir = pkgs.linkFarm "me3-compat-tools" [
+        #     {
+        #       name = "proton-ge"; # me3 looks for the proton by this name
+        #     }
+        #   ];
+        # in
         {
           enable = true;
           remotePlay.openFirewall = true;
@@ -90,19 +108,19 @@
           # extraPackages = [ pkgs.latencyflex-vulkan ];
           extraCompatPackages = with pkgs; [
             steamtinkerlaunch
-            proton-cachyos
           ];
           package = pkgs.steam.override {
             extraPkgs = fpkgs: [ pkgs.modengine3 ];
             extraEnv = {
               STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.concatStringsSep ":" [
-                "${compatToolsDir}" # for ME3 / modengine3
+                # "${compatToolsDir}" # for ME3 / modengine3
                 "\${HOME}/.steam/root/compatibilitytools.d"
-                (lib.makeSearchPathOutput "steamcompattool" "" [ pkgs.proton-cachyos ])
               ];
             };
           };
         };
+
+      _file = ./steam.nix;
     };
 
 }

@@ -17,14 +17,14 @@
           cfg = config.custom.programs.kitty;
         in
         [
-          ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev" })''
-          ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev" })''
+          ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev silent" })''
+          ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev silent" })''
         ];
 
       custom.programs.hyprland.lua.files."keybinds.kitty".content = /* lua */ ''
         hl.bind("SUPER + Return", hl.dsp.exec_raw("kitty -1"), { release = true })
 
-        hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_raw("kitty -1"), { float = true, release = true })
+        hl.bind("SUPER + CTRL + Return", hl.dsp.exec_raw("kitty -1"), { float = true, release = true })
       '';
 
       custom.programs.kitty = {

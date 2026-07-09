@@ -10,7 +10,8 @@
         let
           cfg = config.custom.programs.vivaldi;
         in
-        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = 'name:web' })'' ];
+        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:web silent" })'' ];
+
     };
 
   w.default =

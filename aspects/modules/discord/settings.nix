@@ -11,7 +11,7 @@
         let
           cfg = config.custom.programs.vesktop;
         in
-        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:chat" })'' ];
+        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:chat silent" })'' ];
 
       custom.programs.hyprland.lua.files."window_rules.vesktop".content = /* lua */ ''
         hl.window_rule({
