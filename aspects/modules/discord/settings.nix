@@ -7,6 +7,10 @@
       ...
     }:
     {
+      hj.xdg.mime-apps.default-applications = {
+        "x-scheme-handler/discord" = [ "vesktop.desktop" ];
+      };
+
       custom.programs.hyprland.startup =
         let
           cfg = config.custom.programs.vesktop;

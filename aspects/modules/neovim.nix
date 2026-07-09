@@ -24,6 +24,10 @@
         (pkgs.writeShellScriptBin "todo" "${lib.getExe inputs'.neovim.packages.mdvim} ${constants.homedir}/todo.md")
       ];
 
+      hj.xdg.mime-apps.default-applications = {
+        "text/*" = [ "nvim.desktop" ];
+      };
+
       custom.xdg.desktopEntries = {
         nvim = {
           noDisplay = true;

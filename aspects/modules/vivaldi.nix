@@ -12,6 +12,16 @@
         in
         [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:web silent" })'' ];
 
+      hj.xdg.mime-apps.default-applications =
+        [
+          "text/html"
+          "x-scheme-handler/http"
+          "x-scheme-handler/https"
+          "x-scheme-handler/about"
+          "x-scheme-handler/unknown"
+        ]
+        |> map (mime: lib.nameValuePair mime [ "vivaldi-stable.desktop" ])
+        |> lib.listToAttrs;
     };
 
   w.default =
