@@ -1,10 +1,16 @@
 {
+  inputs.yazi = {
+    url = "github:sxyazi/yazi";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
   w.default =
     {
       pkgs,
       lib,
       config,
       birdee,
+      inputs',
       ...
     }:
     let
@@ -44,6 +50,7 @@
           default = birdee.wrappers.yazi.wrap {
             inherit pkgs;
             inherit (cfg) plugins;
+            package = inputs'.yazi.packages.yazi;
             runtimePkgs = with pkgs; [
               ouch-rar
               ripgrep

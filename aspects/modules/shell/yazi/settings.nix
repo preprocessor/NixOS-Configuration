@@ -12,11 +12,10 @@
         hl.bind("SUPER + E", function()
           utils.toggle_window("yazi-explorer", "kitty --app-id=yazi-explorer -e yazi ~",
             {
-              size         = { 1700, 1100 },
-              center       = true,
-              float        = true,
-              stay_focused = true,
-              pin          = true,
+              size   = { 1700, 1100 },
+              center = true,
+              float  = true,
+              pin    = true,
             })
         end)
       '';

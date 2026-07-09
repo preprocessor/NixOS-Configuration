@@ -16,11 +16,6 @@
           (yaziKeymap [ "H" ] "back" "Go to previous directory")
           (yaziKeymap [ "L" ] "forward" "Go to next directory")
 
-          (yaziKeymap [ "i" "c" ]
-            ''shell --block -- ${pkgs.mcat}/bin/mcat ls "$PWD" --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'; echo -e "\nPress Enter to return to Yazi..."; read ''
-            "mcat preview of cwd"
-          )
-
           (yaziKeymap [ "b" "y" ]
             ''shell -- for path in %s; do echo "file://$path"; done | wl-copy -t text/uri-list''
             "Copy to clipboard"
