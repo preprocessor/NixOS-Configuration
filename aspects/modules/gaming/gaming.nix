@@ -16,7 +16,6 @@
       };
 
       nixpkgs.overlays = with inputs.nix-gaming-edge.overlays; [
-        proton-cachyos
         default
         pokemmo
       ];
@@ -25,22 +24,6 @@
         enable = true;
         steamOrphanCleanup.enable = true;
         enableCache = false;
-        cacheCleanup = {
-          # protonPackage is null by default - thus Proton caches are not cleaned by default. Must define a protonPackage to clear Proton / engine caches
-          enable = true;
-          protonPackage = pkgs.proton-cachyos;
-        };
-      };
-
-      programs.gamemode.enable = true;
-      programs.gamescope = {
-        enable = true;
-        args = [
-          "-W 3440"
-          "-H 1440"
-          # "-O ${config.primaryDisplay.name}"
-          "-f"
-        ];
       };
 
       hardware.amdgpu.overdrive.enable = true;
@@ -91,6 +74,7 @@
         prismlauncher # Minecraft
         bolt-launcher # Runescape
         dualsensectl # Dualsense Controller
+        protonup-rs
         ckan # KSP mod loader
         pokemmo
         me3
