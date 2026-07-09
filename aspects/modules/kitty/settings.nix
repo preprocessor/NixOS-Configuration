@@ -12,6 +12,16 @@
         maple-mono.NF
       ];
 
+      hj.xdg.mime-apps.default-applications =
+        [
+          "inode/directory"
+          "terminal"
+          "x-terminal-emulator"
+          "application/x-shellscript"
+        ]
+        |> map (mime: lib.nameValuePair mime [ "kitty.desktop" ])
+        |> lib.listToAttrs;
+
       custom.programs.hyprland.startup =
         let
           cfg = config.custom.programs.kitty;

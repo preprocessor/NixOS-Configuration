@@ -8,7 +8,7 @@
       xdg = {
         portal = {
           enable = true;
-          xdgOpenUsePortal = true;
+          xdgOpenUsePortal = false;
           wlr.enable = false;
           config = {
             common = {
@@ -26,7 +26,7 @@
         };
       };
       environment.sessionVariables = {
-        GTK_USE_PORTAL = "1";
+        GTK_USE_PORTAL = "0";
       };
     };
 }
