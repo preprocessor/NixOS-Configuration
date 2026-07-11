@@ -39,22 +39,6 @@
     "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
     "lastModified": 1767039857
   },
-  "flake-file": {
-    "type": "github",
-    "owner": "denful",
-    "repo": "flake-file",
-    "rev": "ce63eaf7ebfe04a176653f66385a7f0a36380cee",
-    "narHash": "sha256-N3q/SP2Ropk336e9KSgLh7kpROY6P70dprYdbPIfd5c=",
-    "lastModified": 1781217157
-  },
-  "flake-parts": {
-    "type": "github",
-    "owner": "hercules-ci",
-    "repo": "flake-parts",
-    "rev": "17c9d6cdfc60c64f4ee8d306f9bc0b4ccb51481e",
-    "narHash": "sha256-vp6Y/Grm98ESt6ceOkWiHWyZRDV3J1RID4w+6NWK9yA=",
-    "lastModified": 1782949081
-  },
   "flake-utils": {
     "type": "github",
     "owner": "numtide",
@@ -96,12 +80,12 @@
     "lastModified": 1783276891
   },
   "nix-gaming-edge": {
-    "type": "path",
-    "path": "/home/wyspr/Configuration/nix-gaming-edge",
-    "lastModified": 1781976214,
-    "mtimeNanos": 1781976214445889822,
-    "treeSize": 1000545,
-    "treeEntries": 111
+    "type": "github",
+    "owner": "powerofthe69",
+    "repo": "nix-gaming-edge",
+    "rev": "ac2bb2cf7b81a3a268f441a45349ce4fe78a0d00",
+    "narHash": "sha256-v4KXW9OvmsHNPkmLyOIbc+mFgCMVK/Cm1OuuE6gkvTM=",
+    "lastModified": 1783497296
   },
   "nix-index-database": {
     "type": "github",
@@ -123,9 +107,9 @@
     "type": "github",
     "owner": "nixos",
     "repo": "nixpkgs",
-    "rev": "d407951447dcd00442e97087bf374aad70c04cea",
-    "narHash": "sha256-8i/87eeoqiGE4yOTjwSA3Eh/ziJRQEmd/unYU+K27sk=",
-    "lastModified": 1783224372
+    "rev": "0bb7ec54c8483066ec9d7720e780a5caa71f8612",
+    "narHash": "sha256-iffAls3iaNTyJC2faYcUXSI+Gp02cDjYl+MygxKl2GI=",
+    "lastModified": 1783522502
   },
   "pixprint": {
     "type": "github",
@@ -159,13 +143,13 @@
     "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
     "lastModified": 1689347949
   },
-  "tray-tui": {
+  "tack": {
     "type": "github",
-    "owner": "Levizor",
-    "repo": "tray-tui",
-    "rev": "c478038706cbc17b0ed27b45782d2decc902fe18",
-    "narHash": "sha256-jutgcPB3c59W6ZaqsWnwALl9VY4zLoC88XaEFZdvOw8=",
-    "lastModified": 1773573695
+    "owner": "manic-systems",
+    "repo": "tack",
+    "rev": "95ddc34601dcded62dc5d3cba27a5d102136f542",
+    "narHash": "sha256-2oK+QKei8MNpfDBwnSC/pjWtWwWwGNtqChM8XmAhZhs=",
+    "lastModified": 1782616671
   },
   "yazi": {
     "type": "github",

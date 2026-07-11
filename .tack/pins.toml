@@ -4,7 +4,6 @@ gh = "github:{path}"
 [all_follow]
 nixpkgs = "nixpkgs"
 systems = "systems"
-flake-parts = "flake-parts"
 flake-compat = "flake-compat"
 flake-utils = "flake-utils"
 rust-overlay = "rust-overlay"
@@ -19,12 +18,6 @@ url = "gh:senchopens/base16.nix"
 [inputs.birdee]
 url = "gh:BirdeeHub/nix-wrapper-modules"
 
-[inputs.flake-file]
-url = "gh:denful/flake-file"
-
-[inputs.flake-parts]
-url = "gh:hercules-ci/flake-parts"
-
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
@@ -32,13 +25,14 @@ url = "gh:feel-co/hjem"
 url = "gh:hyprwm/Hyprland"
 
 [inputs.neovim]
-url = "path:/home/wyspr/Configuration/Neovim/"
+url = "git+path:/home/wyspr/Configuration/Neovim/"
 
 [inputs.nix-cachyos-kernel]
 url = "gh:xddxdd/nix-cachyos-kernel/release"
+exclude_follow = ["nixpkgs"]
 
 [inputs.nix-gaming-edge]
-url = "path:/home/wyspr/Configuration/nix-gaming-edge"
+url = "gh:powerofthe69/nix-gaming-edge"
 
 [inputs.nix-index-database]
 url = "gh:nix-community/nix-index-database"
@@ -55,11 +49,11 @@ url = "gh:preprocessor/pixprint"
 [inputs.sops-nix]
 url = "gh:Mic92/sops-nix"
 
-[inputs.tray-tui]
-url = "gh:Levizor/tray-tui"
-
 [inputs.yazi]
 url = "gh:sxyazi/yazi"
+
+[inputs.tack]
+url = "gh:manic-systems/tack"
 
 [inputs.crtty ]
 url = "gh:kosa12/CRTty"
@@ -76,3 +70,4 @@ type = "fetch"
 [inputs.yazi-plugins]
 url = "gh:AminurAlam/yazi-plugins"
 type = "fetch"
+
