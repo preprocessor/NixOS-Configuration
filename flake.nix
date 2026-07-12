@@ -57,8 +57,8 @@
               inputName: key:
               if key.packages ? default then
                 key.packages // key.packages.default
-              else if key.packages ? "${inputName}" then
-                key.packages // key.packages."${inputName}"
+              else if key.packages ? ${inputName} then
+                key.packages // key.packages.${inputName}
               else
                 key.packages
             );
@@ -70,11 +70,11 @@
         modules =
           with lib;
           ./aspects
-          |> fileset.fileFilter (file: file.hasExt "nix" && !hasPrefix "_" file.name)
+          |> lib.fileset.fileFilter (file: file.hasExt "nix" && !lib.hasPrefix "_" file.name)
           |> fileset.toList;
       };
 
-      # Evaluate omniSystem blocks for each system
+      # Evaluate perSystem blocks for each system
       # the output looks like this
       # systemOutputs = { "x86_64-linux" = { packages = "pkg1"; devShells = "shell1"; }; }
       systemOutputs =
@@ -86,8 +86,9 @@
             (lib.evalModules {
               inherit specialArgs;
               modules = [
-                topEval.config.omniSystem
+                topEval.config.perSystem
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
+
               ];
             }).config
           );
