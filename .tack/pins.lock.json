@@ -99,9 +99,9 @@
     "type": "github",
     "owner": "hyprwm",
     "repo": "Hyprland",
-    "rev": "824ed12c9d40a857bb5952b5b209d27d78e01d5b",
-    "narHash": "sha256-obiYHJlgNeugve/5CNHWdyHEvbyjEbHXWOeBZ3ZbqOI=",
-    "lastModified": 1783804259
+    "rev": "c4cfe0e830dbac770fc58acceab357799cb615ba",
+    "narHash": "sha256-DJEsxRTORO8IYsk8Uoo5gRFr1aUwR2PaX3XSGq7rvkU=",
+    "lastModified": 1783871351
   },
   "neovim": {
     "type": "git",
@@ -123,17 +123,17 @@
     "type": "github",
     "owner": "powerofthe69",
     "repo": "nix-gaming-edge",
-    "rev": "6cee1efd82d9825e09cb7beaa82f20f96652e0c0",
-    "narHash": "sha256-p2nK8VCH/WjI2wqHHUHNFqsF3XeXKM5eOSgS0Cbmoug=",
-    "lastModified": 1783792802
+    "rev": "9e1dd3249de6fc1bfd0edb07a2b42be761d57c62",
+    "narHash": "sha256-BrmG608MAwlORzi9dgZ84jvX/Xbtp8CJup1d+m+EnfM=",
+    "lastModified": 1783834229
   },
   "nix-index-database": {
     "type": "github",
     "owner": "nix-community",
     "repo": "nix-index-database",
-    "rev": "96d6de10eb281b98f5cfcd1841394c03da5df77c",
-    "narHash": "sha256-RY8e+gR2/DhXsYDxGDL6Hhe9+POD9u4+llwxMBqMQDs=",
-    "lastModified": 1783414108
+    "rev": "1111b9bc836afb7e31a7014e8d1272de9b1c917d",
+    "narHash": "sha256-BQxN5UMg9FOevAsgBRwPxfxlh51Puj+dNn/8Dsi3sPM=",
+    "lastModified": 1783864904
   },
   "nixos-core": {
     "type": "github",
@@ -155,9 +155,9 @@
     "type": "github",
     "owner": "kuokuo123",
     "repo": "otter-launcher",
-    "rev": "d101421377473a190701d53cbe28b8244edad728",
-    "narHash": "sha256-ZO2WzXNEM9XKuReixgQuP1G+5nrihYWajugBCIjjPkE=",
-    "lastModified": 1783339207
+    "rev": "242e5da4f0acc0b4301be7b4546f5afb3e4b23d6",
+    "narHash": "sha256-Ryg3PqFcGydelQpgPF0j8GMaXaGDrNTSesEy6fDw/eg=",
+    "lastModified": 1783875707
   },
   "pixprint": {
     "type": "github",
@@ -195,9 +195,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "95ddc34601dcded62dc5d3cba27a5d102136f542",
-    "narHash": "sha256-2oK+QKei8MNpfDBwnSC/pjWtWwWwGNtqChM8XmAhZhs=",
-    "lastModified": 1782616671
+    "rev": "1b35dea7e2f90863cce2099eafdf318d4c96f2e6",
+    "narHash": "sha256-5peItmNvgVHeLDf/T7JxA/By0r8JsQx75MuMni1Q9ns=",
+    "lastModified": 1783834540
   },
   "yazi": {
     "type": "github",

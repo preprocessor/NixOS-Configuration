@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 {
   options.tack = lib.mkOption {
     type = lib.types.submodule {
@@ -43,6 +39,7 @@
       shorturls = {
         gh = "github:{path}";
         path = "git+file:///{path}";
+        nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}";
       };
 
       all_follow = {
