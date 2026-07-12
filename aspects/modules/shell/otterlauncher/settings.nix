@@ -16,7 +16,7 @@
           hl.bind("SUPER + Space", function()
             utils.toggle_window(
               "otter.launcher",
-              "ghostty --class=otter.launcher " ..
+              "kitty --class=otter.launcher " ..
               "-e otter-launcher", {
                 size         = { 1010, 510 },
                 border_size  = 0,
