@@ -2,10 +2,7 @@
   w.default =
     { pkgs, ... }:
     {
-      hj.packages = with pkgs; [
-        cliamp
-        yt-dlp
-      ];
+      hj.packages = [ pkgs.cliamp ];
 
       custom.programs.hyprland.lua.files."window_rules.cliamp".content = /* lua */ ''
         hl.window_rule({
