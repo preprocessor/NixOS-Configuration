@@ -10,7 +10,7 @@
       lib,
       config,
       birdee,
-      inputs',
+      packages',
       ...
     }:
     let
@@ -50,7 +50,7 @@
           default = birdee.wrappers.yazi.wrap {
             inherit pkgs;
             inherit (cfg) plugins;
-            package = inputs'.yazi.packages.yazi;
+            package = packages'.yazi;
             runtimePkgs = with pkgs; [
               ouch-rar
               ripgrep
@@ -113,8 +113,6 @@
         flavorContent = lib.mkOption {
           type = with lib.types; nullOr lines;
           default = "";
-          # inherit (toml) type;
-          # default = { };
           description = "Raw TOML content for the flavor file";
         };
 

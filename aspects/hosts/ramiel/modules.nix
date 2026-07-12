@@ -6,10 +6,15 @@
 }:
 {
   flake.nixosConfigurations.ramiel = withSystem "x86_64-linux" (
-    { self', inputs', ... }:
+    {
+      self',
+      inputs',
+      packages',
+      ...
+    }:
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit self' inputs';
+        inherit self' inputs' packages';
         inherit (inputs) birdee;
       };
       modules = with config.w; [

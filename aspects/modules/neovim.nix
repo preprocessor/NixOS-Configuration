@@ -7,7 +7,7 @@
   w.default =
     {
       constants,
-      inputs',
+      packages',
       pkgs,
       lib,
       ...
@@ -19,9 +19,9 @@
       };
 
       hj.packages = [
-        inputs'.neovim.packages.nvim
-        (pkgs.writeShellScriptBin "mdvim" (lib.getExe inputs'.neovim.packages.mdvim))
-        (pkgs.writeShellScriptBin "todo" "${lib.getExe inputs'.neovim.packages.mdvim} ${constants.homedir}/todo.md")
+        packages'.neovim
+        (pkgs.writeShellScriptBin "mdvim" (lib.getExe packages'.neovim.mdvim))
+        (pkgs.writeShellScriptBin "todo" "${lib.getExe packages'.neovim.mdvim} ${constants.homedir}/todo.md")
       ];
 
       hj.xdg.mime-apps.default-applications = {

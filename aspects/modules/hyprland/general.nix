@@ -1,15 +1,10 @@
 {
-  inputs.hyprland = {
-    url = "github:hyprwm/Hyprland";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   w.desktop =
-    { inputs', ... }:
+    { packages', ... }:
     {
       custom.programs.hyprland = {
         enable = true;
-        package = inputs'.hyprland.packages.hyprland;
+        package = packages'.hyprland;
         withUWSM = false;
       };
 
@@ -22,14 +17,15 @@
         })
 
         hl.config({
-          render = { direct_scanout = 2 },
+          render = {
+            direct_scanout = 2,
+          },
 
           cursor = {
             inactive_timeout = 5000,
             hide_on_key_press = true,
             zoom_disable_aa = true,
             no_warps = true,
-            persistent_warps = true,
             warp_back_after_non_mouse_input = false,
             warp_on_change_workspace = 2,
             warp_on_toggle_special = 2,
@@ -56,6 +52,63 @@
             repeat_rate        = 40,
 
             follow_mouse       = 2,
+          },
+        })
+
+        hl.config({
+          general = {
+            gaps_in          = 15,
+            gaps_out         = 25,
+
+            border_size      = 1,
+
+            col              = {
+              active_border   = { colors = { "rgb(EC7420)", "rgb(fabd2f)" }, angle = 135 },
+              inactive_border = "rgb(aaaaaa)",
+            },
+
+            layout           = "lua:centercol",
+          },
+
+          decoration = {
+            -- Change transparency of focused and unfocused windows
+            active_opacity   = 1.0,
+
+            inactive_opacity = 1.0,
+
+            dim_special = 0.8,
+
+            shadow           = {
+              enabled        = true,
+              range          = 15,
+              render_power   = 4,
+              color          = 0x0cEC7420,
+              color_inactive = 0x00000000,
+            },
+
+            blur             = {
+              enabled  = true,
+              size     = 6,
+              passes   = 2,
+              vibrancy = 0.1696,
+            },
+          },
+
+          input = {
+            kb_layout          = "us",
+            kb_options         = "caps:escape",
+
+            numlock_by_default = true,
+
+            repeat_delay       = 300,
+            repeat_rate        = 40,
+
+            follow_mouse       = 2,
+          },
+
+
+          render = {
+            direct_scanout = 2,
           },
         })
 

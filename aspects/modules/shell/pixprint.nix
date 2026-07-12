@@ -2,8 +2,8 @@
   inputs.pixprint.url = "github:preprocessor/pixprint";
 
   w.default =
-    { pkgs, inputs', ... }:
+    { packages', ... }:
     {
-      hj.packages = [ inputs'.pixprint.packages.default ];
+      hj.packages = [ packages'.pixprint ];
     };
 }
