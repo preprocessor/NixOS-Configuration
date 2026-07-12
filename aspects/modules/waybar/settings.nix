@@ -58,10 +58,13 @@
               # on-click-middle = "histui get --format dmenu --since 24h | fuzzel --dmenu -p 'Notifications'";
             };
 
+          "clock" = {
+            format = "{:%I:%M}";
+          };
+
           "custom/hyprlayout" = {
             exec = pkgs.writeShellScript "waybar-hyprlayout" ''
               LAYOUT=$(hyprctl activeworkspace -j | jq -r .tiledLayout)
-
               echo "{\"text\": \"\", \"alt\": \"$LAYOUT\", \"tooltip\": \"\", \"class\": \"hyprlayout\", \"percentage\": 0 }"
             '';
             return-type = "json";

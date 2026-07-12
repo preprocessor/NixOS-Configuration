@@ -57,7 +57,7 @@
               constructFiles = {
                 config = {
                   relPath = "config.jsonc";
-                  builder = ''install -m655 -DT "${json.generate "config.jsonc" cfg.config}" "$2"'';
+                  builder = ''install -m644 -DT "${json.generate "config.jsonc" cfg.config}" "$2"'';
                 };
                 style = {
                   relPath = "style.css";
