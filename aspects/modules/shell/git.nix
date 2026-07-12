@@ -32,12 +32,6 @@
               result*
             ''}";
           };
-          delta = {
-            navigate = true;
-            light = true;
-            line-numbers = true;
-            hyperlinks = true;
-          };
           merge = {
             conflictStyle = "zdiff3";
           };
