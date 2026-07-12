@@ -2,15 +2,12 @@
   w.desktop = {
     custom.xdg.desktopEntries = {
       "isd".noDisplay = true;
-      "Fnott".noDisplay = true;
-      "fnott".noDisplay = true;
       "cups".noDisplay = true;
       "input-remapper-autoload".noDisplay = true;
       "qt5ct".noDisplay = true;
       "qt6ct".noDisplay = true;
       "nixos-manual".noDisplay = true;
       "btop".noDisplay = true;
-      "umpv".noDisplay = true;
       "org.openrgb.OpenRGB.desktop".noDisplay = true;
       "kvantummanager".noDisplay = true;
     };
