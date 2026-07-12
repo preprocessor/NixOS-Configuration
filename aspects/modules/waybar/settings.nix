@@ -47,11 +47,11 @@
               interval = 5;
               format = "{icon} {text}";
               format-icons = {
-                empty = ""; # No notifications
+                empty = "󰂜"; # No notifications
                 dnd = "󰂛"; # Do Not Disturb
                 low = "󱅫"; # Low priority
-                normal = "󱅫"; # Normal priority
-                critical = "󰂚"; # Critical notification
+                normal = "󰂚"; # Normal priority
+                critical = "󱅫"; # Critical notification
               };
               on-click = "histui dnd toggle";
               on-click-right = spawn 1300 600 "histui" "histui tui";
@@ -76,7 +76,6 @@
               dwindle = "󰕴 ";
             };
           };
-
         };
 
         style = with scheme.withHashtag; /* css */ ''
