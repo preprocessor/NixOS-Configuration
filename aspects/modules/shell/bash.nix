@@ -3,11 +3,10 @@
     {
       pkgs,
       lib,
-      config,
       ...
     }:
     {
-      programs.bash.interactiveShellInit = /* bash */ ''
+      hj.files.".bashrc".text = lib.mkAfter /* bash */ ''
         # Auto switch to fish while keeping bash as the system shell
         # See: https://fishshell.com/docs/current/index.html#default-shell
         PARENT_PROCESS=$(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm)
