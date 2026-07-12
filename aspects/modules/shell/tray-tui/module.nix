@@ -1,11 +1,8 @@
 {
-  inputs.tray-tui.url = "github:Levizor/tray-tui";
-
   w.default =
     {
       birdee,
       config,
-      inputs',
       pkgs,
       lib,
       ...
@@ -36,7 +33,7 @@
             { config, ... }:
             {
               inherit pkgs;
-              package = inputs'.tray-tui.packages.tray-tui;
+              package = pkgs.tray-tui;
               flags = {
                 "--config-path" = config.constructFiles.generatedConfig.path;
               };
@@ -47,6 +44,8 @@
                   echo -e "\n${cfg.moreCfg}" >> "$2"
                 '';
               };
+
+              _file = ./module.nix;
             }
           );
         };
