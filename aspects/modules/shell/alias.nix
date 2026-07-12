@@ -31,6 +31,7 @@
 
           rm = "trash-put ";
           rmdir = "trash-put ";
+          delete = "rm";
 
           repl = "nix repl --file ${cfgdir}/repl.nix";
 
