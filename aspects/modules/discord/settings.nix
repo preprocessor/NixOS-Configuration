@@ -15,15 +15,13 @@
         let
           cfg = config.custom.programs.vesktop;
         in
-        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:chat silent" })'' ];
+        [ /* lua */ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:chat silent" })'' ];
 
       custom.programs.hyprland.lua.files."window_rules.vesktop".content = /* lua */ ''
         hl.window_rule({
           name = "hide vesktop",
           match = { class = "^vesktop$" },
-
           workspace = "name:chat silent",
-
           tag = "+hidden"
         })
       '';

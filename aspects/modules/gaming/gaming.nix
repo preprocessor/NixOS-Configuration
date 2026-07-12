@@ -15,10 +15,7 @@
         trusted-public-keys = [ "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk=" ];
       };
 
-      nixpkgs.overlays = with inputs.nix-gaming-edge.overlays; [
-        default
-        pokemmo
-      ];
+      nixpkgs.overlays = [ inputs.nix-gaming-edge.overlays.default ];
 
       drivers.mesa-git = {
         enable = true;
@@ -47,7 +44,6 @@
       };
 
       services = {
-        input-remapper.enable = true;
         system76-scheduler = {
           enable = true;
           useStockConfig = true;
@@ -70,13 +66,10 @@
       };
 
       hj.packages = with pkgs; [
-        protontricks
         prismlauncher # Minecraft
-        bolt-launcher # Runescape
         dualsensectl # Dualsense Controller
         protonup-rs
         ckan # KSP mod loader
-        pokemmo
         me3
       ];
 
