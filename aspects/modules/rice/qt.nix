@@ -2,10 +2,10 @@
   w.default =
     { pkgs, ... }:
     {
-      environment.systemPackages = with pkgs; [
-        qt6Packages.qt6ct
-        qt6Packages.qtstyleplugin-kvantum
-        qt6Packages.qtwayland
+      environment.systemPackages = with pkgs.qt6Packages; [
+        qtstyleplugin-kvantum
+        qtwayland
+        qt6ct
       ];
 
       hj.environment.sessionVariables = {
