@@ -9,12 +9,11 @@
       M.layout_msg = function(ctx, msg)
         local command, arg = msg:match("^(%S+)%s*(.*)$")
 
-        if command == "ratio" then
-          local arg1 = arg:sub(1, 1)
-          if arg1 == "+" or arg1 == "-" then
-            M.ratio = utils.clamp(M.ratio + tonumber(arg), 0.2, 0.8)
-          else
-            M.ratio = utils.clamp(tonumber(arg), 0.2, 0.8)
+        if command == "resize" then
+          if ratio == 0.5 then
+            ratio = 0.3333
+          else 
+            ratio = 0.5
           end
         elseif command == "swap" then
           M.swap = not M.swap

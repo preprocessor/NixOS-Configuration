@@ -100,7 +100,7 @@
             end,
 
             ["lua:centercol"] = function()
-              hl.dispatch(hl.dsp.layout("ratio +0.10"))
+              hl.dispatch(hl.dsp.layout("resize"))
             end,
           })
         end)
@@ -116,7 +116,7 @@
             end,
 
             ["lua:centercol"] = function()
-              hl.dispatch(hl.dsp.layout("ratio -0.10"))
+              hl.dispatch(hl.dsp.layout("resize"))
             end,
           })
         end)
