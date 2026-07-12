@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       # https://github.com/Yujonpradhananga/moon/blob/0776b45ca3a22e3ef85b54c131bcf52ceec840a1/hypr/orbit.lua
       "layouts.orbit".content = /* lua */ ''
         hl.layout.register("orbit", {

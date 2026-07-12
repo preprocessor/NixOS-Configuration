@@ -58,11 +58,11 @@
         self'.packages.histui
       ];
 
-      custom.programs.hyprland.startup = [
+      my.hyprland.startup = [
         ''hl.exec_cmd("${self'.packages.histui}/bin/histuid")''
       ];
 
-      custom.programs.hyprland.lua.files."window_rules.histui".content = /* lua */ ''
+      my.hyprland.lua.files."window_rules.histui".content = /* lua */ ''
         hl.layer_rule({
           match        = { namespace = "^histui-notification$" },
           no_screen_share = true,

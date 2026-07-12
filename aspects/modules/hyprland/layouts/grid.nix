@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       "layouts.grid".content = /* lua */ ''
         hl.layout.register("grid", {
             recalculate = function(ctx)

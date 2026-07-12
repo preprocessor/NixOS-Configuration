@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.mdfried = {
+    my.mdfried = {
       enable = true;
       settings = {
         font_family = "Maple Mono NF";

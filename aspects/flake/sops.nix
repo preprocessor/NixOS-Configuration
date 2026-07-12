@@ -1,9 +1,6 @@
 { inputs, rootPath, ... }:
 {
-  inputs.sops-nix = {
-    url = "github:Mic92/sops-nix";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  tack.sops-nix.url = "gh:Mic92/sops-nix";
 
   w.default =
     {

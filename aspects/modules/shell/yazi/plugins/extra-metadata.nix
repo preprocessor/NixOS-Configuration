@@ -1,16 +1,22 @@
+{ inputs, ... }:
 {
-  envoy.extra-metadata.github = "boydaihungst/file-extra-metadata.yazi";
+  tack.extra-metadata = {
+    url = "gh:boydaihungst/file-extra-metadata.yazi";
+    type = "fetch";
+  };
 
   w.shell =
-    { envoy, pkgs, ... }:
+    { pkgs, ... }:
     {
-      custom.programs.yazi.plugins = {
+      my.yazi.plugins = {
         extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {
-          inherit (envoy.extra-metadata) pname version src;
+          src = inputs.extra-metadata;
+          pname = "yazi-extra-metadata";
+          version = "git";
         };
       };
 
-      custom.programs.yazi.settings = {
+      my.yazi.settings = {
         spotters = [
           {
             url = "*";

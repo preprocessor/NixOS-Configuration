@@ -2,11 +2,11 @@
   w.shell =
     { pkgs, config, ... }:
     {
-      custom.programs.yazi.plugins = {
+      my.yazi.plugins = {
         inherit (pkgs.yaziPlugins) lazygit;
       };
 
-      custom.programs.yazi.keymap = {
+      my.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
           (yaziKeymap [
             "g"

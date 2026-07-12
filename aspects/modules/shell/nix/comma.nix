@@ -1,9 +1,6 @@
 { inputs, lib, ... }:
 {
-  inputs.nix-index-database = {
-    url = "github:nix-community/nix-index-database";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  tack.nix-index-database.url = "gh:nix-community/nix-index-database";
 
   w.default = {
     imports = [ inputs.nix-index-database.nixosModules.default ];

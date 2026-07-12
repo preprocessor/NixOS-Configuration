@@ -23,7 +23,7 @@
         |> map (mime: lib.nameValuePair mime [ "mpv.desktop" ])
         |> lib.listToAttrs;
 
-      custom.programs.hyprland.lua.files."window_rules.mpv".content = /* lua */ ''
+      my.hyprland.lua.files."window_rules.mpv".content = /* lua */ ''
         hl.window_rule({
           name         = "mpv",
           match        = { class = "mpv" },
@@ -32,7 +32,7 @@
         })
       '';
 
-      custom.programs.mpv = {
+      my.mpv = {
         enable = true;
 
         conf = # ini

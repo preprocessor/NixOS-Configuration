@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files."window_rules.zathura".content = /* lua */ ''
+    my.hyprland.lua.files."window_rules.zathura".content = /* lua */ ''
       hl.window_rule({
         name = "float zathura",
         match = {
@@ -10,7 +10,7 @@
       })
     '';
 
-    custom.programs.zathura = {
+    my.zathura = {
       enable = true;
     };
   };

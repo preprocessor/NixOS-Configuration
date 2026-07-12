@@ -51,9 +51,9 @@
       };
     in
     {
-      custom.programs.yazi.plugins = { inherit confirm-dialog; };
+      my.yazi.plugins = { inherit confirm-dialog; };
 
-      custom.programs.yazi.keymap = {
+      my.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
           (yaziKeymap [ "<Enter>" ] "plugin confirm-dialog" "Safe open in chooser mode")
         ];

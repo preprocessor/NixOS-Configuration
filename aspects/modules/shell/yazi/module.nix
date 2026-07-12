@@ -1,8 +1,5 @@
 {
-  inputs.yazi = {
-    url = "github:sxyazi/yazi";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  tack.yazi.url = "gh:sxyazi/yazi";
 
   w.default =
     {
@@ -23,12 +20,12 @@
         };
 
       toml = pkgs.formats.toml { };
-      cfg = config.custom.programs.yazi;
+      cfg = config.my.yazi;
     in
     with lib;
     {
       config = mkIf (cfg.enable) {
-        custom.xdg.desktopEntries."yazi".noDisplay = true;
+        my.xdg.desktopEntries."yazi".noDisplay = true;
 
         utils.yaziKeymap = on: run: desc: { inherit on run desc; };
 
@@ -44,7 +41,7 @@
         '';
       };
 
-      options.custom.programs.yazi = {
+      options.my.yazi = {
         package = mkOption {
           type = types.package;
           default = birdee.wrappers.yazi.wrap {

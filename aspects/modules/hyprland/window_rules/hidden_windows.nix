@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       "keybinds.hide_windows".content = /* lua */ ''
         hl.bind("SUPER + B", function()
           local win = hl.get_active_window()

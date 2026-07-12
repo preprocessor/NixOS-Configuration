@@ -1,5 +1,8 @@
 {
-  envoy.fsel.github = "Mjoyufull/fsel";
+  tack.fsel = {
+    url = "gh:Mjoyufull/fsel";
+    type = "fetch";
+  };
 
   perSystem =
     { pkgs, ... }:
@@ -20,11 +23,11 @@
       ...
     }:
     let
-      cfg = config.custom.programs.eza;
+      cfg = config.my.eza;
       yaml = pkgs.formats.yaml { };
     in
     {
-      options.custom.programs.eza = {
+      options.my.eza = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {

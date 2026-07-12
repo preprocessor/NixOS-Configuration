@@ -10,7 +10,7 @@
       theme = config.theme.variant;
     in
     {
-      custom.programs.hyprland.lua.files = {
+      my.hyprland.lua.files = {
         "keybinds.otter".content = /* lua */ ''
           -- otter-launcher
           hl.bind("SUPER + Space", function()
@@ -19,9 +19,6 @@
               "kitty --class=otter.launcher " ..
               "-e otter-launcher", {
                 size         = { 1010, 510 },
-                border_size  = 0,
-                no_shadow    = true,
-                no_blur      = true,
 
                 center       = true,
                 float        = true,
@@ -43,7 +40,7 @@
         '';
       };
 
-      custom.programs.otter-launcher = {
+      my.otter-launcher = {
         enable = true;
 
         settings = {

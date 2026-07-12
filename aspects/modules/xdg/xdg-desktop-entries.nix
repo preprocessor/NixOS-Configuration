@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.xdg.desktopEntries = {
+    my.xdg.desktopEntries = {
       "isd".noDisplay = true;
       "cups".noDisplay = true;
       "input-remapper-autoload".noDisplay = true;
@@ -150,12 +150,12 @@
     {
       config = lib.fix (f: {
         environment.systemPackages =
-          config.custom.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
+          config.my.xdg.desktopEntries |> lib.mapAttrsToList makeFile |> map lib.hiPrio;
 
         hj.packages = f.environment.systemPackages;
       });
 
-      options.custom.xdg.desktopEntries = mkOption {
+      options.my.xdg.desktopEntries = mkOption {
         description = "Custom Desktop Entries";
         default = { };
         type = desktopEntry |> types.submodule |> types.attrsOf;

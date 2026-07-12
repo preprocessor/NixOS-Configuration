@@ -8,7 +8,7 @@
     {
       hj.packages = [ pkgs.ouch-rar ]; # general de/compression utility
 
-      custom.programs.hyprland.lua.files."keybinds.yazi".content = /* lua */ ''
+      my.hyprland.lua.files."keybinds.yazi".content = /* lua */ ''
         hl.bind("SUPER + E", function()
           utils.toggle_window("yazi-explorer", "kitty --app-id=yazi-explorer -e yazi ~",
             {
@@ -20,7 +20,7 @@
         end)
       '';
 
-      custom.programs.yazi = {
+      my.yazi = {
         enable = true;
 
         theme.flavor = lib.genAttrs [ "dark" "light" ] (_: "wyspr");

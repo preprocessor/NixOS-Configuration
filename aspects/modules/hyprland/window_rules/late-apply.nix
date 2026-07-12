@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       "window_rules.late_apply".content = /* lua */ ''
         ---@class FloatRule
         ---@field width    integer    width as percent of monitor width  (1..100)

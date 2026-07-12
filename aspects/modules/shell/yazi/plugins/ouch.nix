@@ -2,11 +2,11 @@
   w.shell =
     { pkgs, ... }:
     {
-      custom.programs.yazi.plugins = {
+      my.yazi.plugins = {
         inherit (pkgs.yaziPlugins) ouch;
       };
 
-      custom.programs.yazi.settings = {
+      my.yazi.settings = {
         plugin.prepend_previewers = [
           {
             mime = "application/{tar,bzip2,7z*,rar,xz,zstd,java-archive}";
@@ -19,7 +19,7 @@
         ];
       };
 
-      custom.programs.yazi.keymap = {
+      my.yazi.keymap = {
         mgr.prepend_keymap = [
           {
             on = [ "C" ];

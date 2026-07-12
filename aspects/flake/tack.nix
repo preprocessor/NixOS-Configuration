@@ -25,21 +25,24 @@
                 let
                   cfg = config.tack;
                   toml = pkgs.formats.toml { };
-                  tackToml = (cfg |> lib.filterAttrs (n: _: n == "all_follows" || n == "shorturls")) // {
+                  tackToml = (cfg |> lib.filterAttrs (n: _: n == "all_follow" || n == "shorturls")) // {
                     inputs = lib.removeAttrs cfg [
-                      "all_follows"
+                      "all_follow"
                       "shorturls"
                     ];
                   };
                 in
-                /* bash */ "install -m444 -DT '${toml.generate "pins.toml" tackToml}' pins.toml";
+                /* bash */ "install -m444 -DT '${toml.generate "pins.toml" tackToml}' .tack/pins.toml";
             };
         };
       };
 
     tack = {
+      tack.url = "gh:manic-systems/tack";
+
       shorturls = {
         gh = "github:{path}";
+        path = "git+file:///{path}";
       };
 
       all_follow = {

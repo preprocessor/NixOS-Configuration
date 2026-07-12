@@ -2,7 +2,7 @@
   w.desktop =
     { pkgs, lib, ... }:
     {
-      custom.services.udiskie = {
+      my.services.udiskie = {
         enable = true;
         settings = {
           program_options = {
@@ -26,10 +26,10 @@
 
       yaml = pkgs.formats.yaml { };
 
-      cfg = config.custom.services.udiskie;
+      cfg = config.my.services.udiskie;
     in
     {
-      options.custom.services.udiskie = {
+      options.my.services.udiskie = {
         enable = lib.mkEnableOption "" // {
           description = ''
             Whether to enable the udiskie mount daemon.

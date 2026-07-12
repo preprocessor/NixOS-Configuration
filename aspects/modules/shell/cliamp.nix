@@ -4,7 +4,7 @@
     {
       hj.packages = [ pkgs.cliamp ];
 
-      custom.programs.hyprland.lua.files."window_rules.cliamp".content = /* lua */ ''
+      my.hyprland.lua.files."window_rules.cliamp".content = /* lua */ ''
         hl.window_rule({
           name = "float cliamp",
           match = {
@@ -16,7 +16,7 @@
         })
       '';
 
-      custom.programs.otter-launcher.modules = [
+      my.otter-launcher.modules = [
         {
           cmd = ''hyprctl dispatch hl.dsp.exec_sh("kitty --app-id=CliampMusic -e ${pkgs.cliamp}/bin/cliamp; exit")'';
           description = "amp";

@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-  inputs.yazi-fuzzy-search = {
-    url = "github:onelocked/fuzzy-search.yazi";
-    flake = false;
+  tack.yazi-fuzzy-search = {
+    url = "gh:onelocked/fuzzy-search.yazi";
+    type = "fetch";
   };
 
   w.shell =
@@ -24,11 +24,11 @@
       };
     in
     {
-      custom.programs.yazi.plugins = {
+      my.yazi.plugins = {
         inherit fuzzy-search;
       };
 
-      custom.programs.yazi.keymap = {
+      my.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
           (yaziKeymap [ "<S-f>" ] "plugin fuzzy-search -- fd --TL=3" "Fuzzy Find Files")
           (yaziKeymap [ "<S-s>" ] "plugin fuzzy-search -- rg --TL=3" "Ripgrep Search")

@@ -1,11 +1,17 @@
+{ inputs, ... }:
 {
-  envoy.fsel.github = "Mjoyufull/fsel";
+  tack.fsel = {
+    url = "gh:Mjoyufull/fsel";
+    type = "fetch";
+  };
 
   perSystem =
-    { pkgs, envoy, ... }:
+    { pkgs, ... }:
     {
       packages.fsel = pkgs.rustPlatform.buildRustPackage {
-        inherit (envoy.fsel) pname version src;
+        src = inputs.fsel;
+        pname = "fsel";
+        version = "git";
         cargoHash = "sha256-SAQnY0VgRPLjkjmEgZcyjp6hFXxp54PB1j52qwAy9yI=";
       };
     };
@@ -20,11 +26,11 @@
       ...
     }:
     let
-      cfg = config.custom.programs.fsel;
+      cfg = config.my.fsel;
       toml = pkgs.formats.toml { };
     in
     {
-      options.custom.programs.fsel = {
+      options.my.fsel = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {

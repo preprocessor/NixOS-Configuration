@@ -4,8 +4,9 @@
     {
       hj.packages = with pkgs; [
         nix-output-monitor
-        nix-init
         nixfmt-rs
+        nix-tree
+        nix-init
         nurl
       ];
     };

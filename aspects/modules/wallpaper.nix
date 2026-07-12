@@ -22,11 +22,11 @@
         };
       };
 
-      custom.programs.hyprland.startup = [
+      my.hyprland.startup = [
         ''hl.exec_cmd("${lib.getExe pkgs.waypaper} --restore")''
       ];
 
-      custom.programs.hyprland.lua.files."window_rules.waypaper".content = /* lua */ ''
+      my.hyprland.lua.files."window_rules.waypaper".content = /* lua */ ''
         hl.window_rule({
           name = "float waypaper",
           match = {

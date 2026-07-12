@@ -1,14 +1,20 @@
+{ inputs, ... }:
 {
-  inputs.apple-fonts.url = "github:Lyndeno/apple-fonts.nix"; # Apple's New York & San Francisco fonts
-  envoy = {
-    chicago-font.github = "nikdog/chicago-font";
-    helvetica-font.github = "Kyles-World/Helvetica-Font";
+  tack = {
+    apple-fonts.url = "gh:Lyndeno/apple-fonts.nix";
+    chicago-font = {
+      url = "gh:nikdog/chicago-font";
+      type = "fetch";
+    };
+    helvetica-font = {
+      url = "gh:Kyles-World/Helvetica-Font";
+      type = "fetch";
+    };
   };
 
   w.desktop =
     {
-      envoy,
-      inputs',
+      packages',
       pkgs,
       ...
     }:
@@ -25,7 +31,10 @@
 
       fonts.packages = [
         (pkgs.stdenvNoCC.mkDerivation {
-          inherit (envoy.chicago-font) src pname version;
+          src = inputs.chicago-font;
+          pname = "chicago-font";
+          version = "0.1";
+
           dontUnpack = true;
           dontBuild = true;
           dontConfigure = true;
@@ -33,7 +42,10 @@
         })
 
         (pkgs.stdenvNoCC.mkDerivation {
-          inherit (envoy.helvetica-font) src pname version;
+          src = inputs.helvetica-font;
+          pname = "helvetica-font";
+          version = "0.1";
+
           dontUnpack = true;
           dontBuild = true;
           dontConfigure = true;
@@ -63,20 +75,20 @@
         })
       ];
 
-      custom.gtk.fonts = {
+      my.gtk.fonts = {
         serif = {
           name = "New York";
-          package = inputs'.apple-fonts.packages.ny;
+          package = packages'.apple-fonts.ny;
         };
 
         sans = {
           name = "SF Pro Display";
-          package = inputs'.apple-fonts.packages.sf-pro;
+          package = packages'.apple-fonts.sf-pro;
         };
 
         mono = {
           name = "SF Mono Regular";
-          package = inputs'.apple-fonts.packages.sf-mono;
+          package = packages'.apple-fonts.sf-mono;
         };
 
         emoji = {
@@ -84,5 +96,7 @@
           package = pkgs.noto-fonts-emoji-blob-bin;
         };
       };
+
+      _file = ./fonts.nix;
     };
 }

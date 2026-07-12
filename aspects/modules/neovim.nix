@@ -1,8 +1,5 @@
 {
-  inputs.neovim = {
-    url = "path:/home/wyspr/Configuration/Neovim/";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  tack.neovim.url = "path:/home/wyspr/Configuration/Neovim/";
 
   w.default =
     {
@@ -28,7 +25,7 @@
         "text/*" = [ "nvim.desktop" ];
       };
 
-      custom.xdg.desktopEntries = {
+      my.xdg.desktopEntries = {
         nvim = {
           noDisplay = true;
           exec = "nvim %F";

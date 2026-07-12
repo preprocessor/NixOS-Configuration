@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       "window_rules.general".content = /* lua */ ''
         hl.window_rule({
           -- Fix some dragging issues with XWayland

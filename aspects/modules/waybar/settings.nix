@@ -7,7 +7,7 @@
       ...
     }:
     {
-      custom.programs.waybar = {
+      my.waybar = {
         enable = true;
 
         config = {

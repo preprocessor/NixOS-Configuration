@@ -7,7 +7,7 @@
       ...
     }:
     let
-      cfg = config.custom.programs.hyprland;
+      cfg = config.my.hyprland;
 
       hasStartup = cfg.startup != [ ];
       hasPlugins = cfg.plugins != [ ];
@@ -29,12 +29,12 @@
         '')
 
         (lib.optionalString hasPlugins ''
-            -- custom.programs.hyprland.plugins
+            -- my.hyprland.plugins
           ${cfg.plugins |> map (entry: "  hyprctl plugin load ${pluginPath entry}")}
         '')
 
         (lib.optionalString hasStartup ''
-            -- custom.programs.hyprland.startup
+            -- my.hyprland.startup
           ${cfg.startup |> lib.concatMapStrings (command: "  ${command}\n")}'')
 
         (lib.optionalString (hasPlugins || hasStartup) ''
@@ -53,7 +53,7 @@
             hj.xdg.config.files = {
               "hypr/hyprland.lua".text = lib.concatStrings [
                 (lib.optionalString (cfg.lua.pre != "") ''
-                  -- custom.programs.hyprland.lua.pre
+                  -- my.hyprland.lua.pre
                   ${cfg.lua.pre}
 
                 '')
@@ -66,12 +66,12 @@
                     require("files." .. path)
                   end
 
-                  -- custom.programs.hyprland.lua.files."...".autoLoad = true
+                  -- my.hyprland.lua.files."...".autoLoad = true
                   ${autoLoadFiles |> lib.mapAttrsToList (name: _: ''load("${requireName name}")'') |> lib.concatLines}
                 '')
 
                 (lib.optionalString (cfg.lua.post != "") ''
-                  -- custom.programs.hyprland.lua.post
+                  -- my.hyprland.lua.post
                   ${cfg.lua.post}
 
                 '')

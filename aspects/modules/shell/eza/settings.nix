@@ -2,7 +2,7 @@
   w.default =
     { scheme, ... }:
     {
-      custom.programs.eza = {
+      my.eza = {
         enable = true;
         settings = with scheme.withHashtag; {
           colourful = true;

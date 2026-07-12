@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-core.url = "github:manic-systems/nixos-core/refs/tags/v1.0.1"; # NixOS modules covering hardware quirks
+  tack = {
+    nixpkgs.url = "gh:nixos/nixpkgs/nixos-unstable";
+    nixos-core.url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1";
   };
 
   w.default =

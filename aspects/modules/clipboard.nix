@@ -99,7 +99,7 @@
         pkgs.wl-clipboard
       ];
 
-      custom.programs.otter-launcher.modules =
+      my.otter-launcher.modules =
         let
           spawn = config.utils.hyprSpawn;
         in
@@ -137,7 +137,7 @@
         };
       };
 
-      custom.programs.hyprland.startup = [
+      my.hyprland.startup = [
         ''hl.exec_cmd("${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular")''
       ];
 

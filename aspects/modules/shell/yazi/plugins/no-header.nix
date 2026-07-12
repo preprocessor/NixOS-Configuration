@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-  inputs.yazi-no-header = {
-    url = "github:onelocked/no-header-prompt.yazi";
-    flake = false;
+  tack.yazi-no-header = {
+    url = "gh:onelocked/no-header-prompt.yazi";
+    type = "fetch";
   };
 
   w.shell =
@@ -23,11 +23,11 @@
       };
     in
     {
-      custom.programs.yazi.initLua = /* lua */ ''
+      my.yazi.initLua = /* lua */ ''
         require("no-header"):setup()
       '';
 
-      custom.programs.yazi.plugins = {
+      my.yazi.plugins = {
         inherit no-header;
       };
     };

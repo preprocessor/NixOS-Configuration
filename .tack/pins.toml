@@ -1,12 +1,9 @@
-[shorturls]
-gh = "github:{path}"
-
 [all_follow]
-nixpkgs = "nixpkgs"
-systems = "systems"
 flake-compat = "flake-compat"
 flake-utils = "flake-utils"
+nixpkgs = "nixpkgs"
 rust-overlay = "rust-overlay"
+systems = "systems"
 treefmt-nix = "treefmt-nix"
 
 [inputs.apple-fonts]
@@ -18,6 +15,30 @@ url = "gh:senchopens/base16.nix"
 [inputs.birdee]
 url = "gh:BirdeeHub/nix-wrapper-modules"
 
+[inputs.chicago-font]
+type = "fetch"
+url = "gh:nikdog/chicago-font"
+
+[inputs.crtty]
+type = "fetch"
+url = "gh:kosa12/CRTty"
+
+[inputs.extra-metadata]
+type = "fetch"
+url = "gh:boydaihungst/file-extra-metadata.yazi"
+
+[inputs.fish-completion-sync]
+type = "fetch"
+url = "gh:iynaix/fish-completion-sync"
+
+[inputs.fsel]
+type = "fetch"
+url = "gh:Mjoyufull/fsel"
+
+[inputs.helvetica-font]
+type = "fetch"
+url = "gh:Kyles-World/Helvetica-Font"
+
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
@@ -25,11 +46,11 @@ url = "gh:feel-co/hjem"
 url = "gh:hyprwm/Hyprland"
 
 [inputs.neovim]
-url = "git+path:/home/wyspr/Configuration/Neovim/"
+url = "path:/home/wyspr/Configuration/Neovim/"
 
 [inputs.nix-cachyos-kernel]
-url = "gh:xddxdd/nix-cachyos-kernel/release"
 exclude_follow = ["nixpkgs"]
+url = "gh:xddxdd/nix-cachyos-kernel/release"
 
 [inputs.nix-gaming-edge]
 url = "gh:powerofthe69/nix-gaming-edge"
@@ -43,31 +64,38 @@ url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1"
 [inputs.nixpkgs]
 url = "gh:nixos/nixpkgs/nixos-unstable"
 
+[inputs.otter-launcher]
+type = "fetch"
+url = "gh:kuokuo123/otter-launcher"
+
 [inputs.pixprint]
 url = "gh:preprocessor/pixprint"
 
 [inputs.sops-nix]
 url = "gh:Mic92/sops-nix"
 
-[inputs.yazi]
-url = "gh:sxyazi/yazi"
-
 [inputs.tack]
 url = "gh:manic-systems/tack"
 
-[inputs.crtty ]
-url = "gh:kosa12/CRTty"
-type = "fetch"
+[inputs.yazi]
+url = "gh:sxyazi/yazi"
 
 [inputs.yazi-fuzzy-search]
-url = "gh:onelocked/fuzzy-search.yazi"
 type = "fetch"
+url = "gh:onelocked/fuzzy-search.yazi"
 
 [inputs.yazi-no-header]
-url = "gh:onelocked/no-header-prompt.yazi"
 type = "fetch"
+url = "gh:onelocked/no-header-prompt.yazi"
 
 [inputs.yazi-plugins]
-url = "gh:AminurAlam/yazi-plugins"
 type = "fetch"
+url = "gh:AminurAlam/yazi-plugins"
 
+[inputs.yaziline]
+type = "fetch"
+url = "gh:llanosrocas/yaziline.yazi"
+
+[shorturls]
+gh = "github:{path}"
+path = "git+file:///{path}"

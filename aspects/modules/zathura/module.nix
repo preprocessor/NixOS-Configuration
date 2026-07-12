@@ -8,10 +8,10 @@
       ...
     }:
     let
-      cfg = config.custom.programs.zathura;
+      cfg = config.my.zathura;
     in
     {
-      options.custom.programs.zathura = {
+      options.my.zathura = {
         enable = lib.mkEnableOption ''
           Zathura, a highly customizable and functional document viewer
           focused on keyboard interaction'';

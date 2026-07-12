@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files."layouts.center_col".content = /* lua */ ''
+    my.hyprland.lua.files."layouts.center_col".content = /* lua */ ''
       local M = {
         ratio = 0.5,
         swap = false,

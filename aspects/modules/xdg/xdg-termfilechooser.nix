@@ -32,7 +32,7 @@
             path="$4"
             out="$5"
 
-            command="${lib.getExe pkgs.kitty} --app-id=FileChooser -e ${lib.getExe config.custom.programs.yazi.package}"
+            command="${lib.getExe pkgs.kitty} --app-id=FileChooser -e ${lib.getExe config.my.yazi.package}"
 
             if [ "$save" = "1" ]; then
                 export YAZI_CHOOSER_SAVE=1

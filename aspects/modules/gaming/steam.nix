@@ -7,13 +7,13 @@
       ...
     }:
     {
-      custom.programs.hyprland.startup =
+      my.hyprland.startup =
         let
           cfg = config.programs.steam;
         in
         [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:steam silent" })'' ];
 
-      custom.programs.hyprland.lua.files."window_rules.steam".content = /* lua */ ''
+      my.hyprland.lua.files."window_rules.steam".content = /* lua */ ''
         hl.window_rule({
           name = "games-workspace-move-steam",
           match = {

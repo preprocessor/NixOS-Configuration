@@ -1,6 +1,6 @@
 {
   w.gaming = {
-    custom.programs.mangohud = {
+    my.mangohud = {
       enable = true;
 
       settings = {
@@ -31,7 +31,7 @@
     let
       inherit (lib) mkIf mkOption types;
 
-      cfg = config.custom.programs.mangohud;
+      cfg = config.my.mangohud;
 
       settingsType =
         with types;
@@ -66,7 +66,7 @@
     in
     {
       options = {
-        custom.programs.mangohud = {
+        my.mangohud = {
           enable = lib.mkEnableOption "Mangohud";
 
           package = lib.mkPackageOption pkgs "mangohud" { };

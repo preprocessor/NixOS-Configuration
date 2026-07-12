@@ -14,7 +14,7 @@
     { pkgs, config, ... }:
     {
       nixpkgs.overlays = [
-        (_: prev: { kitty = config.custom.programs.kitty.package; })
+        (_: prev: { kitty = config.my.kitty.package; })
       ];
 
       hj.packages = [ pkgs.kitty ];
@@ -46,7 +46,7 @@
         ];
     in
     {
-      options.custom.programs.kitty = {
+      options.my.kitty = {
         settings = mkOption {
           type = types.attrsOf settingsValueType;
           default = { };
@@ -86,7 +86,7 @@
           default = birdee.wrappers.kitty.wrap (
             wrapper:
             let
-              cfg = config.custom.programs.kitty;
+              cfg = config.my.kitty;
             in
             {
               inherit pkgs;

@@ -1,8 +1,10 @@
 {
+  tack.hyprland.url = "gh:hyprwm/Hyprland";
+
   w.default =
     { lib, pkgs, ... }:
     {
-      options.custom.programs.hyprland =
+      options.my.hyprland =
         let
           inherit (lib) mkEnableOption mkOption;
         in

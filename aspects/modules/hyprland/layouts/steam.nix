@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       "layouts.steam".content = /* lua */ ''
         hl.layout.register("steam", {
           recalculate = function(ctx)

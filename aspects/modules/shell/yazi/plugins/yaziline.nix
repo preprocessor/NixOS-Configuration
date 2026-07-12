@@ -1,21 +1,25 @@
+{ inputs, ... }:
 {
-  envoy.yaziline.github = "llanosrocas/yaziline.yazi";
+  tack.yaziline = {
+    url = "gh:llanosrocas/yaziline.yazi";
+    type = "fetch";
+  };
 
   w.shell =
     {
       scheme,
-      envoy,
       pkgs,
-      lib,
       ...
     }:
     let
       yaziline = pkgs.yaziPlugins.mkYaziPlugin {
-        inherit (envoy.yaziline) pname version src;
+        src = inputs.yaziline;
+        pname = "yaziline";
+        version = "git";
       };
     in
     {
-      custom.programs.yazi.initLua = /* lua */ ''
+      my.yazi.initLua = /* lua */ ''
         require("yaziline"):setup({
           separator_style = "empty",
           secondary_color = "${scheme.withHashtag.base00}",
@@ -24,6 +28,6 @@
         })
       '';
 
-      custom.programs.yazi.plugins = { inherit yaziline; };
+      my.yazi.plugins = { inherit yaziline; };
     };
 }

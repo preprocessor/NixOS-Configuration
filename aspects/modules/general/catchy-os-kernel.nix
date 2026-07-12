@@ -1,7 +1,7 @@
 {
-  inputs.nix-cachyos-kernel = {
-    url = "github:xddxdd/nix-cachyos-kernel/release";
-    inputs.flake-parts.follows = "flake-parts";
+  tack.nix-cachyos-kernel = {
+    url = "gh:xddxdd/nix-cachyos-kernel/release";
+    exclude_follow = [ "nixpkgs" ];
   };
 
   w.default =

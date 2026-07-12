@@ -2,7 +2,7 @@
   w.wyspr-theme =
     { pkgs, ... }:
     {
-      custom.gtk = {
+      my.gtk = {
         enable = true;
 
         theme = {

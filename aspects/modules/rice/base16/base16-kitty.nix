@@ -2,7 +2,7 @@
   w.base16 =
     { scheme, ... }:
     {
-      custom.programs.kitty.theme = with scheme.withHashtag; ''
+      my.kitty.theme = with scheme.withHashtag; ''
         background ${base11}
         foreground ${base05}
         selection_background ${base05}

@@ -1,17 +1,18 @@
-{ lib, ... }:
+{ inputs, lib, ... }:
 {
-  envoy.otter-launcher.github = "kuokuo123/otter-launcher";
+  tack.otter-launcher = {
+    url = "gh:kuokuo123/otter-launcher";
+    type = "fetch";
+  };
 
   perSystem =
-    {
-      pkgs,
-      envoy,
-      ...
-    }:
+    { pkgs, ... }:
     {
       packages.otter-launcher = pkgs.rustPlatform.buildRustPackage {
-        inherit (envoy.otter-launcher) pname version src;
-        cargoHash = "sha256-GORp/ok5RNgwAePhtZeLlvhsQZRELIRYwFRROiUjQ1o=";
+        src = inputs.otter-launcher;
+        pname = "otter-launcher";
+        version = "git";
+        cargoHash = "sha256-WTjVDkExigSqV/u5GdjrkQOu2KH/eWTp7eCHIINDX50=";
         doCheck = false;
         patches = [
           (pkgs.writeText "selection.patch" # rust
@@ -53,11 +54,11 @@
       ...
     }@args:
     let
-      cfg = args.config.custom.programs.otter-launcher;
+      cfg = args.config.my.otter-launcher;
       toml = pkgs.formats.toml { };
     in
     {
-      options.custom.programs.otter-launcher = {
+      options.my.otter-launcher = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {

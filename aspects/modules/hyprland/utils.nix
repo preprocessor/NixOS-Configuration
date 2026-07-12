@@ -1,8 +1,8 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.pre = ''utils = require("files.utils")'';
+    my.hyprland.lua.pre = ''utils = require("files.utils")'';
 
-    custom.programs.hyprland.lua.files."utils" = {
+    my.hyprland.lua.files."utils" = {
       autoLoad = false;
       content = /* lua */ ''
         local utils = {}

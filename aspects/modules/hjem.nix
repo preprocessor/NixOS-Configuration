@@ -1,9 +1,6 @@
 { inputs, ... }:
 {
-  inputs.hjem = {
-    url = "github:feel-co/hjem";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  tack.hjem.url = "gh:feel-co/hjem";
 
   w.default =
     {

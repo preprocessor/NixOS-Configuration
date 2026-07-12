@@ -2,7 +2,7 @@
   w.desktop =
     { scheme, ... }:
     {
-      custom.programs.fzf = {
+      my.fzf = {
         enable = true;
         colors = with scheme.withHashtag; {
           "bg+" = base02; # selection background
@@ -41,12 +41,12 @@
       ...
     }:
     let
-      cfg = config.custom.programs.fzf;
+      cfg = config.my.fzf;
       renderedColors =
         colors: colors |> lib.mapAttrsToList (name: value: "${name}:${value}") |> lib.concatStringsSep ",";
     in
     {
-      options.custom.programs.fzf = {
+      options.my.fzf = {
         enable = lib.mkEnableOption "fzf";
         package = lib.mkPackageOption pkgs "fzf" { };
         defaultOptions = lib.mkOption {

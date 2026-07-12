@@ -2,17 +2,17 @@
   w.shell =
     { pkgs, ... }:
     {
-      custom.programs.yazi.initLua = /* lua */ ''
+      my.yazi.initLua = /* lua */ ''
         require("git"):setup {
         	order = 1500, -- Order of status signs showing in the line mode
         }
       '';
 
-      custom.programs.yazi.plugins = {
+      my.yazi.plugins = {
         inherit (pkgs.yaziPlugins) git;
       };
 
-      custom.programs.yazi.settings = {
+      my.yazi.settings = {
         plugin.prepend_fetchers = [
           {
             group = "git";

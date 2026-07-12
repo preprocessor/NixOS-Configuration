@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files."appearance".content = /* lua */ ''
+    my.hyprland.lua.files."appearance".content = /* lua */ ''
       hl.config({
         general = {
           gaps_in          = 15,

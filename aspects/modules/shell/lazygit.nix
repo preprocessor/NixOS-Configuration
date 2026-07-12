@@ -9,12 +9,10 @@
     }:
     let
       scheme = config.scheme.withHashtag;
-
     in
     {
       hj.packages = with pkgs; [
         lazygit
-        delta
       ];
 
       programs.fish.functions.lg = /* fish */ ''

@@ -1,12 +1,15 @@
+{ inputs, ... }:
 {
-  envoy.fish-completion-sync.github = "iynaix/fish-completion-sync";
+  tack.fish-completion-sync = {
+    url = "gh:iynaix/fish-completion-sync";
+    type = "fetch";
+  };
 
   w.shell =
     {
+      config,
       pkgs,
       lib,
-      config,
-      envoy,
       ...
     }:
     {
@@ -21,7 +24,7 @@
           set -g SHELL_PROGRAM fish
 
           # setup fish-completion-sync
-          source ${envoy.fish-completion-sync.src}/init.fish
+          source ${inputs.fish-completion-sync}/init.fish
 
           bind Z __onelockeds_fuzzy_zox
           bind -M insert Z __onelockeds_fuzzy_zox

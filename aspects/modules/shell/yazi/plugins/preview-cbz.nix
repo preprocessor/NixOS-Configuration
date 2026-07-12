@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-  inputs.yazi-plugins = {
-    url = "github:AminurAlam/yazi-plugins";
-    flake = false;
+  tack.yazi-plugins = {
+    url = "gh:AminurAlam/yazi-plugins";
+    type = "fetch";
   };
 
   w.default =
@@ -19,9 +19,9 @@
       };
     in
     {
-      custom.programs.yazi.plugins = { inherit preview-cbz; };
+      my.yazi.plugins = { inherit preview-cbz; };
 
-      custom.programs.yazi.settings = {
+      my.yazi.settings = {
         plugin.prepend_previewers = [
           {
             url = "*.cb{z,r}";

@@ -1,9 +1,6 @@
 { inputs, ... }:
 {
-  inputs.birdee = {
-    url = "github:BirdeeHub/nix-wrapper-modules";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  tack.birdee.url = "gh:BirdeeHub/nix-wrapper-modules";
 
   perSystem = {
     _module.args = { inherit (inputs) birdee; };

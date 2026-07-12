@@ -45,33 +45,57 @@
 
       withSystem =
         system: f:
-        f {
-          inherit system inputs rootPath;
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
+        let
           inputs' = inputs |> lib.mapAttrs (_: projectInput system);
           self' = projectInput system self;
           packages' =
-            inputs
-            |> lib.mapAttrs (_: projectInput system)
+            inputs'
             |> lib.mapAttrs (
-              inputName: key:
-              if key.packages ? default then
-                key.packages // key.packages.default
-              else if key.packages ? ${inputName} then
-                key.packages // key.packages.${inputName}
-              else
-                key.packages
+              inputName: projected:
+              let
+                pkgs = projected.packages or { };
+                extra = pkgs.default or pkgs.${inputName} or { };
+              in
+              pkgs // lib.optionalAttrs (builtins.isAttrs extra) extra
             );
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+        in
+        f {
+          inherit
+            system
+            inputs
+            rootPath
+            pkgs
+            inputs'
+            self'
+            packages'
+            ;
         };
+      # f rec {
+      #   inherit system inputs rootPath;
+      #   pkgs = inputs.nixpkgs.legacyPackages.${system};
+      #   inputs' = inputs |> lib.mapAttrs (_: projectInput system);
+      #   self' = projectInput system self;
+      #   packages' =
+      #     inputs'
+      #     |> lib.mapAttrs (
+      #       inputName: key:
+      #       if key.packages ? default then
+      #         key.packages // key.packages.default
+      #       else if key.packages ? ${inputName} then
+      #         key.packages // key.packages.${inputName}
+      #       else
+      #         key.packages
+      #     );
+      # };
 
       #  Evaluate the top-level modules
       topEval = lib.evalModules {
         specialArgs = { inherit inputs withSystem rootPath; };
         modules =
-          with lib;
           ./aspects
           |> lib.fileset.fileFilter (file: file.hasExt "nix" && !lib.hasPrefix "_" file.name)
-          |> fileset.toList;
+          |> lib.fileset.toList;
       };
 
       # Evaluate perSystem blocks for each system

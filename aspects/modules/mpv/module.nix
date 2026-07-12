@@ -8,11 +8,11 @@
       ...
     }:
     let
-      cfg = config.custom.programs.mpv;
+      cfg = config.my.mpv;
     in
     {
 
-      options.custom.programs.mpv = {
+      options.my.mpv = {
         enable = lib.mkEnableOption "mpv";
 
         conf = lib.mkOption {
@@ -70,9 +70,9 @@
           cfg.image-viewer
         ];
 
-        custom.xdg.desktopEntries."umpv".noDisplay = true;
+        my.xdg.desktopEntries."umpv".noDisplay = true;
 
-        custom.xdg.desktopEntries."mpvi" = {
+        my.xdg.desktopEntries."mpvi" = {
           name = "MPV Image Viewer";
           exec = "${cfg.image-viewer}/bin/mpv %U";
           noDisplay = true;

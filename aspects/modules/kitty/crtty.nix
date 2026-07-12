@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-  inputs.crtty = {
-    url = "github:kosa12/CRTty";
-    flake = false;
+  tack.crtty = {
+    url = "gh:kosa12/CRTty";
+    type = "fetch";
   };
 
   perSystem =

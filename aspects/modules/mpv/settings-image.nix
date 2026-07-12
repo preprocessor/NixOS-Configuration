@@ -17,7 +17,7 @@
         |> map (mime: lib.nameValuePair mime [ "mpvi.desktop" ])
         |> lib.listToAttrs;
 
-      custom.programs.mpv = {
+      my.mpv = {
         image-conf = # ini
           ''
             image-display-duration=inf

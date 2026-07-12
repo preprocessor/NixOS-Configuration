@@ -8,10 +8,10 @@
     }:
     let
       json = pkgs.formats.json { };
-      cfg = config.custom.programs.vesktop;
+      cfg = config.my.vesktop;
     in
     {
-      options.custom.programs.vesktop = {
+      options.my.vesktop = {
         enable = lib.mkEnableOption { };
 
         package = lib.mkPackageOption pkgs "vesktop" { };

@@ -6,7 +6,7 @@
         app2unit
       ];
 
-      custom.xdg.desktopEntries."uuctl".noDisplay = true;
+      my.xdg.desktopEntries."uuctl".noDisplay = true;
 
       hj.environment.sessionVariables = {
         APP2UNIT_SLICES = "a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice";

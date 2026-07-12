@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files."animations".content = /* lua */ ''
+    my.hyprland.lua.files."animations".content = /* lua */ ''
       hl.config({
         animations = {
           enabled = true,

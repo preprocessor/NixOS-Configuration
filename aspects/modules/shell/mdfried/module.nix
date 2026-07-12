@@ -7,11 +7,11 @@
       ...
     }:
     let
-      cfg = config.custom.programs.mdfried;
+      cfg = config.my.mdfried;
       toml = pkgs.formats.toml { };
     in
     {
-      options.custom.programs.mdfried = {
+      options.my.mdfried = {
         enable = lib.mkEnableOption { };
 
         package = lib.mkPackageOption pkgs "mdfried" { };

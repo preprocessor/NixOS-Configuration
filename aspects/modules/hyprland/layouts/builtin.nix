@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       "layouts.builtin".content = /* lua */ ''
         hl.config({
           dwindle = {

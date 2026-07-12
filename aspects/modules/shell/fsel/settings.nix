@@ -2,7 +2,7 @@
   w.default =
     { config, ... }:
     {
-      custom.programs.fsel = {
+      my.fsel = {
         enable = true;
         settings = {
           apps_border_color = "Purple";
@@ -38,7 +38,7 @@
         };
       };
 
-      custom.programs.otter-launcher = {
+      my.otter-launcher = {
         settings.general = {
           empty_module = "find";
           default_module = "app";

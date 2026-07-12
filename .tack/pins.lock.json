@@ -23,6 +23,14 @@
     "narHash": "sha256-vAmbArdCyjqpVW+37aCy/PMBOLIqukUXLQuEKLwUhA4=",
     "lastModified": 1782135443
   },
+  "chicago-font": {
+    "type": "github",
+    "owner": "nikdog",
+    "repo": "chicago-font",
+    "rev": "ad613ccf9e356035187a377618f0f552963e18b7",
+    "narHash": "sha256-M49oTUSc1jTmO2npx96wGYEopZU3+ql9L7mGm2rbzzM=",
+    "lastModified": 1753671569
+  },
   "crtty": {
     "type": "github",
     "owner": "kosa12",
@@ -30,6 +38,22 @@
     "rev": "673f61528a7640299719c07a380d0b87841a4aa3",
     "narHash": "sha256-KCprd3CCAYMobLF6/tHTtbY+DbZ4l5GwW4sOJXEJOFY=",
     "lastModified": 1770985802
+  },
+  "extra-metadata": {
+    "type": "github",
+    "owner": "boydaihungst",
+    "repo": "file-extra-metadata.yazi",
+    "rev": "611d0ed8d778e7a065ddc73d75bd932852af24f4",
+    "narHash": "sha256-Yq8nv/MSxOy0xTyeIQac/Gu8j1tLL6m7glFicjJ3fIs=",
+    "lastModified": 1782988567
+  },
+  "fish-completion-sync": {
+    "type": "github",
+    "owner": "iynaix",
+    "repo": "fish-completion-sync",
+    "rev": "4f058ad2986727a5f510e757bc82cbbfca4596f0",
+    "narHash": "sha256-kHpdCQdYcpvi9EFM/uZXv93mZqlk1zCi2DRhWaDyK5g=",
+    "lastModified": 1741513748
   },
   "flake-compat": {
     "type": "github",
@@ -47,6 +71,22 @@
     "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
     "lastModified": 1731533236
   },
+  "fsel": {
+    "type": "github",
+    "owner": "Mjoyufull",
+    "repo": "fsel",
+    "rev": "8a12d4f35e78297f3e2d55e026185710bff38338",
+    "narHash": "sha256-XGKD/DId5Eont4ytPV7LfGvykDRalMWx4pbkRVUNzxY=",
+    "lastModified": 1781478132
+  },
+  "helvetica-font": {
+    "type": "github",
+    "owner": "Kyles-World",
+    "repo": "Helvetica-Font",
+    "rev": "26bef19d2b9f3a8d1194629760ca1c0e14185d93",
+    "narHash": "sha256-EyqFPfjPGvQ1GIo3/4aTYum1tJRgVYqTmypgzj9T0BI=",
+    "lastModified": 1780376715
+  },
   "hjem": {
     "type": "github",
     "owner": "feel-co",
@@ -59,33 +99,33 @@
     "type": "github",
     "owner": "hyprwm",
     "repo": "Hyprland",
-    "rev": "01f5c9aee4c31e5b782e99eb354ee7230b999821",
-    "narHash": "sha256-fsDLDZuvet2iZv6svhcMjcO5LjwHrY6VQnJAfND/N+U=",
-    "lastModified": 1783582777
+    "rev": "824ed12c9d40a857bb5952b5b209d27d78e01d5b",
+    "narHash": "sha256-obiYHJlgNeugve/5CNHWdyHEvbyjEbHXWOeBZ3ZbqOI=",
+    "lastModified": 1783804259
   },
   "neovim": {
-    "type": "path",
-    "path": "/home/wyspr/Configuration/Neovim",
-    "lastModified": 1783378665,
-    "mtimeNanos": 1783378665525738801,
-    "treeSize": 857630,
-    "treeEntries": 781
+    "type": "git",
+    "url": "file:////home/wyspr/Configuration/Neovim",
+    "ref": "HEAD",
+    "rev": "d1750c570a32e22dccaec2eb92b84b5fcbab12e1",
+    "narHash": "sha256-igLTxHmgFhr1dEYqrncLALDGhxCSzoZJItBMA7oj/VA=",
+    "lastModified": 1783811119
   },
   "nix-cachyos-kernel": {
     "type": "github",
     "owner": "xddxdd",
     "repo": "nix-cachyos-kernel",
-    "rev": "cf393892e55698ed5ac49377a24476d87bd880d4",
-    "narHash": "sha256-7+9RDZQxflIV5AuRqxIh+ZK+GrFUgngAzo5wPyhxBP4=",
-    "lastModified": 1783276891
+    "rev": "6472f543b68e0b874603ad944419747815cfeb7a",
+    "narHash": "sha256-SgzzS5GtMFv323ritWP8A3rwhjphB7AYTfHLNSXGX3c=",
+    "lastModified": 1783794640
   },
   "nix-gaming-edge": {
     "type": "github",
     "owner": "powerofthe69",
     "repo": "nix-gaming-edge",
-    "rev": "ac2bb2cf7b81a3a268f441a45349ce4fe78a0d00",
-    "narHash": "sha256-v4KXW9OvmsHNPkmLyOIbc+mFgCMVK/Cm1OuuE6gkvTM=",
-    "lastModified": 1783497296
+    "rev": "6cee1efd82d9825e09cb7beaa82f20f96652e0c0",
+    "narHash": "sha256-p2nK8VCH/WjI2wqHHUHNFqsF3XeXKM5eOSgS0Cbmoug=",
+    "lastModified": 1783792802
   },
   "nix-index-database": {
     "type": "github",
@@ -107,9 +147,17 @@
     "type": "github",
     "owner": "nixos",
     "repo": "nixpkgs",
-    "rev": "0bb7ec54c8483066ec9d7720e780a5caa71f8612",
-    "narHash": "sha256-iffAls3iaNTyJC2faYcUXSI+Gp02cDjYl+MygxKl2GI=",
-    "lastModified": 1783522502
+    "rev": "e7a3ca8092b61ff85b6a45bf863ea2b2d6a661b3",
+    "narHash": "sha256-UgCQzxeWI75XM8G+hPrPh+MKzEPjG3SpAj7dtqSbksA=",
+    "lastModified": 1783776592
+  },
+  "otter-launcher": {
+    "type": "github",
+    "owner": "kuokuo123",
+    "repo": "otter-launcher",
+    "rev": "d101421377473a190701d53cbe28b8244edad728",
+    "narHash": "sha256-ZO2WzXNEM9XKuReixgQuP1G+5nrihYWajugBCIjjPkE=",
+    "lastModified": 1783339207
   },
   "pixprint": {
     "type": "github",
@@ -182,5 +230,13 @@
     "rev": "ce325af662cbdd438194c68b6d69a3ff59c1b305",
     "narHash": "sha256-5+Wopb+W0STi1JMTDnjmIXorZEzDzSdMfdHLK9vl8xs=",
     "lastModified": 1782585302
+  },
+  "yaziline": {
+    "type": "github",
+    "owner": "llanosrocas",
+    "repo": "yaziline.yazi",
+    "rev": "25161c18e61339b6a79f29f8948e3c360e3f9ace",
+    "narHash": "sha256-gF21K8Sn9VFh6nKcM5dhTiAH1sOE9D/Gmc8i3J8m+S4=",
+    "lastModified": 1778346155
   }
 }

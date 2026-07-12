@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       "workspaces".content = /* lua */ ''
         for index, name in ipairs({ "web", "dev", "chat", "media", "games" }) do
           hl.workspace_rule({ workspace = tostring(index), default_name = name, persistent = true })

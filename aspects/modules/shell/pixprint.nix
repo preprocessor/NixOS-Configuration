@@ -1,5 +1,5 @@
 {
-  inputs.pixprint.url = "github:preprocessor/pixprint";
+  tack.pixprint.url = "gh:preprocessor/pixprint";
 
   w.default =
     { packages', ... }:

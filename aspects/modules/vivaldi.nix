@@ -2,13 +2,13 @@
   w.desktop =
     { lib, config, ... }:
     {
-      custom.programs.vivaldi = {
+      my.vivaldi = {
         enable = true;
       };
 
-      custom.programs.hyprland.startup =
+      my.hyprland.startup =
         let
-          cfg = config.custom.programs.vivaldi;
+          cfg = config.my.vivaldi;
         in
         [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:web silent" })'' ];
 
@@ -32,11 +32,11 @@
       ...
     }:
     let
-      cfg = config.custom.programs.vivaldi;
+      cfg = config.my.vivaldi;
       yaml = pkgs.formats.yaml { };
     in
     {
-      options.custom.programs.vivaldi = {
+      options.my.vivaldi = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {

@@ -1,6 +1,6 @@
 {
   w.desktop = {
-    custom.programs.hyprland.lua.files = {
+    my.hyprland.lua.files = {
       "keybinds.overview".content = /* lua */ ''
         local overview = {
           origin_window = nil,

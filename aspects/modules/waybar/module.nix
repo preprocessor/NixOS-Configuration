@@ -8,14 +8,14 @@
       ...
     }:
     let
-      cfg = config.custom.programs.waybar;
+      cfg = config.my.waybar;
       json = pkgs.formats.json { };
     in
     {
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
 
-        custom.programs.hyprland.startup = [ ''hl.exec_cmd("${lib.getExe cfg.package}")'' ];
+        my.hyprland.startup = [ ''hl.exec_cmd("${lib.getExe cfg.package}")'' ];
 
         # systemd.user.services.waybar = {
         #   description = "waybar";
@@ -29,7 +29,7 @@
         # };
       };
 
-      options.custom.programs.waybar = {
+      options.my.waybar = {
         enable = lib.mkEnableOption { };
 
         config = lib.mkOption {

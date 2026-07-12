@@ -8,11 +8,11 @@
       ...
     }:
     let
-      cfg = config.custom.programs.tray-tui;
+      cfg = config.my.tray-tui;
       toml = pkgs.formats.toml { };
     in
     {
-      options.custom.programs.tray-tui = {
+      options.my.tray-tui = {
         enable = lib.mkEnableOption { };
 
         settings = lib.mkOption {

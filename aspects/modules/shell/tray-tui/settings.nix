@@ -2,7 +2,7 @@
   w.default =
     { config, lib, ... }:
     {
-      custom.programs.tray-tui = {
+      my.tray-tui = {
         enable = true;
         settings = {
 
@@ -51,13 +51,13 @@
         };
       };
 
-      custom.programs.otter-launcher.modules =
+      my.otter-launcher.modules =
         let
           spawn = config.utils.hyprSpawn;
         in
         [
           {
-            cmd = spawn 1200 1200 "tray-tui" (lib.getExe config.custom.programs.tray-tui.package);
+            cmd = spawn 1200 1200 "tray-tui" (lib.getExe config.my.tray-tui.package);
             description = "systray";
             prefix = "tray";
           }

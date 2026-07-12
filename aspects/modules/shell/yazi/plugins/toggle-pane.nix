@@ -1,19 +1,12 @@
 {
   w.shell =
+    { config, pkgs, ... }:
     {
-      config,
-      scheme,
-      envoy,
-      pkgs,
-      lib,
-      ...
-    }:
-    {
-      custom.programs.yazi.plugins = {
+      my.yazi.plugins = {
         inherit (pkgs.yaziPlugins) toggle-pane;
       };
 
-      custom.programs.yazi.keymap = {
+      my.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
           (yaziKeymap [ "[" ] "plugin toggle-pane min-parent" "Minimize left pane")
           (yaziKeymap [ "]" ] "plugin toggle-pane min-preview" "Minimize right pane")

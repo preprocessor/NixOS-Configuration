@@ -2,13 +2,13 @@
   w.desktop =
     { packages', ... }:
     {
-      custom.programs.hyprland = {
+      my.hyprland = {
         enable = true;
         package = packages'.hyprland;
         withUWSM = false;
       };
 
-      custom.programs.hyprland.lua.files."general".content = /* lua */ ''
+      my.hyprland.lua.files."general".content = /* lua */ ''
         hl.monitor({
           output = "DP-2",
           mode = "3440x1440@74.983",

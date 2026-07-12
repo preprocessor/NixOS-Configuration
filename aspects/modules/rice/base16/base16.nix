@@ -1,9 +1,6 @@
 { inputs, ... }:
 {
-  inputs.base16.url = "github:senchopens/base16.nix";
-
-  envoy.schemes.github = "tinted-theming/schemes";
-  # Browse themes at: https://tinted-theming.github.io/tinted-gallery/
+  tack.base16.url = "gh:senchopens/base16.nix";
 
   w.default =
     {

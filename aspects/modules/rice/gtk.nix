@@ -7,7 +7,7 @@
       ...
     }:
     let
-      cfg = config.custom.gtk;
+      cfg = config.my.gtk;
 
       default_index_theme = ''
         [Icon Theme]
@@ -112,7 +112,7 @@
         };
       };
 
-      options.custom.gtk = {
+      options.my.gtk = {
         enable = lib.mkEnableOption { };
 
         theme = {

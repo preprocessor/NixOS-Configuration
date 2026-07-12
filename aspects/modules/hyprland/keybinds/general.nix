@@ -26,7 +26,7 @@
       '';
     in
     {
-      custom.programs.hyprland.lua.files = {
+      my.hyprland.lua.files = {
         "keybinds.base".content = /* lua */ ''
           -- Close
           hl.bind("SUPER + Q", hl.dsp.window.close())

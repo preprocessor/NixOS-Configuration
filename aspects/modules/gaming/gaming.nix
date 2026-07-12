@@ -1,9 +1,6 @@
 { inputs, ... }:
 {
-  inputs.nix-gaming-edge = {
-    url = "path:/home/wyspr/Configuration/nix-gaming-edge";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+  tack.nix-gaming-edge.url = "gh:powerofthe69/nix-gaming-edge";
 
   w.gaming =
     { lib, pkgs, ... }:
