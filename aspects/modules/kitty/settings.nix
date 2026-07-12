@@ -44,7 +44,7 @@
           bold_font = ''family="Maple Mono NF" style="ExtraBold"'';
           italic_font = ''family="Maple Mono NF" style="Italic"'';
           bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
-          font_size = "14";
+          font_size = "14.5";
 
           resize_debounce_time = "0 0";
 
@@ -55,9 +55,10 @@
           remember_window_position = "no";
 
           draw_minimal_borders = "yes";
-          placement_strategy = "center";
-          update_check_interval = "24";
+          update_check_interval = "0";
           allow_hyperlinks = "yes";
+
+          shell_integration = "no-cursor";
 
           background_opacity = "0.5";
 
@@ -76,20 +77,16 @@
           cursor_trail = "1";
           cursor_trail_decay = "0.1 0.2";
           cursor_shape = "block";
-          cursor_blink_interval = "0.5";
-          cursor_stop_blinking_after = "15.0";
+          cursor_blink_interval = "0.5 ease-in-out";
+          cursor_stop_blinking_after = "0.0";
           enabled_layouts = "splits,stack";
 
-          # Better URL handling
           detect_urls = "yes";
           url_style = "curly";
-          # Match foot's "hide cursor when typing"
           mouse_hide_wait = "2.0";
 
-          # Match foot's hollow cursor when unfocused
-          focus_follows_mouse = "no"; # if you don't already have FFM
-          cursor_shape_unfocused = "hollow"; # kitty 0.36+
-
+          focus_follows_mouse = "no";
+          cursor_shape_unfocused = "hollow";
         };
 
         keybindings = {
