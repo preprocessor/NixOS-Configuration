@@ -1,5 +1,5 @@
 {
-  w.gaming = {
+  exo.mods.gaming = {
     my.mangohud = {
       enable = true;
 
@@ -21,7 +21,7 @@
     };
   };
 
-  w.default =
+  exo.skeleton =
     {
       config,
       lib,

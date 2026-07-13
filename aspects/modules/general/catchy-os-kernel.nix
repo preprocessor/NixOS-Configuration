@@ -4,7 +4,7 @@
     exclude_follow = [ "nixpkgs" ];
   };
 
-  w.default =
+  exo.mods.gaming =
     { inputs', ... }:
     {
       nix.settings = {

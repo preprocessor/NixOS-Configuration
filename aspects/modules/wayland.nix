@@ -1,10 +1,8 @@
 {
-  w.default =
+  exo.mods.desktop =
     { pkgs, lib, ... }:
     {
-      environment.systemPackages = with pkgs; [
-        app2unit
-      ];
+      environment.systemPackages = [ pkgs.app2unit ];
 
       my.xdg.desktopEntries."uuctl".noDisplay = true;
 
@@ -18,6 +16,6 @@
       services.graphical-desktop.enable = true;
       services.speechd.enable = lib.mkForce false;
 
-      _file = ./wayland.nix;
+      _file = "wayland.nix";
     };
 }

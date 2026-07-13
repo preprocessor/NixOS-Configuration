@@ -2,11 +2,11 @@
 {
   tack.sops-nix.url = "gh:Mic92/sops-nix";
 
-  w.default =
+  exo.core =
     {
-      pkgs,
-      config,
       constants,
+      config,
+      pkgs,
       ...
     }:
     {

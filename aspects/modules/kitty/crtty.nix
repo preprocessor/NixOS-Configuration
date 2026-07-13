@@ -36,7 +36,7 @@
       };
     };
 
-  w.desktop =
+  exo.mods.desktop =
     { self', ... }:
     {
       hj.packages = [ self'.packages.crtty ];

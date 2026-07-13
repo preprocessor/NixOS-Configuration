@@ -1,5 +1,5 @@
 {
-  w.desktop = {
+  exo.mods.desktop = {
     my.hyprland.lua.files."layouts.center_col".content = /* lua */ ''
       local M = {
         ratio = 0.5,

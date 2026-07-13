@@ -1,7 +1,7 @@
 {
   tack.pixprint.url = "gh:preprocessor/pixprint";
 
-  w.default =
+  exo.core =
     { packages', ... }:
     {
       hj.packages = [ packages'.pixprint ];

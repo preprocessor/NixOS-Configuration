@@ -2,7 +2,7 @@
 {
   tack.hjem.url = "gh:feel-co/hjem";
 
-  w.default =
+  exo.core =
     {
       config,
       lib,
@@ -20,10 +20,17 @@
 
       hjem.clobberByDefault = true;
 
-      # Sorce environment variables
-      hj.files.".profile" = {
-        executable = true;
-        source = config.hj.environment.loadEnv;
+      hj = {
+        enable = true;
+
+        user = constants.username;
+        directory = constants.homedir;
+
+        # Sorce environment variables
+        files.".profile" = {
+          executable = true;
+          source = config.hj.environment.loadEnv;
+        };
       };
     };
 }

@@ -1,18 +1,14 @@
 { lib, ... }:
-{
-  imports = [ (lib.mkAliasOptionModule [ "w" ] [ "nixos" "modules" ]) ];
-
-  options.utils = lib.mkOption {
+let
+  utilOption = lib.mkOption {
     type = lib.types.attrsOf lib.types.unspecified;
     default = { };
   };
+in
+{
+  options.utils = utilOption;
 
   config = {
-    w.default = {
-      options.utils = lib.mkOption {
-        type = lib.types.attrsOf lib.types.unspecified;
-        default = { };
-      };
-    };
+    exo.skeleton.options.utils = utilOption;
   };
 }

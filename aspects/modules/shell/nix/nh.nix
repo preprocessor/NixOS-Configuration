@@ -1,5 +1,5 @@
 {
-  w.default = {
+  exo.core = {
     programs.nh = {
       enable = true;
       flake = "$HOME/Configuration/NixOS"; # sets NH_OS_FLAKE variable for you

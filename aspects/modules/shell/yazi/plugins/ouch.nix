@@ -1,5 +1,5 @@
 {
-  w.shell =
+  exo.core =
     { pkgs, ... }:
     {
       my.yazi.plugins = {

@@ -46,7 +46,7 @@
       };
     };
 
-  w.default =
+  exo.skeleton =
     {
       birdee,
       self',

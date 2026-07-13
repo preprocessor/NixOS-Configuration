@@ -1,5 +1,5 @@
 {
-  w.ramiel =
+  exo.host.ramiel =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
@@ -9,7 +9,6 @@
 
       hj.packages = with pkgs; [
         gdmap # similar to WinDirStat
-        mpv
       ];
     };
 }

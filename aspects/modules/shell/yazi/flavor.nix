@@ -1,5 +1,5 @@
 {
-  w.shell =
+  exo.core =
     { scheme, ... }:
     {
       my.yazi = {

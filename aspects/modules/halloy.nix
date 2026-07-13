@@ -1,10 +1,8 @@
 {
-  w.default =
+  exo.mods.irc =
     { pkgs, ... }:
     {
-      hj.packages = with pkgs; [
-        halloy
-      ];
+      hj.packages = [ pkgs.halloy ];
 
       hj.xdg.config.files = {
         "halloy/config.toml".text = /* toml */ ''

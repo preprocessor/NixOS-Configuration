@@ -52,7 +52,7 @@
       };
     };
 
-    w.default =
+    exo.core =
       { packages', ... }:
       {
         hj.packages = [ packages'.tack ];

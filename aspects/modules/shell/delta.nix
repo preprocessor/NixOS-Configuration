@@ -1,11 +1,11 @@
 {
-  w.default =
+  exo.core =
     {
-      lib,
       birdee,
-      scheme,
       config,
+      scheme,
       pkgs,
+      lib,
       ...
     }:
     let
@@ -43,10 +43,10 @@
               "--hyperlinks-file-link-format" = "lazygit-edit://{path}:{line}";
               "--line-fill-method" = "ansi";
               "--commit-style" = "${yellow}";
-              "--paging" = "never";
               "--file-style" = "${bright-red}";
-              "--features" = "space-separated";
               "--true-color" = "always";
+              "--features" = "space-separated";
+              "--paging" = "never";
             };
           };
         };

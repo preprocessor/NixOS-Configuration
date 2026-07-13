@@ -1,5 +1,5 @@
 {
-  w.default =
+  exo.mods.printing =
     { pkgs, ... }:
     {
       # Enable CUPS to print documents.

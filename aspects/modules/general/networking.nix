@@ -1,5 +1,5 @@
 {
-  w.default = {
+  exo.core = {
     # Enable networking
     networking.networkmanager.enable = true;
 

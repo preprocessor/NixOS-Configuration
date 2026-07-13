@@ -1,5 +1,5 @@
 {
-  w.default = {
+  exo.core = {
     programs.direnv = {
       enable = true;
       silent = true;

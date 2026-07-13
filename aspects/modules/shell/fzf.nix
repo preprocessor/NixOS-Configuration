@@ -1,5 +1,5 @@
 {
-  w.desktop =
+  exo.core =
     { scheme, ... }:
     {
       my.fzf = {
@@ -33,7 +33,7 @@
       };
     };
 
-  w.default =
+  exo.skeleton =
     {
       config,
       lib,
@@ -48,18 +48,23 @@
     {
       options.my.fzf = {
         enable = lib.mkEnableOption "fzf";
+
         package = lib.mkPackageOption pkgs "fzf" { };
+
         defaultOptions = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [ ];
         };
+
         colors = lib.mkOption {
           type = lib.types.attrsOf lib.types.str;
           default = { };
         };
       };
+
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
+
         hj.environment.sessionVariables = {
           FZF_DEFAULT_OPTS = lib.escapeShellArgs (
             cfg.defaultOptions ++ lib.optional (cfg.colors != { }) "--color=${renderedColors cfg.colors}"
@@ -71,7 +76,7 @@
         '';
       };
 
-      _file = ./fzf.nix;
+      _file = "fzf.nix";
     };
 
 }

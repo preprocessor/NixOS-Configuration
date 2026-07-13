@@ -1,18 +1,18 @@
 {
-  w.desktop =
-    { pkgs, lib, ... }:
+  exo.host.ramiel =
+    { config, lib, ... }:
     {
       my.services.udiskie = {
         enable = true;
         settings = {
           program_options = {
-            file_manager = "${lib.getExe pkgs.kitty} -e ${lib.getExe pkgs.yazi}";
+            file_manager = "${lib.getExe config.my.kitty.package} -e ${lib.getExe config.my.yazi.package}";
           };
         };
       };
     };
 
-  w.default =
+  exo.skeleton =
     {
       pkgs,
       config,
@@ -33,11 +33,6 @@
         enable = lib.mkEnableOption "" // {
           description = ''
             Whether to enable the udiskie mount daemon.
-
-            Note, if you use NixOS then you must add
-            `services.udisks2.enable = true`
-            to your system configuration. Otherwise mounting will fail because
-            the Udisk2 DBus service is not found.
           '';
         };
 

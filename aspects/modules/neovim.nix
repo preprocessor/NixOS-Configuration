@@ -1,7 +1,7 @@
 {
   tack.neovim.url = "path:/home/wyspr/Configuration/Neovim/";
 
-  w.default =
+  exo.core =
     {
       constants,
       packages',
@@ -55,5 +55,4 @@
         };
       };
     };
-
 }

@@ -85,31 +85,13 @@
       _file = ./clipboard.nix;
     };
 
-  w.default =
-    {
-      config,
-      self',
-      pkgs,
-      lib,
-      ...
-    }:
+  exo.core =
+    { self', pkgs, ... }:
     {
       hj.packages = [
         self'.packages.cliphist-tui
         pkgs.wl-clipboard
       ];
-
-      my.otter-launcher.modules =
-        let
-          spawn = config.utils.hyprSpawn;
-        in
-        [
-          {
-            description = "board";
-            prefix = "clip";
-            cmd = spawn 800 1000 "cliphist-tui" (lib.getExe' self'.packages.cliphist-tui "cliphist-tui");
-          }
-        ];
 
       systemd.user.services = {
         cliphist-text = {
@@ -136,6 +118,28 @@
           };
         };
       };
+    };
+
+  exo.host.ramiel =
+    {
+      config,
+      self',
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      my.otter-launcher.modules =
+        let
+          spawn = config.utils.hyprSpawn;
+        in
+        [
+          {
+            description = "board";
+            prefix = "clip";
+            cmd = spawn 800 1000 "cliphist-tui" (lib.getExe' self'.packages.cliphist-tui "cliphist-tui");
+          }
+        ];
 
       my.hyprland.startup = [
         ''hl.exec_cmd("${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular")''

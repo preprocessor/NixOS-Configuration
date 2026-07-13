@@ -1,5 +1,5 @@
 {
-  w.desktop =
+  exo.mods.desktop =
     { pkgs, lib, ... }:
     {
       hj.packages = with pkgs; [
@@ -22,9 +22,7 @@
         };
       };
 
-      my.hyprland.startup = [
-        ''hl.exec_cmd("${lib.getExe pkgs.waypaper} --restore")''
-      ];
+      my.hyprland.startup = [ "hl.exec_cmd('${lib.getExe pkgs.waypaper} --restore')" ];
 
       my.hyprland.lua.files."window_rules.waypaper".content = /* lua */ ''
         hl.window_rule({

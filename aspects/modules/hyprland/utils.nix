@@ -1,5 +1,5 @@
 {
-  w.desktop = {
+  exo.mods.desktop = {
     my.hyprland.lua.pre = ''utils = require("files.utils")'';
 
     my.hyprland.lua.files."utils" = {

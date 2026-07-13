@@ -1,5 +1,5 @@
 {
-  w.desktop = {
+  exo.mods.desktop = {
     my.hyprland.lua.files = {
       "workspaces".content = /* lua */ ''
         for index, name in ipairs({ "web", "dev", "chat", "media", "games" }) do

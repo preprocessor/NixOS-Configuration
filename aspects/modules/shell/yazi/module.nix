@@ -1,7 +1,7 @@
 {
   tack.yazi.url = "gh:sxyazi/yazi";
 
-  w.default =
+  exo.skeleton =
     {
       pkgs,
       lib,

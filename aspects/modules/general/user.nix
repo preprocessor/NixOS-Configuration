@@ -1,17 +1,10 @@
 {
-  w.default =
+  exo.core =
     { constants, ... }:
     let
-      inherit (constants) username homedir;
+      inherit (constants) username;
     in
     {
-      # Will be referenced as "hj" in this flake
-      hjem.users.${username} = {
-        enable = true;
-        user = username;
-        directory = homedir;
-      };
-
       users.users.${username} = {
         description = username;
         isNormalUser = true;

@@ -10,17 +10,7 @@
       );
     };
 
-  w.desktop =
-    { pkgs, config, ... }:
-    {
-      nixpkgs.overlays = [
-        (_: prev: { kitty = config.my.kitty.package; })
-      ];
-
-      hj.packages = [ pkgs.kitty ];
-    };
-
-  w.default =
+  exo.skeleton =
     {
       lib,
       pkgs,
@@ -44,9 +34,16 @@
           int
           float
         ];
+      cfg = config.my.kitty;
     in
     {
+      config = lib.mkIf cfg.enable {
+        hj.packages = [ cfg.package ];
+      };
+
       options.my.kitty = {
+        enable = lib.mkEnableOption { };
+
         settings = mkOption {
           type = types.attrsOf settingsValueType;
           default = { };

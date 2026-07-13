@@ -5,7 +5,7 @@
     type = "fetch";
   };
 
-  w.shell =
+  exo.core =
     {
       config,
       pkgs,

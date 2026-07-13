@@ -5,7 +5,7 @@
     type = "fetch";
   };
 
-  w.shell =
+  exo.core =
     {
       config,
       pkgs,
@@ -84,7 +84,8 @@
 
     };
 
-  w.default =
+  # [todo] full hjem + wrapped implementation
+  exo.skeleton =
     { lib, ... }:
     {
       options.programs.fish.functions = lib.mkOption {

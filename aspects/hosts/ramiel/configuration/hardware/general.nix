@@ -1,5 +1,5 @@
 {
-  w.ramiel =
+  exo.hardware.desktop-pc =
     { pkgs, ... }:
     {
       hardware.bluetooth.enable = true;

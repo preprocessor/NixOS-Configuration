@@ -1,5 +1,5 @@
 {
-  w.desktop = {
+  exo.mods.desktop = {
     my.xdg.desktopEntries = {
       "isd".noDisplay = true;
       "cups".noDisplay = true;
@@ -13,7 +13,7 @@
     };
   };
 
-  w.default =
+  exo.skeleton =
     {
       config,
       pkgs,

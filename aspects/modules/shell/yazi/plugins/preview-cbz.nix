@@ -5,7 +5,7 @@
     type = "fetch";
   };
 
-  w.default =
+  exo.core =
     { pkgs, lib, ... }:
     let
       preview-cbz = pkgs.yaziPlugins.mkYaziPlugin {

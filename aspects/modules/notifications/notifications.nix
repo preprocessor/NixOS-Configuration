@@ -50,7 +50,7 @@
       });
     };
 
-  w.desktop =
+  exo.mods.desktop =
     { self', pkgs, ... }:
     {
       hj.packages = [

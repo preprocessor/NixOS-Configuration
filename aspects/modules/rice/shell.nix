@@ -70,10 +70,9 @@
             mainProgram = "gotermfx";
           };
         });
-
       };
 
-      devShells.wyce = pkgs.mkShell {
+      devShells.rice = pkgs.mkShell {
         packages =
           with pkgs;
           [

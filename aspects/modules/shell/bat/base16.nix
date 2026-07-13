@@ -1,6 +1,6 @@
 {
 
-  w.base16 =
+  exo.mods.desktop =
     { scheme, ... }:
     {
       hj.xdg.config.files."bat/config".text = "--theme=base16";

@@ -1,6 +1,6 @@
 {
-  w.default =
-    { pkgs, lib, ... }:
+  exo.core =
+    { pkgs, ... }:
     {
       hj.packages = [ pkgs.nix-your-shell ];
 

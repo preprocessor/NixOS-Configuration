@@ -1,5 +1,5 @@
 {
-  w.desktop = {
+  exo.mods.desktop = {
     my.hyprland.lua.files = {
       "keybinds.hide_windows".content = /* lua */ ''
         hl.bind("SUPER + B", function()

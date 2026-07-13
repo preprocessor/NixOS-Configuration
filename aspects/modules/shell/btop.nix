@@ -15,11 +15,12 @@
       _file = ./btop.nix;
     };
 
-  w.default =
+  exo.core =
     { self', ... }:
     {
       hj.packages = [ self'.packages.btop ];
 
+      # Enable monitoring of GPU wattage by programs like btop
       systemd.tmpfiles.rules = [
         "Z /sys/class/powercap/intel-rapl:0/energy_uj 0444 root root - -"
       ];

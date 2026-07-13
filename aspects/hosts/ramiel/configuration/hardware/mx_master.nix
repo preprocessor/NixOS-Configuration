@@ -1,5 +1,5 @@
 {
-  w.ramiel =
+  exo.hardware.desktop-pc =
     { pkgs, ... }:
     {
       environment.systemPackages = [ pkgs.logiops ];

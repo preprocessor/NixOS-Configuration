@@ -1,5 +1,5 @@
 {
-  w.desktop = {
+  exo.mods.desktop = {
     my.hyprland.lua.files = {
       "keybinds.overview".content = /* lua */ ''
         local overview = {

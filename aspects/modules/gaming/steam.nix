@@ -1,5 +1,5 @@
 {
-  w.gaming =
+  exo.mods.gaming =
     {
       pkgs,
       lib,

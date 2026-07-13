@@ -1,5 +1,5 @@
 {
-  w.desktop =
+  exo.mods.desktop =
     { config, lib, ... }:
     {
 

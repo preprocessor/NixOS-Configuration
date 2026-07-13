@@ -1,5 +1,5 @@
 {
-  w.wyspr-theme =
+  exo.mods.desktop =
     { pkgs, ... }:
     {
       my.gtk = {

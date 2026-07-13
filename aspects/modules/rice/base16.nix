@@ -2,9 +2,10 @@
 {
   tack.base16.url = "gh:senchopens/base16.nix";
 
-  w.default =
+  exo.skeleton =
     {
       config,
+      theme,
       lib,
       ...
     }:
@@ -36,8 +37,7 @@
 
       config =
         let
-          cfg = config.theme;
-          scheme = cfg.${cfg.variant};
+          scheme = config.theme.${theme};
         in
         {
           inherit scheme;
@@ -46,7 +46,6 @@
             inherit (config) scheme;
           };
         };
-
     };
 
   _file = ./base16.nix;

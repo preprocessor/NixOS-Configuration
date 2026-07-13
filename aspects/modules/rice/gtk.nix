@@ -1,5 +1,5 @@
 {
-  w.default =
+  exo.skeleton =
     {
       lib,
       pkgs,

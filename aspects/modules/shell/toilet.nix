@@ -46,7 +46,7 @@
       };
     };
 
-  w.default =
+  exo.core =
     { self', ... }:
     {
       hj.packages = [ self'.packages.toilet ];

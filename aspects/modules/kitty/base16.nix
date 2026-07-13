@@ -1,5 +1,5 @@
 {
-  w.base16 =
+  exo.skeleton =
     { scheme, ... }:
     {
       my.kitty.theme = with scheme.withHashtag; ''

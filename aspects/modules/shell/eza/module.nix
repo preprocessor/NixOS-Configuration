@@ -13,7 +13,7 @@
       });
     };
 
-  w.default =
+  exo.skeleton =
     {
       birdee,
       config,

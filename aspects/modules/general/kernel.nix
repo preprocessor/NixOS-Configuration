@@ -1,5 +1,5 @@
 {
-  w.default =
+  exo.core =
     { pkgs, constants, ... }:
     {
       environment.systemPackages = [ pkgs.ddcutil ];

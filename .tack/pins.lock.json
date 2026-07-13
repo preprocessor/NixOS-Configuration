@@ -15,6 +15,14 @@
     "narHash": "sha256-qcMhnL7aGAuFuutH4rq9fvAhCpJWVHLcHVZLtPctPlo=",
     "lastModified": 1755819240
   },
+  "bat-syntax-justfile": {
+    "type": "github",
+    "owner": "nk9",
+    "repo": "just_sublime",
+    "rev": "2dcc60286d1af6a4c6c2c03d50bc03230dc56ce3",
+    "narHash": "sha256-XlxItYVL9I612DhfCGHiUdv6U6Nv9LOlEbJVf1zTwPg=",
+    "lastModified": 1775998107
+  },
   "birdee": {
     "type": "github",
     "owner": "BirdeeHub",
@@ -70,6 +78,14 @@
     "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
     "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
     "lastModified": 1731533236
+  },
+  "fragment-mono": {
+    "type": "github",
+    "owner": "dtinth",
+    "repo": "fragment-mono-weights",
+    "rev": "ab47063dc6b2d2040071173ce87ec84d6d5997ed",
+    "narHash": "sha256-TF0LW+4axEQvmNRvRL7zZACkALA7SgM2EKZiqJQj7x0=",
+    "lastModified": 1705316590
   },
   "fsel": {
     "type": "github",

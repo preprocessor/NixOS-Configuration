@@ -1,7 +1,7 @@
 {
   tack.hyprland.url = "gh:hyprwm/Hyprland";
 
-  w.default =
+  exo.skeleton =
     { lib, pkgs, ... }:
     {
       options.my.hyprland =

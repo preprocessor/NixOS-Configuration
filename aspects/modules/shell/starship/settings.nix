@@ -1,5 +1,5 @@
 {
-  w.desktop =
+  exo.core =
     { config, ... }:
     let
       theme = config.theme.variant;

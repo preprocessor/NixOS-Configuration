@@ -1,5 +1,5 @@
 {
-  w.desktop = {
+  exo.mods.desktop = {
     my.hyprland.lua.files = {
       "layouts.steam".content = /* lua */ ''
         hl.layout.register("steam", {

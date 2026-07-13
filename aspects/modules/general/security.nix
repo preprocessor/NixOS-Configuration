@@ -1,5 +1,5 @@
 {
-  w.default =
+  exo.core =
     { pkgs, ... }:
     {
       security = {
@@ -18,8 +18,6 @@
         pam.services.swaylock = { };
       };
       services.gnome.gnome-keyring.enable = true; # secret service
-
-      virtualisation.podman.enable = true;
 
       systemd.user.services.polkit-agent = {
         description = "PolicyKit Authentication by Gnome";

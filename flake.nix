@@ -1,3 +1,4 @@
+#
 #         ▄▀▀▀▄   ▄▀▄   ▄▀▄
 #       ▄▀ ▄█▄ ▀▄▀ ▄ ▀▄▀ ▄ ▀▄
 #     ▄▀ ▄█████▄ ▄▛██▄ ▄▛██▄ ▀▄▄▄  ▄▄▄▄              ▄▄▄▄▄▄  ▄▄▀▀▀▀▄     ▄▀▀▀▄
@@ -15,6 +16,7 @@
 #    ▀▄ ▀ █               █ ▄███▆▄▄▆█░ ▄▀ ▀▀▀▀▀      █ ██▀ ▄▀▀    ▀▀▀
 #      ▀▀▀                █ ▀ ▄ ▀▀▀▀▀ ▄▀             █ █ ▄▀
 #                          ▀▀▀ ▀▀▀▀▀▀▀               ▀▄▄▄▀
+#
 {
   description = "wyspr's departed flake";
 
@@ -99,7 +101,7 @@
           # packages': a convenience layer on top of inputs'.<name>.packages
           #
           # So now:
-          #   packages'.someInput.foo
+          #   packages'.someInput
           # is shorthand for:
           #   inputs.foo.packages.${system}.default
           # or
@@ -123,7 +125,7 @@
             );
         };
 
-      # Integral options for departed, merged with topEval's module list
+      # Integral options for departed, this is merged with topEval's module list
       topOptions = {
         options = {
           systems = lib.mkOption {

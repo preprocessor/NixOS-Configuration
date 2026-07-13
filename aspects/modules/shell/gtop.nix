@@ -12,7 +12,7 @@
       });
     };
 
-  w.default =
+  exo.mods.gaming =
     { self', ... }:
     {
       nixpkgs.overlays = [ (_: _: { amdgpu_top = self'.packages.amdgpu_top; }) ];

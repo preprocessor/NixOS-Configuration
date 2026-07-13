@@ -12,6 +12,10 @@ url = "gh:Lyndeno/apple-fonts.nix"
 [inputs.base16]
 url = "gh:senchopens/base16.nix"
 
+[inputs.bat-syntax-justfile]
+type = "fetch"
+url = "gh:nk9/just_sublime"
+
 [inputs.birdee]
 url = "gh:BirdeeHub/nix-wrapper-modules"
 
@@ -30,6 +34,10 @@ url = "gh:boydaihungst/file-extra-metadata.yazi"
 [inputs.fish-completion-sync]
 type = "fetch"
 url = "gh:iynaix/fish-completion-sync"
+
+[inputs.fragment-mono]
+type = "fetch"
+url = "gh:dtinth/fragment-mono-weights"
 
 [inputs.fsel]
 type = "fetch"
@@ -62,7 +70,7 @@ url = "gh:nix-community/nix-index-database"
 url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1"
 
 [inputs.nixpkgs]
-url = "gh:nixos/nixpkgs/nixos-unstable"
+url = "nixpkgs:unstable"
 
 [inputs.otter-launcher]
 type = "fetch"
@@ -98,4 +106,5 @@ url = "gh:llanosrocas/yaziline.yazi"
 
 [shorturls]
 gh = "github:{path}"
+nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}"
 path = "git+file:///{path}"

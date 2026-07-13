@@ -5,7 +5,7 @@
     nixos-core.url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1";
   };
 
-  w.default =
+  exo.core =
     {
       lib,
       constants,
@@ -53,6 +53,5 @@
       services.dbus.implementation = "broker";
 
       services.power-profiles-daemon.enable = true;
-
     };
 }

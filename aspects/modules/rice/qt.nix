@@ -1,5 +1,5 @@
 {
-  w.default =
+  exo.mods.desktop =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs.qt6Packages; [

@@ -11,7 +11,7 @@
       });
     };
 
-  w.default =
+  exo.core =
     {
       pkgs,
       self',
@@ -20,20 +20,20 @@
     }:
     let
       lla = self'.packages.lla;
-      _ = lib.getExe;
       tomlFormat = pkgs.formats.toml { };
     in
     {
       environment.shellAliases = {
-        l = "${_ lla} -T ";
-        ls = "${_ lla}";
-        la = "${_ lla} -AT ";
-        ll = "${_ lla} -Al ";
-        lss = "${_ lla} -s ";
+        l = "${lib.getExe lla} -T ";
+        ls = "${lib.getExe lla}";
+        la = "${lib.getExe lla} -AT ";
+        ll = "${lib.getExe lla} -Al ";
+        lss = "${lib.getExe lla} -s ";
       };
 
       hj.packages = [ lla ];
 
+      # [todo] wrap + create options
       hj.xdg.config.files."lla/config.toml".source = tomlFormat.generate "lla-config" {
         default_sort = "name";
         default_format = "grid";

@@ -1,5 +1,5 @@
 {
-  w.desktop =
+  exo.mods.desktop =
     {
       pkgs,
       lib,
@@ -38,6 +38,8 @@
       '';
 
       my.kitty = {
+        enable = true;
+
         settings = {
           # text_composition_strategy = "legacy";
           font_family = ''family="Maple Mono NF" style="Medium"'';

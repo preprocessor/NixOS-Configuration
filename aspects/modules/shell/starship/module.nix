@@ -1,10 +1,10 @@
 {
-  w.default =
+  exo.skeleton =
     {
+      birdee,
       config,
       pkgs,
       lib,
-      birdee,
       ...
     }:
     let
@@ -39,7 +39,7 @@
               constructFiles.generatedConfig = {
                 relPath = "starship.toml";
                 builder = ''
-                  install -m655 -DT "${toml.generate "starship.toml" cfg.settings}" "$2"
+                  install -m644 -DT "${toml.generate "starship.toml" cfg.settings}" "$2"
                   echo -e "\n${cfg.moreCfg}" >> "$2"
                 '';
               };

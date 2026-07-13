@@ -1,5 +1,5 @@
 {
-  w.default =
+  exo.mods.desktop =
     { scheme, ... }:
     {
       my.eza = {

@@ -1,10 +1,8 @@
 {
-  w.desktop =
+  exo.mods.desktop =
     { lib, config, ... }:
     {
-      my.vivaldi = {
-        enable = true;
-      };
+      my.vivaldi.enable = true;
 
       my.hyprland.startup =
         let
@@ -24,7 +22,7 @@
         |> lib.listToAttrs;
     };
 
-  w.default =
+  exo.skeleton =
     {
       config,
       pkgs,

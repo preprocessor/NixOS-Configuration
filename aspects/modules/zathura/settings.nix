@@ -1,5 +1,5 @@
 {
-  w.desktop = {
+  exo.mods.desktop = {
     my.hyprland.lua.files."window_rules.zathura".content = /* lua */ ''
       hl.window_rule({
         name = "float zathura",

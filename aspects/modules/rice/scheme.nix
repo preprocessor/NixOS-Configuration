@@ -1,5 +1,5 @@
 {
-  w.wyspr-theme = {
+  exo.core = {
     theme = {
       variant = "dark";
       dark = {
@@ -65,7 +65,7 @@
       };
     };
 
-    _file = ./theme.nix;
+    _file = "scheme.nix";
   };
 
 }

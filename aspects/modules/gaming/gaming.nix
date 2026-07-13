@@ -2,7 +2,7 @@
 {
   tack.nix-gaming-edge.url = "gh:powerofthe69/nix-gaming-edge";
 
-  w.gaming =
+  exo.mods.gaming =
     { lib, pkgs, ... }:
     {
       imports = [ inputs.nix-gaming-edge.nixosModules.default ];
