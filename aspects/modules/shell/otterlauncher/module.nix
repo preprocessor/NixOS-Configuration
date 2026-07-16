@@ -8,12 +8,12 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.otter-launcher = pkgs.rustPlatform.buildRustPackage {
+      packages.otter-launcher = pkgs.rustPlatform.buildRustPackage (final: {
         src = inputs.otter-launcher;
         pname = "otter-launcher";
         version = "git";
-        cargoHash = "sha256-WTjVDkExigSqV/u5GdjrkQOu2KH/eWTp7eCHIINDX50=";
         doCheck = false;
+        cargoLock.lockFile = final.src + "/Cargo.lock";
         patches = [
           (pkgs.writeText "selection.patch" # rust
             ''
@@ -43,14 +43,14 @@
           license = lib.licenses.gpl3Only;
           mainProgram = "otter-launcher";
         };
-      };
+      });
     };
 
   exo.skeleton =
     {
-      birdee,
       self',
       pkgs,
+      wrapPackage,
       ...
     }@args:
     let
@@ -80,21 +80,22 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
+          default = wrapPackage (
+            { wlib, ... }:
             {
-              inherit pkgs;
               package = self'.packages.otter-launcher;
-              flags = {
-                "--config" = config.constructFiles.generatedConfig.path;
-              };
-              constructFiles.generatedConfig = {
-                relPath = "config.toml";
-                builder = ''
-                  install -m655 -DT "${toml.generate "config.toml" (cfg.settings // { inherit (cfg) modules; })}" "$2"
-                  echo -e "\n${cfg.moreCfg}" >> "$2"
-                '';
-              };
+              args = [
+                "--config ${wlib.files}"
+              ];
+              files =
+                "config.toml"
+                |> wlib.buildAndAppend' {
+                  formatter = toml;
+                  buildFrom = cfg.settings // {
+                    inherit (cfg) modules;
+                  };
+                  appendString = cfg.moreCfg;
+                };
             }
           );
         };

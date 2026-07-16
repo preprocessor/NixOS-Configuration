@@ -15,7 +15,7 @@
 
   exo.skeleton =
     {
-      birdee,
+      wrapPackage,
       config,
       self',
       pkgs,
@@ -43,19 +43,18 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
+          default = wrapPackage (
+            { wlib, ... }:
             {
-              inherit pkgs;
               package = self'.packages.eza;
-              env.EZA_CONFIG_DIR = dirOf config.constructFiles.generatedConfig.path;
-              constructFiles.generatedConfig = {
-                relPath = "theme.yml";
-                builder = ''
-                  install -m655 -DT "${yaml.generate "theme.yml" cfg.settings}" "$2"
-                  echo -e "\n${cfg.moreCfg}" >> "$2"
-                '';
-              };
+              env.EZA_CONFIG_DIR = wlib.files;
+              files =
+                "theme.yml"
+                |> wlib.buildAndAppend' {
+                  formatter = yaml;
+                  buildFrom = cfg.settings;
+                  appendString = cfg.moreCfg;
+                };
             }
           );
         };

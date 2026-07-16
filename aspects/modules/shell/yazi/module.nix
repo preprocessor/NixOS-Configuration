@@ -3,11 +3,11 @@
 
   exo.skeleton =
     {
-      pkgs,
-      lib,
-      config,
-      birdee,
       packages',
+      config,
+      pkgs,
+      wrapPackage,
+      lib,
       ...
     }:
     let
@@ -15,11 +15,11 @@
         description:
         lib.mkOption {
           inherit description;
-          inherit (toml) type;
+          type = toml;
           default = { };
         };
 
-      toml = pkgs.formats.toml { };
+      toml = lib.types.toml;
       cfg = config.my.yazi;
     in
     with lib;
@@ -44,34 +44,44 @@
       options.my.yazi = {
         package = mkOption {
           type = types.package;
-          default = birdee.wrappers.yazi.wrap {
-            inherit pkgs;
-            inherit (cfg) plugins;
-            package = packages'.yazi;
-            runtimePkgs = with pkgs; [
-              ouch-rar
-              ripgrep
-              unrar
-              unzip
-              glow
-              git
-            ];
-            settings = {
-              inherit (cfg) keymap theme;
-              yazi = cfg.settings;
-            };
-            constructFiles = {
-              initLua = {
-                relPath = "yazi-config/init.lua";
-                content = cfg.initLua;
+          default = wrapPackage (
+            { wlib, ... }:
+            {
+              package = packages'.yazi;
+              extraPkgs = with pkgs; [
+                ouch
+                exiv2
+                ffmpeg
+                xxhash
+              ];
+              files =
+                let
+                  tomlFormat = pkgs.formats.toml { };
+                in
+                (lib.optionalAttrs (cfg.settings != { }) {
+                  "yazi-config/yazi.toml" = tomlFormat.generate "yazi.toml" cfg.settings;
+                })
+                // (lib.optionalAttrs (cfg.keymap != { }) {
+                  "yazi-config/keymap.toml" = tomlFormat.generate "keymap.toml" cfg.keymap;
+                })
+                // (lib.optionalAttrs (cfg.theme != { }) {
+                  "yazi-config/theme.toml" = tomlFormat.generate "theme.toml" cfg.theme;
+                })
+                // (lib.mapAttrs' (name: path: {
+                  name = "yazi-config/plugins/${name}.yazi";
+                  value = path;
+                }) (lib.filterAttrs (_: path: path != null) cfg.plugins))
+                // (lib.optionalAttrs (cfg.initLua != "") {
+                  "yazi-config/init.lua" = cfg.initLua;
+                })
+                // (lib.optionalAttrs (cfg.flavorContent != "") {
+                  "yazi-config/flavors/wyspr.yazi/flavor.toml" = cfg.flavorContent;
+                });
+              env = {
+                YAZI_CONFIG_HOME = "${wlib.files}/yazi-config";
               };
-
-              flavor = {
-                relPath = "yazi-config/flavors/wyspr.yazi/flavor.toml";
-                content = cfg.flavorContent;
-              };
-            };
-          };
+            }
+          );
         };
 
         enable = lib.mkEnableOption { };
@@ -102,7 +112,7 @@
         };
 
         theme = lib.mkOption {
-          inherit (toml) type;
+          type = toml;
           default = { };
           description = "Theme settings";
         };
@@ -121,7 +131,7 @@
           '';
 
           type = types.submodule {
-            freeformType = toml.type;
+            freeformType = toml;
             options = {
               mgr = mkMapOption ''
                 Manager settings
@@ -180,7 +190,7 @@
           '';
 
           type = types.submodule {
-            freeformType = toml.type;
+            freeformType = toml;
             options = {
               mgr = mkMapOption ''
                 Keymap mgr settings

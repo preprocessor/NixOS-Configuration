@@ -24,14 +24,13 @@ in
           inputs.nixpkgs.lib.nixosSystem {
             specialArgs = {
               inherit
-                inputs
-                self'
-                inputs'
                 packages'
                 hostname
+                inputs'
+                inputs
+                self'
                 ;
               inherit (hostConfig) hardware theme;
-              inherit (inputs) birdee;
               constants = {
                 username = hostConfig.user;
                 stateVersion = hostConfig.stateVersion;
@@ -111,6 +110,7 @@ in
                 default = { };
                 description = "configurations specific to this host.";
               };
+
             };
           }
         )

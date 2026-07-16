@@ -1,7 +1,7 @@
 {
   exo.core =
     {
-      birdee,
+      wrapPackage,
       config,
       scheme,
       pkgs,
@@ -31,23 +31,21 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage {
-            inherit pkgs;
+          default = wrapPackage {
             package = pkgs.delta;
-            flagSeparator = "=";
-            flags = with scheme.withHashtag; {
-              "--dark" = true;
-              "--diff-highlight" = true;
-              "--line-numbers" = true;
-              "--hyperlinks" = true;
-              "--hyperlinks-file-link-format" = "lazygit-edit://{path}:{line}";
-              "--line-fill-method" = "ansi";
-              "--commit-style" = "${yellow}";
-              "--file-style" = "${bright-red}";
-              "--true-color" = "always";
-              "--features" = "space-separated";
-              "--paging" = "never";
-            };
+            args = with scheme.withHashtag; [
+              "--dark"
+              "--diff-highlight"
+              "--line-numbers"
+              "--hyperlinks"
+              "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+              "--line-fill-method=ansi"
+              "--commit-style='${yellow}'"
+              "--file-style='${bright-red}'"
+              "--true-color=always"
+              "--features=space-separated"
+              "--paging=never"
+            ];
           };
         };
       };

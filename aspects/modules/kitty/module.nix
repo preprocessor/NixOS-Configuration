@@ -12,11 +12,10 @@
 
   exo.skeleton =
     {
-      lib,
-      pkgs,
+      wrapPackage,
       config,
       self',
-      birdee,
+      lib,
       ...
     }:
     let
@@ -79,32 +78,47 @@
           description = "Mapping of keybindings to actions.";
         };
 
-        package = lib.mkOption {
-          default = birdee.wrappers.kitty.wrap (
-            wrapper:
-            let
-              cfg = config.my.kitty;
-            in
-            {
-              inherit pkgs;
-              package = self'.packages.kitty;
-              inherit (cfg) keybindings;
-              extraConfig = cfg.extraCfg;
-              settings = cfg.settings // {
-                include = wrapper.config.constructFiles.theme.path;
-              };
-              constructFiles.theme = {
-                relPath = "oneshill.conf";
-                content = cfg.theme;
-              };
-            }
-          );
-        };
-
         extraCfg = mkOption {
           type = types.lines;
           default = "";
           description = "Additional configuration appended verbatim to kitty.conf.";
+        };
+
+        package = lib.mkOption {
+          default =
+            let
+              cfg = config.my.kitty;
+              toKittyConfig = lib.generators.toKeyValue {
+                mkKeyValue =
+                  key: value:
+                  let
+                    yesNo = v: if v then "yes" else "no";
+                    value' = value |> (if (builtins.isBool value) then yesNo else toString);
+                  in
+                  "${key} ${value'}";
+              };
+            in
+            wrapPackage (
+              { wlib, ... }:
+              {
+                package = self'.packages.kitty;
+                env.KITTY_CONFIG_DIRECTORY = wlib.files;
+                files = {
+                  "kitty.conf" = ''
+                    ${toKittyConfig cfg.settings}
+
+                    # Keybindings
+                    ${toKittyConfig cfg.keybindings}
+
+                    # extraCfg
+                    ${cfg.extraCfg}
+
+                    # Theme
+                    ${cfg.theme}
+                  '';
+                };
+              }
+            );
         };
       };
     };

@@ -1,9 +1,9 @@
 {
   exo.skeleton =
     {
-      birdee,
       config,
       pkgs,
+      wrapPackage,
       lib,
       ...
     }:
@@ -29,23 +29,20 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
+          default = wrapPackage (
+            { wlib, ... }:
             {
-              inherit pkgs;
               package = pkgs.tray-tui;
-              flags = {
-                "--config-path" = config.constructFiles.generatedConfig.path;
-              };
-              constructFiles.generatedConfig = {
-                relPath = "config.toml";
-                builder = ''
-                  install -m655 -DT "${toml.generate "theme.yaml" cfg.settings}" "$2"
-                  echo -e "\n${cfg.moreCfg}" >> "$2"
-                '';
-              };
-
-              _file = ./module.nix;
+              args = [
+                ''--config-path "${wlib.files}"''
+              ];
+              files =
+                "config.toml"
+                |> wlib.buildAndAppend' {
+                  formatter = toml;
+                  buildFrom = cfg.settings;
+                  appendString = cfg.moreCfg;
+                };
             }
           );
         };

@@ -1,7 +1,7 @@
 {
   exo.skeleton =
     {
-      birdee,
+      wrapPackage,
       config,
       pkgs,
       lib,
@@ -30,19 +30,18 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
+          default = wrapPackage (
+            { wlib, ... }:
             {
-              inherit pkgs;
               package = pkgs.starship;
-              env.STARSHIP_CONFIG = config.constructFiles.generatedConfig.path;
-              constructFiles.generatedConfig = {
-                relPath = "starship.toml";
-                builder = ''
-                  install -m644 -DT "${toml.generate "starship.toml" cfg.settings}" "$2"
-                  echo -e "\n${cfg.moreCfg}" >> "$2"
-                '';
-              };
+              env.STARSHIP_CONFIG = "${wlib.files}/starship.toml";
+              files =
+                "starship.toml"
+                |> wlib.buildAndAppend' {
+                  formatter = toml;
+                  buildFrom = cfg.settings;
+                  appendString = cfg.moreCfg;
+                };
             }
           );
         };

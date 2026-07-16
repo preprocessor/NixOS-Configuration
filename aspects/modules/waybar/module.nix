@@ -1,9 +1,9 @@
 {
   exo.skeleton =
     {
-      birdee,
       config,
       pkgs,
+      wrapPackage,
       lib,
       ...
     }:
@@ -45,24 +45,17 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
+          default = wrapPackage (
+            { wlib, ... }:
             {
-              inherit pkgs;
               package = pkgs.waybar;
-              flags = {
-                "--config" = config.constructFiles.config.path;
-                "--style" = config.constructFiles.style.path;
-              };
-              constructFiles = {
-                config = {
-                  relPath = "config.jsonc";
-                  builder = ''install -m644 -DT "${json.generate "config.jsonc" cfg.config}" "$2"'';
-                };
-                style = {
-                  relPath = "style.css";
-                  content = cfg.style;
-                };
+              args = [
+                "--config ${wlib.files}/config.jsonc"
+                "--style ${wlib.files}/style.css"
+              ];
+              files = {
+                "config.jsonc" = json.generate "config.jsonc" cfg.config;
+                "style.css" = cfg.style;
               };
             }
           );

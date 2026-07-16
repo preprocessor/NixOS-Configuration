@@ -1,8 +1,8 @@
 {
   exo.skeleton =
     {
+      wrapPackage,
       config,
-      birdee,
       pkgs,
       lib,
       ...
@@ -67,17 +67,13 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
+          default = wrapPackage (
+            { wlib, ... }:
             {
-              inherit pkgs;
               package = pkgs.zathura;
-              flags = {
-                "--config-dir" = config.constructFiles.generatedConfig.path;
-              };
-              constructFiles.generatedConfig = {
-                relPath = "zathura/zathurarc";
-                content =
+              args = [ "--config-dir ${wlib.files}" ];
+              files = {
+                "config/zathurarc" =
                   lib.concatStringsSep "\n" (
                     lib.optional (cfg.moreCfg != "") cfg.moreCfg
                     ++ lib.mapAttrsToList lib.formatLine cfg.options
@@ -93,5 +89,7 @@
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
       };
+
+      _file = "zathura_module.nix";
     };
 }

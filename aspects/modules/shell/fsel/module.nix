@@ -8,17 +8,17 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.fsel = pkgs.rustPlatform.buildRustPackage {
+      packages.fsel = pkgs.rustPlatform.buildRustPackage (final: {
         src = inputs.fsel;
         pname = "fsel";
         version = "git";
-        cargoHash = "sha256-SAQnY0VgRPLjkjmEgZcyjp6hFXxp54PB1j52qwAy9yI=";
-      };
+        cargoLock.lockFile = final.src + "/Cargo.lock";
+      });
     };
 
   exo.skeleton =
     {
-      birdee,
+      wrapPackage,
       config,
       self',
       pkgs,
@@ -47,21 +47,18 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
+          default = wrapPackage (
+            { wlib, ... }:
             {
-              inherit pkgs;
               package = self'.packages.fsel;
-              flags = {
-                "--config" = config.constructFiles.generatedConfig.path;
-              };
-              constructFiles.generatedConfig = {
-                relPath = "config.toml";
-                builder = ''
-                  install -m655 -DT "${toml.generate "config.toml" cfg.settings}" "$2"
-                  echo -e "\n${cfg.moreCfg}" >> "$2"
-                '';
-              };
+              args = [ "--config ${wlib.files}/config.toml" ];
+              files =
+                "config.toml"
+                |> wlib.buildAndAppend' {
+                  formatter = toml;
+                  buildFrom = cfg.settings;
+                  appendString = cfg.moreCfg;
+                };
             }
           );
         };

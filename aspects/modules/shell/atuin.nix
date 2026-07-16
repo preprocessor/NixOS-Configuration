@@ -12,7 +12,7 @@
 
   exo.skeleton =
     {
-      birdee,
+      wrapPackage,
       config,
       pkgs,
       lib,
@@ -45,19 +45,18 @@
         };
 
         package = lib.mkOption {
-          default = birdee.lib.wrapPackage (
-            { config, ... }:
+          default = wrapPackage (
+            { wlib, ... }:
             {
-              inherit pkgs;
               package = pkgs.atuin;
-              env.ATUIN_CONFIG_DIR = dirOf config.constructFiles.atuin-config.path;
-              constructFiles.atuin-config = {
-                relPath = "config.toml";
-                builder = ''
-                  install -m644 -DT "${toml.generate "config.toml" cfg.settings}" "$2"
-                  echo -e "\n${cfg.moreCfg}" >> "$2"
-                '';
-              };
+              env.ATUIN_CONFIG_DIR = wlib.files;
+              files =
+                "config.toml"
+                |> wlib.buildAndAppend' {
+                  formatter = toml;
+                  buildFrom = cfg.settings;
+                  appendString = cfg.moreCfg;
+                };
             }
           );
         };

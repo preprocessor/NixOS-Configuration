@@ -1,81 +1,48 @@
+{ inputs, ... }:
 {
+  tack = {
+    cliphist-src = {
+      url = "gh:sentriz/cliphist";
+      type = "fetch";
+    };
+    cliphist-tui-src = {
+      url = "gh:SHORiN-KiWATA/cliphist-tui";
+      type = "fetch";
+    };
+  };
+
   perSystem =
     {
-      pkgs,
       self',
-      birdee,
+      pkgs,
+      wrapPackage,
       ...
     }:
     {
-      packages.cliphist = birdee.lib.wrapPackage {
-        inherit pkgs;
+      packages.cliphist = wrapPackage {
         env.CLIPHIST_MAX_STORE_SIZE = "1GB";
+
         package = pkgs.buildGoModule (final: {
           pname = "cliphist";
           version = "0-unstable-2026-04-21";
-          src = pkgs.fetchFromGitHub {
-            owner = "sentriz";
-            repo = "cliphist";
-            rev = "980c85fab4a5bab04c6f14bed49b330fd18922ab";
-            hash = "sha256-EeBIGhbWGw6BZ54kG9BhBc5OQGy3Ag/7eyXRImovqi8=";
-          };
+          src = inputs.cliphist-src;
           vendorHash = "sha256-fDl+ul1t2Ux1w5WcCo6YMJtrcC20o+eUEO3NNycSNvI=";
           buildInputs = [ pkgs.bash ];
           postInstall = ''
             cp ${final.src}/contrib/* $out/bin/
           '';
-          patches = [
-            (pkgs.writeText "fix-browser-copy-with-meta.patch" # go
-              ''
-                diff --git a/cliphist.go b/cliphist.go
-                index 8e1eb95..375f807 100644
-                --- a/cliphist.go
-                +++ b/cliphist.go
-                @@ -127,7 +127,7 @@ func store(dbPath string, in io.Reader, maxDedupeSearch, maxItems uint64, minLen
-                 	}
-                 	defer db.Close()
-
-                -	if len(bytes.TrimSpace(input)) == 0 {
-                +	if len(bytes.TrimSpace(input)) == 0 || isBrowserImageFallback(input) {
-                 		return nil
-                 	}
-                 	tx, err := db.Begin(true)
-                @@ -564,3 +564,13 @@ func parseSize(s string) (uint64, error) {
-                 	}
-                 	return num, nil
-                 }
-                +
-                +func isBrowserImageFallback(input []byte) bool {
-                +	s := string(input)
-                +	const meta = "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">"
-                +	if !strings.HasPrefix(s, meta) {
-                +		return false
-                +	}
-                +	rest := strings.TrimSpace(s[len(meta):])
-                +	return strings.HasPrefix(rest, "<img") && strings.HasSuffix(rest, ">")
-                +}
-                --
-                2.53.0
-              ''
-            )
-          ];
+          patches = [ ./cliphist-fix-browser-copy-with-meta.patch ];
         });
       };
 
-      packages.cliphist-tui = birdee.lib.wrapPackage {
-        inherit pkgs;
+      packages.cliphist-tui = wrapPackage {
         package = pkgs.rustPlatform.buildRustPackage (final: {
           pname = "cliphist-tui";
           version = "0-unstable-2026-04-26";
-          cargoHash = "sha256-KHlEw5RZNeCYeNngPvgDFvBFMKD2OZrx8sg2QWdwjQ8=";
-          src = pkgs.fetchFromGitHub {
-            owner = "SHORiN-KiWATA";
-            repo = "cliphist-tui";
-            rev = "fd4a47baaba60598603d6c760512d2169479872b";
-            hash = "sha256-wjgE9aladixbGfMXVdkvxEBJHKS2BEepbwILZro7d0A=";
-          };
+          cargoLock.lockFile = final.src + "/Cargo.lock";
+          src = inputs.cliphist-tui-src;
         });
-        runtimePkgs = [
+        extraPkgs = [
           self'.packages.cliphist
           pkgs.ffmpegthumbnailer
           pkgs.chafa

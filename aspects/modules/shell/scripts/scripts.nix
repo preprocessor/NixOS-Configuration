@@ -1,21 +1,20 @@
 {
   exo.core =
-    { pkgs, birdee, ... }:
+    { pkgs, wrapPackage, ... }:
     {
       hj.packages = [
         (pkgs.writeShellScriptBin "eye" ./bin/eye)
         (pkgs.writeShellScriptBin "gbc" ./bin/gbc)
         (pkgs.writeShellScriptBin "moon" ./bin/moon)
-        (birdee.lib.wrapPackage {
-          inherit pkgs;
+        (wrapPackage {
           package = pkgs.writeShellScriptBin "waow" ./bin/waow;
           aliases = [
+            "wystem"
             "wot"
             "huh"
             "hmm"
-            "wystem"
           ];
-          runtimePkgs = with pkgs; [
+          extraPkgs = with pkgs; [
             fetchutils
             xrandr
             xprop

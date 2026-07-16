@@ -1,0 +1,29 @@
+diff --git a/cliphist.go b/cliphist.go
+index 8e1eb95..375f807 100644
+--- a/cliphist.go
++++ b/cliphist.go
+@@ -127,7 +127,7 @@ func store(dbPath string, in io.Reader, maxDedupeSearch, maxItems uint64, minLen
+ 	}
+ 	defer db.Close()
+
+-	if len(bytes.TrimSpace(input)) == 0 {
++	if len(bytes.TrimSpace(input)) == 0 || isBrowserImageFallback(input) {
+ 		return nil
+ 	}
+ 	tx, err := db.Begin(true)
+@@ -564,3 +564,13 @@ func parseSize(s string) (uint64, error) {
+ 	}
+ 	return num, nil
+ }
++
++func isBrowserImageFallback(input []byte) bool {
++	s := string(input)
++	const meta = "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">"
++	if !strings.HasPrefix(s, meta) {
++		return false
++	}
++	rest := strings.TrimSpace(s[len(meta):])
++	return strings.HasPrefix(rest, "<img") && strings.HasSuffix(rest, ">")
++}
+--
+2.53.0

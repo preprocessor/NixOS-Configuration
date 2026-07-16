@@ -10,7 +10,7 @@
         printing
         desktop
         gaming
-        irc
+        comms
       ];
     };
   };

@@ -77,8 +77,8 @@
             in
             {
               suggestion_mode = "list";
-              # indicator_no_arg_module = "${a "94"} ${a "90"}";
-              # indicator_with_arg_module = "${a "95"}󰈽 ${a "90"}";
+              indicator_no_arg_module = "${a "94"} ${a "90"}";
+              indicator_with_arg_module = "${a "95"}󰈽 ${a "90"}";
             }
             // lib.optionalAttrs (theme == "light") {
               move_interface_right = 27;
@@ -90,8 +90,8 @@
                 ${a "96"}┃${a "35"}   $(printf "%-10s" ${mem})    ${a "96"}┃ ${a "35"}  $XDG_CURRENT_DESKTOP          ${a "96"}┃
                 ${a "96"}┃${a "32"} 󰹑  ${res}  ${a "96"}┃ ${a "32"}  $TERMINAL         ${a "96"}┃
                 ${a "96"}┃${a "31"} 󰄉  $(printf "%-10s" "$(upt)") ${a "93"}┃ ${a "91"}  fish          ${a "96"}┃
-                ${a "96"}┣━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━┛
-                ${a "97"}┗━  ${a "92"}'';
+                ${a "96"}┗━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━┛
+                ${a "97"}  ${a "92"}'';
               hint_color = "${a "91"}";
               list_prefix = "     ${a "94"}";
               place_holder = "Search...";

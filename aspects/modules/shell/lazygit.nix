@@ -79,14 +79,15 @@
 
   exo.skeleton =
     {
-      pkgs,
+      wrapPackage,
       config,
+      pkgs,
       lib,
-      birdee,
       ...
     }:
     let
       cfg = config.my.lazygit;
+      yaml = pkgs.formats.yaml { };
     in
     {
       config = lib.mkIf cfg.enable {
@@ -102,33 +103,38 @@
         '';
       };
 
-      options.my.lazygit =
-        let
-          yaml = pkgs.formats.yaml { };
-        in
-        {
-          enable = lib.mkEnableOption { };
+      options.my.lazygit = {
+        enable = lib.mkEnableOption { };
 
-          settings = lib.mkOption {
-            inherit (yaml) type;
-            default = { };
-            description = "Options to go into lazygit's yaml config";
-          };
-
-          moreCfg = lib.mkOption {
-            type = with lib.types; nullOr (either path lines);
-            default = "";
-            description = "Additional config lines.";
-          };
-
-          package = lib.mkOption {
-            default = birdee.lib.wrapPackage {
-              inherit pkgs;
-              package = pkgs.lazygit;
-              env.LG_CONFIG_FILE = yaml.generate "config.yml" cfg.settings;
-            };
-          };
+        settings = lib.mkOption {
+          inherit (yaml) type;
+          default = { };
+          description = "Options to go into lazygit's yaml config";
         };
+
+        moreCfg = lib.mkOption {
+          type = with lib.types; nullOr (either path lines);
+          default = "";
+          description = "Additional config lines.";
+        };
+
+        package = lib.mkOption {
+          default = wrapPackage (
+            { wlib, ... }:
+            {
+              package = pkgs.lazygit;
+              env.LG_CONFIG_FILE = "${wlib.files}/config.yml";
+              files =
+                "config.yml"
+                |> wlib.buildAndAppend' {
+                  formatter = yaml;
+                  buildFrom = cfg.settings;
+                  appendString = cfg.moreCfg;
+                };
+            }
+          );
+        };
+      };
 
       _file = ./lazygit.nix;
     };

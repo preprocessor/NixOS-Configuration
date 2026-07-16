@@ -1,7 +1,7 @@
 {
   exo.skeleton =
     {
-      birdee,
+      wrapPackage,
       config,
       pkgs,
       lib,
@@ -37,29 +37,46 @@
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = birdee.wrappers.mpv.wrap {
-            inherit pkgs;
-            "mpv.conf".content = cfg.conf;
-            "mpv.input".content = cfg.input;
-            script = {
-              mpris.path = pkgs.mpvScripts.mpris;
-              modernz = {
-                path = pkgs.mpvScripts.modernz;
-                opts.download_path = "${config.hj.directory}/Videos/mpv";
-                opts.osc_on_start = "no";
-                opts.osc_on_seek = "no";
-                opts.showonpause = "no";
+          default =
+            let
+              mpvScripts = pkgs.symlinkJoin {
+                name = "mpv-scripts";
+                paths = with pkgs.mpvScripts; [
+                  mpris
+                  sponsorblock
+                  modernz
+                ];
               };
-            };
-          };
+            in
+            wrapPackage (
+              { wlib, ... }:
+              {
+                package = pkgs.mpv;
+                files = {
+                  "configuration/mpv.conf" = cfg.conf;
+                  "configuration/input.conf" = cfg.input;
+                  "configuration/scripts" = "${mpvScripts}/share/mpv/scripts";
+                  "configuration/fonts" = "${mpvScripts}/share/fonts";
+                  "configuration/script-opts/modernz.conf" = lib.generators.toKeyValue { } {
+                    download_path = "${config.hj.directory}/Videos/mpv";
+                    osc_on_start = "no";
+                    osc_on_seek = "no";
+                    showonpause = "no";
+                  };
+                };
+                env.MPV_HOME = "${wlib.files}/configuration";
+              }
+            );
         };
 
         image-viewer = lib.mkOption {
           type = lib.types.package;
-          default = birdee.wrappers.mpv.wrap {
-            inherit pkgs;
-            "mpv.conf".content = cfg.image-conf;
-            "mpv.input".content = cfg.image-input;
+          default = wrapPackage {
+            package = pkgs.mpv;
+            files = {
+              "configuration/mpv.conf" = cfg.image-conf;
+              "configuration/input.conf" = cfg.image-input;
+            };
           };
         };
       };
