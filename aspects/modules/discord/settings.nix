@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  exo.mods.comms =
     {
       scheme,
       config,

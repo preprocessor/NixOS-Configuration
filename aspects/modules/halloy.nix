@@ -1,5 +1,5 @@
 {
-  exo.mods.irc =
+  exo.mods.comms =
     { pkgs, ... }:
     {
       hj.packages = [ pkgs.halloy ];

@@ -4,10 +4,10 @@
 
   exo.core =
     {
+      constants,
+      packages',
       config,
       lib,
-      constants,
-      inputs',
       ...
     }:
     {
@@ -16,7 +16,7 @@
         (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" constants.username ])
       ];
 
-      nixpkgs.overlays = [ (_: _: { inherit (inputs'.hjem.packages) smfh; }) ];
+      nixpkgs.overlays = [ (_: _: { inherit (packages'.hjem) smfh; }) ];
 
       hjem.clobberByDefault = true;
 
