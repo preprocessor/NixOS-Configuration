@@ -141,7 +141,7 @@
             default = { };
             description = ''
               Flake level options, things like: flake.nixosConfigurations, flake.overlays,
-              or anything else set with config.flake by top-level ./aspects modules.
+              or anything else set with config.flake by top-level modules.
             '';
           };
 
@@ -157,7 +157,7 @@
         };
       };
 
-      # topEval: the FIRST of two evalModules passes. This one evaluates the top-level modules in ./aspects
+      # topEval: the FIRST of two evalModules passes. This one evaluates the top-level modules
       topEval = lib.evalModules {
         # specialArgs get handed to every module function as extra function arguments.
         # So any file under ./aspects can just write at the top
@@ -208,35 +208,27 @@
         );
 
       # transposed: swap the keys
-      # systemOutputs is shaped
-      #   system -> category -> value        (e.g. x86_64-linux.packages.foo)
-      # but real flake outputs need to be shaped the other way round:
-      #   category -> system -> value        (e.g. packages.x86_64-linux.foo)
       #
-      # so this walks every system's output set and folds each one into an
-      # accumulator, transposed into the opposite key.
+      # systemOutputs is shaped
+      #   system -> category -> drv (derivation) (ex: x86_64-linux.packages.foo)
+      # but flake outputs need to be shaped the other way around:
+      #   category -> system -> drv              (ex: packages.x86_64-linux.foo)
+      #
+      # this walks every system's output set and folds each one into an accumulator, transposed into the correct key.
       transposed =
         systemOutputs
-        # foldlAttrs walks an attrset left-to-right, calling
-        #   acc: name: value: <new acc>
-        # once per entry — so here, for each system key in systemOutputs,
-        # we get outputs, that system's whole config
-        # ({ packages = ...; devShells = ...; }).
-        |> lib.foldlAttrs (
-          acc: system: outputs:
-          # For this one system, wrap every top-level category's value in { ${system} = value; }
-          # turning:
-          #   systemOutputs.${system} = { packages = P; devShells = D; }
-          # into:
-          #   { packages = { ${system} = P; }; devShells = { ${system} = D; }; }
-          # which is now shaped correctly to be merged into the accumulator.
-          acc // (outputs |> lib.mapAttrs (_: value: { ${system} = value; }))
-        ) { };
-      #   { } is the starting accumulator for the fold — build up from nothing, one system at a time.
+        # For this one system, wrap every top-level category's value in { ${system} = value; }
+        # turning:
+        #   systemOutputs.${system} = { packages = P; devShells = D; } where P and D are { foo = drv, bar = drv, ... }
+        # into:
+        #   { packages = { ${system} = P; }; devShells = { ${system} = D; }; }
+        |> lib.mapAttrsToList (system: lib.mapAttrs (category: drv: { ${system} = drv; }))
+        # which is now shaped correctly to be merged into the accumulator.
+        |> lib.foldAttrs (category: acc: acc // category) { }; # { } is the starting accumulator for the fold
     in
     # Final result: the perSystem stuff we just transposed (packages.<system>, devShells.<system>, checks.<system>, etc.)
     # merged with whatever system-independent flake outputs got declared directly,
     # things like: flake.nixosConfigurations, flake.overlays, or anything else set
-    # with config.flake by the top-level ./aspects modules.
+    # with config.flake by the top-level modules.
     transposed // topEval.config.flake;
 }
