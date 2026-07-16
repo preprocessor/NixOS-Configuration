@@ -39,6 +39,22 @@
     "narHash": "sha256-M49oTUSc1jTmO2npx96wGYEopZU3+ql9L7mGm2rbzzM=",
     "lastModified": 1753671569
   },
+  "cliphist-src": {
+    "type": "github",
+    "owner": "sentriz",
+    "repo": "cliphist",
+    "rev": "25cc3e4affb6d24398cbcb2f42d8e8cf9cf62823",
+    "narHash": "sha256-1hXxezGSQJ4x1V/iwMZGmB7ONTldpNQ21dbvR1+qkCE=",
+    "lastModified": 1780919089
+  },
+  "cliphist-tui-src": {
+    "type": "github",
+    "owner": "SHORiN-KiWATA",
+    "repo": "cliphist-tui",
+    "rev": "d9b43bfc88ab50fd49e2dd9237d21343b208357b",
+    "narHash": "sha256-TtKy57evRwwS2j0CyB4tsiJZD4fkn0OoYuUkbHWiDS8=",
+    "lastModified": 1781050727
+  },
   "crtty": {
     "type": "github",
     "owner": "kosa12",
@@ -123,9 +139,9 @@
     "type": "git",
     "url": "file:////home/wyspr/Configuration/Neovim",
     "ref": "HEAD",
-    "rev": "d1750c570a32e22dccaec2eb92b84b5fcbab12e1",
-    "narHash": "sha256-igLTxHmgFhr1dEYqrncLALDGhxCSzoZJItBMA7oj/VA=",
-    "lastModified": 1783811119
+    "rev": "59fb319b9a8adcbe6a86243457d30db47ba9d540",
+    "narHash": "sha256-xgeXpOYQyl/ZpIbi1RTMlDzQBAwkG5zkRORh2547a3M=",
+    "lastModified": 1784067712
   },
   "nix-cachyos-kernel": {
     "type": "github",

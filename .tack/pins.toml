@@ -23,6 +23,14 @@ url = "gh:BirdeeHub/nix-wrapper-modules"
 type = "fetch"
 url = "gh:nikdog/chicago-font"
 
+[inputs.cliphist-src]
+type = "fetch"
+url = "gh:sentriz/cliphist"
+
+[inputs.cliphist-tui-src]
+type = "fetch"
+url = "gh:SHORiN-KiWATA/cliphist-tui"
+
 [inputs.crtty]
 type = "fetch"
 url = "gh:kosa12/CRTty"
