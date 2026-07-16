@@ -17,18 +17,27 @@
             lib.getExe
             <| pkgs.writeShellApplication {
               name = "write-tack";
+              runtimeInputs = [ pkgs.delta ];
               text =
                 let
                   cfg = config.tack;
-                  toml = pkgs.formats.toml { };
-                  tackToml = (cfg |> lib.filterAttrs (n: _: n == "all_follow" || n == "shorturls")) // {
-                    inputs = lib.removeAttrs cfg [
-                      "all_follow"
-                      "shorturls"
-                    ];
-                  };
+                  tomlFormat = pkgs.formats.toml { };
+                  tackToml =
+                    (
+                      (cfg |> lib.filterAttrs (n: _: n == "all_follow" || n == "shorturls"))
+                      // {
+                        inputs = lib.removeAttrs cfg [
+                          "all_follow"
+                          "shorturls"
+                        ];
+                      }
+                    )
+                    |> tomlFormat.generate "pins.toml";
                 in
-                /* bash */ "install -m444 -DT '${toml.generate "pins.toml" tackToml}' .tack/pins.toml";
+                /* bash */ ''
+                  delta --dark --diff-highlight .tack/pins.toml ${tackToml} || true
+                  install -m444 -DT ${tackToml} .tack/pins.toml
+                '';
             };
         };
       };
@@ -56,6 +65,10 @@
       { packages', ... }:
       {
         hj.packages = [ packages'.tack ];
+
+        hj.environment.sessionVariables = {
+          TACK_NIX_CONF_TOKENS = 1;
+        };
       };
   };
 }
