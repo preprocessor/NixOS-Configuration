@@ -152,11 +152,6 @@
               cmd = spawn 2100 1200 "btop" "btop";
             }
             {
-              description = "systemd";
-              prefix = "isd";
-              cmd = spawn 2100 1200 "isd" "isd";
-            }
-            {
               description = "mixer";
               prefix = "vol";
               cmd = spawn 800 500 "mixer" (lib.getExe pkgs.pulsemixer);

@@ -21,7 +21,6 @@
         wget
         tree
         just # a command runnner
-        isd # inspect system d
         fd
         sd
         jq # parse json
