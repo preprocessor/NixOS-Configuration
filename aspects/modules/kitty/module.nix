@@ -76,6 +76,7 @@
             }
           '';
           description = "Mapping of keybindings to actions.";
+          apply = lib.mapAttrs' (name: value: lib.nameValuePair ("map " + name) value);
         };
 
         extraCfg = mkOption {
@@ -105,16 +106,17 @@
                 env.KITTY_CONFIG_DIRECTORY = wlib.files;
                 files = {
                   "kitty.conf" = ''
+                    # Settings
                     ${toKittyConfig cfg.settings}
 
                     # Keybindings
                     ${toKittyConfig cfg.keybindings}
 
-                    # extraCfg
-                    ${cfg.extraCfg}
-
                     # Theme
                     ${cfg.theme}
+
+                    # extraCfg
+                    ${cfg.extraCfg}
                   '';
                 };
               }

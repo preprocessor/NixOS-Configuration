@@ -35,9 +35,10 @@
 
   exo.skeleton =
     {
+      wrapPackage,
       config,
-      lib,
       pkgs,
+      lib,
       ...
     }:
     let
@@ -49,8 +50,6 @@
       options.my.fzf = {
         enable = lib.mkEnableOption "fzf";
 
-        package = lib.mkPackageOption pkgs "fzf" { };
-
         defaultOptions = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [ ];
@@ -60,16 +59,19 @@
           type = lib.types.attrsOf lib.types.str;
           default = { };
         };
+
+        package = lib.mkOption {
+          default = wrapPackage {
+            package = pkgs.fzf;
+            env.FZF_DEFAULT_OPTS = lib.escapeShellArgs (
+              cfg.defaultOptions ++ lib.optional (cfg.colors != { }) "--color=${renderedColors cfg.colors}"
+            );
+          };
+        };
       };
 
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
-
-        hj.environment.sessionVariables = {
-          FZF_DEFAULT_OPTS = lib.escapeShellArgs (
-            cfg.defaultOptions ++ lib.optional (cfg.colors != { }) "--color=${renderedColors cfg.colors}"
-          );
-        };
 
         programs.fish.interactiveShellInit = /* fish */ ''
           ${lib.getExe cfg.package} --fish | source
