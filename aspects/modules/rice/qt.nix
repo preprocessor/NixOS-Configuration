@@ -8,6 +8,12 @@
         qt6ct
       ];
 
+      my.xdg.desktopEntries = {
+        "qt5ct".noDisplay = true;
+        "qt6ct".noDisplay = true;
+        "kvantummanager".noDisplay = true;
+      };
+
       hj.environment.sessionVariables = {
         QT_QPA_PLATFORMTHEME = "qt5ct";
         QT_STYLE_OVERRIDE = "kvantum";

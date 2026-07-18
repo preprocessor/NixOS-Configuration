@@ -1,16 +1,6 @@
 {
   exo.mods.desktop = {
-    my.xdg.desktopEntries = {
-      "isd".noDisplay = true;
-      "cups".noDisplay = true;
-      "input-remapper-autoload".noDisplay = true;
-      "qt5ct".noDisplay = true;
-      "qt6ct".noDisplay = true;
-      "nixos-manual".noDisplay = true;
-      "btop".noDisplay = true;
-      "org.openrgb.OpenRGB.desktop".noDisplay = true;
-      "kvantummanager".noDisplay = true;
-    };
+    my.xdg.desktopEntries."nixos-manual".noDisplay = true;
   };
 
   exo.skeleton =

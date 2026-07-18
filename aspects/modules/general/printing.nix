@@ -2,6 +2,8 @@
   exo.mods.printing =
     { pkgs, ... }:
     {
+      my.xdg.desktopEntries."cups".noDisplay = true;
+
       # Enable CUPS to print documents.
       services.avahi = {
         enable = true;
