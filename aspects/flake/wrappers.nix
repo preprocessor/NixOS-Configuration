@@ -3,7 +3,6 @@ let
   wrapperModule =
     {
       config,
-      pkgs,
       lib,
       ...
     }:
@@ -46,14 +45,6 @@ let
         files = lib.mkOption {
           type = with lib.types; attrsOf (either str path);
           default = { };
-          apply = lib.mapAttrs (
-            name: path:
-            if (path |> lib.isString) && !(lib.hasPrefix builtins.storeDir path) then
-              (path |> pkgs.writeText "${lib.baseNameOf name}-text")
-            else
-              path
-          );
-
         };
 
         aliases = lib.mkOption {
@@ -86,7 +77,22 @@ let
             name = "${package.name}-wrapped";
             paths = [
               (
-                files |> lib.mapAttrsToList (name: path: { inherit name path; }) |> pkgs.linkFarm "${package.name}"
+                files
+                |> lib.mapAttrsToList (
+                  name: value:
+                  let
+                    path =
+                      if (value |> lib.isString) && !(lib.hasPrefix builtins.storeDir value) then
+                        # Write a text file of the content and return the store path
+                        (value |> pkgs.writeText "${lib.baseNameOf name}-text")
+                      else
+                        value;
+                  in
+                  {
+                    inherit name path;
+                  }
+                )
+                |> pkgs.linkFarm "${package.name}"
               )
               package
             ];
@@ -205,10 +211,7 @@ let
           wrapperModule
           spec
         ];
-        specialArgs = {
-          inherit pkgs;
-          wlib = wlib pkgs;
-        };
+        specialArgs.wlib = wlib pkgs;
       };
     in
     evaluation.config.wrapper pkgs;
@@ -220,6 +223,7 @@ in
       _module.args.wrapPackage = wrap pkgs;
       _module.args.wrapPackage' = wrap;
     };
+
   perSystem =
     { pkgs, ... }:
     {
