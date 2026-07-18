@@ -3,6 +3,7 @@
     { config, pkgs, ... }:
     {
       hj.packages = [ pkgs.isd ];
+      my.xdg.desktopEntries."isd".noDisplay = true;
 
       my.otter-launcher.modules =
         let
