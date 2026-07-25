@@ -32,6 +32,7 @@
 
       # The flake's root directory as a path value gets threaded through to every module later via specialArgs,
       # so modules can reference files relative to the repo root without doing path gymnastics themselves.
+      # Mainly used for sops
       rootPath = ./.;
 
       # projectInput: take one flake-shaped input and project it down to just the outputs it has for one

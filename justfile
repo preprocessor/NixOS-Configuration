@@ -2,4 +2,4 @@
 vim:
   just nvim
 nvim:
-  nix flake update neovim --offline
+  tack update neovim
