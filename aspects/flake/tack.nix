@@ -29,7 +29,7 @@
 
     perSystem =
       {
-        inputs,
+        rootPath,
         pkgs,
         ...
       }:
@@ -41,25 +41,43 @@
             lib.getExe
             <| pkgs.writeShellApplication {
               name = "write-tack";
+              derivationArgs = {
+                allowSubstitutes = false;
+                preferLocalBuild = true;
+              };
               runtimeInputs = [ pkgs.delta ];
               text =
                 let
                   tomlFormat = pkgs.formats.toml { };
                   cfg = config.tack;
 
-                  tackInputs = lib.removeAttrs cfg [
-                    "all_follow"
-                    "shorturls"
-                  ];
+                  tackInputs = lib.importTOML (rootPath + /.tack/pins.toml);
 
-                  tackToml =
-                    ((cfg |> lib.filterAttrs (n: _: n == "all_follow" || n == "shorturls")) // { inputs = tackInputs; })
-                    |> tomlFormat.generate "pins.toml";
+                  tomlObj = (cfg |> lib.filterAttrs (n: _: n == "all_follow" || n == "shorturls")) // {
+                    inputs = lib.removeAttrs cfg [
+                      "all_follow"
+                      "shorturls"
+                    ];
+                  };
 
-                  prevInputs = inputs |> lib.attrNames;
-                  finalInputs = tackInputs |> lib.attrNames;
+                  tackToml = tomlObj |> tomlFormat.generate "pins.toml";
 
-                  newInputs = finalInputs |> lib.subtractLists prevInputs |> lib.join " ";
+                  findChangedInputs =
+                    old: new:
+                    let
+                      oldKeys = lib.attrNames old;
+                      newKeys = lib.attrNames new;
+                      # Inputs that exist in new but not in old
+                      newInputNames = newKeys |> lib.subtractLists oldKeys;
+                      # Inputs that exist in both but have different URLs
+                      changedInputNames =
+                        (lib.intersectLists oldKeys newKeys) |> lib.filter (name: old.${name}.url != new.${name}.url);
+                    in
+                    (newInputNames ++ changedInputNames) |> lib.join " ";
+
+                  changedInputs = findChangedInputs tackInputs.inputs tomlObj.inputs;
+
+                  diff = tackInputs != tomlObj;
                 in
                 /* bash */ ''
                   LOCK_FILE="''${1:-./.tack/pins.toml}"
@@ -69,9 +87,11 @@
                     exit 1
                   fi
 
-                  delta --dark --diff-highlight "$LOCK_FILE" ${tackToml} || true
-                  install -m644 -DT ${tackToml} "$LOCK_FILE"
-                  ${lib.optionalString (newInputs != "") "tack update ${newInputs}"}
+                  ${lib.optionalString diff /* bash */ ''
+                    delta --dark --diff-highlight "$LOCK_FILE" ${tackToml} || true
+                    install -m644 -DT ${tackToml} "$LOCK_FILE"
+                  ''}
+                  ${lib.optionalString (changedInputs != "") "tack update ${changedInputs}"}
                   if [[ $# -gt 0 ]]; then
                     nh os "$@"
                   fi
