@@ -57,12 +57,10 @@
           string = option;
           list = lib.join "," (lib.lists.forEach option toString);
         }
-        .${builtins.typeOf option};
+        .${lib.typeOf option};
 
       renderLine = k: v: (if lib.isBool v && v then k else "${k}=${renderOption v}");
-      renderSettings =
-        attrs: lib.strings.concatStringsSep "\n" (lib.attrsets.mapAttrsToList renderLine attrs) + "\n";
-
+      renderSettings = attrs: lib.concatLines (lib.attrsets.mapAttrsToList renderLine attrs) + "\n";
     in
     {
       options = {
