@@ -15,18 +15,18 @@
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
 
-        my.hyprland.startup = [ ''hl.exec_cmd("${lib.getExe cfg.package}")'' ];
+        # my.hyprland.startup = [ ''hl.exec_cmd("${lib.getExe cfg.package}")'' ];
 
-        # systemd.user.services.waybar = {
-        #   description = "waybar";
-        #   after = [ "graphical-session.target" ];
-        #   partOf = [ "graphical-session.target" ];
-        #   wantedBy = [ "graphical-session.target" ];
-        #   serviceConfig = {
-        #     ExecStart = lib.getExe cfg.package;
-        #     Restart = "on-failure";
-        #   };
-        # };
+        systemd.user.services.waybar = {
+          description = "waybar";
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+          serviceConfig = {
+            ExecStart = lib.getExe cfg.package;
+            Restart = "on-failure";
+          };
+        };
       };
 
       options.my.waybar = {
