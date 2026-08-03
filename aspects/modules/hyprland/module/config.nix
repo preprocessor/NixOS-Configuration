@@ -16,7 +16,7 @@
       requireName = name: lib.removeSuffix ".lua" name;
 
       # folder.filename.lua -> folder/filename.lua
-      luaFileName = name: builtins.replaceStrings [ "." ] [ "/" ] (requireName name) + ".lua";
+      luaFileName = name: lib.replaceStrings [ "." ] [ "/" ] (requireName name) + ".lua";
 
       autoLoadFiles = lib.filterAttrs (_: file: file.autoLoad) cfg.lua.files;
 
@@ -139,13 +139,6 @@
 
             # Allows lua stub file to be accessed from /run/current-system/sw/share/hypr
             environment.pathsToLink = [ "/share/hypr" ];
-
-            security.wrappers.Hyprland = {
-              owner = "root";
-              group = "root";
-              capabilities = "cap_sys_nice+ep";
-              source = lib.getExe cfg.package;
-            };
 
             xdg.portal = {
               enable = true;

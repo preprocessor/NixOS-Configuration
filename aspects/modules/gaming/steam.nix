@@ -112,7 +112,7 @@
           package = pkgs.steam.override {
             extraPkgs = fpkgs: [ pkgs.modengine3 ];
             extraEnv = {
-              STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.concatStringsSep ":" [
+              STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.join ":" [
                 # "${compatToolsDir}" # for ME3 / modengine3
                 "\${HOME}/.steam/root/compatibilitytools.d"
               ];

@@ -74,7 +74,7 @@
               args = [ "--config-dir ${wlib.files}" ];
               files = {
                 "config/zathurarc" =
-                  lib.concatStringsSep "\n" (
+                  lib.concatLines (
                     lib.optional (cfg.moreCfg != "") cfg.moreCfg
                     ++ lib.mapAttrsToList lib.formatLine cfg.options
                     ++ lib.mapAttrsToList lib.formatMapLine cfg.mappings

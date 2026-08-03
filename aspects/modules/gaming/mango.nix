@@ -55,7 +55,7 @@
           path = int;
           bool = "0"; # "on/off" opts are disabled with `=0`
           string = option;
-          list = lib.concatStringsSep "," (lib.lists.forEach option toString);
+          list = lib.join "," (lib.lists.forEach option toString);
         }
         .${builtins.typeOf option};
 

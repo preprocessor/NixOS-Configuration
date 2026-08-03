@@ -33,6 +33,7 @@
           int
           float
         ];
+
       cfg = config.my.kitty;
     in
     {
@@ -88,13 +89,12 @@
         package = lib.mkOption {
           default =
             let
-              cfg = config.my.kitty;
               toKittyConfig = lib.generators.toKeyValue {
                 mkKeyValue =
                   key: value:
                   let
                     yesNo = v: if v then "yes" else "no";
-                    value' = value |> (if (builtins.isBool value) then yesNo else toString);
+                    value' = value |> (if (lib.isBool value) then yesNo else toString);
                   in
                   "${key} ${value'}";
               };
