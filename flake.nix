@@ -18,8 +18,6 @@
 #                          ▀▀▀ ▀▀▀▀▀▀▀               ▀▄▄▄▀
 #
 {
-  description = "wyspr's departed flake";
-
   outputs =
     { self, ... }:
     let
@@ -30,9 +28,8 @@
 
       inherit (inputs.nixpkgs) lib;
 
-      # The flake's root directory as a path value gets threaded through to every module later via specialArgs,
-      # so modules can reference files relative to the repo root without doing path gymnastics themselves.
-      # Mainly used for sops
+      # The flake's root directory as a path value so modules can reference files relative to the repo root
+      # Mainly used for sops and tack-write
       rootPath = ./.;
 
       # projectInput: take one flake-shaped input and project it down to just the outputs it has for one
@@ -44,7 +41,7 @@
       #     devShells.aarch64-darwin.bar = ...;
       #     devShells.x86_64-linux.foo = ...;
       #     ...
-      #   }
+      #  }
       # and this turns that into:
       #   for system = "x86_64-linux":
       #     {
@@ -70,8 +67,6 @@
         # Keep only the category names that
         #   a) actually exist on this input
         #   b) have an entry for this specific system.
-        # This guards against inputs that don't export a given category (a flake with no apps) and against inputs
-        # that support some systems but not others (nixpkgs itself has legacyPackages, but no packages at the
         # top level, input ? ${key} catches that safely
         |> lib.filter (key: input ? ${key} && input.${key} ? ${system})
         # Turn that filtered list of category names into an actual attrset
