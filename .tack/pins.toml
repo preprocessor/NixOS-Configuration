@@ -6,18 +6,12 @@ rust-overlay = "rust-overlay"
 systems = "systems"
 treefmt-nix = "treefmt-nix"
 
-[inputs.apple-fonts]
-url = "gh:Lyndeno/apple-fonts.nix"
-
 [inputs.base16]
 url = "gh:senchopens/base16.nix"
 
 [inputs.bat-syntax-justfile]
 type = "fetch"
 url = "gh:nk9/just_sublime"
-
-[inputs.birdee]
-url = "gh:BirdeeHub/nix-wrapper-modules"
 
 [inputs.chicago-font]
 type = "fetch"
@@ -47,19 +41,25 @@ url = "gh:iynaix/fish-completion-sync"
 type = "fetch"
 url = "gh:dtinth/fragment-mono-weights"
 
-[inputs.fsel]
-type = "fetch"
-url = "gh:Mjoyufull/fsel"
+[inputs.glide-browser]
+url = "gh:glide-browser/glide.nix"
 
 [inputs.helvetica-font]
 type = "fetch"
 url = "gh:Kyles-World/Helvetica-Font"
+
+[inputs.histui]
+type = "fixed"
+url = "https://github.com/jmylchreest/histui/archive/refs/tags/v0.0.14.tar.gz"
 
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
 [inputs.hyprland]
 url = "gh:hyprwm/Hyprland"
+
+[inputs.iris]
+url = "gh:versenilvis/iris/main"
 
 [inputs.neovim]
 url = "path:/home/wyspr/Configuration/Neovim/"
@@ -80,18 +80,51 @@ url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1"
 [inputs.nixpkgs]
 url = "nixpkgs:unstable"
 
-[inputs.otter-launcher]
-type = "fetch"
-url = "gh:kuokuo123/otter-launcher"
+[inputs.ny]
+type = "fixed"
+url = "applefont:NY"
 
 [inputs.pixprint]
 url = "gh:preprocessor/pixprint"
 
+[inputs.pond]
+type = "fetch"
+url = "gitlab:alice-lefebvre/pond"
+
+[inputs.rsakura]
+url = "gh:preprocessor/rsakura"
+
+[inputs.sf-compact]
+type = "fixed"
+url = "applefont:SF-Compact"
+
+[inputs.sf-mono]
+type = "fixed"
+url = "applefont:SF-Mono"
+
+[inputs.sf-pro]
+type = "fixed"
+url = "applefont:SF-Pro"
+
 [inputs.sops-nix]
 url = "gh:Mic92/sops-nix"
 
+[inputs.spicetify-nix]
+url = "gh:Gerg-L/spicetify-nix"
+
 [inputs.tack]
 url = "gh:manic-systems/tack"
+
+[inputs.terminal-toys]
+type = "fetch"
+url = "gh:seebass22/terminal-toys"
+
+[inputs.textfox]
+url = "gh:adriankarlen/textfox"
+
+[inputs.voxcii]
+type = "fetch"
+url = "gh:ashish0kumar/voxcii"
 
 [inputs.yazi]
 url = "gh:sxyazi/yazi"
@@ -113,6 +146,7 @@ type = "fetch"
 url = "gh:llanosrocas/yaziline.yazi"
 
 [shorturls]
+applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dmg"
 gh = "github:{path}"
 nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}"
 path = "git+file:///{path}"
