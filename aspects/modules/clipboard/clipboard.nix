@@ -13,40 +13,44 @@
 
   perSystem =
     {
+      wrapPackage,
       self',
       pkgs,
-      wrapPackage,
       ...
     }:
     {
-      packages.cliphist = wrapPackage {
-        env.CLIPHIST_MAX_STORE_SIZE = "1GB";
-
-        package = pkgs.buildGoModule (final: {
-          pname = "cliphist";
-          version = "0-unstable-2026-04-21";
-          src = inputs.cliphist-src;
-          vendorHash = "sha256-fDl+ul1t2Ux1w5WcCo6YMJtrcC20o+eUEO3NNycSNvI=";
-          buildInputs = [ pkgs.bash ];
-          postInstall = ''
-            cp ${final.src}/contrib/* $out/bin/
-          '';
-          patches = [ ./cliphist-fix-browser-copy-with-meta.patch ];
-        });
-      };
-
       packages.cliphist-tui = wrapPackage {
         package = pkgs.rustPlatform.buildRustPackage (final: {
           pname = "cliphist-tui";
           version = "0-unstable-2026-04-26";
           cargoLock.lockFile = final.src + "/Cargo.lock";
           src = inputs.cliphist-tui-src;
+          allowSubstitutes = false;
+          preferLocalBuild = true;
         });
+
         extraPkgs = [
-          self'.packages.cliphist
           pkgs.ffmpegthumbnailer
           pkgs.chafa
         ];
+      };
+
+      packages.cliphist = wrapPackage {
+        package = pkgs.buildGoModule (final: {
+          pname = "cliphist";
+          version = "0-unstable-2026-04-21";
+          src = inputs.cliphist-src;
+          allowSubstitutes = false;
+          preferLocalBuild = true;
+          vendorHash = "sha256-fDl+ul1t2Ux1w5WcCo6YMJtrcC20o+eUEO3NNycSNvI=";
+          buildInputs = [ pkgs.bash ];
+          postInstall = "cp ${final.src}/contrib/* $out/bin/ ";
+          patches = [ ./cliphist-fix-browser-copy-with-meta.patch ];
+        });
+
+        morePackages = [ self'.packages.cliphist-tui ];
+
+        env.CLIPHIST_MAX_STORE_SIZE = "1GB";
       };
 
       _file = ./clipboard.nix;
@@ -56,7 +60,7 @@
     { self', pkgs, ... }:
     {
       hj.packages = [
-        self'.packages.cliphist-tui
+        self'.packages.cliphist
         pkgs.wl-clipboard
       ];
 
@@ -88,29 +92,11 @@
     };
 
   exo.host.ramiel =
+    { self', lib, ... }:
     {
-      config,
-      self',
-      pkgs,
-      lib,
-      ...
-    }:
-    {
-      my.otter-launcher.modules =
-        let
-          spawn = config.utils.hyprSpawn;
-        in
-        [
-          {
-            description = "board";
-            prefix = "clip";
-            cmd = spawn 800 1000 "cliphist-tui" (lib.getExe' self'.packages.cliphist-tui "cliphist-tui");
-          }
-        ];
-
-      my.hyprland.startup = [
-        ''hl.exec_cmd("${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular")''
-      ];
+      my.hyprland.lua.files."keybinds.clipboard".content = /* lua */ ''
+        hl.bind("SUPER + V", hl.dsp.exec_cmd('kitty -e ${lib.getExe' self'.packages.cliphist "cliphist-tui"}', {size = { 800, 1200}, float = true, center = true}))
+      '';
 
       _file = ./clipboard.nix;
     };
