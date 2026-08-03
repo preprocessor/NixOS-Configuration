@@ -16,21 +16,38 @@
         (lib.mkAliasOptionModule [ "hj" ] [ "hjem" "users" constants.username ])
       ];
 
-      nixpkgs.overlays = [ (_: _: { inherit (packages'.hjem) smfh; }) ];
+      config = lib.mkMerge [
+        {
+          nixpkgs.overlays = [ (_: _: { inherit (packages'.hjem) smfh; }) ];
 
-      hjem.clobberByDefault = true;
+          hjem.clobberByDefault = true;
 
-      hj = {
-        enable = true;
+          hj = {
+            enable = true;
 
-        user = constants.username;
-        directory = constants.homedir;
+            user = constants.username;
+            directory = constants.homedir;
 
-        # Sorce environment variables
-        files.".profile" = {
-          executable = true;
-          source = config.hj.environment.loadEnv;
-        };
-      };
+            # Sorce environment variables into ~/.profile
+            files.".profile" = {
+              executable = true;
+              source = config.hj.environment.loadEnv;
+            };
+          };
+        }
+
+        (lib.mkIf (config.programs.fish.enable) {
+          hj.xdg.config.files."fish/config.fish".text = ''
+            if not test -n "$__HJEM_ENV_INIT"
+              source "${config.hj.environment.loadEnv}"
+              set __HJEM_ENV_INIT 1
+            end
+          '';
+        })
+
+        (lib.mkIf (config.programs.bash.enable) {
+          programs.bash.loginShellInit = "source ${config.hj.environment.loadEnv}";
+        })
+      ];
     };
 }
