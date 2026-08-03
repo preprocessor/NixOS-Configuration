@@ -110,7 +110,6 @@ in
                 default = { };
                 description = "configurations specific to this host.";
               };
-
             };
           }
         )
