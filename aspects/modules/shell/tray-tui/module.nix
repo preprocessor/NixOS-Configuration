@@ -50,6 +50,12 @@
 
       config = lib.mkIf (cfg.enable) {
         hj.packages = [ cfg.package ];
+
+        my.xdg.desktopTuiEntries."Tray TUI" = {
+          package = config.my.tray-tui.package;
+          width = 1200;
+          height = 1200;
+        };
       };
 
       _file = ./module.nix;

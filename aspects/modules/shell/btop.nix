@@ -20,7 +20,11 @@
     {
       hj.packages = [ self'.packages.btop ];
 
-      my.xdg.desktopEntries."btop".noDisplay = true;
+      my.xdg.desktopTuiEntries."btop" = {
+        package = self'.packages.btop;
+        width = 2100;
+        height = 1200;
+      };
 
       # Enable monitoring of GPU wattage by programs like btop
       systemd.tmpfiles.rules = [
