@@ -1,9 +1,4 @@
 {
-  tack.fsel = {
-    url = "gh:Mjoyufull/fsel";
-    type = "fetch";
-  };
-
   perSystem =
     { pkgs, ... }:
     {
