@@ -3,21 +3,28 @@
     { pkgs, wrapPackage, ... }:
     {
       hj.packages = [
-        (pkgs.writeShellScriptBin "eye" ./bin/eye)
-        (pkgs.writeShellScriptBin "gbc" ./bin/gbc)
         (pkgs.writeShellScriptBin "moon" ./bin/moon)
+
         (wrapPackage {
           package = pkgs.writeShellScriptBin "waow" ./bin/waow;
+
+          morePackages = [
+            (pkgs.writeShellScriptBin "eye" ./bin/eye)
+            (pkgs.writeShellScriptBin "gbc" ./bin/gbc)
+            (wrapPackage {
+              package = pkgs.writeShellScriptBin "wystem" ./bin/wystem;
+              extraPkgs = with pkgs; [
+                fetchutils
+                xrandr
+                xprop
+              ];
+            })
+          ];
+
           aliases = [
-            "wystem"
             "wot"
             "huh"
             "hmm"
-          ];
-          extraPkgs = with pkgs; [
-            fetchutils
-            xrandr
-            xprop
           ];
         })
       ];

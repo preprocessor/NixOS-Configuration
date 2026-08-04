@@ -1,61 +1,11 @@
 #!/usr/bin/env bash
-# vim: set nowrap:
-
-CNAMES=(BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE)
-
-RESET="\e[0m"
-F=3 B=4 BF=9 BB=10
-for i in {0..7}; do
-  printf -v  ${CNAMES[$i]}   %b "\e[${F}${i}m"
-  printf -v  ${CNAMES[$i]}BG %b "\e[${B}${i}m"
-  printf -v L${CNAMES[$i]}   %b "\e[${BF}${i}m"
-  printf -v L${CNAMES[$i]}BG %b "\e[${BB}${i}m"
-done
-
-CPU="i9 10900K"
-GPU="RX 6700 XT"
-
-HOST=$(cat /etc/hostname)
-RES=$(res '${width}x${height}' 2>/dev/null)
-MEM=$(mem '${gb_used}G󰿟${gb_total}G')
-OSVER=$(grep '^VERSION_ID=' /etc/os-release | cut -d'"' -f2)
-KERNEL=$(uname -r | sd 'os-lto' '')
-
-WM=$(wm)
-UPTIME=$(upt)
-TERMINAL=$(echo $TERMINAL)
-SHELL="fish"
-
-USER_INFO_LEN=$((${#HOSTNAME} + ${#USER} + 1))
-
-USER_INFO="${LYELLOW}${USER}${WHITE}@${LCYAN}${HOSTNAME}"
-
-USER_INFO_UNDERLINE=$(printf "%0.s▔" $(seq 1 $USER_INFO_LEN))
-
-HW_INFO=$(gum style \
-  --padding "0 1" \
-  --border-foreground 10 \
-  --border thick "\
-${LYELLOW}  ${CPU}
-${LBLUE}󱡜  ${GPU}
-${LMAGENTA}  ${MEM}
-${LCYAN}󰹑  ${RES}
-${LRED}󰄉  ${UPTIME}")
-
-SW_INFO=$(gum style \
-  --padding "0 1" \
-  --border-foreground 10 \
-  --border thick "\
-${LYELLOW}  ${KERNEL}
-${LBLUE}  ${OSVER}
-${LMAGENTA}󰧨  $XDG_CURRENT_DESKTOP
-${LCYAN}  ${TERMINAL}
-${LRED}  ${SHELL}")
-
-INFO=$(gum join --horizontal "${HW_INFO}" "${SW_INFO}")
+ART=$(gum style --margin "0 0 0 7" "$(eye)")
+INFO=$(wystem)
 COLOR=$(gbc)
 
-ART=$(gum style --margin "0 0 0 7" "$(eye)")
+USER_INFO_LEN=$((${#HOSTNAME} + ${#USER} + 1))
+USER_INFO=$(echo -e "\e[33m${USER}\e[97m@\e[36m${HOSTNAME}\e[37m")
+USER_INFO_UNDERLINE=$(printf "%0.s▔" $(seq 1 $USER_INFO_LEN))
 
 RIGHT=$(gum style \
   --margin "0 0 0 2" \
@@ -64,7 +14,6 @@ ${USER_INFO}
 ${USER_INFO_UNDERLINE}
 ${INFO}
 ${COLOR}")
-
 
 OUT=$(gum join --vertical "${ART}" "${RIGHT}")
 
