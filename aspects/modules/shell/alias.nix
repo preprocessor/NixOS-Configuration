@@ -29,16 +29,13 @@
           cp = "cp -r ";
           mkdir = "mkdir -p";
 
-          rm = "trash-put ";
-          rmdir = "trash-put ";
-          delete = "rm";
+          rmt = "trash-put ";
+          rmtdir = "trash-put ";
 
           repl = "nix repl --file ${cfgdir}/repl.nix";
 
           ils = "mcat ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
 
-          wf = "cd ${cfgdir} && nix run .#write-flake";
-          ws = "cd ${cfgdir} && nix run .#write-sources";
         };
 
         shellAbbrs = {
