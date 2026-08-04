@@ -1,18 +1,25 @@
 {
+  tack.histui = {
+    url = "https://github.com/jmylchreest/histui/archive/refs/tags/v0.0.14.tar.gz";
+    type = "fixed";
+  };
+
   perSystem =
-    { pkgs, lib, ... }:
+    {
+      inputs,
+      pkgs,
+      lib,
+      ...
+    }:
     {
       packages.histui = pkgs.buildGoModule (final: {
         pname = "histui";
-        version = final.src.tag;
+        version = "v0.0.14";
         __structuredAttrs = true;
-        src = pkgs.fetchFromGitHub {
-          owner = "jmylchreest";
-          repo = "histui";
-          tag = "v0.0.11";
-          hash = "sha256-xBAS81eWuxABQRLfWUR/xH9bHUq/OoFmjmAsRr3kts4=";
-        };
-        vendorHash = "sha256-2WPZwP0G6STb2jF7Hy/7/fUyWbXTcdlokp18E8U60bc=";
+        allowSubstitutes = false;
+        preferLocalBuild = true;
+        src = inputs.histui;
+        vendorHash = "sha256-b5CFO2UEzaMlTK1I4r+/5LAQNseClZirpwpjb0ne9Cc=";
         doCheck = false;
 
         nativeBuildInputs = with pkgs; [
@@ -54,15 +61,15 @@
     { self', pkgs, ... }:
     {
       hj.packages = [
-        pkgs.libnotify # notify-send
         self'.packages.histui
+        pkgs.libnotify # notify-send
       ];
 
       my.hyprland.startup = [
         ''hl.exec_cmd("${self'.packages.histui}/bin/histuid")''
       ];
 
-      my.hyprland.lua.files."window_rules.histui".content = /* lua */ ''
+      my.hyprland.lua.files."layer_rules.histui".content = /* lua */ ''
         hl.layer_rule({
           match        = { namespace = "^histui-notification$" },
           no_screen_share = true,
