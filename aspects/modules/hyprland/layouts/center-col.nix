@@ -12,7 +12,7 @@
         if command == "resize" then
           if ratio == 0.5 then
             ratio = 0.3333
-          else 
+          else
             ratio = 0.5
           end
         elseif command == "swap" then

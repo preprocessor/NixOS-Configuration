@@ -1,6 +1,19 @@
 {
   exo.mods.desktop = {
     my.hyprland.lua.files = {
+      "layer_rules.general".content = /* lua */ ''
+
+        hl.layer_rule({
+          match   = { namespace = "^(wayfreeze)$" },
+          no_anim = true,
+        })
+
+        hl.layer_rule({
+          match     = { namespace = "^(selection)$" },
+          animation = "fade"
+        })
+      '';
+
       "window_rules.general".content = /* lua */ ''
         hl.window_rule({
           -- Fix some dragging issues with XWayland
@@ -32,16 +45,6 @@
 
           move  = "20 monitor_h-120",
           float = true,
-        })
-
-        hl.layer_rule({
-          match   = { namespace = "^(wayfreeze)$" },
-          no_anim = true,
-        })
-
-        hl.layer_rule({
-          match     = { namespace = "^(selection)$" },
-          animation = "fade"
         })
 
         hl.window_rule({

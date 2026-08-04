@@ -1,29 +1,30 @@
 {
   exo.mods.desktop =
-    { pkgs, lib, ... }:
+    {
+      scheme,
+      pkgs,
+      lib,
+      ...
+    }:
 
     let
-      powercontrols = pkgs.writeShellScript "powercontrols" ''
-        CHOICE=$(gum choose --cursor=" " --cursor.foreground="#fff" --header="" --no-show-help 'Log Out' 'Reboot' 'Power Off')
+      powercontrols =
+        with scheme.withHashtag;
+        pkgs.writeShellScript "powercontrols" ''
+          CHOICE=$(gum choose --cursor=" " --cursor.foreground="#fff" --header="" --no-show-help 'Log Out' 'Reboot' 'Power Off')
 
-        if [[ -z $CHOICE ]]; then
-          exit 0
-        fi
+          if [[ -z $CHOICE ]]; then
+            exit 0
+          fi
 
-        gum confirm --no-show-help --selected.background="#EC7420" --prompt.foreground="#EC7420" "$CHOICE?" || exit 0
+          gum confirm --no-show-help --selected.background="${bright-cyan}" --prompt.foreground="${bright-cyan}" "$CHOICE?" || exit 0
 
-        case $CHOICE in
-          "Log Out")
-            command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop
-            ;;
-          "Reboot")
-            hyprshutdown -t "Restarting..." --post-cmd "reboot"
-            ;;
-          "Power Off")
-            hyprshutdown -t "Shutting down..." --post-cmd "shutdown -P 0"
-            ;;
-        esac
-      '';
+          case $CHOICE in
+            "Log Out") command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop ;;
+            "Reboot") hyprshutdown -t "Restarting..." --post-cmd "reboot" ;;
+            "Power Off") hyprshutdown -t "Shutting down..." --post-cmd "shutdown -P 0" ;;
+          esac
+        '';
     in
     {
       my.hyprland.lua.files = {
@@ -83,26 +84,6 @@
           hl.bind("SUPER + KP_Subtract", function()
             zoom(-0.5)
           end)
-
-          -- ░█▄█░█▀▀░█▀▄░▀█▀░█▀█
-          -- ░█░█░█▀▀░█░█░░█░░█▀█
-          -- ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀░▀
-
-          -- multimedia keys for volume
-          hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
-            { locked = true, repeating = true })
-          hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
-            { locked = true, repeating = true })
-          hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
-            { locked = true, repeating = true })
-          hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
-            { locked = true, repeating = true })
-
-          -- multimedia keys for playback control
-          hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-          hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-          hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-          hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
         '';
       };
     };

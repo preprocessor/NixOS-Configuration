@@ -2,7 +2,7 @@
   exo.mods.desktop = {
     my.hyprland.lua.files = {
       "keybinds.hide_windows".content = /* lua */ ''
-        hl.bind("SUPER + B", function()
+        hl.bind("SUPER + PERIOD", function()
           local win = hl.get_active_window()
           if not win then return end
           hl.dispatch(hl.dsp.window.tag({ tag = "hidden", window = win }))
