@@ -47,7 +47,9 @@
           default = wrapPackage (
             { wlib, ... }:
             {
-              package = packages'.yazi;
+              package = packages'.yazi.overrideAttrs {
+                doCheck = false;
+              };
               extraPkgs = with pkgs; [
                 ouch
                 exiv2

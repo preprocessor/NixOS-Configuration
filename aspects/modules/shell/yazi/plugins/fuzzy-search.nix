@@ -35,7 +35,5 @@
           (yaziKeymap [ "<S-z>" ] "plugin fuzzy-search -- zoxide --TL=3" "Zoxide Search")
         ];
       };
-
-      _file = ./plugins.nix;
     };
 }
