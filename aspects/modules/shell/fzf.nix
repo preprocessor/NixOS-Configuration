@@ -44,7 +44,7 @@
     let
       cfg = config.my.fzf;
       renderedColors =
-        colors: colors |> lib.mapAttrsToList (name: value: "${name}:${value}") |> lib.concatStringsSep ",";
+        colors: colors |> lib.mapAttrsToList (name: value: "${name}:${value}") |> lib.join ",";
     in
     {
       options.my.fzf = {

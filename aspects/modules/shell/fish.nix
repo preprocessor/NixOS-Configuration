@@ -84,7 +84,6 @@
 
     };
 
-  # [todo] full hjem + wrapped implementation
   exo.skeleton =
     { lib, ... }:
     {

@@ -5,6 +5,7 @@
       hj.packages = with pkgs; [
         lutgen-studio
         waypaper
+        wpgtk
         awww
       ];
 

@@ -1,9 +1,9 @@
 {
   exo.core =
     {
-      pkgs,
-      config,
       constants,
+      config,
+      pkgs,
       ...
     }:
     {

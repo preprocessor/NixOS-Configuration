@@ -18,22 +18,8 @@
               url = "https://github.com/xero/figlet-fonts/archive/refs/heads/main.zip";
               hash = "sha256-QogGNQ772bcYLOzgO0i6ydbzxjn5jnXNav72vW/SXm8=";
             };
-            dontUnpack = true;
-            dontBuild = true;
-            dontConfigure = true;
-            installPhase = ''
-              mkdir -p $out/share/figlet
-              cp -r $src/* $out/share/figlet/
-            '';
-          })
-          (pkgs.stdenvNoCC.mkDerivation {
-            name = "gangshit";
-            src = pkgs.fetchFromGitHub {
-              owner = "thugcrowd";
-              repo = "gangshit";
-              rev = "3618cdf4616fa428070b3aa106f3874f95bca1e3";
-              hash = "sha256-fnt7ZfgBU7yvMCkTjEeQkhx2ohQ8YWmzwNvrhjg5D/A=";
-            };
+            allowSubstitutes = false;
+            preferLocalBuild = true;
             dontUnpack = true;
             dontBuild = true;
             dontConfigure = true;

@@ -23,12 +23,12 @@
       tomlFormat = pkgs.formats.toml { };
     in
     {
-      environment.shellAliases = {
-        l = "${lib.getExe lla} -T ";
+      programs.fish.functions = {
+        l = "${lib.getExe lla} -T";
         ls = "${lib.getExe lla}";
-        la = "${lib.getExe lla} -AT ";
-        ll = "${lib.getExe lla} -Al ";
-        lss = "${lib.getExe lla} -s ";
+        la = "${lib.getExe lla} -AT";
+        ll = "${lib.getExe lla} -Al";
+        lss = "${lib.getExe lla} -s";
       };
 
       hj.packages = [ lla ];
