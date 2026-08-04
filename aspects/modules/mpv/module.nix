@@ -71,13 +71,17 @@
 
         image-viewer = lib.mkOption {
           type = lib.types.package;
-          default = wrapPackage {
-            package = pkgs.mpv;
-            files = {
-              "configuration/mpv.conf" = cfg.image-conf;
-              "configuration/input.conf" = cfg.image-input;
-            };
-          };
+          default = wrapPackage (
+            { wlib, ... }:
+            {
+              package = pkgs.mpv;
+              env.MPV_HOME = "${wlib.files}/configuration";
+              files = {
+                "configuration/mpv.conf" = cfg.image-conf;
+                "configuration/input.conf" = cfg.image-input;
+              };
+            }
+          );
         };
       };
 
