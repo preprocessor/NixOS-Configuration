@@ -1,7 +1,7 @@
 {
   exo.core = {
     theme = {
-      variant = "dark";
+      variant = "light";
       dark = {
         slug = "wyspr-evangelion";
         scheme = "MAGI";
@@ -9,7 +9,7 @@
 
         base00 = "#111111"; # Default background
         base01 = "#484848"; # Lighter bg / status bars
-        base02 = "#6B6B6B"; # Selection background
+        base02 = "#9B9B9B"; # Selection background
         base03 = "#B0B0B0"; # Comments, invisibles
         base04 = "#C4C4C8"; # Dark bg highlight (tab_bar_background)
         base05 = "#EC7420"; # Default foreground
@@ -34,38 +34,37 @@
       };
 
       light = {
-        slug = "wyspr-scp";
-        scheme = "FOUNDATION";
+        slug = "wyspr-jojo";
+        scheme = "BIZZARE";
         author = "wyspr";
 
-        base00 = "#b89c7a"; # Default background
-        base01 = "#a4896a"; # Lighter bg / status bars
-        base02 = "#90775b"; # Selection background (color0)
-        base03 = "#7b664b"; # Comments, invisibles (color8)
-        base04 = "#66543b"; # Dark bg highlight (tab_bar_background)
-        base05 = "#1F0F22"; # Default foreground
-        base06 = "#180810"; # Light foreground (color15)
-        base07 = "#100002"; # Lightest foreground
-        base08 = "#cc241d"; # Red — variables, errors
-        base09 = "#d65d0e"; # Orange — integers, booleans
-        base0A = "#d79921"; # Yellow — classes
-        base0B = "#98971a"; # Green — strings
-        base0C = "#689d6a"; # Cyan — escape chars, regex
-        base0D = "#458588"; # Blue — functions
-        base0E = "#b16286"; # Magenta — keywords
-        base0F = "#3f0f00"; # Brown — deprecated
-        base10 = "#bda382"; # Darker background (base00 stepped down)
-        base11 = "#c7af93"; # Darkest background (stepped further)
-        base12 = "#9d0006"; # Bright red
-        base13 = "#b57614"; # Bright yellow
-        base14 = "#79740e"; # Bright green
-        base15 = "#427b58"; # Bright blue
-        base16 = "#076678"; # Bright magenta
-        base17 = "#8f3f71"; # Bright cyan
+        base00 = "#101010"; # Default background
+        base01 = "#3A3A3A"; # Lighter bg / status bars
+        base02 = "#AAAAAA"; # Selection background (color0)
+        base03 = "#BCBCBC"; # Comments, invisibles (color8)
+        base04 = "#CFCFCF"; # Cark bg highlight (tab_bar_background)
+        base05 = "#F2B1D6"; # Default foreground
+        base06 = "#F2C6DF"; # Light foreground (color15)
+        base07 = "#F2D7E7"; # Lightest foreground
+        base08 = "#C74F41"; # Red — variables, errors
+        base09 = "#FFB08B"; # Orange — integers, booleans
+        base0A = "#D3BF63"; # Yellow — classes
+        base0B = "#99AC6C"; # Green — strings
+        base0C = "#4D8386"; # Cyan — escape chars, regex
+        base0D = "#BE7B7B"; # Blue — functions
+        base0E = "#C04F84"; # Magenta — keywords
+        base0F = "#FFC9C9"; # Brown — deprecated
+        base10 = "#010101"; # Darker background (base00 stepped down)
+        base11 = "#000000"; # Darkest background (stepped further)
+        base12 = "#F9543E"; # Bright red
+        base13 = "#FFFF6C"; # Bright yellow
+        base14 = "#CEF17A"; # Bright green
+        base15 = "#2CB3BC"; # Bright cyan
+        base16 = "#FF8B8B"; # Bright blue
+        base17 = "#F451AA"; # Bright magenta
       };
     };
 
     _file = "scheme.nix";
   };
-
 }
