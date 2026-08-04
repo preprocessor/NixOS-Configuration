@@ -34,7 +34,7 @@
       my.hyprland.lua.files."keybinds.kitty".content = /* lua */ ''
         hl.bind("SUPER + Return", hl.dsp.exec_raw("kitty -1"), { release = true })
 
-        hl.bind("SUPER + CTRL + Return", hl.dsp.exec_raw("kitty -1"), { float = true, release = true })
+        hl.bind("SUPER + ALT + Return", hl.dsp.exec_raw("kitty -1"), { float = true, release = true })
       '';
 
       my.kitty = {
@@ -62,7 +62,7 @@
 
           shell_integration = "no-cursor";
 
-          background_opacity = "0.5";
+          background_opacity = "0.9";
 
           scrollback_lines = "10000";
           wheel_scroll_multiplier = "5.0";
