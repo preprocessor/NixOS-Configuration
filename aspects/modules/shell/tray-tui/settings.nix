@@ -1,7 +1,13 @@
 {
   exo.mods.desktop =
-    { config, lib, ... }:
+    { config, ... }:
     {
+      my.xdg.desktopTuiEntries."isd" = {
+        package = config.my.tray-tui.package;
+        width = 600;
+        height = 1200;
+      };
+
       my.tray-tui = {
         enable = true;
         settings = {
@@ -50,18 +56,6 @@
           };
         };
       };
-
-      my.otter-launcher.modules =
-        let
-          spawn = config.utils.hyprSpawn;
-        in
-        [
-          {
-            cmd = spawn 1200 1200 "tray-tui" (lib.getExe config.my.tray-tui.package);
-            description = "systray";
-            prefix = "tray";
-          }
-        ];
 
       _file = ./settings.nix;
     };
