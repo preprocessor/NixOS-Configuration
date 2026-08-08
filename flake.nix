@@ -29,7 +29,6 @@
       inherit (inputs.nixpkgs) lib;
 
       # The flake's root directory as a path value so modules can reference files relative to the repo root
-      # Mainly used for sops and tack-write
       rootPath = ./.;
 
       # projectInput: take one flake-shaped input and project it down to just the outputs it has for one
@@ -78,13 +77,13 @@
       withSystem =
         system: f:
         f rec {
-          # re-expose these so every perSystem module gets them for free
+          # re-expose these so every module gets them for free
           inherit system inputs rootPath;
 
           # The nixpkgs package set for this specific system
           pkgs = inputs.nixpkgs.legacyPackages.${system};
 
-          # Every input, projected down to "just this input's system-specific  outputs" via projectInput.
+          # Every input, projected down to the input's system-specific outputs via projectInput.
           # So now:
           #   inputs'.someFlake.packages.foo
           # is shorthand for:
@@ -114,14 +113,14 @@
                 inherit (projectedAttrs) packages;
                 # 1. Try packages.default first
                 # 2. Try a package literally named after the input itself (an input called foo exposing packages.foo)
-                # 3. fall back to {} so the merge below is a no-op.
+                # 3. fall back to {} so the merge below is a no-op, resulting in the inputs' packages set.
                 spec = packages.default or packages.${inputName} or { };
               in
               packages // spec
             );
         };
 
-      # Integral options for departed, this is merged with topEval's module list
+      # Integral options for the configuration, this is merged with topEval's module list
       topOptions = {
         options = {
           systems = lib.mkOption {
@@ -145,7 +144,7 @@
             type = lib.types.deferredModule;
             default = { };
             description = ''
-              The same fragment gets re-evaluated once per system, with additional system-specific  specialArgs passed.
+              The same fragment gets re-evaluated once per system, with additional system-specific specialArgs passed.
 
               additional specialArgs: self', inputs', packages'
             '';
@@ -175,7 +174,7 @@
       # Evaluate perSystem blocks for each system
       # the output looks like this
       # systemOutputs = { "x86_64-linux" = { packages = P; devShells = D; }; }
-      # where P and D are { item = derivation, ...  }
+      # where P and D are { foo = drv, bar = drv, ... }
       systemOutputs =
         topEval.config.systems
         |> lib.flip lib.genAttrs (
@@ -189,42 +188,57 @@
               modules = [
                 topEval.config.perSystem
                 # This is a hand-rolled version of flake-parts' perSystem.
-                # perSystem : the same fragment gets re-evaluated once per system,
-                # each time with different specialArgs (a different pkgs, system, inputs', etc).
+                # perSystem: the same module gets re-evaluated once per system,
+                # each time with different set of specialArgs (a different pkgs, system, inputs', etc).
                 #
                 # Setting freeformType to "lazyAttrsOf unspecified"
                 # lets every possible key someone might set be valid inside perSystem,
                 # with no options for any of that declared up front anywhere.
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
               ];
-              # .config pulls out just the evaluated attrset of values not the whole evalModules result,
-              # which also bundles things like .options and .type that we don't care about here.
             }).config
+            # .config pulls out just the evaluated attrset of values not the whole evalModules result,
+            # which also bundles things like .options and .type that we don't care about here.
           )
         );
 
-      # transposed: swap the keys
+      # transposed: swap the attributes
       #
-      # systemOutputs is shaped
-      #   system -> category -> drv (derivation) (ex: x86_64-linux.packages.foo)
+      # our systemOutputs is shaped
+      #   system -> category -> derivation (ex: x86_64-linux.packages.foo)
       # but flake outputs need to be shaped the other way around:
-      #   category -> system -> drv              (ex: packages.x86_64-linux.foo)
+      #   category -> system -> derivation (ex: packages.x86_64-linux.foo)
       #
       # this walks every system's output set and folds each one into an accumulator, transposed into the correct key.
       transposed =
         systemOutputs
         # For this one system, wrap every top-level category's value in { ${system} = value; }
         # turning:
-        #   systemOutputs.${system} = { packages = P; devShells = D; } where P and D are { foo = drv, bar = drv, ... }
-        # into:
-        #   { packages = { ${system} = P; }; devShells = { ${system} = D; }; }
+        # systemOutputs = {
+        #   aarch64-darwin = { packages = P; devShells = D; }
+        #   x86_64-linux = { packages = P; devShells = D; }
+        # };
+        # where P and D are { foo = drv, bar = drv, ... }
         |> lib.mapAttrsToList (system: lib.mapAttrs (category: drv: { ${system} = drv; }))
+        # into:
+        # [
+        #   { packages = { aarch64-darwin = P; }; devShells = { aarch64-darwin = D; }; }
+        #   { packages = { x86_64-linux = P; }; devShells = { x86_64-linux = D; }; }
+        # ]
         # which is now shaped correctly to be merged into the accumulator.
-        |> lib.foldAttrs (category: acc: acc // category) { }; # { } is the starting accumulator for the fold
+        |> lib.foldAttrs (category: acc: acc // category) { };
     in
     # Final result: the perSystem stuff we just transposed (packages.<system>, devShells.<system>, checks.<system>, etc.)
     # merged with whatever system-independent flake outputs got declared directly,
     # things like: flake.nixosConfigurations, flake.overlays, or anything else set
     # with config.flake by the top-level modules.
-    transposed // topEval.config.flake;
+    # transposed // topEval.config.flake;
+    topEval.config.flake
+    // transposed
+    // {
+      # Repl debug entrypoint
+      topLevelDebug = {
+        inherit (topEval) options config;
+      };
+    };
 }
