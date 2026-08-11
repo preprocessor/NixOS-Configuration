@@ -105,32 +105,28 @@
       };
 
       hardware.steam-hardware.enable = true; # controller / Steam Deck input udev rules
-      programs.steam =
-        # let
-        #   compatToolsDir = pkgs.linkFarm "me3-compat-tools" [
-        #     {
-        #       name = "proton-ge"; # me3 looks for the proton by this name
-        #     }
-        #   ];
-        # in
-        {
-          enable = true;
-          remotePlay.openFirewall = true;
-          localNetworkGameTransfers.openFirewall = true;
-          # extraPackages = [ pkgs.latencyflex-vulkan ];
-          extraCompatPackages = with pkgs; [
-            steamtinkerlaunch
-          ];
-          package = pkgs.steam.override {
-            extraPkgs = fpkgs: [ pkgs.modengine3 ];
-            extraEnv = {
-              STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.join ":" [
-                # "${compatToolsDir}" # for ME3 / modengine3
-                "\${HOME}/.steam/root/compatibilitytools.d"
-              ];
-            };
+      programs.steam = {
+        enable = true;
+        remotePlay.openFirewall = true;
+        localNetworkGameTransfers.openFirewall = true;
+        fontPackages = with pkgs; [
+          noto-fonts-color-emoji
+          noto-fonts-cjk-sans
+          noto-fonts
+        ];
+        # extraPackages = [ pkgs.latencyflex-vulkan ];
+        # extraCompatPackages = with pkgs; [
+        #   steamtinkerlaunch
+        # ];
+        package = pkgs.steam.override {
+          extraPkgs = fpkgs: [ pkgs.modengine3 ];
+          extraEnv = {
+            STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.join ":" [
+              "\${HOME}/.steam/root/compatibilitytools.d"
+            ];
           };
         };
+      };
 
       _file = ./steam.nix;
     };
