@@ -41,8 +41,8 @@ url = "gh:iynaix/fish-completion-sync"
 type = "fetch"
 url = "gh:dtinth/fragment-mono-weights"
 
-[inputs.glide-browser]
-url = "gh:glide-browser/glide.nix"
+[inputs.helium]
+url = "gh:amaanq/helium-flake/"
 
 [inputs.helvetica-font]
 type = "fetch"
@@ -61,8 +61,12 @@ url = "gh:hyprwm/Hyprland"
 [inputs.iris]
 url = "gh:versenilvis/iris/main"
 
+[inputs.my-nixpkgs]
+type = "fetch"
+url = "gh:preprocessor/nixpkgs/module-test"
+
 [inputs.neovim]
-url = "path:/home/wyspr/Configuration/Neovim/"
+url = "gh:preprocessor/neovim"
 
 [inputs.nix-cachyos-kernel]
 exclude_follow = ["nixpkgs"]
@@ -119,9 +123,6 @@ url = "gh:manic-systems/tack"
 type = "fetch"
 url = "gh:seebass22/terminal-toys"
 
-[inputs.textfox]
-url = "gh:adriankarlen/textfox"
-
 [inputs.voxcii]
 type = "fetch"
 url = "gh:ashish0kumar/voxcii"
@@ -149,4 +150,3 @@ url = "gh:llanosrocas/yaziline.yazi"
 applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dmg"
 gh = "github:{path}"
 nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}"
-path = "git+file:///{path}"

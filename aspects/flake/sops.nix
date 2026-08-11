@@ -1,6 +1,6 @@
 { inputs, rootPath, ... }:
 {
-  tack.sops-nix.url = "gh:Mic92/sops-nix";
+  tack.inputs.sops-nix.url = "gh:Mic92/sops-nix";
 
   exo.core =
     {
@@ -24,6 +24,7 @@
         };
         secrets = {
           cachix_key.owner = constants.username;
+          email0.owner = constants.username;
           email1.owner = constants.username;
           github_access_token.owner = constants.username;
           nix_extra_options.owner = constants.username;

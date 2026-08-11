@@ -277,14 +277,6 @@
     "narHash": "sha256-x/wjqPR0pUTseD+zK5ImKYLIoDIznA33fT6hAw1wvuo=",
     "lastModified": 1772571788
   },
-  "textfox": {
-    "type": "github",
-    "owner": "adriankarlen",
-    "repo": "textfox",
-    "rev": "d6895da75f10fa17f1b637759aec3d84818b20e2",
-    "narHash": "sha256-WhPHaupeq5yWP53anFH6vr/ZMQQtAYGtpgUhzqWx9Ws=",
-    "lastModified": 1780405768
-  },
   "voxcii": {
     "type": "github",
     "owner": "ashish0kumar",

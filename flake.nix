@@ -31,6 +31,16 @@
       # The flake's root directory as a path value so modules can reference files relative to the repo root
       rootPath = ./.;
 
+      # All system-specific flake objects
+      systemOutputKeys = [
+        "packages"
+        "legacyPackages"
+        "devShells"
+        "checks"
+        "apps"
+        "formatter"
+      ];
+
       # projectInput: take one flake-shaped input and project it down to just the outputs it has for one
       # specific system ("x86_64-linux").
       #
@@ -55,14 +65,7 @@
       # it strips the system layer out and only keeps the categories that actually exist for that system.
       projectInput =
         system: input:
-        [
-          "packages"
-          "legacyPackages"
-          "devShells"
-          "checks"
-          "apps"
-          "formatter"
-        ]
+        systemOutputKeys
         # Keep only the category names that
         #   a) actually exist on this input
         #   b) have an entry for this specific system.
@@ -74,6 +77,7 @@
 
       # This is a hand-rolled version of flake-parts' withSystem.
       # withSystem: builds the "perSystem args" bundle for one system and hands it to a callback f.
+      # [TODO] look at mapAttrs here (mapAttrs (system: pkgs: { expr } inputs.nixpkgs.legacyPackages))
       withSystem =
         system: f:
         f rec {
@@ -149,6 +153,12 @@
               additional specialArgs: self', inputs', packages'
             '';
           };
+
+          debug = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            internal = true;
+          };
         };
       };
 
@@ -210,35 +220,48 @@
       #   category -> system -> derivation (ex: packages.x86_64-linux.foo)
       #
       # this walks every system's output set and folds each one into an accumulator, transposed into the correct key.
-      transposed =
-        systemOutputs
-        # For this one system, wrap every top-level category's value in { ${system} = value; }
-        # turning:
+      transposed = lib.genAttrs systemOutputKeys (
+        # For each top-level flake output generate and attribute set, creating:
+        # {
+        #   packages = { ... }
+        #   legacyPackages = { ... }
+        #   devShells = { ... }
+        #   checks = { ... }
+        #   apps = { ... }
+        #   formatter = { ... }
+        # }
+        key: lib.genAttrs (lib.attrNames systemOutputs) (system: systemOutputs.${system}.${key} or { })
+        # Within each top-level attrset (packages, devShells),
+        # make an attrset for each system, generated from systemOutputs
+        #
         # systemOutputs = {
         #   aarch64-darwin = { packages = P; devShells = D; }
         #   x86_64-linux = { packages = P; devShells = D; }
         # };
+        #
         # where P and D are { foo = drv, bar = drv, ... }
-        |> lib.mapAttrsToList (system: lib.mapAttrs (category: drv: { ${system} = drv; }))
-        # into:
-        # [
-        #   { packages = { aarch64-darwin = P; }; devShells = { aarch64-darwin = D; }; }
-        #   { packages = { x86_64-linux = P; }; devShells = { x86_64-linux = D; }; }
-        # ]
-        # which is now shaped correctly to be merged into the accumulator.
-        |> lib.foldAttrs (category: acc: acc // category) { };
+        #
+        # {
+        #   packages = {
+        #     aarch64-darwin = P;
+        #     x86_64-linux = P;
+        #   };
+        #   devShells = {
+        #     aarch64-darwin = D;
+        #     x86_64-linux = D;
+        #   };
+        # }
+        # which is now shaped correctly to be the flake outputs
+      );
     in
     # Final result: the perSystem stuff we just transposed (packages.<system>, devShells.<system>, checks.<system>, etc.)
     # merged with whatever system-independent flake outputs got declared directly,
     # things like: flake.nixosConfigurations, flake.overlays, or anything else set
     # with config.flake by the top-level modules.
-    # transposed // topEval.config.flake;
     topEval.config.flake
     // transposed
-    // {
-      # Repl debug entrypoint
-      topLevelDebug = {
-        inherit (topEval) options config;
-      };
+    // lib.optionalAttrs (topEval.config.debug) {
+      # Repl debug entrypoint for the top-level evaluation (tack, perSystem, ...)
+      topLevelDebug = { inherit (topEval) options config; };
     };
 }
