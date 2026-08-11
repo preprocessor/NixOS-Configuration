@@ -51,10 +51,10 @@
                 doCheck = false;
               };
               extraPkgs = with pkgs; [
-                ouch
-                exiv2
+                ouch-rar
                 ffmpeg
                 xxhash
+                exiv2
               ];
               files =
                 let
