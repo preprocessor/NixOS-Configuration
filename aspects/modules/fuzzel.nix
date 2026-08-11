@@ -11,8 +11,8 @@
             namespace = "fuzzel";
             render-workers = 10;
             match-workers = 10;
-            horizontal-pad = 10;
-            vertical-pad = 10;
+            horizontal-pad = 14;
+            vertical-pad = 14;
             prompt = ''"Run: "'';
             font = "SF Pro Display:weight=Medium:size=16";
           };
