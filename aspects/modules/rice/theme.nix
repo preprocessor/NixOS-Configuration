@@ -7,11 +7,7 @@
 
         theme = {
           name = "Gruvbox-Yellow-Dark";
-          package = pkgs.gruvbox-gtk-theme.override {
-            colorVariants = [ "dark" ];
-            # sizeVariants = [ "compact" ];
-            themeVariants = [ "yellow" ];
-          };
+          package = pkgs.gruvbox-dark-gtk;
         };
 
         icons = {
