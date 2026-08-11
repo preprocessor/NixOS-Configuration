@@ -97,7 +97,7 @@ let
             name = "${package.name}-canoli";
             paths = morePackages ++ [
               package
-              (
+              (pkgs.linkFarm "${package.name}" (
                 files
                 |> lib.mapAttrsToList (
                   name: value:
@@ -115,8 +115,7 @@ let
                     inherit name path;
                   }
                 )
-                |> pkgs.linkFarm "${package.name}"
-              )
+              ))
             ];
             nativeBuildInputs = [ pkgs.makeWrapper ];
             meta = removeAttrs (package.meta or { }) [ "outputsToInstall" ] // {
