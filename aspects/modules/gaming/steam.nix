@@ -81,6 +81,18 @@
         })
 
         hl.window_rule({
+          name = "games-workspace-move-darksouls",
+          match = {
+            class = "darksoulsremastered.exe",
+            title = "DARK SOULS™: REMASTERED",
+          },
+          workspace = "name:games silent",
+          render_unfocused = true,
+          fullscreen = true,
+          content = "game",
+        })
+
+        hl.window_rule({
           name = "games-workspace-move-content",
           match = { content = "game" },
           workspace = "name:games silent",
