@@ -1,28 +1,12 @@
 {
   exo.core =
-    {
-      constants,
-      config,
-      pkgs,
-      ...
-    }:
+    { pkgs, ... }:
     {
       hj.packages = [ pkgs.gh ];
-
-      sops.templates."git-email" = {
-        owner = constants.username;
-        content = ''
-          [user]
-            email = ${config.sops.placeholder."email1"}
-        '';
-      };
 
       programs.git = {
         enable = true;
         config = {
-          include = {
-            path = config.sops.templates."git-email".path;
-          };
           core = {
             editor = "$EDITOR";
             pager = "delta";
@@ -43,7 +27,8 @@
             show = "diffnav";
             log = "diffnav";
           };
-          user.name = "wyspr";
+          user.name = "preprocessor";
+          user.email = "5649544+preprocessor@users.noreply.github.com";
           interactive.diffFilter = "delta --color-only";
           init.defaultBranch = "main";
           advice.objectNameWarning = false;
