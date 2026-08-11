@@ -65,14 +65,14 @@
           "custom/hyprlayout" = {
             exec = pkgs.writeShellScript "waybar-hyprlayout" ''
               LAYOUT=$(hyprctl activeworkspace -j | jq -r .tiledLayout)
-              echo "{\"text\": \"\", \"alt\": \"$LAYOUT\", \"tooltip\": \"\", \"class\": \"hyprlayout\", \"percentage\": 0 }"
+              echo "{\"text\": \"text\", \"alt\": \"$LAYOUT\", \"tooltip\": \"tooltip\", \"class\": \"hyprlayout\", \"percentage\": 0 }"
             '';
             return-type = "json";
             interval = 1;
             format = "{icon}";
             format-icons = {
-              scrolling = "󰕭 ";
               "lua:centercol" = "󰕬 ";
+              scrolling = "󰕭 ";
               dwindle = "󰕴 ";
             };
           };
