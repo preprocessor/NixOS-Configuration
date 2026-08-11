@@ -1,5 +1,5 @@
 {
-  tack.neovim.url = "path:/home/wyspr/Configuration/Neovim/";
+  tack.inputs.neovim.url = "gh:preprocessor/neovim";
 
   exo.core =
     {

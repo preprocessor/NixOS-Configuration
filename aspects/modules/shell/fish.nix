@@ -1,18 +1,27 @@
 { inputs, ... }:
 {
-  tack.fish-completion-sync = {
-    url = "gh:iynaix/fish-completion-sync";
-    type = "fetch";
+  tack.inputs = {
+    fish-completion-sync = {
+      url = "gh:iynaix/fish-completion-sync";
+      type = "fetch";
+    };
+
+    my-nixpkgs = {
+      url = "gh:preprocessor/nixpkgs/module-test";
+      type = "fetch";
+    };
   };
 
   exo.core =
     {
+      modulesPath,
       config,
-      pkgs,
-      lib,
       ...
     }:
     {
+      disabledModules = [ (modulesPath + "/programs/fish.nix") ];
+      imports = [ (inputs.my-nixpkgs + "/nixos/modules/programs/fish.nix") ];
+
       programs.fish = {
         enable = true;
 
@@ -31,66 +40,6 @@
         '';
 
         extraCompletionPackages = config.hj.packages;
-      };
-
-      hj.xdg.config.files =
-        let
-          # Adapted from home-manager (https://github.com/nix-community/home-manager/blob/master/modules/programs/fish.nix)
-          fishIndent =
-            name: text:
-            pkgs.runCommand name {
-              nativeBuildInputs = [ pkgs.fish ];
-              inherit text;
-              passAsFile = [ "text" ];
-            } "env HOME=$(mktemp -d) fish_indent < $textPath > $out";
-
-          inherit (lib) optional isAttrs;
-        in
-        lib.mkIf (config.programs.fish.functions != { }) (
-          config.programs.fish.functions
-          |> lib.mapAttrs' (
-            name: def: {
-              name = "fish/functions/${name}.fish";
-              value.source =
-                let
-                  modifierStr = n: v: optional (v != null) ''--${n}="${toString v}"'';
-                  modifierStrs = n: v: optional (v != null) "--${n}=${toString v}";
-                  modifierBool = n: v: optional (v != null && v) "--${n}";
-
-                  mods =
-                    with def;
-                    modifierStr "description" description
-                    ++ modifierStr "wraps" wraps
-                    ++ lib.concatMap (modifierStr "on-event") (lib.toList onEvent)
-                    ++ modifierStr "on-variable" onVariable
-                    ++ modifierStr "on-job-exit" onJobExit
-                    ++ modifierStr "on-process-exit" onProcessExit
-                    ++ modifierStr "on-signal" onSignal
-                    ++ modifierBool "no-scope-shadowing" noScopeShadowing
-                    ++ modifierStr "inherit-variable" inheritVariable
-                    ++ modifierStrs "argument-names" argumentNames;
-
-                  modifiers = if isAttrs def then " ${toString mods}" else "";
-                  body = if isAttrs def then def.body else def;
-                in
-                fishIndent "${name}.fish" ''
-                  function ${name}${modifiers}
-                    ${lib.strings.removeSuffix "\n" body}
-                  end
-                '';
-            }
-          )
-        );
-
-    };
-
-  exo.skeleton =
-    { lib, ... }:
-    {
-      options.programs.fish.functions = lib.mkOption {
-        default = { };
-        type = with lib.types; attrsOf (either lines functionModule);
-        description = "Set custom fish functions.";
       };
     };
 }

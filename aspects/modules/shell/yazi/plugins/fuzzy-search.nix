@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.yazi-fuzzy-search = {
+  tack.inputs.yazi-fuzzy-search = {
     url = "gh:onelocked/fuzzy-search.yazi";
     type = "fetch";
   };

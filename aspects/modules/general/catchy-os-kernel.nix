@@ -1,5 +1,5 @@
 {
-  tack.nix-cachyos-kernel = {
+  tack.inputs.nix-cachyos-kernel = {
     url = "gh:xddxdd/nix-cachyos-kernel/release";
     exclude_follow = [ "nixpkgs" ];
   };

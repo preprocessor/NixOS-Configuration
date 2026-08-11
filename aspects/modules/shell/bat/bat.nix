@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.bat-syntax-justfile = {
+  tack.inputs.bat-syntax-justfile = {
     url = "gh:nk9/just_sublime";
     type = "fetch";
   };

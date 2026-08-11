@@ -1,22 +1,60 @@
-{ config, lib, ... }:
 {
-  options.tack = lib.mkOption {
-    type = lib.types.submodule {
-      freeformType = lib.types.toml;
+  rootPath,
+  config,
+  lib,
+  ...
+}:
+{
+  # Create a top-level option for tack, to be used like flake-file
+  options.tack = {
+    shorturls = lib.mkOption {
+      type = with lib.types; nullOr (attrsOf str);
+    };
+
+    all_follow = lib.mkOption {
+      type = with lib.types; nullOr (attrsOf str);
+    };
+
+    inputs = lib.mkOption {
+      default = { };
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          freeformType = lib.types.toml;
+          options = {
+            url = lib.mkOption { type = lib.types.str; };
+
+            type = lib.mkOption {
+              type = lib.types.nullOr (
+                lib.types.enum [
+                  "fetch"
+                  "fixed"
+                ]
+              );
+            };
+
+            follows = lib.mkOption {
+              type = with lib.types; nullOr (attrsOf str);
+            };
+
+            exclude_follow = lib.mkOption {
+              type = with lib.types; nullOr (listOf str);
+            };
+          };
+        }
+      );
     };
   };
 
   config = {
+    debug = true;
+    # Define a base pins.toml with an input for tack
     tack = {
-      tack.url = "gh:manic-systems/tack";
-
+      inputs.tack.url = "gh:manic-systems/tack";
       shorturls = {
         gh = "github:{path}";
-        path = "git+file:///{path}";
+        # local = "git+file://{path}";
         nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}";
-        applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dmg";
       };
-
       all_follow = {
         nixpkgs = "nixpkgs";
         systems = "systems";
@@ -29,7 +67,7 @@
 
     perSystem =
       {
-        rootPath,
+        packages',
         pkgs,
         ...
       }:
@@ -37,30 +75,30 @@
         apps.write-tack = {
           type = "app";
           meta.description = "A flake-file like tack pins.toml updater";
-          program =
-            lib.getExe
-            <| pkgs.writeShellApplication {
+          program = lib.getExe (
+            pkgs.writeShellApplication {
               name = "write-tack";
+
               derivationArgs = {
                 allowSubstitutes = false;
                 preferLocalBuild = true;
               };
-              runtimeInputs = [ pkgs.delta ];
+
+              runtimeInputs = [
+                packages'.tack
+                pkgs.delta
+                pkgs.nh
+              ];
+
               text =
                 let
-                  tomlFormat = pkgs.formats.toml { };
-                  cfg = config.tack;
-
-                  tackInputs = lib.importTOML (rootPath + /.tack/pins.toml);
-
-                  tomlObj = (cfg |> lib.filterAttrs (n: _: n == "all_follow" || n == "shorturls")) // {
-                    inputs = lib.removeAttrs cfg [
-                      "all_follow"
-                      "shorturls"
-                    ];
+                  cfg = {
+                    inherit (config.tack) all_follow shorturls;
+                    inputs = config.tack.inputs |> lib.filterAttrsRecursive (k: v: v != null);
                   };
 
-                  tackToml = tomlObj |> tomlFormat.generate "pins.toml";
+                  tomlFormat = pkgs.formats.toml { };
+                  tackToml = cfg |> tomlFormat.generate "pins.toml";
 
                   findChangedInputs =
                     old: new:
@@ -72,31 +110,41 @@
                       # Inputs that exist in both but have different URLs
                       changedInputNames =
                         (lib.intersectLists oldKeys newKeys) |> lib.filter (name: old.${name}.url != new.${name}.url);
+
+                      # Merge the new and changed inputs into a space seperated string
+                      updates = (newInputNames ++ changedInputNames) |> lib.join " ";
+                      # Find removed inputs and merge them
+                      removals = (oldKeys |> lib.subtractLists newKeys) |> lib.join " ";
                     in
-                    (newInputNames ++ changedInputNames) |> lib.join " ";
+                    {
+                      inherit updates removals;
+                    };
+                  # Get the content of pins.toml as an attrset
+                  oldTackInputs = lib.importTOML (rootPath + /.tack/pins.toml);
 
-                  changedInputs = findChangedInputs tackInputs.inputs tomlObj.inputs;
-
-                  diff = tackInputs != tomlObj;
+                  changedInputs = findChangedInputs oldTackInputs.inputs cfg.inputs;
                 in
                 /* bash */ ''
-                  LOCK_FILE="''${1:-./.tack/pins.toml}"
+                  LOCK_FILE="./.tack/pins.toml"
 
                   if [[ ! -f "$LOCK_FILE" ]]; then
                     echo "Error: file not found: $LOCK_FILE" >&2
                     exit 1
                   fi
 
-                  ${lib.optionalString diff /* bash */ ''
+                  ${lib.optionalString (changedInputs.removals != "") "tack rm ${changedInputs.removals}"}
+                  ${lib.optionalString (oldTackInputs != cfg) /* bash */ ''
                     delta --dark --diff-highlight "$LOCK_FILE" ${tackToml} || true
                     install -m644 -DT ${tackToml} "$LOCK_FILE"
                   ''}
-                  ${lib.optionalString (changedInputs != "") "tack update ${changedInputs}"}
+                  ${lib.optionalString (changedInputs.updates != "") "tack update ${changedInputs.updates}"}
+
                   if [[ $# -gt 0 ]]; then
                     nh os "$@"
                   fi
                 '';
-            };
+            }
+          );
         };
       };
 
@@ -104,24 +152,10 @@
       {
         constants,
         packages',
-        pkgs,
         ...
       }:
       {
-        hj.packages = [
-          (packages'.tack.overrideAttrs (
-            finalAttrs: previousAttrs: {
-              doCheck = false;
-              patches = (previousAttrs.patches or [ ]) ++ [
-                (pkgs.fetchpatch2 {
-                  name = "add --exclude argument";
-                  url = "https://github.com/manic-systems/tack/pull/86.patch";
-                  hash = "sha256-WbwxtkG9P1fMgnqU42s/NqGnUXKFbOg/KNJXJvo/1YE=";
-                })
-              ];
-            }
-          ))
-        ];
+        hj.packages = [ packages'.tack ];
 
         programs.fish.shellAliases.tack-write = "cd ${constants.cfgdir} && nix run .#tack-write";
 

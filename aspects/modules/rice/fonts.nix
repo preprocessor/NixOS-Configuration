@@ -1,32 +1,37 @@
 {
   tack = {
-    sf-pro = {
-      url = "applefont:SF-Pro";
-      type = "fixed";
-    };
-    sf-mono = {
-      url = "applefont:SF-Mono";
-      type = "fixed";
-    };
-    sf-compact = {
-      url = "applefont:SF-Compact";
-      type = "fixed";
-    };
-    ny = {
-      url = "applefont:NY";
-      type = "fixed";
-    };
-    fragment-mono = {
-      url = "gh:dtinth/fragment-mono-weights";
-      type = "fetch";
-    };
-    chicago-font = {
-      url = "gh:nikdog/chicago-font";
-      type = "fetch";
-    };
-    helvetica-font = {
-      url = "gh:Kyles-World/Helvetica-Font";
-      type = "fetch";
+    shorturls.applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dmg";
+
+    inputs = {
+      sf-pro = {
+        url = "applefont:SF-Pro";
+        type = "fixed";
+      };
+      sf-mono = {
+        url = "applefont:SF-Mono";
+        type = "fixed";
+      };
+      sf-compact = {
+        url = "applefont:SF-Compact";
+        type = "fixed";
+      };
+      ny = {
+        url = "applefont:NY";
+        type = "fixed";
+      };
+
+      fragment-mono = {
+        url = "gh:dtinth/fragment-mono-weights";
+        type = "fetch";
+      };
+      chicago-font = {
+        url = "gh:nikdog/chicago-font";
+        type = "fetch";
+      };
+      helvetica-font = {
+        url = "gh:Kyles-World/Helvetica-Font";
+        type = "fetch";
+      };
     };
   };
 

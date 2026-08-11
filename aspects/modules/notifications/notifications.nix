@@ -1,5 +1,5 @@
 {
-  tack.histui = {
+  tack.inputs.histui = {
     url = "https://github.com/jmylchreest/histui/archive/refs/tags/v0.0.14.tar.gz";
     type = "fixed";
   };

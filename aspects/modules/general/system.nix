@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack = {
+  tack.inputs = {
     nixpkgs.url = "nixpkgs:unstable";
     nixos-core.url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1";
   };

@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack = {
+  tack.inputs = {
     cliphist-src = {
       url = "gh:sentriz/cliphist";
       type = "fetch";

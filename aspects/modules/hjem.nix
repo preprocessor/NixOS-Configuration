@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.hjem.url = "gh:feel-co/hjem";
+  tack.inputs.hjem.url = "gh:feel-co/hjem";
 
   exo.core =
     {

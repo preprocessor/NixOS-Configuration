@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.nix-gaming-edge.url = "gh:powerofthe69/nix-gaming-edge";
+  tack.inputs.nix-gaming-edge.url = "gh:powerofthe69/nix-gaming-edge";
 
   exo.mods.gaming =
     { lib, pkgs, ... }:

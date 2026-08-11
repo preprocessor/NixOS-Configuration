@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.extra-metadata = {
+  tack.inputs.extra-metadata = {
     url = "gh:boydaihungst/file-extra-metadata.yazi";
     type = "fetch";
   };

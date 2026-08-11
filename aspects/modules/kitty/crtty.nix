@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.crtty = {
+  tack.inputs.crtty = {
     url = "gh:kosa12/CRTty";
     type = "fetch";
   };

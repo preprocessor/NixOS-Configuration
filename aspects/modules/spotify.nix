@@ -1,5 +1,6 @@
 {
-  tack.spicetify-nix.url = "gh:Gerg-L/spicetify-nix";
+  tack.inputs.spicetify-nix.url = "gh:Gerg-L/spicetify-nix";
+
   exo.mods.desktop =
     {
       inputs',

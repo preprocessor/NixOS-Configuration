@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.yazi-plugins = {
+  tack.inputs.yazi-plugins = {
     url = "gh:AminurAlam/yazi-plugins";
     type = "fetch";
   };

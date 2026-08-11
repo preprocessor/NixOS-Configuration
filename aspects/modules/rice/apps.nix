@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack = {
+  tack.inputs = {
     rsakura.url = "gh:preprocessor/rsakura";
     pixprint.url = "gh:preprocessor/pixprint";
     pond = {

@@ -1,6 +1,6 @@
 { inputs, lib, ... }:
 {
-  tack.nix-index-database.url = "gh:nix-community/nix-index-database";
+  tack.inputs.nix-index-database.url = "gh:nix-community/nix-index-database";
 
   exo.core = {
     imports = [ inputs.nix-index-database.nixosModules.default ];

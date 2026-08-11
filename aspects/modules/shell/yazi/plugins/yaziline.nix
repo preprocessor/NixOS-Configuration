@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.yaziline = {
+  tack.inputs.yaziline = {
     url = "gh:llanosrocas/yaziline.yazi";
     type = "fetch";
   };

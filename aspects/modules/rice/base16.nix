@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.base16.url = "gh:senchopens/base16.nix";
+  tack.inputs.base16.url = "gh:senchopens/base16.nix";
 
   exo.skeleton =
     {

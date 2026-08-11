@@ -1,5 +1,5 @@
 {
-  tack.iris.url = "gh:versenilvis/iris/main";
+  tack.inputs.iris.url = "gh:versenilvis/iris/main";
 
   exo.mods.desktop =
     { packages', ... }:

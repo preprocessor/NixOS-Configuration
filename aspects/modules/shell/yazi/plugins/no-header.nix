@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.yazi-no-header = {
+  tack.inputs.yazi-no-header = {
     url = "gh:onelocked/no-header-prompt.yazi";
     type = "fetch";
   };

@@ -1,5 +1,5 @@
 {
-  tack.hyprland.url = "gh:hyprwm/Hyprland";
+  tack.inputs.hyprland.url = "gh:hyprwm/Hyprland";
 
   exo.skeleton =
     { lib, pkgs, ... }:

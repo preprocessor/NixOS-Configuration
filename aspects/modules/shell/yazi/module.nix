@@ -1,5 +1,5 @@
 {
-  tack.yazi.url = "gh:sxyazi/yazi";
+  tack.inputs.yazi.url = "gh:sxyazi/yazi";
 
   exo.skeleton =
     {
