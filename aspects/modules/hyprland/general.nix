@@ -21,7 +21,7 @@
           },
 
           cursor = {
-            inactive_timeout = 5000,
+            inactive_timeout = 5,
             hide_on_key_press = true,
             zoom_disable_aa = true,
             no_warps = true,

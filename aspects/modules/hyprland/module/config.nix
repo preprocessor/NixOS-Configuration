@@ -30,7 +30,7 @@
 
         (lib.optionalString hasPlugins ''
             -- my.hyprland.plugins
-          ${cfg.plugins |> map (entry: "  hyprctl plugin load ${pluginPath entry}")}
+          ${cfg.plugins |> map (entry: "  hyprctl plugin load ${pluginPath entry}") |> lib.join "\n"}
         '')
 
         (lib.optionalString hasStartup ''

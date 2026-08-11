@@ -16,7 +16,7 @@
             tag = "hidden"
           },
           no_screen_share = true,
-          border_color = "rgb(ff0d2d)",
+          border_color = "rgb(ff0d2d) rgb(ff0d2d)",
         })
 
         hl.window_rule({
