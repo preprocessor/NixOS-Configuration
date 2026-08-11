@@ -47,10 +47,6 @@
                 url = "*.cb{r,z}";
                 use = [ "open" ];
               }
-              {
-                mime = "application/{x-zip*,zip*,tar,bzip2,7z*,rar,xz,zstd,java-archive}";
-                use = [ "ouch" ];
-              }
             ];
           };
 
@@ -74,12 +70,6 @@
                 {
                   run = "${getExe video-trimmer} %s";
                   desc = "Video Trimmer";
-                }
-              ];
-              ouch = [
-                {
-                  run = ''${getExe ouch-rar} d -y "$@"'';
-                  desc = "Extract here with ouch";
                 }
               ];
             };
