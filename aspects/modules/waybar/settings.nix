@@ -15,7 +15,7 @@
           position = "bottom";
           exclusive = false;
           width = 700;
-          margin-bottom = -3;
+          margin-bottom = -4;
           spacing = 0;
           reload_style_on_change = true;
           modules-left = [
@@ -93,6 +93,12 @@
             padding: 0 8px 0 0;
 
             transition: color 0.3s ease;
+          }
+
+          #workspaces button:hover {
+            text-shadow: none;
+            background: none;
+            border: none;
           }
 
           #workspaces button.active {
