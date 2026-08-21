@@ -23,14 +23,16 @@
         |> map (mime: lib.nameValuePair mime [ "mpv.desktop" ])
         |> lib.listToAttrs;
 
-      my.hyprland.lua.files."window_rules.mpv".content = /* lua */ ''
-        hl.window_rule({
-          name         = "mpv",
-          match        = { class = "mpv" },
-          center       = true,
-          float        = true,
-        })
-      '';
+      my.hyprland.windowrules.mpv = [
+        {
+          name = "mpv";
+          match.class = "mpv";
+          rules = {
+            center = true;
+            float = true;
+          };
+        }
+      ];
 
       my.mpv = {
         enable = true;

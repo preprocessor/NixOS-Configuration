@@ -1,16 +1,16 @@
 {
   exo.mods.desktop = {
-    my.hyprland.lua.files = {
-      "window_rules.tags".content = /* lua */ ''
-        hl.window_rule({
-          match = { tag = "center-float" },
-
-          stay_focused = true,
-          center       = true,
-          float        = true,
-          pin          = true,
-        })
-      '';
-    };
+    my.hyprland.windowrules.tags = [
+      {
+        name = "center-float-tag";
+        match.tag = "center-float";
+        rules = {
+          stay_focused = true;
+          center = true;
+          float = true;
+          pin = true;
+        };
+      }
+    ];
   };
 }

@@ -25,15 +25,13 @@
 
       my.hyprland.startup = [ "hl.exec_cmd('${lib.getExe pkgs.waypaper} --restore')" ];
 
-      my.hyprland.lua.files."window_rules.waypaper".content = /* lua */ ''
-        hl.window_rule({
-          name = "float waypaper",
-          match = {
-            class = "^(waypaper)$"
-          },
-          float = true,
-        })
-      '';
+      my.hyprland.windowrules.waypaper = [
+        {
+          name = "float waypaper";
+          match.class = "^(waypaper)$";
+          rules.float = true;
+        }
+      ];
 
       _file = "wallpaper.nix";
     };

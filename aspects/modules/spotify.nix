@@ -45,14 +45,16 @@
         }
 
         (lib.mkIf cfg.enable {
-          my.hyprland.lua.files."window-rules.spotify" = /* lua */ ''
-            hl.window_rule({
-              name      = "spotify",
-              match     = { class = "spotify" },
-              workspace = "name:media silent",
-              scrolling_width = 0.5,
-            })
-          '';
+          my.hyprland.windowrules.spotify = [
+            {
+              name = "spotify";
+              match.class = "spotify";
+              rules = {
+                workspace = "name:media silent";
+                scrolling_width = 0.5;
+              };
+            }
+          ];
         })
       ];
     };

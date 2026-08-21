@@ -1,14 +1,12 @@
 {
   exo.mods.desktop = {
-    my.hyprland.lua.files."window_rules.zathura".content = /* lua */ ''
-      hl.window_rule({
-        name = "float zathura",
-        match = {
-          class = "^org.pwmt.zathura$"
-        },
-        float = true,
-      })
-    '';
+    my.hyprland.windowrules.zathura = [
+      {
+        name = "float-zathura";
+        match.class = "^org.pwmt.zathura$";
+        rules.float = true;
+      }
+    ];
 
     my.zathura = {
       enable = true;

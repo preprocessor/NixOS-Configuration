@@ -16,16 +16,19 @@
           hl.bind("SUPER + Y", hl.dsp.exec_cmd("${bin}"))
         '';
 
-        "window_rules.general".content = /* lua */ ''
-          hl.window_rule({
-            name = "float color-picker",
-            match = {
-              class = "^color-picker$"
-            },
-            size = { 680, 270 },
-            float = true,
-          })
-        '';
+        windowrules.general = [
+          {
+            name = "float-color-picker";
+            match.class = "^color-picker$";
+            rules = {
+              size = [
+                680
+                270
+              ];
+              float = true;
+            };
+          }
+        ];
       };
     };
 }
