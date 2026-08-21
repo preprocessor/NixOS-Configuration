@@ -13,13 +13,13 @@
               days = 365;
               method = "never";
             };
-            pagers =
+            diffRenderers =
               let
                 delta = config.my.delta;
               in
               [
-                { pager = "${lib.getExe delta.package}"; }
-                { pager = "${lib.getExe delta.package} --side-by-side"; }
+                { command = "${lib.getExe delta.package}"; }
+                { command = "${lib.getExe delta.package} --side-by-side"; }
               ];
           };
 
