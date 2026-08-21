@@ -62,6 +62,8 @@
 
         hl.bind("CTRL + Space", hl.dsp.submap("layout"))
 
+        hl.bind("SUPER + P", hl.dsp.window.pin({ action = "toggle" }))
+
         -- Start a submap called "resize".
         hl.define_submap("layout", function()
           -- Set repeating binds for moving the active window.
