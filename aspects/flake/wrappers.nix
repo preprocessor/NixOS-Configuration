@@ -40,6 +40,12 @@ let
           description = "Arguments to pass to the binary";
         };
 
+        runCommand = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+          description = "Run commands before the executable";
+        };
+
         env = lib.mkOption {
           type =
             with lib.types;
@@ -90,6 +96,7 @@ let
               morePackages
               files
               aliases
+              runCommand
               ;
           in
           pkgs:
@@ -137,9 +144,11 @@ let
                   |> map (alias: "ln -sf $out/bin/${binName} $out/bin/${lib.escapeShellArg alias}")
                   |> lib.concatLines;
 
+                runCommand' = runCommand |> map (v: " --run ${lib.escapeShellArg v}") |> lib.join " \\\n ";
+
                 # Each of the prime (') variables above are the correctly processed values for use with makeWrapper
 
-                wrapperArgs = "${args'}${env'}${extraPkgs'}";
+                wrapperArgs = "${args'}${env'}${extraPkgs'}${runCommand'}";
               in
               /* bash */ ''
                 if [ ! -e $out/bin/${binName} ]; then
