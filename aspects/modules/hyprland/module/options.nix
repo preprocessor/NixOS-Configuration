@@ -58,6 +58,46 @@
             '';
           };
 
+          windowrules = mkOption {
+            default = { };
+            type =
+              with lib.types;
+              attrsOf (
+                listOf (submodule {
+                  options = {
+                    name = mkOption {
+                      type = nullOr str;
+                    };
+                    match = mkOption {
+                      type = attrsOf unspecified;
+                    };
+                    rules = mkOption {
+                      type = attrsOf unspecified;
+                    };
+                  };
+                })
+              );
+          };
+
+          keybinds = mkOption {
+            default = { };
+            type =
+              with lib.types;
+              attrsOf (
+                attrsOf (
+                  either str (submodule {
+                    options = {
+                      keys = mkOption { type = str; };
+                      dispatcher = mkOption { type = str; };
+                      flags = mkOption {
+                        type = nullOr (attrsOf bool);
+                      };
+                    };
+                  })
+                )
+              );
+          };
+
           lua =
             let
               apply = c: if builtins.isPath c then (builtins.readFile c) else c;
