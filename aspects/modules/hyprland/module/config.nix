@@ -18,7 +18,7 @@
       # folder.filename.lua -> folder/filename.lua
       luaFileName = name: lib.replaceStrings [ "." ] [ "/" ] (requireName name) + ".lua";
 
-      autoLoadFiles = lib.filterAttrs (_: file: file.autoLoad) cfg.lua.files;
+      autoLoadFiles = cfg.lua.files |> lib.filterAttrs (_: file: file.autoLoad);
 
       pluginPath =
         entry: if lib.types.package.check entry then "${entry}/lib/lib${entry.pname}.so" else entry;
@@ -115,6 +115,91 @@
                 }
               );
           }
+          (
+            let
+              windowrules = cfg.windowrules;
+
+              generateRules =
+                indent:
+                lib.mapAttrsToList (
+                  name: value:
+                  let
+                    stringify =
+                      s:
+                      if (lib.isBool s) then
+                        lib.boolToString s
+                      else if (lib.isString s) then
+                        ''"${s}"''
+                      else
+                        toString s;
+
+                    value' =
+                      if (lib.isList value) then
+                        # return list as lua table
+                        "{ ${lib.join ", " (value |> map stringify)} }"
+                      else
+                        stringify value;
+                  in
+                  indent + "${name} = ${value'},"
+                );
+            in
+            (lib.mkIf (windowrules != { }) {
+              my.hyprland.lua.files =
+                windowrules
+                |> lib.mapAttrs' (
+                  fileName: windowrulesList: {
+                    name = "window_rules.${fileName}";
+                    value.content =
+                      windowrulesList
+                      |> lib.concatMapStringsSep "\n\n" (
+                        rule:
+                        lib.concatLines (
+                          [
+                            "hl.window_rule({"
+                            (lib.optional (rule.name != null) "  name = \"${rule.name}\",")
+                            "  match = {"
+                            (generateRules "    " rule.match)
+                            "  },"
+                            (generateRules "  " rule.rules)
+                            "})"
+                          ]
+                          |> lib.flatten
+                        )
+                      );
+                  }
+                );
+            })
+          )
+          (
+            let
+              binds = cfg.keybinds;
+
+              mkFlags = lib.mapAttrsToList (name: value: "name = " + lib.boolToString value) |> lib.join ", ";
+
+              mkBind =
+                name: value:
+                let
+                  value' =
+                    if !(lib.isString value) then
+                      "${value.dispatcher}${lib.optionalString (value.flags != null) ", { ${mkFlags value.flags} }"}"
+                    else
+                      value;
+                in
+                ''hl.bind("${name}", ${value'})'';
+
+            in
+            (lib.mkIf (binds != { }) {
+              my.hyprland.lua.files =
+                binds
+                |> lib.mapAttrs' (
+                  fileName: binds: {
+                    name = "keybinds.${fileName}";
+                    value.content = binds |> lib.mapAttrsToList mkBind |> lib.concatLines;
+                  }
+                );
+            })
+
+          )
           {
             hj.packages = with pkgs; [
               hyprshutdown
@@ -159,7 +244,7 @@
           }
 
           (lib.mkIf cfg.withAutostart {
-            programs.bash.interactiveShellInit =
+            programs.bash.loginShellInit =
               let
                 session =
                   if cfg.withUWSM then # bash
