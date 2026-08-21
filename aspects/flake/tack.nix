@@ -19,7 +19,6 @@
       default = { };
       type = lib.types.attrsOf (
         lib.types.submodule {
-          freeformType = lib.types.toml;
           options = {
             url = lib.mkOption { type = lib.types.str; };
 
