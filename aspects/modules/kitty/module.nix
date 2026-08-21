@@ -87,24 +87,23 @@
         };
 
         package = lib.mkOption {
-          default =
-            let
-              toKittyConfig = lib.generators.toKeyValue {
-                mkKeyValue =
-                  key: value:
-                  let
-                    yesNo = v: if v then "yes" else "no";
-                    value' = value |> (if (lib.isBool value) then yesNo else toString);
-                  in
-                  "${key} ${value'}";
-              };
-            in
-            wrapPackage (
-              { wlib, ... }:
-              {
-                package = self'.packages.kitty;
-                env.KITTY_CONFIG_DIRECTORY = wlib.files;
-                files = {
+          default = wrapPackage (
+            { wlib, ... }:
+            {
+              package = self'.packages.kitty;
+              env.KITTY_CONFIG_DIRECTORY = wlib.files;
+              files =
+                let
+                  toKittyConfig = lib.generators.toKeyValue {
+                    mkKeyValue =
+                      key: value:
+                      let
+                        value' = value |> (if (lib.isBool value) then lib.boolToYesNo else toString);
+                      in
+                      "${key} ${value'}";
+                  };
+                in
+                {
                   "kitty.conf" = ''
                     # Settings
                     ${toKittyConfig cfg.settings}
@@ -119,8 +118,8 @@
                     ${cfg.extraCfg}
                   '';
                 };
-              }
-            );
+            }
+          );
         };
       };
     };
