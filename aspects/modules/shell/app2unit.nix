@@ -4,7 +4,6 @@
   exo.skeleton =
     {
       config,
-      inputs,
       pkgs,
       lib,
       ...
@@ -17,13 +16,7 @@
         enable = lib.mkEnableOption { };
 
         package = lib.mkOption {
-          default = (
-            pkgs.app2unit.overrideAttrs (
-              final: prev: {
-                src = inputs.app2unit;
-              }
-            )
-          );
+          default = pkgs.app2unit;
         };
       };
 
