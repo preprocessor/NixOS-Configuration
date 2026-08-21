@@ -1,7 +1,11 @@
 {
   exo.mods.desktop =
-    { scheme, ... }:
+    { scheme, theme, ... }:
     with scheme;
+    let
+      active = if (theme == "light") then bright-cyan else base05;
+      inactive = if (theme == "light") then base07 else base04;
+    in
     {
       my.hyprland.lua.files."appearance".content = /* lua */ ''
         hl.config({
@@ -12,11 +16,12 @@
             border_size      = 1,
 
             col              = {
-              active_border   = "rgb(${bright-cyan})",
-              inactive_border = "rgb(${base07})",
+              active_border   = "rgb(${active})",
+              inactive_border = "rgb(${inactive})",
             },
 
-            layout           = "lua:centercol",
+            -- layout           = "lua:centercol",
+            layout           = "scrolling",
           },
 
           decoration = {
@@ -30,7 +35,7 @@
               enabled        = true,
               range          = 10,
               render_power   = 4,
-              color          = 0x1F${bright-cyan},
+              color          = 0x1F${active},
               color_inactive = 0x00000000,
             },
 
