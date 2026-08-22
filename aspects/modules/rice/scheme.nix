@@ -1,7 +1,6 @@
 {
   exo.core = {
     theme = {
-      variant = "light";
       dark = {
         slug = "wyspr-evangelion";
         scheme = "MAGI";
