@@ -18,6 +18,7 @@
         enable = true;
         remotePlay.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
+        # Defaults to system fonts, its instead set to a specific list to avoid rebuilding the derivation upon font changes
         fontPackages = with pkgs; [
           noto-fonts-color-emoji
           noto-fonts-cjk-sans
