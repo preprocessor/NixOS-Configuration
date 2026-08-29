@@ -11,8 +11,8 @@
       '';
     in
     {
-      my.hyprland.lua.files = {
-        "keybinds.hyprpicker".content = /* lua */ ''
+      my.hyprland = {
+        lua.files."keybinds.hyprpicker".content = /* lua */ ''
           hl.bind("SUPER + Y", hl.dsp.exec_cmd("${bin}"))
         '';
 
