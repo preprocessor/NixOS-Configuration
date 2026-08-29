@@ -7,13 +7,16 @@
 
   exo.core =
     {
-      lib,
       constants,
+      pkgs,
+      lib,
       ...
     }:
     {
       imports = [ inputs.nixos-core.nixosModules.default ];
       system.nixos-core.enable = true;
+
+      nix.package = pkgs.nixVersions.latest;
 
       nix.settings = {
         use-xdg-base-directories = true;
