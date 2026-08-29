@@ -6,6 +6,10 @@
     {
       hj.packages = [ packages'.helium ];
 
+      my.hyprland.startup = [
+        /* lua */ ''hl.exec_cmd("${lib.getExe packages'.helium}", { workspace = "name:web silent" })''
+      ];
+
       xdg.mime = lib.mkIf true {
         defaultApplications =
           [
@@ -25,6 +29,7 @@
           |> map (mime: lib.nameValuePair mime [ "helium.desktop" ])
           |> lib.listToAttrs;
       };
-      hj.environment.sessionVariables = lib.mkIf true { BROWSER = "helium"; };
+
+      hj.environment.sessionVariables.BROWSER = "helium";
     };
 }
