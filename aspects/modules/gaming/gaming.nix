@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   tack.inputs.nix-gaming-edge.url = "gh:powerofthe69/nix-gaming-edge";
 
@@ -6,23 +5,17 @@
     {
       lib,
       pkgs,
+      inputs,
       constants,
       ...
     }:
     {
       imports = [ inputs.nix-gaming-edge.nixosModules.default ];
+      nixpkgs.overlays = [ inputs.nix-gaming-edge.overlays.default ];
 
       nix.settings = {
         substituters = [ "https://nix-cache.tokidoki.dev/tokidoki" ];
         trusted-public-keys = [ "tokidoki:MD4VWt3kK8Fmz3jkiGoNRJIW31/QAm7l1Dcgz2Xa4hk=" ];
-      };
-
-      nixpkgs.overlays = [ inputs.nix-gaming-edge.overlays.default ];
-
-      drivers.mesa-git = {
-        enable = true;
-        steamOrphanCleanup.enable = true;
-        enableCache = false;
       };
 
       hj.environment.sessionVariables = {
