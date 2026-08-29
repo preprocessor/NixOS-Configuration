@@ -3,7 +3,6 @@
     {
       pkgs,
       scheme,
-      config,
       ...
     }:
     {
@@ -18,12 +17,10 @@
           margin-bottom = -4;
           spacing = 0;
           reload_style_on_change = true;
-          modules-left = [
+          modules-center = [
             "custom/hyprlayout"
             "hyprland/workspaces"
           ];
-          modules-center = [ "clock" ];
-          modules-right = [ "custom/histui" ];
           "hyprland/workspaces" = {
             format = "{icon}";
             format-icons = {
@@ -37,31 +34,6 @@
               default = "󱥐";
             };
           };
-          "custom/histui" =
-            let
-              spawn = config.utils.hyprSpawn;
-            in
-            {
-              exec = "histui status --detailed";
-              return-type = "json";
-              interval = 5;
-              format = "{icon} {text}";
-              format-icons = {
-                empty = "󰂜"; # No notifications
-                dnd = "󰂛"; # Do Not Disturb
-                low = "󱅫"; # Low priority
-                normal = "󰂚"; # Normal priority
-                critical = "󱅫"; # Critical notification
-              };
-              on-click = "histui dnd toggle";
-              on-click-right = spawn 1300 600 "histui" "histui tui";
-              # on-click-middle = "histui get --format dmenu --since 24h | fuzzel --dmenu -p 'Notifications'";
-            };
-
-          "clock" = {
-            format = "{:%I:%M}";
-          };
-
           "custom/hyprlayout" = {
             exec = pkgs.writeShellScript "waybar-hyprlayout" ''
               LAYOUT=$(hyprctl activeworkspace -j | jq -r .tiledLayout)
@@ -71,9 +43,9 @@
             interval = 1;
             format = "{icon}";
             format-icons = {
-              "lua:centercol" = "󰕬 ";
               scrolling = "󰕭 ";
               dwindle = "󰕴 ";
+              master = "󰕬 ";
             };
           };
         };
@@ -82,27 +54,28 @@
           window#waybar {
             background-color: transparent;
             font-family: "Chicago";
-            color: ${base05};
+            color: ${base04};
           }
 
           /* non-empty workspaces */
           #workspaces button, #workspaces button:hover {
             font-size: 14pt;
-            color: ${base05};
+            color: ${base04};
 
             padding: 0 8px 0 0;
 
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
           }
 
           #workspaces button:hover {
             text-shadow: none;
+            box-shadow: none;
             background: none;
             border: none;
           }
 
           #workspaces button.active {
-            color: ${cyan};
+            color: ${base05};
           }
 
           #workspaces button.urgent {
@@ -111,26 +84,6 @@
 
           #custom-hyprlayout {
             font-size: 14pt;
-          }
-
-          #custom-histui {
-            margin-right: 80px;
-          }
-
-          /* Do Not Disturb active */
-          #custom-histui.dnd {
-            color: ${base01};
-          }
-
-          /* Has unread notifications */
-          #custom-histui.has-notifications {
-            color: ${bright-yellow};
-          }
-
-          /* Critical notification pending */
-          #custom-histui.critical {
-            color: ${bright-red};
-            animation: pulse 1s ease-in-out infinite;
           }
 
           @keyframes pulse {
