@@ -2,17 +2,26 @@
   exo.mods.gaming = {
     my.mangohud = {
       enable = true;
+      envConfig = true;
 
       settings = {
         position = "top-left";
         hud_compact = true;
         round_corners = 0;
+        font_size = 17;
 
+        background_alpha = 0;
         fps = true;
         frametime = true;
-        frame_timing = true;
+        fps_limit = "60+30+0"; # careful with the fps limiter, Dark Souls 2 SOFTS doesn't like it
+        fps_limit_method = "early";
+        toggle_fps_limit = "Alt_L+f";
+        horizontal = true;
+
         cpu_stats = true;
+
         gpu_stats = true;
+
         ram = true;
         vram = true;
 
@@ -53,19 +62,49 @@
           int = toString option;
           float = int;
           path = int;
-          bool = "0"; # "on/off" opts are disabled with `=0`
+          bool = "0";
           string = option;
-          list = lib.join "," (lib.lists.forEach option toString);
+          list = lib.concatStringsSep "," (lib.lists.forEach option toString);
         }
-        .${lib.typeOf option};
+        .${builtins.typeOf option};
 
-      renderLine = k: v: (if lib.isBool v && v then k else "${k}=${renderOption v}");
-      renderSettings = attrs: lib.concatLines (lib.attrsets.mapAttrsToList renderLine attrs) + "\n";
+      renderFormat =
+        sep: suffix: attrs:
+        attrs
+        |> lib.mapAttrsToList (k: v: if lib.isBool v && v then k else "${k}=${renderOption v}")
+        |> lib.concatStringsSep sep
+        |> (str: str + suffix);
+
+      renderSettings = renderFormat "\n" "\n";
+      renderEnvString = renderFormat "," "";
+
     in
     {
+      config = mkIf cfg.enable {
+        hj.packages = [ cfg.package ];
+
+        hj.environment.sessionVariables = lib.mkMerge [
+          (mkIf cfg.enableSessionWide {
+            MANGOHUD = 1;
+            MANGOHUD_DLSYM = 1;
+          })
+          (mkIf (cfg.envConfig && cfg.settings != { }) {
+            MANGOHUD_CONFIG = renderEnvString cfg.settings;
+          })
+        ];
+
+        hj.xdg.config.files = {
+          "MangoHud/MangoHud.conf" = mkIf (cfg.settings != { }) { text = renderSettings cfg.settings; };
+        }
+        // lib.mapAttrs' (
+          n: v: lib.nameValuePair "MangoHud/${n}.conf" { text = renderSettings v; }
+        ) cfg.settingsPerApplication;
+      };
       options = {
         my.mangohud = {
           enable = lib.mkEnableOption "Mangohud";
+
+          envConfig = lib.mkEnableOption "MANGOHUD_CONFIG environment variable generation";
 
           package = lib.mkPackageOption pkgs "mangohud" { };
 
@@ -112,21 +151,6 @@
             '';
           };
         };
-      };
-
-      config = mkIf cfg.enable {
-        hj.packages = [ cfg.package ];
-
-        hj.environment.sessionVariables = mkIf cfg.enableSessionWide {
-          MANGOHUD = 1;
-          MANGOHUD_DLSYM = 1;
-        };
-        hj.xdg.config.files = {
-          "MangoHud/MangoHud.conf" = mkIf (cfg.settings != { }) { text = renderSettings cfg.settings; };
-        }
-        // lib.mapAttrs' (
-          n: v: lib.nameValuePair "MangoHud/${n}.conf" { text = renderSettings v; }
-        ) cfg.settingsPerApplication;
       };
     };
 }
