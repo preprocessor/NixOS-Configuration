@@ -56,21 +56,21 @@
           x = "exit";
         };
 
-        functions = {
-          mcd = "mkdir -p $argv[1]; and cd $argv[1]"; # mkdir + cd
+        shellFunctions = {
+          mcd.body = "mkdir -p $argv[1]; and cd $argv[1]"; # mkdir + cd
 
-          store = ''y (string match -r "/nix/store/[^/]*" (builtin realpath (type -fP $argv[1])))'';
+          store.body = ''y (string match -r "/nix/store/[^/]*" (builtin realpath (type -fP $argv[1])))'';
 
-          ncp = ''echo "pkgs.$(nurl $(wl-paste));" | wl-copy'';
+          ncp.body = ''echo "pkgs.$(nurl $(wl-paste));" | wl-copy'';
 
-          mem = ''
+          mem.body = ''
             echo "   PID Command                        PSS"
             , smem -c "pid command pss" -nkP $argv[1] | tail -n+3
           '';
 
-          starship_transient_prompt_func = ''printf " \e[94m  \e[0m"'';
+          starship_transient_prompt_func.body = ''printf " \e[94m  \e[0m"'';
 
-          __onelockeds_fuzzy_zox = /* fish */ ''
+          __onelockeds_fuzzy_zox.body = /* fish */ ''
             set -l dir (
               zoxide query -ls 2>/dev/null \
               | awk -v home="$HOME" '{

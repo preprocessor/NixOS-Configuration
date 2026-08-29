@@ -93,14 +93,17 @@
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
 
-        programs.fish.functions.lg = /* fish */ ''
-          set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
-          command lazygit $argv
-          if test -f $LAZYGIT_NEW_DIR_FILE
-            cd (cat $LAZYGIT_NEW_DIR_FILE)
-              rm -f $LAZYGIT_NEW_DIR_FILE
-              end
-        '';
+        programs.fish.shellFunctions.lg = {
+          modifiers = "--wraps lazygit";
+          body = /* fish */ ''
+            set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
+            command lazygit $argv
+            if test -f $LAZYGIT_NEW_DIR_FILE
+              cd (cat $LAZYGIT_NEW_DIR_FILE)
+                rm -f $LAZYGIT_NEW_DIR_FILE
+                end
+          '';
+        };
       };
 
       options.my.lazygit = {
