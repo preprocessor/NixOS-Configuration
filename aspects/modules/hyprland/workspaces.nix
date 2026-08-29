@@ -20,7 +20,9 @@
         hl.workspace_rule({
           workspace = "special:steam",
           layout = "lua:steam",
-          border_size = 5,
+          gaps_in = 50,
+          gaps_out = 50,
+          border_size = 2,
           on_created_empty = "steam"
         })
 
@@ -37,7 +39,7 @@
           workspace = "special:dashboard",
           gaps_in = 50,
           gaps_out = 50,
-          border_size = 5,
+          border_size = 2,
           on_created_empty = "kitty -o font_size=18 -e todo"
         })
 
@@ -45,7 +47,7 @@
           workspace = "special:scratch",
           gaps_in = 25,
           gaps_out = 50,
-          border_size = 5,
+          border_size = 2,
           on_created_empty = "kitty"
         })
       '';

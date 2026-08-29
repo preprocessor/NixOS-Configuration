@@ -51,6 +51,11 @@
             repeat_rate        = 40,
 
             follow_mouse       = 2,
+            mouse_refocus       = false,
+
+            focus_on_close      = 2,
+
+            float_switch_override_focus = 0,
           },
         })
 

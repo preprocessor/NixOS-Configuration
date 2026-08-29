@@ -22,8 +22,8 @@
             match.class = "^color-picker$";
             rules = {
               size = [
-                680
-                270
+                730
+                300
               ];
               float = true;
             };

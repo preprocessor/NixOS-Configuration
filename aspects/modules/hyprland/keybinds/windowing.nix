@@ -18,8 +18,6 @@
         }) do
           hl.bind("SUPER + " .. key, utils.focus(key))
           hl.bind("SUPER + CTRL + " .. key, utils.move(key))
-          hl.bind("SUPER + mouse_" .. dir, utils.focus(key), { non_consuming = false })
-          hl.bind("SUPER + CTRL + mouse_" .. dir, utils.move(key), { non_consuming = false })
         end
 
         -- Switch workspaces with SUPER + [0-9]
@@ -64,31 +62,12 @@
 
         hl.bind("SUPER + P", hl.dsp.window.pin({ action = "toggle" }))
 
-        -- Start a submap called "resize".
-        hl.define_submap("layout", function()
-          -- Set repeating binds for moving the active window.
-          hl.bind("h", hl.dsp.window.move({ x = -50, y = 0, relative = true }), { repeating = true })
-          hl.bind("k", hl.dsp.window.move({ x = 0, y = -50, relative = true }), { repeating = true })
-          hl.bind("j", hl.dsp.window.move({ x = 0, y = 50, relative = true }), { repeating = true })
-          hl.bind("l", hl.dsp.window.move({ x = 50, y = 0, relative = true }), { repeating = true })
-          -- Set repeating binds for resizing the active window.
-          hl.bind("SHIFT + h", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
-          hl.bind("SHIFT + k", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
-          hl.bind("SHIFT + j", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
-          hl.bind("SHIFT + l", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
-
-          hl.bind("f", function () utils.float_center() end)
-
-          -- Use `reset` to go back to the global submap
-          hl.bind("escape", hl.dsp.submap("reset"))
-        end)
-
         hl.bind("SUPER + F", function()
-          hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 3, action = "toggle" }))
+          hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 2, client = 2, action = "toggle", layout_aware = false }))
         end)
 
         hl.bind("SUPER + SHIFT + F", function()
-          hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 2, client = 3, action = "toggle" }))
+          hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "toggle", layout_aware = false }))
         end)
 
         hl.bind("SUPER + R", function()
@@ -101,8 +80,8 @@
               hl.dispatch(hl.dsp.layout("splitratio +0.25"))
             end,
 
-            ["lua:centercol"] = function()
-              hl.dispatch(hl.dsp.layout("resize"))
+            ["master"] = function()
+              hl.dispatch(hl.dsp.layout("mfact +0.1"))
             end,
           })
         end)
@@ -117,8 +96,8 @@
               hl.dispatch(hl.dsp.layout("splitratio -0.25"))
             end,
 
-            ["lua:centercol"] = function()
-              hl.dispatch(hl.dsp.layout("resize"))
+            ["master"] = function()
+              hl.dispatch(hl.dsp.layout("mfact -0.1"))
             end,
           })
         end)
@@ -135,10 +114,6 @@
 
             ["dwindle"] = function()
               hl.dispatch(hl.dsp.layout("togglesplit"))
-            end,
-
-            ["lua:centercol"] = function()
-              hl.dispatch(hl.dsp.layout("swap"))
             end,
           })
         end)

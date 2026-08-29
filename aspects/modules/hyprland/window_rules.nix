@@ -1,18 +1,18 @@
 {
   exo.mods.desktop = {
     my.hyprland = {
-      lua.files."layer_rules.general".content = /* lua */ ''
-
-        hl.layer_rule({
-          match   = { namespace = "^(wayfreeze)$" },
-          no_anim = true,
-        })
-
-        hl.layer_rule({
-          match     = { namespace = "^(selection)$" },
-          animation = "fade"
-        })
-      '';
+      windowrules.tags = [
+        {
+          name = "center-float-tag";
+          match.tag = "center-float";
+          rules = {
+            stay_focused = true;
+            center = true;
+            float = true;
+            pin = true;
+          };
+        }
+      ];
 
       windowrules.general = [
         {
@@ -27,7 +27,6 @@
             pin = false;
           };
           rules.no_focus = true;
-
         }
 
         {

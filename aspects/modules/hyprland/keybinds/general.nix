@@ -2,45 +2,37 @@
   exo.mods.desktop =
     {
       scheme,
+      theme,
       pkgs,
-      lib,
       ...
     }:
 
     let
-      powercontrols =
-        with scheme.withHashtag;
-        pkgs.writeShellScript "powercontrols" ''
-          CHOICE=$(gum choose --cursor=" " --cursor.foreground="#fff" --header="" --no-show-help 'Log Out' 'Reboot' 'Power Off')
+      highlight = with scheme.withHashtag; if (theme == "light") then bright-cyan else base05;
 
-          if [[ -z $CHOICE ]]; then
-            exit 0
-          fi
+      powercontrols = pkgs.writeShellScript "powercontrols" ''
+        CHOICE=$(gum choose --cursor=" " --cursor.foreground="#fff" --header="" --no-show-help 'Log Out' 'Reboot' 'Power Off')
 
-          gum confirm --no-show-help --selected.background="${bright-cyan}" --prompt.foreground="${bright-cyan}" "$CHOICE?" || exit 0
+        if [[ -z $CHOICE ]]; then
+          exit 0
+        fi
 
-          case $CHOICE in
-            "Log Out") command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop ;;
-            "Reboot") hyprshutdown -t "Restarting..." --post-cmd "reboot" ;;
-            "Power Off") hyprshutdown -t "Shutting down..." --post-cmd "shutdown -P 0" ;;
-          esac
-        '';
+        gum confirm --no-show-help --selected.background="${highlight}" --prompt.foreground="${highlight}" "$CHOICE?" || exit 0
+
+        case $CHOICE in
+          "Log Out") command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop ;;
+          "Reboot") hyprshutdown -t "Restarting..." --post-cmd "reboot" ;;
+          "Power Off") hyprshutdown -t "Shutting down..." --post-cmd "shutdown -P 0" ;;
+        esac
+      '';
     in
     {
       my.hyprland.lua.files = {
         "keybinds.base".content = /* lua */ ''
           -- Close
-          hl.bind("SUPER + Q", hl.dsp.window.close())
+          hl.bind("SUPER + CTRL + Q", hl.dsp.window.close())
           -- Float
-          hl.bind("SUPER + Backslash", function () utils.float_center() end)
-        '';
-
-        "keybinds.screenshot".content = /* lua */ ''
-          -- Screenshots
-          hl.bind("Print", hl.dsp.exec_cmd('wayfreeze & PID=$!; sleep .1; grim -g "$(slurp)" - | wl-copy; kill $PID'))
-          hl.bind("CTRL + Print", hl.dsp.exec_cmd('grim - | wl-copy'))
-          hl.bind("SUPER + Print", hl.dsp.exec_cmd('wayfreeze & PID=$!; sleep .1; grim -g "$(slurp -o -r -c \'##ff0000ff\')" -t ppm - | ${lib.getExe pkgs.satty} --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date \'+%Y%m%d-%H:%M:%S\').png; kill $PID'))
-          hl.bind("SUPER + CTRL + Print", hl.dsp.exec_cmd('grim  -t ppm - | ${lib.getExe pkgs.satty} --filename - --fullscreen --output-filename ~/Pictures/Screenshots/satty-$(date \'+%Y%m%d-%H:%M:%S\').png'))
+          hl.bind("SUPER + Backslash", function() utils.float_center() end)
         '';
 
         "keybinds.powercontrols".content = /* lua */ ''

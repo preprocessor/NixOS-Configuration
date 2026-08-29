@@ -20,7 +20,6 @@
               inactive_border = "rgb(${inactive})",
             },
 
-            -- layout           = "lua:centercol",
             layout           = "scrolling",
           },
 

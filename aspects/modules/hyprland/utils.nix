@@ -230,19 +230,43 @@
           fn()
         end
 
+        utils.count_tiled_windows = function(ws)
+          local window_count = 0
+          for _, w in pairs(hl.get_workspace_windows(ws)) do
+            if not w.floating then
+              window_count = window_count + 1
+            end
+          end
+          return window_count
+        end
+
         utils.layout_cycle = function(layout_map)
-          local workspace   = hl.get_active_workspace()
-          if not workspace then return end
+          local ws = hl.get_active_workspace()
+          if not ws then return end
 
-          local next_layout = layout_map[workspace.tiled_layout] or "lua:centercol"
+          local next_layout = layout_map[ws.tiled_layout] or "scrolling"
 
-          hl.workspace_rule({ workspace = "name:" .. workspace.name, layout = next_layout })
+          hl.workspace_rule({ workspace = "name:" .. ws.name, layout = next_layout })
 
           if next_layout == "scrolling" then
-            local prev = hl.get_config("scrolling.focus_fit_method")
-            hl.config({ scrolling = { focus_fit_method = 0 } })
+            local count = utils.count_tiled_windows(ws)
+
+            if count == 1 then
+              -- hl.dispatch(hl.dsp.layout("colresize 0.7296"))
+            elseif count == 2 or count == 3 then
+              hl.config({ scrolling = { column_width = 1/count } })
+              -- hl.dispatch(hl.dsp.layout("fit all"))
+            else
+              hl.config({ scrolling = { column_width = 0.33333 } })
+              -- for _, w in pairs(hl.get_workspace_windows(ws)) do
+              --   if not w.floating then
+              --     hl.dispatch(hl.dsp.focus({ window = w }))
+              --     hl.dispatch(hl.dsp.layout("colresize 0.33333"))
+              --   end
+              -- end
+            end
             hl.timer(function()
-              hl.config({ scrolling = { focus_fit_method = prev } })
+              hl.config({ scrolling = { column_width = 0.7296 } })
             end, { timeout = 50, type = "oneshot" })
           end
         end
