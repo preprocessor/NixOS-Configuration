@@ -9,6 +9,35 @@
     let
       cfg = config.my.gtk;
 
+      dconfSettings = with cfg; {
+        "ca/desrt/dconf-editor".show-warning = false;
+        "org/gnome/desktop/thumbnailers".disable-all = true;
+        "org/gnome/desktop/screen-time-limits".history-enabled = false;
+        "org/gnome/desktop/media-handling".autorun-never = true;
+        "org/gnome/desktop/interface" = {
+          gtk-theme = theme.name;
+          icon-theme = icons.name;
+          cursor-theme = cursor.name;
+          cursor-size = cursor.size;
+          color-scheme = "prefer-dark";
+          font-name = "${fonts.sans.name} ${fonts.sans.size}";
+          document-font-name = "${fonts.serif.name} ${fonts.serif.size}";
+          monospace-font-name = "${fonts.mono.name} ${fonts.mono.size}";
+          font-antialiasing = "rgba";
+          font-hinting = "full";
+          text-scaling-factor = 1.0;
+          gtk-enable-primary-paste = false;
+          overlay-scrolling = false;
+        };
+      };
+
+      managedKeysJson =
+        dconfSettings
+        |> lib.mapAttrsToList (dir: lib.mapAttrsToList (key: _: "/${dir}/${key}"))
+        |> lib.concatLists
+        |> builtins.toJSON
+        |> pkgs.writeText "dconf-keys.json";
+
       default_index_theme = ''
         [Icon Theme]
         Name=Default
@@ -20,12 +49,40 @@
       config = lib.mkIf (cfg.enable) {
         hj.packages = [
           cfg.theme.package
+          cfg.icons.package
           cfg.cursor.package
         ];
 
         hj.environment.sessionVariables = {
           XCURSOR_SIZE = cfg.cursor.size;
           XCURSOR_THEME = cfg.cursor.name;
+        };
+
+        hj.systemd.services.dconf-cleanup = {
+          description = "Cleanup unmanaged dconf keys";
+          wantedBy = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.Type = "oneshot";
+          script = # bash
+            ''
+              STATE_DIR="${config.hj.xdg.state.directory}/hjem-dconf"
+              mkdir -p "$STATE_DIR"
+
+              OLD_STATE="$STATE_DIR/keys.json"
+              NEW_STATE="${managedKeysJson}"
+
+              if [[ -f "$OLD_STATE" ]]; then
+                ${lib.getExe pkgs.jq} -r -n \
+                  --slurpfile old "$OLD_STATE" \
+                  --slurpfile new "$NEW_STATE" \
+                  '($old[] - $new[])[]' | while read -r key; do
+                    echo "Resetting unmanaged dconf key: $key"
+                    ${lib.getExe pkgs.dconf} reset "$key"
+                done
+              fi
+
+              cp "$NEW_STATE" "$OLD_STATE"
+            '';
         };
 
         hj.xdg.data.files = {
@@ -40,29 +97,10 @@
 
         programs.dconf = {
           enable = true;
-
           profiles.user.databases = [
             {
-              settings = {
-                "ca/desrt/dconf-editor".show-warning = false; # disable dconf first use warning
-                # gtk related settings
-                "org/gnome/desktop/interface" = with cfg; {
-                  gtk-theme = theme.name;
-                  icon-theme = icons.name;
-                  cursor-theme = cursor.name;
-                  cursor-size = cursor.size;
-                  font-name = "${fonts.sans.name} ${fonts.sans.size}";
-                  document-font-name = "${fonts.serif.name} ${fonts.serif.size}";
-                  monospace-font-name = "${fonts.mono.name} ${fonts.mono.size}";
-                  color-scheme = "prefer-dark"; # set dark theme for gtk 4
-                  # disable middle click paste
-                  gtk-enable-primary-paste = false;
-                  font-antialiasing = "rgba";
-                  font-hinting = "full";
-                  text-scaling-factor = 1.0;
-                  overlay-scrolling = false;
-                };
-              };
+              lockAll = true;
+              settings = dconfSettings;
             }
           ];
         };

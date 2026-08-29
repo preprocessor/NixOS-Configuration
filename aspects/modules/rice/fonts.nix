@@ -109,7 +109,7 @@
   exo.mods.desktop =
     { self', pkgs, ... }:
     {
-      hj.packages = [ pkgs.font-manager ];
+      # hj.packages = [ pkgs.font-manager ];
 
       fonts.packages = [ self'.legacyPackages.helvetica-font ];
 
