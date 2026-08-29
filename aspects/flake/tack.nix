@@ -110,17 +110,19 @@
                       changedInputNames =
                         (lib.intersectLists oldKeys newKeys) |> lib.filter (name: old.${name}.url != new.${name}.url);
 
-                      # Merge the new and changed inputs into a space seperated string
-                      updates = (newInputNames ++ changedInputNames) |> lib.join " ";
-                      # Find removed inputs and merge them
-                      removals = (oldKeys |> lib.subtractLists newKeys) |> lib.join " ";
+                      # Merge the new and changed inputs into a single list
+                      newInputs = (newInputNames ++ changedInputNames);
+                      # Find removed inputs
+                      removedInputs = oldKeys |> lib.subtractLists newKeys;
                     in
                     {
-                      inherit updates removals;
+                      hasUpdates = newInputs != [ ];
+                      hasRemovals = removedInputs != [ ];
+                      removals = removedInputs |> map (remKey: "tack rm ${remKey}") |> lib.concatLines;
+                      updates = "tack update ${newInputs |> lib.join " "}";
                     };
                   # Get the content of pins.toml as an attrset
                   oldTackInputs = lib.importTOML (rootPath + /.tack/pins.toml);
-
                   changedInputs = findChangedInputs oldTackInputs.inputs cfg.inputs;
                 in
                 /* bash */ ''
@@ -131,12 +133,12 @@
                     exit 1
                   fi
 
-                  ${lib.optionalString (changedInputs.removals != "") "tack rm ${changedInputs.removals}"}
-                  ${lib.optionalString (oldTackInputs != cfg) /* bash */ ''
+                  ${lib.optionalString changedInputs.hasRemovals changedInputs.removals}
+                  ${lib.optionalString (changedInputs.hasRemovals || changedInputs.hasUpdates) /* bash */ ''
                     delta --dark --diff-highlight "$LOCK_FILE" ${tackToml} || true
                     install -m644 -DT ${tackToml} "$LOCK_FILE"
                   ''}
-                  ${lib.optionalString (changedInputs.updates != "") "tack update ${changedInputs.updates}"}
+                  ${lib.optionalString changedInputs.hasUpdates changedInputs.updates}
 
                   if [[ $# -gt 0 ]]; then
                     nh os "$@"
