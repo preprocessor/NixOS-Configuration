@@ -48,22 +48,11 @@ url = "gh:amaanq/helium-flake/"
 type = "fetch"
 url = "gh:Kyles-World/Helvetica-Font"
 
-[inputs.histui]
-type = "fixed"
-url = "https://github.com/jmylchreest/histui/archive/refs/tags/v0.0.14.tar.gz"
-
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
 [inputs.hyprland]
 url = "gh:hyprwm/Hyprland"
-
-[inputs.iris]
-url = "gh:versenilvis/iris/main"
-
-[inputs.my-nixpkgs]
-type = "fetch"
-url = "gh:preprocessor/nixpkgs/module-test"
 
 [inputs.neovim]
 url = "gh:preprocessor/neovim"
@@ -75,14 +64,17 @@ url = "gh:xddxdd/nix-cachyos-kernel/release"
 [inputs.nix-gaming-edge]
 url = "gh:powerofthe69/nix-gaming-edge"
 
-[inputs.nix-index-database]
-url = "gh:nix-community/nix-index-database"
+[inputs.nix-inspect]
+url = "gh:bluskript/nix-inspect"
 
 [inputs.nixos-core]
 url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1"
 
 [inputs.nixpkgs]
 url = "nixpkgs:unstable"
+
+[inputs.nixtopsy]
+url = "gh:amaanq/nixtopsy"
 
 [inputs.ny]
 type = "fixed"
