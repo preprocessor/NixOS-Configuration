@@ -165,9 +165,9 @@
       # topEval: the FIRST of two evalModules passes. This one evaluates the top-level modules
       topEval = lib.evalModules {
         # specialArgs get handed to every module function as extra function arguments.
-        # So any file under ./aspects can just write at the top
+        # So, all modules under ./aspects can just write in the top formal
         #   { inputs, withSystem, rootPath, ... }: { ... }
-        # and pull these out of specialArgs.
+        # and pull these out of this specialArgs.
         specialArgs = { inherit inputs withSystem rootPath; };
         modules =
           (
@@ -207,8 +207,8 @@
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
               ];
             }).config
-            # .config pulls out just the evaluated attrset of values not the whole evalModules result,
-            # which also bundles things like .options and .type that we don't care about here.
+            # .config is just the evaluated attrset, not the whole evalModules result,
+            # which also has things like .options and .type that we don't care about here.
           )
         );
 
@@ -218,10 +218,8 @@
       #   system -> category -> derivation (ex: x86_64-linux.packages.foo)
       # but flake outputs need to be shaped the other way around:
       #   category -> system -> derivation (ex: packages.x86_64-linux.foo)
-      #
-      # this walks every system's output set and folds each one into an accumulator, transposed into the correct key.
       transposed = lib.genAttrs systemOutputKeys (
-        # For each top-level flake output generate and attribute set, creating:
+        # For each top-level flake output generate an attribute set, creating:
         # {
         #   packages = { ... }
         #   legacyPackages = { ... }
