@@ -1,9 +1,17 @@
 {
   tack.inputs.yazi.url = "gh:sxyazi/yazi";
 
+  perSystem =
+    { packages', ... }:
+    {
+      packages.yazi = packages'.yazi.overrideAttrs {
+        doCheck = false;
+      };
+    };
+
   exo.skeleton =
     {
-      packages',
+      self',
       config,
       pkgs,
       wrapPackage,
@@ -47,9 +55,7 @@
           default = wrapPackage (
             { wlib, ... }:
             {
-              package = packages'.yazi.overrideAttrs {
-                doCheck = false;
-              };
+              package = self'.packages.yazi;
               extraPkgs = with pkgs; [
                 ouch-rar
                 ffmpeg
