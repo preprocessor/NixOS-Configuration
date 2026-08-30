@@ -143,14 +143,6 @@
     "narHash": "sha256-AjukBik+kyTGla3TBPb4ojmYIoHJtoEFSqf4qe8EuR0=",
     "lastModified": 1787850983
   },
-  "nix-inspect": {
-    "type": "github",
-    "owner": "bluskript",
-    "repo": "nix-inspect",
-    "rev": "2938c8e94acca6a7f1569f478cac6ddc4877558e",
-    "narHash": "sha256-ArwdTtlIje7yOTblkZs4aQ1+HBtEwJKkfKOiA9tY8nA=",
-    "lastModified": 1733357226
-  },
   "nixos-core": {
     "type": "github",
     "owner": "manic-systems",

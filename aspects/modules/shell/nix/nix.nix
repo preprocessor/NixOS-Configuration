@@ -1,8 +1,5 @@
 {
-  tack.inputs = {
-    nixtopsy.url = "gh:amaanq/nixtopsy";
-    nix-inspect.url = "gh:bluskript/nix-inspect";
-  };
+  tack.inputs.nixtopsy.url = "gh:amaanq/nixtopsy";
 
   exo.core =
     { pkgs, packages', ... }:
@@ -11,13 +8,13 @@
         with pkgs;
         [
           nix-output-monitor
+          nix-inspect
           nixfmt-rs
           nix-init
           nurl
         ]
         ++ (with packages'; [
           nixtopsy
-          nix-inspect
         ]);
     };
 }

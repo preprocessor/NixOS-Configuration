@@ -64,9 +64,6 @@ url = "gh:xddxdd/nix-cachyos-kernel/release"
 [inputs.nix-gaming-edge]
 url = "gh:powerofthe69/nix-gaming-edge"
 
-[inputs.nix-inspect]
-url = "gh:bluskript/nix-inspect"
-
 [inputs.nixos-core]
 url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1"
 
