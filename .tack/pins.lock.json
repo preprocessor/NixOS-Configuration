@@ -119,6 +119,14 @@
     "narHash": "sha256-oSKl52n8/2qnJRakBsrXuHJCKv56w/oy/vVPBRzn/QI=",
     "lastModified": 1788024727
   },
+  "hyprland-scroll-overview": {
+    "type": "github",
+    "owner": "yayuuu",
+    "repo": "hyprland-scroll-overview",
+    "rev": "a8e47fa769be1f0bdceb9869b2dfea97a84a1ecc",
+    "narHash": "sha256-+mvHHi5Ou9RB6G5E3qMoxkATtAFuFoJlIev0yfkDI0Q=",
+    "lastModified": 1787510763
+  },
   "neovim": {
     "type": "github",
     "owner": "preprocessor",

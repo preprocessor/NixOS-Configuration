@@ -54,6 +54,10 @@ url = "gh:feel-co/hjem"
 [inputs.hyprland]
 url = "gh:hyprwm/Hyprland"
 
+[inputs.hyprland-scroll-overview]
+type = "fetch"
+url = "gh:yayuuu/hyprland-scroll-overview/new-release"
+
 [inputs.neovim]
 url = "gh:preprocessor/neovim"
 
