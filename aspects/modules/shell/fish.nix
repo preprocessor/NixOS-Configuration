@@ -1,15 +1,7 @@
-{ inputs, ... }:
 {
-  tack.inputs = {
-    fish-completion-sync = {
-      url = "gh:iynaix/fish-completion-sync";
-      type = "fetch";
-    };
-
-    # my-nixpkgs = {
-    #   url = "gh:preprocessor/nixpkgs/module-test";
-    #   type = "fetch";
-    # };
+  tack.inputs.fish-completion-sync = {
+    url = "gh:iynaix/fish-completion-sync";
+    type = "fetch";
   };
 
   exo.skeleton =
@@ -21,49 +13,16 @@
     }:
     {
       options.programs.fish.shellFunctions = lib.mkOption {
-        description = ''
-          A set of fish functions, with the attribute name being the function name. Function names cannot be reserved
-          words or have spaces. These are elements of fish syntax or builtin commands which are essential for the
-          operations of the shell. Current reserved words are [, _, and, argparse, begin, break, builtin, case,
-          command, continue, else, end, eval, exec, for, function, if, not, or, read, return, set, status, string,
-          switch, test, time, and while.
-
-          See the documentation for [fish functions](https://fishshell.com/docs/current/cmds/function.html) for further information
-        '';
-        example = {
-          ll.body = "ls -l $argv";
-          mcd = {
-            modifiers = ''--description "Create a directory and set CWD"'';
-            body = ''
-              command mkdir $argv
-              if test $status = 0
-                switch $argv[(count $argv)]
-                  case '-*'
-
-                  case '*'
-                    cd $argv[(count $argv)]
-                    return
-                end
-              end
-            '';
-          };
-        };
         type = lib.types.attrsOf (
           lib.types.submodule {
             options = {
               body = lib.mkOption {
                 type = lib.types.str;
-                description = ''
-                  The function body. You may provide a path or a string containing the fish function body.
-                '';
               };
 
               modifiers = lib.mkOption {
                 type = lib.types.str;
                 default = "";
-                description = ''
-                  Modifiers to be applied to the function. This is a string, concatenated with a space after the function nane
-                '';
               };
             };
 
@@ -92,24 +51,24 @@
               end
             '';
           }) cfg.shellFunctions;
+
+          programs.fish.shellInit = ''
+            # Add the search path for global fish functions
+            set fish_function_path /etc/fish/functions/ $fish_function_path
+          '';
         };
     };
 
   exo.core =
     {
-      # modulesPath,
+      inputs,
       config,
       ...
     }:
     {
-      # disabledModules = [ (modulesPath + "/programs/fish.nix") ];
-      # imports = [ (inputs.my-nixpkgs + "/nixos/modules/programs/fish.nix") ];
-
       programs.fish = {
         enable = true;
-
-        # shellFunctions."space test".body = "echo test";
-        # shellFunctions."and".body = "echo test";
+        extraCompletionPackages = config.hj.packages;
 
         shellInit = /* fish */ ''
           fish_vi_key_bindings # Vim mode
@@ -125,7 +84,6 @@
           bind -M insert Z __onelockeds_fuzzy_zox
         '';
 
-        extraCompletionPackages = config.hj.packages;
       };
     };
 }
