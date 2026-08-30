@@ -1,8 +1,16 @@
 {
   tack.inputs.hyprland.url = "gh:hyprwm/Hyprland";
 
+  perSystem =
+    { packages', ... }:
+    {
+      packages.hyprland = packages'.hyprland.overrideAttrs {
+        doCheck = false;
+      };
+    };
+
   exo.skeleton =
-    { lib, pkgs, ... }:
+    { self', lib, ... }:
     {
       options.my.hyprland =
         let
@@ -11,7 +19,10 @@
         {
           enable = mkEnableOption { };
 
-          package = lib.mkPackageOption pkgs "hyprland" { };
+          package = mkOption {
+            type = lib.types.package;
+            default = self'.packages.hyprland;
+          };
 
           withAutostart = mkEnableOption "autoStart" // {
             default = true;

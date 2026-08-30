@@ -30,6 +30,7 @@ jobs:
             "yazi"
             "kitty"
             "cliphist"
+            "hyprland"
             "cliphist-tui"
             "amdgpu_top"
             "systemctl-tui"
