@@ -1,8 +1,6 @@
 name: Build and Cache Specific Nix Packages
-
 on:
   workflow_dispatch:
-
 jobs:
   prepare-matrix:
     name: Check Cache
@@ -12,69 +10,75 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
         with:
           extra-conf: |
             experimental-features = pipe-operators
-
-      - name: Filter packages against Cachix
+      - name: Filter uncached packages
         id: set-matrix
         run: |
-          PACKAGES=("amdgpu_top" "kitty")
-          TO_BUILD=()
+          PACKAGES=(
+            "eza"
+            "lla"
+            "btop"
+            "yazi"
+            "kitty"
+            "cliphist"
+            "cliphist-tui"
+            "amdgpu_top"
+            "systemctl-tui"
+          )
 
+          # Pre-fetch all flake inputs into the store
+          nix flake prefetch . 2>/dev/null || true
+          MISSING=()
           for pkg in "${PACKAGES[@]}"; do
-            STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath")
-            echo "Checking $pkg..."
-
-            if ! nix path-info --store https://bazinga.cachix.org "$STORE_PATH" >/dev/null 2>&1; then
-              echo " -> Not found. Queuing for build."
-              TO_BUILD+=("\"$pkg\"")
+            if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
+              if ! nix path-info --store https://bazinga.cachix.org "$STORE_PATH" >/dev/null 2>&1; then
+                MISSING+=("$pkg")
+              fi
             else
-              echo " -> Already in cache. Skipping."
+              echo "::error::Evaluation failed for package: $pkg"
+              exit 1
             fi
           done
-
-          if [ ${#TO_BUILD[@]} -eq 0 ]; then
+          if [ ${#MISSING[@]} -eq 0 ]; then
             echo "All packages are cached."
             echo "matrix=[]" >> "$GITHUB_OUTPUT"
           else
-            JSON_ARRAY="[$(IFS=,; echo "${TO_BUILD[*]}")]"
+            JSON_ARRAY="$(printf '%s\n' "${MISSING[@]}" | jq -R . | jq -s -c .)"
             echo "matrix=$JSON_ARRAY" >> "$GITHUB_OUTPUT"
           fi
-
-  build-heavy-packages:
-    needs: prepare-matrix
-    if: ${{ needs.prepare-matrix.outputs.matrix != '[]' }}
+  build-packages:
     name: Build ${{ matrix.package }}
+    needs: prepare-matrix
+    if: >-
+      needs.prepare-matrix.result == 'success' &&
+      needs.prepare-matrix.outputs.matrix != '[]'
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
       matrix:
         package: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
         with:
           extra-conf: |
             experimental-features = pipe-operators
-
+      - name: Setup Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Setup Cachix
         uses: cachix/cachix-action@v15
         with:
           name: bazinga
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: true
-
-      - name: Build and Push ${{ matrix.package }}
-        run: |
-          echo "Starting build for ${{ matrix.package }}..."
-          nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-out-paths --print-build-logs \
-          | cachix push bazinga
+      - name: Build and push ${{ matrix.package }}
+        run: |-
+          nix build ".#packages.x86_64-linux.${{ matrix.package }}" \
+            --print-out-paths --print-build-logs \
+            | cachix push bazinga
