@@ -1,10 +1,15 @@
 name: Build and Cache Specific Nix Packages
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 jobs:
   prepare-matrix:
     name: Check Cache
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      startsWith(github.event.head_commit.message, 'tack: update inputs')
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
