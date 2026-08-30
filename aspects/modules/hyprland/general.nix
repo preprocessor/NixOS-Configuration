@@ -54,7 +54,6 @@
             mouse_refocus       = false,
 
             focus_on_close      = 2,
-
             float_switch_override_focus = 0,
           },
         })

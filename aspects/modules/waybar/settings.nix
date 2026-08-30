@@ -1,10 +1,6 @@
 {
   exo.mods.desktop =
-    {
-      pkgs,
-      scheme,
-      ...
-    }:
+    { scheme, ... }:
     {
       my.waybar = {
         enable = true;
@@ -17,10 +13,7 @@
           margin-bottom = -4;
           spacing = 0;
           reload_style_on_change = true;
-          modules-center = [
-            "custom/hyprlayout"
-            "hyprland/workspaces"
-          ];
+          modules-center = [ "hyprland/workspaces" ];
           "hyprland/workspaces" = {
             format = "{icon}";
             format-icons = {
@@ -30,22 +23,7 @@
               media = "󰐎";
               games = "󰊖";
 
-              # active = "";
-              default = "󱥐";
-            };
-          };
-          "custom/hyprlayout" = {
-            exec = pkgs.writeShellScript "waybar-hyprlayout" ''
-              LAYOUT=$(hyprctl activeworkspace -j | jq -r .tiledLayout)
-              echo "{\"text\": \"text\", \"alt\": \"$LAYOUT\", \"tooltip\": \"tooltip\", \"class\": \"hyprlayout\", \"percentage\": 0 }"
-            '';
-            return-type = "json";
-            interval = 1;
-            format = "{icon}";
-            format-icons = {
-              scrolling = "󰕭 ";
-              dwindle = "󰕴 ";
-              master = "󰕬 ";
+              default = "";
             };
           };
         };
@@ -53,7 +31,6 @@
         style = with scheme.withHashtag; /* css */ ''
           window#waybar {
             background-color: transparent;
-            font-family: "Chicago";
             color: ${base04};
           }
 
@@ -80,10 +57,6 @@
 
           #workspaces button.urgent {
             color: ${bright-red};
-          }
-
-          #custom-hyprlayout {
-            font-size: 14pt;
           }
 
           @keyframes pulse {

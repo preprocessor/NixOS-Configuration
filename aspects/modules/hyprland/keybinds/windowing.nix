@@ -58,66 +58,23 @@
 
         hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-        hl.bind("CTRL + Space", hl.dsp.submap("layout"))
-
         hl.bind("SUPER + P", hl.dsp.window.pin({ action = "toggle" }))
 
-        hl.bind("SUPER + F", function()
-          hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 2, client = 2, action = "toggle", layout_aware = false }))
-        end)
+        hl.bind("SUPER + F", hl.dsp.window.fullscreen_state({ internal = 2, client = 2, action = "toggle", layout_aware = false }))
 
-        hl.bind("SUPER + SHIFT + F", function()
-          hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "toggle", layout_aware = false }))
-        end)
+        hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "toggle", layout_aware = false }))
 
-        hl.bind("SUPER + R", function()
-          utils.layout_exec({
-            ["scrolling"] = function()
-              hl.dispatch(hl.dsp.layout("colresize +conf"))
-            end,
+        hl.bind("SUPER + R", hl.dsp.layout("colresize +conf"))
 
-            ["dwindle"] = function()
-              hl.dispatch(hl.dsp.layout("splitratio +0.25"))
-            end,
-
-            ["master"] = function()
-              hl.dispatch(hl.dsp.layout("mfact +0.1"))
-            end,
-          })
-        end)
-
-        hl.bind("SUPER + SHIFT + R", function()
-          utils.layout_exec({
-            ["scrolling"] = function()
-              hl.dispatch(hl.dsp.layout("colresize -conf"))
-            end,
-
-            ["dwindle"] = function()
-              hl.dispatch(hl.dsp.layout("splitratio -0.25"))
-            end,
-
-            ["master"] = function()
-              hl.dispatch(hl.dsp.layout("mfact -0.1"))
-            end,
-          })
-        end)
+        hl.bind("SUPER + SHIFT + R", hl.dsp.layout("colresize -conf"))
 
         hl.bind("SUPER + C", function()
-          utils.layout_exec({
-            ["scrolling"] = function()
-              local prev = hl.get_config("scrolling.focus_fit_method")
+          local prev = hl.get_config("scrolling.focus_fit_method")
 
-              hl.config({ scrolling = { focus_fit_method = 0 } })
-              hl.dispatch(hl.dsp.layout("center"))
-              hl.config({ scrolling = { focus_fit_method = prev } })
-            end,
-
-            ["dwindle"] = function()
-              hl.dispatch(hl.dsp.layout("togglesplit"))
-            end,
-          })
+          hl.config({ scrolling = { focus_fit_method = 0 } })
+          hl.dispatch(hl.dsp.layout("center"))
+          hl.config({ scrolling = { focus_fit_method = prev } })
         end)
-
 
         hl.bind("ALT + TAB", function()
           local window = hl.get_active_window()

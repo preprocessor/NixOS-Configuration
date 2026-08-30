@@ -88,14 +88,6 @@
               else return false end
             end
 
-            if space.tiled_layout == "monocle" then
-              if dir == "h" then
-                return hl.dispatch(hl.dsp.layout("cycleprev"))
-              elseif dir == "l" then
-                return hl.dispatch(hl.dsp.layout("cyclenext"))
-              end
-            end
-
             local allwin = hl.get_workspace_windows(space)
             local ret = find_best_window(dir, win, allwin)
             if ret then
@@ -221,15 +213,6 @@
           end
         end
 
-        utils.layout_exec = function(case)
-          local space = hl.get_active_special_workspace() or hl.get_active_workspace()
-          if not space then return false end
-
-          local fn = case[space.tiled_layout]
-          if not fn then return false end
-          fn()
-        end
-
         utils.count_tiled_windows = function(ws)
           local window_count = 0
           for _, w in pairs(hl.get_workspace_windows(ws)) do
@@ -240,35 +223,21 @@
           return window_count
         end
 
-        utils.layout_cycle = function(layout_map)
-          local ws = hl.get_active_workspace()
-          if not ws then return end
-
-          local next_layout = layout_map[ws.tiled_layout] or "scrolling"
-
-          hl.workspace_rule({ workspace = "name:" .. ws.name, layout = next_layout })
-
-          if next_layout == "scrolling" then
-            local count = utils.count_tiled_windows(ws)
-
-            if count == 1 then
-              -- hl.dispatch(hl.dsp.layout("colresize 0.7296"))
-            elseif count == 2 or count == 3 then
-              hl.config({ scrolling = { column_width = 1/count } })
-              -- hl.dispatch(hl.dsp.layout("fit all"))
-            else
-              hl.config({ scrolling = { column_width = 0.33333 } })
-              -- for _, w in pairs(hl.get_workspace_windows(ws)) do
-              --   if not w.floating then
-              --     hl.dispatch(hl.dsp.focus({ window = w }))
-              --     hl.dispatch(hl.dsp.layout("colresize 0.33333"))
-              --   end
-              -- end
+        utils.get_tiled_windows = function(ws)
+          local windows = {}
+          for _, w in pairs(hl.get_workspace_windows(ws)) do
+            if not w.floating then
+              table.insert(windows, w)
             end
-            hl.timer(function()
-              hl.config({ scrolling = { column_width = 0.7296 } })
-            end, { timeout = 50, type = "oneshot" })
           end
+          return windows
+        end
+
+        utils.sort_windows_ltr = function(windows)
+          table.sort(windows, function(a, b)
+            return a.at.x < b.at.x
+          end)
+          return windows
         end
 
         utils.does_file_exist = function(path)
