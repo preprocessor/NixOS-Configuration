@@ -38,7 +38,7 @@
           };
 
           plugins = mkOption {
-            type = with lib.types; listOf (either package path);
+            type = with lib.types; attrsOf (either package path);
             default = [ ];
             description = ''
               List of Hyprland plugins to use. Can either be packages or

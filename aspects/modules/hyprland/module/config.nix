@@ -10,7 +10,7 @@
       cfg = config.my.hyprland;
 
       hasStartup = cfg.startup != [ ];
-      hasPlugins = cfg.plugins != [ ];
+      hasPlugins = cfg.plugins != { };
 
       # filename.lua -> filename
       requireName = name: lib.removeSuffix ".lua" name;
@@ -30,7 +30,11 @@
 
         (lib.optionalString hasPlugins ''
             -- my.hyprland.plugins
-          ${cfg.plugins |> map (entry: "  hyprctl plugin load ${pluginPath entry}") |> lib.join "\n"}
+          ${
+            cfg.plugins
+            |> lib.mapAttrsToList (_: value: "  hl.exec_cmd(\"hyprctl plugin load ${pluginPath value}\")")
+            |> lib.concatLines
+          }
         '')
 
         (lib.optionalString hasStartup ''
