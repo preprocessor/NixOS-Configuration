@@ -48,7 +48,7 @@
           patches = [ ./cliphist-fix-browser-copy-with-meta.patch ];
         });
 
-        morePackages = [ self'.packages.cliphist-tui ];
+        symlink = [ self'.packages.cliphist-tui ];
 
         env.CLIPHIST_MAX_STORE_SIZE = "1GB";
       };

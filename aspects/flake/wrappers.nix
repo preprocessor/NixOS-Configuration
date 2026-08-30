@@ -14,7 +14,7 @@ let
           description = "The package to wrap.";
         };
 
-        morePackages = lib.mkOption {
+        symlink = lib.mkOption {
           type = lib.types.listOf lib.types.package;
           default = [ ];
           description = ''
@@ -93,7 +93,7 @@ let
               args
               env
               extraPkgs
-              morePackages
+              symlink
               files
               aliases
               runCommand
@@ -102,7 +102,7 @@ let
           pkgs:
           pkgs.symlinkJoin {
             name = "${package.name}-canoli";
-            paths = morePackages ++ [
+            paths = symlink ++ [
               package
               (pkgs.linkFarm "${package.name}" (
                 files

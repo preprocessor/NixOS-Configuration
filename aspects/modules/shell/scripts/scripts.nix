@@ -9,7 +9,7 @@
           package = pkgs.writeShellScriptBin "waow" ./bin/waow;
           env.CLICOLOR_FORCE = 1;
 
-          morePackages = [
+          symlink = [
             (pkgs.writeShellScriptBin "eye" ./bin/eye)
             (pkgs.writeShellScriptBin "gbc" ./bin/gbc)
             (wrapPackage {
