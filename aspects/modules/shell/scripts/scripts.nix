@@ -7,6 +7,7 @@
 
         (wrapPackage {
           package = pkgs.writeShellScriptBin "waow" ./bin/waow;
+          env.CLICOLOR_FORCE = 1;
 
           morePackages = [
             (pkgs.writeShellScriptBin "eye" ./bin/eye)
