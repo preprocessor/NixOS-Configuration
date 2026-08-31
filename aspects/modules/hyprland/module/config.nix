@@ -207,10 +207,6 @@
           {
             hj.packages = with pkgs; [
               hyprshutdown
-              wayfreeze
-              slurp
-              grim
-
               cfg.package
             ];
 
