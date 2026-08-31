@@ -13,8 +13,8 @@
     };
 
   exo.mods.gaming =
-    { self', ... }:
+    { self', lib, ... }:
     {
-      nixpkgs.overlays = [ (_: _: { amdgpu_top = self'.packages.amdgpu_top; }) ];
+      programs.fish.shellAliases.gtop = lib.getExe self'.packages.amdgpu_top;
     };
 }

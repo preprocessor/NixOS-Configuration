@@ -24,8 +24,6 @@
           man = "batman";
           cat = "bat --plain ";
 
-          gtop = _ pkgs.amdgpu_top;
-
           cp = "cp -r ";
           mkdir = "mkdir -p";
 
