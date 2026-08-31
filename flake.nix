@@ -157,7 +157,7 @@
           debug = lib.mkOption {
             type = lib.types.bool;
             default = false;
-            internal = true;
+            readOnly = true;
           };
         };
       };

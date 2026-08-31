@@ -45,7 +45,6 @@
   };
 
   config = {
-    debug = true;
     # Define a base pins.toml with an input for tack
     tack = {
       inputs.tack.url = "gh:manic-systems/tack";
