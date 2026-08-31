@@ -28,6 +28,10 @@
         }
       ];
 
+      my.hyprland.lua.files."keybinds/vesktop".content = /* lua */ ''
+        hl.bind("SUPER + F1", hl.dsp.send_shortcut({ mods = "CTRL + SHIFT", key = "M", window = "class:(vesktop)" }))
+      '';
+
       my.vesktop = with scheme.withHashtag; {
         enable = true;
 
