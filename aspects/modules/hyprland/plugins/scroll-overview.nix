@@ -1,6 +1,6 @@
 {
   tack.inputs.hyprland-scroll-overview = {
-    url = "gh:yayuuu/hyprland-scroll-overview/new-release";
+    url = "gh:yayuuu/hyprland-scroll-overview";
     type = "fetch";
   };
 
@@ -15,6 +15,12 @@
       hyprland = config.my.hyprland.package;
     in
     {
+      my.hyprland.lua.files."plugins/scrolloverview".content = /* lua */ ''
+        hl.bind("SUPER + Tab", function()
+          hl.plugin.scrolloverview.overview("toggle all")
+        end)
+      '';
+
       my.hyprland.plugins.scrolloverview = hyprland.stdenv.mkDerivation (finalAttrs: {
         pname = "scrolloverview";
         version = "1.0";
@@ -38,8 +44,7 @@
 
         installPhase = ''
           runHook preInstall
-          mkdir -p "$out/lib"
-          mv scrolloverview.so "$out/lib/libscrolloverview.so"
+          install -m555 -DT scrolloverview.so "$out/lib/libscrolloverview.so"
           runHook postInstall
         '';
 
