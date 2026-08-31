@@ -23,21 +23,7 @@ jobs:
       - name: Filter uncached packages
         id: set-matrix
         run: |
-          PACKAGES=(
-            "eza"
-            "lla"
-            "btop"
-            "yazi"
-            "kitty"
-            "cliphist"
-            "hyprland"
-            "cliphist-tui"
-            "amdgpu_top"
-            "systemctl-tui"
-          )
-
-          # Pre-fetch all flake inputs into the store
-          nix flake prefetch . 2>/dev/null || true
+          PACKAGES=($(nix run .#list-remote-packages))
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
             if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then

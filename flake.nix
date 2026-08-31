@@ -199,12 +199,43 @@
                 topEval.config.perSystem
                 # This is a hand-rolled version of flake-parts' perSystem.
                 # perSystem: the same module gets re-evaluated once per system,
-                # each time with different set of specialArgs (a different pkgs, system, inputs', etc).
+                # each time with the respective set of specialArgs (a different pkgs, system, inputs', etc).
                 #
-                # Setting freeformType to "lazyAttrsOf unspecified"
-                # lets every possible key someone might set be valid inside perSystem,
-                # with no options for any of that declared up front anywhere.
+                # Setting freeformType to "lazyAttrsOf unspecified" lets every possible key be valid inside perSystem
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
+
+                (
+                  {
+                    config,
+                    pkgs,
+                    lib,
+                    ...
+                  }:
+                  {
+                    options.remotePkgs = lib.mkOption {
+                      type = lib.types.listOf lib.types.str;
+                      default = [ ];
+                    };
+
+                    options.remotePackages = lib.mkOption {
+                      type = with lib.types; lazyAttrsOf package;
+                      default = { };
+                    };
+
+                    config = {
+                      packages = config.remotePackages;
+
+                      apps.list-remote-packages = {
+                        type = "app";
+                        program = lib.getExe (
+                          pkgs.writeShellScriptBin "list-remote-packages" ''
+                            echo '${config.remotePackages |> lib.attrNames |> lib.concatLines |> lib.trim}'
+                          ''
+                        );
+                      };
+                    };
+                  }
+                )
               ];
             }).config
             # .config is just the evaluated attrset, not the whole evalModules result,
