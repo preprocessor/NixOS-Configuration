@@ -7,7 +7,7 @@
   perSystem =
     { inputs, pkgs, ... }:
     {
-      packages.systemctl-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
+      remotePackages.systemctl-tui = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
         pname = "systemctl-tui";
         meta.mainProgram = finalAttrs.pname;
         version = "0.8.0";

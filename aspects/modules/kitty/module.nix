@@ -2,7 +2,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.kitty = pkgs.kitty.overrideAttrs (
+      remotePackages.kitty = pkgs.kitty.overrideAttrs (
         finalAttrs: previousAttrs: {
           patches = (previousAttrs.patches or [ ]) ++ [ ./shade-blocks.patch ];
           doCheck = false;

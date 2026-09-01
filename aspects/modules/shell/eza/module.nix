@@ -2,7 +2,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.eza = pkgs.eza.overrideAttrs (o: {
+      remotePackages.eza = pkgs.eza.overrideAttrs (o: {
         patches = (o.patches or [ ]) ++ [ ./custom-icons.patch ];
         doCheck = false;
       });

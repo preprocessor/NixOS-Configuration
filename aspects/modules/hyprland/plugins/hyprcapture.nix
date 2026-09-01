@@ -4,18 +4,79 @@
     type = "fetch";
   };
 
-  exo.mods.desktop =
+  perSystem =
     {
-      inputs,
-      config,
       pkgs,
+      inputs,
       lib,
       ...
     }:
-    let
-      cfg = config.my.hyprland;
-    in
     {
+      remotePackages.hyprcapture = pkgs.hyprland.stdenv.mkDerivation (finalAttrs: {
+        pname = "hyprcapture";
+        version = "0.2.7";
+        src = inputs.hyprland-hyprcapture;
+
+        nativeBuildInputs = with pkgs; [
+          kdePackages.wrapQtAppsHook
+          pkg-config
+          cmake
+        ];
+
+        buildInputs =
+          pkgs.hyprland.buildInputs
+          ++ (with pkgs; [
+            kdePackages.layer-shell-qt
+            kdePackages.qtbase
+            kdePackages.qtsvg
+            nlohmann_json
+            hyprland
+            glib
+            lua
+          ]);
+
+        enableParallelBuilding = true;
+        dontUseCmakeConfigure = true;
+
+        cmakeFlags = [
+          "-DHYPRCAPTURE_DEFAULT_HELPER_PATH=${placeholder "out"}/bin/hyprcapture-ui"
+          "-DHYPRCAPTURE_TRUSTED_BIN_DIRS=${lib.makeBinPath [ pkgs.hyprland ]}"
+        ];
+
+        preCheck = ''
+          export QT_QPA_PLATFORM=offscreen
+        '';
+
+        buildPhase = ''
+          runHook preBuild
+          cmake -DCMAKE_BUILD_TYPE=Release -B build-cmake
+          cmake --build build-cmake -j"$(nproc)"
+          ctest --test-dir build-cmake --output-on-failure
+          runHook postBuild
+        '';
+
+        installPhase = ''
+          runHook preInstall
+          install -m555 -DT build-cmake/libhyprcapture.so "$out/lib/libhyprcapture.so"
+          install -m555 -DT build-cmake/hyprcapture-ui "$out/bin/hyprcapture-ui"
+          runHook postInstall
+        '';
+
+        meta = {
+          homepage = "https://github.com/gfhdhytghd/HyprCapture";
+          description = "Hyprland-only screenshot and recording tool";
+          license = lib.licenses.gpl3Only;
+          inherit (pkgs.hyprland.meta) platforms;
+          mainProgram = "hyprcapture-ui";
+        };
+      });
+    };
+
+  exo.mods.desktop =
+    { self', ... }:
+    {
+      my.hyprland.plugins = { inherit (self'.packages) hyprcapture; };
+
       my.hyprland.lua.files."plugins/hyprcapture".content = /* lua */ ''
         hl.bind("Print", hl.plugin.hyprcapture.open)
 
@@ -42,70 +103,11 @@
               save_dir = "$XDG_PICTURES_DIR/Screenshots",
               filename_template = "Screenshot-%Y-%m-%d-%H:%M:%S.png",
               record_save_dir = "$XDG_VIDEOS_DIR/Screenrecords",
-              helper = "${cfg.plugins.hyprcapture}/bin/hyprcapture-ui",
+              helper = "${self'.packages.hyprcapture}/bin/hyprcapture-ui",
             },
           },
         })
       '';
-
-      my.hyprland.plugins.hyprcapture = cfg.package.stdenv.mkDerivation (finalAttrs: {
-        pname = "hyprcapture";
-        version = "0.2.7";
-        src = inputs.hyprland-hyprcapture;
-
-        nativeBuildInputs = with pkgs; [
-          kdePackages.wrapQtAppsHook
-          pkg-config
-          cmake
-        ];
-
-        buildInputs =
-          cfg.package.buildInputs
-          ++ [ cfg.package ]
-          ++ (with pkgs; [
-            kdePackages.layer-shell-qt
-            kdePackages.qtbase
-            kdePackages.qtsvg
-            nlohmann_json
-            glib
-            lua
-          ]);
-
-        enableParallelBuilding = true;
-        dontUseCmakeConfigure = true;
-
-        cmakeFlags = [
-          "-DHYPRCAPTURE_DEFAULT_HELPER_PATH=${placeholder "out"}/bin/hyprcapture-ui"
-          "-DHYPRCAPTURE_TRUSTED_BIN_DIRS=${lib.makeBinPath [ cfg.package ]}"
-        ];
-
-        preCheck = ''
-          export QT_QPA_PLATFORM=offscreen
-        '';
-
-        buildPhase = ''
-          runHook preBuild
-          cmake -DCMAKE_BUILD_TYPE=Release -B build-cmake
-          cmake --build build-cmake -j"$(nproc)"
-          ctest --test-dir build-cmake --output-on-failure
-          runHook postBuild
-        '';
-
-        installPhase = ''
-          runHook preInstall
-          install -m555 -DT build-cmake/libhyprcapture.so "$out/lib/libhyprcapture.so"
-          install -m555 -DT build-cmake/hyprcapture-ui "$out/bin/hyprcapture-ui"
-          runHook postInstall
-        '';
-
-        meta = {
-          homepage = "https://github.com/gfhdhytghd/HyprCapture";
-          description = "Hyprland-only screenshot and recording tool";
-          license = lib.licenses.gpl3Only;
-          inherit (cfg.package.meta) platforms;
-          mainProgram = "hyprcapture-ui";
-        };
-      });
 
     };
 }

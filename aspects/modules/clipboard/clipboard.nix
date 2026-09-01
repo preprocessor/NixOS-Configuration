@@ -14,12 +14,11 @@
   perSystem =
     {
       wrapPackage,
-      self',
       pkgs,
       ...
     }:
     {
-      packages.cliphist-tui = wrapPackage {
+      remotePackages.cliphist-tui = wrapPackage {
         package = pkgs.rustPlatform.buildRustPackage (final: {
           pname = "cliphist-tui";
           version = "0-unstable-2026-04-26";
@@ -35,7 +34,7 @@
         ];
       };
 
-      packages.cliphist = wrapPackage {
+      remotePackages.cliphist = wrapPackage {
         package = pkgs.buildGoModule (final: {
           pname = "cliphist";
           version = "0-unstable-2026-04-21";
@@ -50,8 +49,6 @@
 
         env.CLIPHIST_MAX_STORE_SIZE = "1GB";
       };
-
-      _file = ./clipboard.nix;
     };
 
   exo.core =

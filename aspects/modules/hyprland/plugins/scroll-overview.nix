@@ -4,33 +4,22 @@
     type = "fetch";
   };
 
-  exo.mods.desktop =
+  perSystem =
+    { inputs, pkgs, ... }:
     {
-      inputs,
-      config,
-      pkgs,
-      ...
-    }:
-    let
-      hyprland = config.my.hyprland.package;
-    in
-    {
-      my.hyprland.lua.files."plugins/scrolloverview".content = /* lua */ ''
-        hl.bind("SUPER + Tab", function()
-          hl.plugin.scrolloverview.overview("toggle all")
-        end)
-      '';
-
-      my.hyprland.plugins.scrolloverview = hyprland.stdenv.mkDerivation (finalAttrs: {
+      remotePackages.scrolloverview = pkgs.hyprland.stdenv.mkDerivation (finalAttrs: {
         pname = "scrolloverview";
         version = "1.0";
         src = inputs.hyprland-scroll-overview;
 
         nativeBuildInputs = [ pkgs.pkg-config ];
-        buildInputs = hyprland.buildInputs ++ [
-          pkgs.lua5_4
-          hyprland
-        ];
+        buildInputs =
+          with pkgs;
+          [
+            lua5_4
+            hyprland
+          ]
+          ++ pkgs.hyprland.buildInputs;
 
         enableParallelBuilding = true;
         dontUseCmakeConfigure = true;
@@ -51,8 +40,16 @@
         meta = {
           homepage = "https://github.com/yayuuu/hyprland-scroll-overview";
           description = "scroll overview";
-          platforms = hyprland.meta.platforms or [ ];
+          platforms = pkgs.hyprland.meta.platforms or [ ];
         };
       });
     };
+
+  exo.mods.desktop = {
+    my.hyprland.lua.files."plugins/scrolloverview".content = /* lua */ ''
+      hl.bind("SUPER + Tab", function()
+        hl.plugin.scrolloverview.overview("toggle all")
+      end)
+    '';
+  };
 }

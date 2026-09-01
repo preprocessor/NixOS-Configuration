@@ -2,7 +2,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.lla = pkgs.lla.overrideAttrs (oldAttrs: {
+      remotePackages.lla = pkgs.lla.overrideAttrs (oldAttrs: {
         doCheck = false;
         postPatch = ''
           substituteInPlace lla/src/formatter/column_config.rs \

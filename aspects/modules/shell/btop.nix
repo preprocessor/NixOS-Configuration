@@ -2,7 +2,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.btop = pkgs.btop-rocm.overrideAttrs {
+      remotePackages.btop = pkgs.btop-rocm.overrideAttrs {
         patches = [
           (pkgs.fetchpatch2 {
             name = "normalize_processes";

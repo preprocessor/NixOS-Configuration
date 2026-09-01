@@ -4,7 +4,7 @@
   perSystem =
     { packages', ... }:
     {
-      packages.yazi = packages'.yazi.overrideAttrs {
+      remotePackages.yazi = packages'.yazi.overrideAttrs {
         doCheck = false;
       };
     };

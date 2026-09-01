@@ -2,7 +2,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      packages.amdgpu_top = pkgs.amdgpu_top.overrideAttrs (oldAttrs: {
+      remotePackages.amdgpu_top = pkgs.amdgpu_top.overrideAttrs (oldAttrs: {
         doCheck = false;
         cargoBuildFlags = (oldAttrs.cargoBuildFlags or [ ]) ++ [
           "--no-default-features"
