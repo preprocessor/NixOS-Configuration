@@ -204,6 +204,7 @@
                 # Setting freeformType to "lazyAttrsOf unspecified" lets every possible key be valid inside perSystem
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
 
+                # TODO: Document this >.<
                 (
                   {
                     config,
@@ -212,11 +213,6 @@
                     ...
                   }:
                   {
-                    options.remotePkgs = lib.mkOption {
-                      type = lib.types.listOf lib.types.str;
-                      default = [ ];
-                    };
-
                     options.remotePackages = lib.mkOption {
                       type = with lib.types; lazyAttrsOf package;
                       default = { };
@@ -224,14 +220,13 @@
 
                     config = {
                       packages = config.remotePackages;
-
                       apps.list-remote-packages = {
                         type = "app";
-                        program = lib.getExe (
-                          pkgs.writeShellScriptBin "list-remote-packages" ''
+                        meta.description = "List packages that will be built remotely";
+                        program =
+                          (pkgs.writeShellScript "list-remote-packages" ''
                             echo '${config.remotePackages |> lib.attrNames |> lib.concatLines |> lib.trim}'
-                          ''
-                        );
+                          '').outPath;
                       };
                     };
                   }
@@ -261,8 +256,8 @@
         # }
         key: lib.genAttrs (lib.attrNames systemOutputs) (system: systemOutputs.${system}.${key} or { })
         # Within each top-level attrset (packages, devShells),
-        # make an attrset for each system, generated from systemOutputs
         #
+        # make an attrset for each system, generated from systemOutputs
         # systemOutputs = {
         #   aarch64-darwin = { packages = P; devShells = D; }
         #   x86_64-linux = { packages = P; devShells = D; }

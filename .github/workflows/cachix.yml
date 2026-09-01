@@ -74,3 +74,50 @@ jobs:
           nix build ".#packages.x86_64-linux.${{ matrix.package }}" \
             --print-out-paths --print-build-logs \
             | cachix push bazinga
+      - name: Record Build Status
+        if: always()
+        run: echo "${{ job.status }}" > "status-${{ matrix.package }}.txt"
+      - name: Upload Build Status
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: status-${{ matrix.package }}
+          path: status-${{ matrix.package }}.txt
+          retention-days: 1
+  notify:
+    name: Notify Discord
+    needs: build-packages
+    if: always() && needs.build-packages.result != 'skipped'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Statuses
+        uses: actions/download-artifact@v8
+        with:
+          pattern: status-*
+          merge-multiple: true
+      - name: Create Summary
+        id: summary
+        run: |
+          echo "description<<EOF" >> "$GITHUB_OUTPUT"
+          for file in status-*.txt; do
+            [ -e "$file" ] || continue
+            PACKAGE="${file#status-}"
+            PACKAGE="${PACKAGE%.txt}"
+            if [ "$(cat "$file")" = "success" ]; then
+              echo "✅ $PACKAGE" >> "$GITHUB_OUTPUT"
+            else
+              echo "❌ $PACKAGE" >> "$GITHUB_OUTPUT"
+            fi
+          done
+          echo "EOF" >> "$GITHUB_OUTPUT"
+      - name: Notify Discord
+        uses: sarisia/actions-status-discord@v1.16.0
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Workflow
+          avatar_url: ${{ secrets.AVATAR_URL }}
+          status: ${{ needs.build-packages.result }}
+          title: Build and cache packages
+          description: ${{ steps.summary.outputs.description }}
+          content: look at this shi ${{ secrets.DISCORD_USER}}
+          notimestamp: true
