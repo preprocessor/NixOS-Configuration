@@ -104,6 +104,7 @@
           hl.dispatch(hl.dsp.layout("fit all"))
         elseif count > 3 then
           for i, w in pairs(windows) do
+            local focused_win = hl.get_active_window()
             hl.dispatch(hl.dsp.focus({ window = w }))
             hl.dispatch(hl.dsp.layout("colresize 0.33333"))
             if i % 4 == 0 then
@@ -115,6 +116,7 @@
                 hl.dispatch(hl.dsp.layout("focus d"))
               end
             end
+            hl.dispatch(hl.dsp.focus({ window = focused_win  }))
           end
         end
       end)
