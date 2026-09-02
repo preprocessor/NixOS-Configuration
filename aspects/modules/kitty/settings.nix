@@ -34,8 +34,16 @@
       my.hyprland.lua.files."keybinds.kitty".content = /* lua */ ''
         hl.bind("SUPER + Return", hl.dsp.exec_raw("kitty -1"), { release = true })
 
-        hl.bind("SUPER + ALT + Return", hl.dsp.exec_raw("kitty -1"), { float = true, release = true })
+        hl.bind("SUPER + ALT + Return", hl.dsp.exec_raw("kitty --class float-kitty"), { release = true })
       '';
+
+      my.hyprland.windowrules.kitty = [
+        {
+          name = "float-kitty";
+          match.class = "^float-kitty$";
+          rules.float = true;
+        }
+      ];
 
       my.kitty = {
         enable = true;
