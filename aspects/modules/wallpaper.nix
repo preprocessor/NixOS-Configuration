@@ -9,21 +9,30 @@
         awww
       ];
 
-      systemd.user.services = {
+      hj.systemd.services = {
         wallpaper-daemon = {
           description = "Wallpaper daemon";
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
           wantedBy = [ "graphical-session.target" ];
-
           serviceConfig = {
             ExecStart = lib.getExe' pkgs.awww "awww-daemon";
             Restart = "on-failure";
           };
         };
-      };
 
-      my.hyprland.startup = [ "hl.exec_cmd('${lib.getExe pkgs.waypaper} --restore')" ];
+        restore-wallpaper = {
+          description = "Restore wallpaper";
+          after = [ "graphical-session.target" ];
+          partOf = [ "graphical-session.target" ];
+          serviceConfig.Type = "oneshot";
+          path = [
+            pkgs.procps
+            pkgs.awww
+          ];
+          script = "${lib.getExe pkgs.waypaper} --restore";
+        };
+      };
 
       my.hyprland.windowrules.waypaper = [
         {

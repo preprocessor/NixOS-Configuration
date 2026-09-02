@@ -3,13 +3,18 @@
     { lib, pkgs, ... }:
     {
       hj.packages = with pkgs; [
-        mako
         libnotify # notify-send
+        mako
       ];
 
-      my.hyprland.startup = [
-        ''hl.exec_cmd("${lib.getExe pkgs.mako}")''
-      ];
+      hj.systemd.services.notification-daemon = {
+        description = "mako notification daemon";
+        after = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
+        serviceConfig.Restart = "on-failure";
+        script = lib.getExe pkgs.mako;
+      };
 
       my.hyprland.lua.files."layer_rules.mako".content = /* lua */ ''
         hl.layer_rule({
