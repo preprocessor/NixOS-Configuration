@@ -12,7 +12,6 @@
         # Whether to enable the RealtimeKit system service, which hands out realtime scheduling priority to user processes on demand. For example, PulseAudio and PipeWire use this to acquire realtime priority.
         rtkit.enable = true;
         polkit.enable = true;
-        pam.services.swaylock = { };
       };
       services.gnome.gnome-keyring.enable = true; # secret service
 
@@ -29,5 +28,17 @@
           TimeoutStopSec = 10;
         };
       };
+
+      my.hyprland.windowrules.polkit = [
+        {
+          match.class = "^polkit-gnome-authentication-agent-1$";
+          rules = {
+            pin = true;
+            float = true;
+            center = true;
+            no_close_for = true;
+          };
+        }
+      ];
     };
 }
