@@ -36,8 +36,8 @@
           rules.suppress_event = "maximize";
         }
 
-        # Hyprland-run windowrule
         {
+          # Hyprland-run windowrule
           name = "move-hyprland-run";
           match.class = "hyprland-run";
           rules = {
@@ -56,7 +56,7 @@
         }
 
         {
-          name = "pip";
+          name = "Picture in Picture";
           match.title = "^[Pp]icture[- ]in[- ][Pp]icture$";
           rules = {
             size = [
@@ -69,6 +69,7 @@
             ];
             pin = true;
             float = true;
+            no_initial_focus = false;
           };
         }
 
