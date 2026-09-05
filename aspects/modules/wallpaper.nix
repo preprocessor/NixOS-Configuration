@@ -15,10 +15,8 @@
           after = [ "graphical-session.target" ];
           partOf = [ "graphical-session.target" ];
           wantedBy = [ "graphical-session.target" ];
-          serviceConfig = {
-            ExecStart = lib.getExe' pkgs.awww "awww-daemon";
-            Restart = "on-failure";
-          };
+          serviceConfig.Restart = "on-failure";
+          script = lib.getExe' pkgs.awww "awww-daemon";
         };
 
         restore-wallpaper = {
