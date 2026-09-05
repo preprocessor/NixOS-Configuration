@@ -94,7 +94,7 @@
         hj.packages = [ cfg.package ];
 
         programs.fish.shellFunctions.lg = {
-          modifiers = "--wraps lazygit";
+          modifiers.wraps = "lazygit";
           body = /* fish */ ''
             set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
             command lazygit $argv
