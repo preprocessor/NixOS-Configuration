@@ -203,34 +203,6 @@
                 #
                 # Setting freeformType to "lazyAttrsOf unspecified" lets every possible key be valid inside perSystem
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
-
-                # TODO: Document this >.<
-                (
-                  {
-                    config,
-                    pkgs,
-                    lib,
-                    ...
-                  }:
-                  {
-                    options.remotePackages = lib.mkOption {
-                      type = with lib.types; lazyAttrsOf package;
-                      default = { };
-                    };
-
-                    config = {
-                      packages = config.remotePackages;
-                      apps.list-remote-packages = {
-                        type = "app";
-                        meta.description = "List packages that will be built remotely";
-                        program =
-                          (pkgs.writeShellScript "list-remote-packages" ''
-                            echo '${config.remotePackages |> lib.attrNames |> lib.concatLines |> lib.trim}'
-                          '').outPath;
-                      };
-                    };
-                  }
-                )
               ];
             }).config
             # .config is just the evaluated attrset, not the whole evalModules result,
