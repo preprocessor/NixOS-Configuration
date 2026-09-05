@@ -115,21 +115,22 @@
           globs = []
           dirs  = [
           	{ name = ".config", text = "", fg = "${yellow}" },
-          	{ name = ".git", text = "", fg = "${yellow}" },
+          	{ name = ".git", text = "", fg = "${green}" },
           	{ name = ".github", text = "", fg = "${yellow}" },
           	{ name = ".npm", text = "", fg = "${yellow}" },
-          	{ name = "Desktop", text = "", fg = "${yellow}" },
+          	{ name = "Desktop", text = "", fg = "${base09}" },
           	{ name = "Projects", text = "󱀫", fg = "${bright-green}" },
-          	{ name = "Repos", text = "󰳐", fg = "${bright-green}" },
-          	{ name = "Documents", text = "", fg = "${yellow}" },
-          	{ name = "Downloads", text = "", fg = "${yellow}" },
-          	{ name = "NixOS", text = "", fg = "${yellow}" },
+          	{ name = "Repos", text = "󰳐", fg = "${bright-blue}" },
+          	{ name = "Documents", text = "", fg = "${cyan}" },
+          	{ name = "Downloads", text = "", fg = "${base05}" },
+          	{ name = "NixOS", text = "", fg = "${blue}" },
+          	{ name = "Nix", text = "", fg = "${blue}" },
           	{ name = "Library", text = "", fg = "${yellow}" },
           	{ name = "Movies", text = "", fg = "${yellow}" },
-          	{ name = "Music", text = "", fg = "${yellow}" },
+          	{ name = "Music", text = "", fg = "${magenta}" },
           	{ name = "Pictures", text = "", fg = "${yellow}" },
           	{ name = "Public", text = "", fg = "${yellow}" },
-          	{ name = "Videos", text = "", fg = "${yellow}" },
+          	{ name = "Videos", text = "", fg = "${bright-red}" },
           ]
           conds = [
           	# Special files
