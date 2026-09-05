@@ -7,10 +7,6 @@
       ...
     }:
     {
-      hj.xdg.mime-apps.default-applications = {
-        "x-scheme-handler/discord" = [ "vesktop.desktop" ];
-      };
-
       my.hyprland.startup =
         let
           cfg = config.my.vesktop;
@@ -53,12 +49,20 @@
         vencord.settings = {
           autoUpdate = false;
           autoUpdateNotification = false;
-          disableMinSize = true;
           notifyAboutUpdates = false;
+          eagerPatches = false;
+          enabledThemes = [ ];
+          enableReactDevtools = false;
+          frameless = false;
+          transparent = false;
+          winCtrlQ = false;
+          disableMinSize = false;
+          winNativeTitleBar = false;
 
           plugins = {
             AlwaysExpandRoles.enabled = true;
             BetterRoleContext.enabled = true;
+            BadgeAPI.enabled = true;
             BetterSettings.enabled = true;
             BiggerStreamPreview.enabled = true;
             ClearURLs.enabled = true;
@@ -70,6 +74,7 @@
             DisableCallIdle.enabled = true;
             FakeNitro.enabled = true;
             ExpressionCloner.enabled = true;
+            FixCodeblockGap.enabled = true;
             FriendsSince.enabled = true;
             NoF1.enabled = true;
             NoOnboardingDelay.enabled = true;
@@ -84,6 +89,17 @@
             YoutubeAdblock.enabled = true;
             WebKeybinds.enabled = true;
             WebScreenShareFixes.enabled = true;
+            NoTrack = {
+              enabled = true;
+              disableAnalytics = true;
+            };
+            Settings = {
+              enabled = true;
+              settingsLocation = "aboveNitro";
+            };
+            DisableDeepLinks.enabled = true;
+            SupportHelper.enabled = true;
+            WebContextMenus.enabled = true;
           };
         };
       };

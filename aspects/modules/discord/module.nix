@@ -36,6 +36,10 @@
           "vesktop/settings.json".source = json.generate "vesktop-settings" cfg.settings;
           "vesktop/settings/settings.json".source = json.generate "vencord-settings" cfg.vencord.settings;
         };
+
+        hj.xdg.mime-apps.default-applications = {
+          "x-scheme-handler/discord" = [ "vesktop.desktop" ];
+        };
       };
     };
 }
