@@ -14,7 +14,7 @@ let
           description = "The package to wrap.";
         };
 
-        symlink = lib.mkOption {
+        linkedPackages = lib.mkOption {
           type = lib.types.listOf lib.types.package;
           default = [ ];
           description = ''
@@ -93,7 +93,7 @@ let
               args
               env
               extraPkgs
-              symlink
+              linkedPackages
               files
               aliases
               runCommand
