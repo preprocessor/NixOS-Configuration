@@ -125,9 +125,6 @@ let
               ))
             ];
             nativeBuildInputs = [ pkgs.makeWrapper ];
-            meta = removeAttrs (package.meta or { }) [ "outputsToInstall" ] // {
-              mainProgram = binName;
-            };
             postBuild =
               let
                 args' = args |> map (v: "--add-flags ${lib.escapeShellArg v}") |> lib.join " \\\n  ";
@@ -161,6 +158,10 @@ let
 
                 ${lib.optionalString (aliases != [ ]) aliases'}
               '';
+
+            meta = removeAttrs (package.meta or { }) [ "outputsToInstall" ] // {
+              mainProgram = binName;
+            };
           };
       };
     };
