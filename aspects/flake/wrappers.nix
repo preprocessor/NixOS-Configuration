@@ -4,6 +4,7 @@ let
   wrapperModule =
     {
       config,
+      pkgs,
       lib,
       ...
     }:
@@ -66,7 +67,23 @@ let
         };
 
         files = lib.mkOption {
-          type = with lib.types; attrsOf (either str path);
+          type = lib.types.attrsOf (
+            lib.types.submodule {
+              options = {
+                relPath = lib.mkOption {
+                  type = lib.types.str;
+                  description = "Path of the file relative to $out. ";
+                };
+
+                file = lib.mkOption {
+                  type = with lib.types; either str pathInStore;
+                  description = ''
+                    Either a string to be passed into `pkgs.writeText` or a path to a file in the nix store.
+                  '';
+                };
+              };
+            }
+          );
           default = { };
           description = "Files generated relative to the root of the derivation.";
         };
@@ -78,13 +95,21 @@ let
         };
 
         wrapper = lib.mkOption {
-          type = lib.types.functionTo lib.types.package;
+          type = lib.types.package;
           readOnly = true;
           description = "The built, wrapped derivation.";
+        };
+
+        processedFiles = lib.mkOption {
+          type = with lib.types; attrsOf anything;
+          readOnly = true;
         };
       };
 
       config = {
+        processedFiles =
+          config.files |> lib.mapAttrs (_: { relPath, ... }: "${placeholder "out"}/${relPath}");
+
         wrapper =
           let
             inherit (config)
@@ -98,32 +123,28 @@ let
               aliases
               runCommand
               ;
+
+            userFiles =
+              files
+              |> lib.mapAttrsToList (
+                filename:
+                { relPath, file }:
+                # Linkfarm expects { name = ..., path = ... }
+                {
+                  name = relPath;
+                  path =
+                    # If the value IS a string and IS NOT a nix store path
+                    if (lib.isString file) && !(lib.hasPrefix builtins.storeDir file) then
+                      # Write a text file of the content and return its store path
+                      file |> pkgs.writeText "${lib.baseNameOf filename}-text"
+                    else
+                      file;
+                }
+              );
           in
-          pkgs:
           pkgs.symlinkJoin {
-            name = "${package.name}-canoli";
-            paths = symlink ++ [
-              package
-              (pkgs.linkFarm "${package.name}" (
-                files
-                |> lib.mapAttrsToList (
-                  name: value:
-                  let
-                    path =
-                      # If the value IS a string and IS NOT a nix store path
-                      if (lib.isString value) && !(lib.hasPrefix builtins.storeDir value) then
-                        # Write a text file of the content and return its store path
-                        value |> pkgs.writeText "${lib.baseNameOf name}-text"
-                      else
-                        value;
-                  in
-                  # Linkfarm expects { name = ..., path = ... }
-                  {
-                    inherit name path;
-                  }
-                )
-              ))
-            ];
+            name = "${package.name}-wrapper";
+            paths = linkedPackages ++ [ package ] ++ [ (pkgs.linkFarm "${package.name}-files" userFiles) ];
             nativeBuildInputs = [ pkgs.makeWrapper ];
             postBuild =
               let
@@ -166,33 +187,47 @@ let
       };
     };
 
-  wlib = pkgs: rec {
-    inherit pkgs;
+  wlib = (
+    { config, pkgs, ... }:
+    {
+      _module.args = {
+        files = config.processedFiles;
 
-    files = placeholder "out";
+        wlib = rec {
+          out = placeholder "out";
 
-    buildAndAppend =
-      {
-        formatter,
-        buildFrom,
-        appendString ? "",
-      }:
-      fileName:
-      pkgs.runCommand "generate-${fileName}" { } ''
-        install -m644 -DT "${formatter.generate "${fileName}" buildFrom}" "$out"
-        echo -e "\n${appendString}" >> "$out"
-      '';
+          generate = fmt: (fmt { }).generate;
 
-    buildAndAppend' =
-      {
-        formatter,
-        buildFrom,
-        appendString ? "",
-      }:
-      fileName: {
-        "${fileName}" = fileName |> buildAndAppend { inherit formatter buildFrom appendString; };
+          json = generate pkgs.formats.json;
+          toml = generate pkgs.formats.toml;
+          yaml = generate pkgs.formats.yaml;
+          ini = generate pkgs.formats.ini;
+
+          buildAndAppend =
+            {
+              formatter,
+              buildFrom,
+              appendString ? "",
+            }:
+            fileName:
+            pkgs.runCommand "generate-${fileName}" { } ''
+              install -m644 -DT "${formatter.generate "${fileName}" buildFrom}" "$out"
+              echo -e "\n${appendString}" >> "$out"
+            '';
+
+          buildAndAppend' =
+            {
+              formatter,
+              buildFrom,
+              appendString ? "",
+            }:
+            fileName: {
+              "${fileName}" = fileName |> buildAndAppend { inherit formatter buildFrom appendString; };
+            };
+        };
       };
-  };
+    }
+  );
 
   wrap =
     pkgs: spec:
@@ -200,26 +235,25 @@ let
       evaluation = lib.evalModules {
         modules = [
           wrapperModule
+          wlib
           spec
         ];
-        specialArgs.wlib = wlib pkgs;
+        specialArgs = { inherit pkgs; };
       };
     in
-    evaluation.config.wrapper pkgs;
+    evaluation.config.wrapper;
 in
 {
   exo.core =
     { pkgs, ... }:
     {
       _module.args.wrapPackage = wrap pkgs;
-      _module.args.wrapPackage' = wrap;
     };
 
   perSystem =
     { pkgs, ... }:
     {
       _module.args.wrapPackage = wrap pkgs;
-      _module.args.wrapPackage' = wrap;
     };
 
   _file = "wrappers.nix";
