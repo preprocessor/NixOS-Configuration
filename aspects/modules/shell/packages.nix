@@ -15,6 +15,7 @@
       programs.nano.enable = lib.mkForce false; # Take out the trash
 
       hj.packages = with pkgs; [
+        diffoscopeMinimal
         trash-cli
         ripgrep
         chafa
