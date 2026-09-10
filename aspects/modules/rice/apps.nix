@@ -27,35 +27,10 @@
           src = inputs.pond;
           allowSubstitutes = false;
           preferLocalBuild = true;
-          nativeBuildInputs = [ pkgs.ncurses ];
-
-          patchPhase = ''
-            substituteInPlace Makefile \
-              --replace-fail 'curses' 'ncurses' \
-              --replace-fail 'bin/pond' 'pond' \
-              --replace-fail 'rm -f /usr/local/games/pond' ''' \
-              --replace-fail '/usr/games' 'bin'
-          '';
-
-          installPhase = "install -m755 -Dt $out/bin pond";
+          buildInputs = [ pkgs.ncurses ];
+          buildPhase = "gcc -std=gnu99 -Wall -Os $src/pond.c -lncurses -o pond";
+          installPhase = "install -m555 -Dt $out/bin pond";
         };
-
-        voxcii = pkgs.stdenv.mkDerivation {
-          name = "voxcii";
-          pname = "voxcii";
-          src = inputs.voxcii;
-          allowSubstitutes = false;
-          preferLocalBuild = true;
-          nativeBuildInputs = [ pkgs.ncurses ];
-          installPhase = "install -m755 -Dt $out/bin voxcii";
-        };
-
-        terminal-toys = pkgs.rustPlatform.buildRustPackage (final: {
-          name = "terminal-toys";
-          pname = "terminal-toys";
-          src = inputs.terminal-toys;
-          cargoLock.lockFile = final.src + "/Cargo.lock";
-        });
       };
     };
 
@@ -75,11 +50,7 @@
           drift
           neo
         ]
-        ++ (with self'.packages; [
-          voxcii
-          pond
-          terminal-toys
-        ])
+        ++ [ self'.packages.pond ]
         ++ (with packages'; [
           pixprint
           rsakura
