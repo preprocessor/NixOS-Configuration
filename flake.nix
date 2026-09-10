@@ -77,7 +77,6 @@
 
       # This is a hand-rolled version of flake-parts' withSystem.
       # withSystem: builds the "perSystem args" bundle for one system and hands it to a callback f.
-      # [TODO] look at mapAttrs here (mapAttrs (system: pkgs: { expr } inputs.nixpkgs.legacyPackages))
       withSystem =
         system: f:
         f rec {
