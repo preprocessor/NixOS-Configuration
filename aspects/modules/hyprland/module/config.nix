@@ -113,8 +113,15 @@
               |> lib.mapAttrs' (
                 fileName: file: {
                   name = "hypr/files/${luaFileName fileName}";
-                  value = {
+                  value.source = pkgs.writeTextFile {
+                    name = "${fileName}.lua";
                     text = file.content;
+                    checkPhase = /* bash */ ''
+                      if !(${pkgs.lua}/bin/luac -p $out); then
+                        echo -e "\nLua Error: ${fileName}.lua has incorrect syntax\n"
+                        exit 1
+                      fi
+                    '';
                   };
                 }
               );
