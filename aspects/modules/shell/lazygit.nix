@@ -123,17 +123,14 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { files, wlib, ... }:
             {
               package = pkgs.lazygit;
-              env.LG_CONFIG_FILE = "${wlib.files}/config.yml";
-              files =
-                "config.yml"
-                |> wlib.buildAndAppend' {
-                  formatter = yaml;
-                  buildFrom = cfg.settings;
-                  appendString = cfg.moreCfg;
-                };
+              env.LG_CONFIG_FILE = files.config;
+              files.config = {
+                relPath = "config/config.yml";
+                file = wlib.yaml "config.yml" cfg.settings;
+              };
             }
           );
         };

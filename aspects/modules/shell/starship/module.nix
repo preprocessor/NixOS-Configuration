@@ -31,17 +31,14 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { files, wlib, ... }:
             {
               package = pkgs.starship;
-              env.STARSHIP_CONFIG = "${wlib.files}/starship.toml";
-              files =
-                "starship.toml"
-                |> wlib.buildAndAppend' {
-                  formatter = toml;
-                  buildFrom = cfg.settings;
-                  appendString = cfg.moreCfg;
-                };
+              env.STARSHIP_CONFIG = files.config;
+              files.config = {
+                relPath = "config/starship.toml";
+                file = wlib.toml "starship.toml" cfg.settings;
+              };
             }
           );
         };

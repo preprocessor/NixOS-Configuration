@@ -36,12 +36,18 @@
             { wlib, ... }:
             {
               package = pkgs.halloy;
-              env.XDG_CONFIG_HOME = wlib.files;
+              env.XDG_CONFIG_HOME = wlib.out;
               files = {
-                "halloy/config.toml" = toml.generate "halloy-config" cfg.settings // {
-                  settings.theme = "theme";
+                config = {
+                  relPath = "halloy/config.toml";
+                  file = wlib.toml "halloy-config" cfg.settings // {
+                    settings.theme = "theme";
+                  };
                 };
-                "halloy/themes/theme.toml" = toml.generate "halloy-theme" cfg.theme;
+                theme = {
+                  relPath = "halloy/themes/theme.toml";
+                  file = wlib.toml "halloy-theme" cfg.theme;
+                };
               };
             }
           );

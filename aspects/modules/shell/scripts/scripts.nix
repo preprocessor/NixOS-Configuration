@@ -9,12 +9,12 @@
           package = pkgs.writeShellScriptBin "waow" ./bin/waow;
           env.CLICOLOR_FORCE = 1;
 
-          symlink = [
+          linkedPackages = [
             (pkgs.writeShellScriptBin "eye" ./bin/eye)
             (pkgs.writeShellScriptBin "gbc" ./bin/gbc)
             (wrapPackage {
               package = pkgs.writeShellScriptBin "wystem" ./bin/wystem;
-              extraPkgs = with pkgs; [
+              runtimePackages = with pkgs; [
                 fetchutils
                 xrandr
                 xprop

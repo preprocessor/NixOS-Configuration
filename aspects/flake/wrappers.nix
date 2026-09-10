@@ -19,12 +19,11 @@ let
           type = lib.types.listOf lib.types.package;
           default = [ ];
           description = ''
-            Additional packages to include in the derivation.
+            Additional packages to include in the output by symlinking them into the derivation root.
 
-            This differs from extraPkgs, which links packages for use at runtime
+            This differs from runtimePackages, which links packages for use at runtime with the makeWrapper lib
 
-            Note: As of writing, packages in extraPackages do not inherit environment
-                  variables passed to the wrapper.
+            Note: As of writing, packages in extraPackages do not inherit environment variables passed to the wrapper.
           '';
         };
 
@@ -32,7 +31,6 @@ let
           type = lib.types.str;
           default = config.package.meta.mainProgram or (lib.getName config.package);
           description = "Name of the wrapped binary at $out/bin/<binName>.";
-          apply = lib.escapeShellArg;
         };
 
         args = lib.mkOption {
@@ -60,10 +58,10 @@ let
           description = "Environment variables to pass to the binary";
         };
 
-        extraPkgs = lib.mkOption {
+        runtimePackages = lib.mkOption {
           type = lib.types.listOf lib.types.package;
           default = [ ];
-          description = "Packages to link at runtime";
+          description = "Packages to add to PATH at runtime";
         };
 
         files = lib.mkOption {
@@ -72,20 +70,25 @@ let
               options = {
                 relPath = lib.mkOption {
                   type = lib.types.str;
-                  description = "Path of the file relative to $out. ";
+                  description = "Path relative to the root of the output.";
                 };
 
                 file = lib.mkOption {
                   type = with lib.types; either str pathInStore;
                   description = ''
-                    Either a string to be passed into `pkgs.writeText` or a path to a file in the nix store.
+                    File or directory to add to the output.
                   '';
                 };
               };
             }
           );
+
           default = { };
-          description = "Files generated relative to the root of the derivation.";
+          description = ''
+            Files or directories to add to the output.
+
+            Strings are passed through passAsFile. Store paths are linked directly into the output.
+          '';
         };
 
         aliases = lib.mkOption {
@@ -103,13 +106,11 @@ let
         processedFiles = lib.mkOption {
           type = with lib.types; attrsOf anything;
           readOnly = true;
+          description = "Output paths corresponding to files.";
         };
       };
 
       config = {
-        processedFiles =
-          config.files |> lib.mapAttrs (_: { relPath, ... }: "${placeholder "out"}/${relPath}");
-
         wrapper =
           let
             inherit (config)
@@ -117,91 +118,112 @@ let
               binName
               args
               env
-              extraPkgs
+              runtimePackages
               linkedPackages
               files
               aliases
               runCommand
               ;
 
-            args' = args |> map (v: "--add-flags ${lib.escapeShellArg v}") |> lib.join " \\\n  ";
+            args' = args |> lib.concatMapStringsSep " " (v: "--add-flags ${lib.escapeShellArg v}");
 
             env' =
               env
-              |> lib.mapAttrsToList (n: v: " --set ${lib.escapeShellArg n} ${lib.escapeShellArg (toString v)}")
-              |> lib.join " \\\n ";
+              |> lib.concatMapAttrsStringSep " " (
+                name: value: " --set ${lib.escapeShellArg name} ${lib.escapeShellArg (toString value)}"
+              );
 
-            extraPkgs' = lib.optionalString (extraPkgs != [ ]) " --prefix PATH : ${lib.makeBinPath extraPkgs}";
+            runtimePackages' = lib.optionalString (
+              runtimePackages != [ ]
+            ) " --prefix PATH : ${lib.makeBinPath runtimePackages}";
 
-            aliases' =
-              aliases
-              |> map (alias: "ln -sf $out/bin/${binName} $out/bin/${lib.escapeShellArg alias}")
-              |> lib.concatLines;
+            runCommand' = runCommand |> lib.concatMapStringsSep " " (v: " --run ${lib.escapeShellArg v}");
 
-            runCommand' = runCommand |> map (v: " --run ${lib.escapeShellArg v}") |> lib.join " \\\n ";
+            wrapperArgs = "${args'}${env'}${runtimePackages'}${runCommand'}";
 
             # Each of the prime (') variables above are the correctly processed values for use with makeWrapper
 
-            wrapperArgs = "${args'}${env'}${extraPkgs'}${runCommand'}";
+            stringFiles = files |> lib.filterAttrs (_: { file, ... }: lib.isString file);
 
-            # The attribute name is the 'meta' value, which isnt needed here
-            # The value is of type { relPath = <path from $out>, file = <> }
-            splitFiles = files |> lib.attrValues |> lib.partition ({ file, ... }: lib.isString file);
-
-            stringFiles = files |> lib.filterAttrs (name: _: lib.elem name splitFiles.right);
-            linkFiles = splitFiles.wrong;
+            mainBin = lib.escapeShellArg binName;
           in
           pkgs.runCommandLocal "${package.name}-wrapper"
-            (lib.mkMerge [
+            (
               {
                 passAsFile = stringFiles |> lib.attrNames;
                 nativeBuildInputs = with pkgs; [
-                  lndir
                   makeWrapper
+                  lndir
                 ];
                 meta = removeAttrs (package.meta or { }) [ "outputsToInstall" ] // {
                   mainProgram = binName;
                 };
               }
-
-              (stringFiles |> lib.mapAttrs (_: value: value.file))
-            ])
+              // (stringFiles |> lib.mapAttrs (_: { file, ... }: file))
+            )
             /* bash */ ''
-              lndir -silent ${package.outPath} $out
+              mkdir -p $out
 
-              ${lib.optionalString (linkedPackages != [ ]) (
-                linkedPackages |> lib.concatMapStringSep "\n" (pkg: "lndir -silent ${pkg.outPath} $out")
-              )}
+              # Link the main package and any additional packages.
+              ${[ package ] ++ linkedPackages |> lib.concatMapStringsSep "\n" (pkg: "lndir -silent ${pkg} $out")}
 
-              ${lib.optionalString (linkFiles != [ ]) (
-                linkFiles
-                |> lib.concatMapStringSep "\n" (
+              # Generate files and directories
+              ${
+                files
+                |> lib.concatMapAttrsStringSep "\n" (
+                  attrName:
                   { relPath, file }:
-                  if lib.hasSuffix "/" relPath then
-                    "lndir -silent ${file} $out/${relPath}"
+                  if lib.isString file then
+                    # Files passed in with passAsFile
+                    ''install -D "''$${attrName}Path" "$out/${relPath}"''
                   else
-                    "ln -sf ${file} $out/${relPath}"
+                    let
+                      dirName = lib.dirOf relPath;
+                    in
+                    ''
+                      ${lib.optionalString (dirName != ".") ''mkdir -p "$out/${dirName}"''}
+                      ${
+                        if lib.hasSuffix "/" relPath then
+                          # Directory -> Directory
+                          ''lndir -silent ${file} "$out/${relPath}"''
+                        else
+                          # Link an individual file.
+                          ''ln -sf ${file} "$out/${relPath}"''
+                      }
+                    ''
                 )
-              )}
+              }
 
-              ${lib.optionalString (stringFiles != [ ]) (
-                stringFiles
-                |> lib.concatMapStringSep "\n" (
-                  varname: { relPath, ... }: ''install -DT "$$${varname}Path" "$out/${relPath}"''
-                )
-              )}
-
-              if [ ! -e $out/bin/${binName} ]; then
+              if [ ! -e $out/bin/${mainBin} ]; then
                 makeWrapper ${
                   lib.getExe' package (package.meta.mainProgram or (lib.getName package))
-                } $out/bin/${binName} ${wrapperArgs}
+                } $out/bin/${mainBin} ${wrapperArgs}
               else
-                wrapProgram $out/bin/${binName} ${wrapperArgs}
+                wrapProgram $out/bin/${mainBin} ${wrapperArgs}
               fi
 
-              ${lib.optionalString (aliases != [ ]) aliases'}
+              ${
+                aliases
+                |> lib.concatMapStringsSep "\n" (
+                  alias: "ln -sf $out/bin/${mainBin} $out/bin/${lib.escapeShellArg alias}"
+                )
+              }
             '';
 
+        processedFiles =
+          config.files
+          |> lib.mapAttrs (
+            _:
+            { relPath, ... }:
+            {
+              __toString = _: "${placeholder "out"}/${relPath}";
+              dir =
+                let
+                  dirName = lib.dirOf relPath;
+                in
+                "${placeholder "out"}${if dirName == "." then "" else "/${dirName}"}";
+            }
+          );
       };
     };
 
@@ -213,35 +235,12 @@ let
 
         wlib = rec {
           out = placeholder "out";
-
           generate = fmt: (fmt { }).generate;
 
           json = generate pkgs.formats.json;
           toml = generate pkgs.formats.toml;
           yaml = generate pkgs.formats.yaml;
           ini = generate pkgs.formats.ini;
-
-          buildAndAppend =
-            {
-              formatter,
-              buildFrom,
-              appendString ? "",
-            }:
-            fileName:
-            pkgs.runCommand "generate-${fileName}" { } ''
-              install -m644 -DT "${formatter.generate "${fileName}" buildFrom}" "$out"
-              echo -e "\n${appendString}" >> "$out"
-            '';
-
-          buildAndAppend' =
-            {
-              formatter,
-              buildFrom,
-              appendString ? "",
-            }:
-            fileName: {
-              "${fileName}" = fileName |> buildAndAppend { inherit formatter buildFrom appendString; };
-            };
         };
       };
     }
@@ -270,6 +269,4 @@ in
 {
   exo.core = wrapModule;
   perSystem = wrapModule;
-
-  _file = "wrappers.nix";
 }

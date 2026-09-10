@@ -30,19 +30,16 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { files, wlib, ... }:
             {
               package = pkgs.tray-tui;
               args = [
-                ''--config-path "${wlib.files}"''
+                ''--config-path "${files.config}"''
               ];
-              files =
-                "config.toml"
-                |> wlib.buildAndAppend' {
-                  formatter = toml;
-                  buildFrom = cfg.settings;
-                  appendString = cfg.moreCfg;
-                };
+              files.config = {
+                relPath = "config/config.toml";
+                file = wlib.toml "config.toml" cfg.settings;
+              };
             }
           );
         };

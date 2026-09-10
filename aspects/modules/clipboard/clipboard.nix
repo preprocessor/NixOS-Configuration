@@ -28,7 +28,7 @@
           preferLocalBuild = true;
         });
 
-        extraPkgs = [
+        runtimePackages = [
           pkgs.ffmpegthumbnailer
           pkgs.chafa
         ];

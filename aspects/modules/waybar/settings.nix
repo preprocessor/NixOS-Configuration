@@ -9,8 +9,7 @@
           layer = "top";
           position = "bottom";
           exclusive = false;
-          width = 700;
-          margin-bottom = -4;
+          margin-bottom = -2;
           spacing = 0;
           reload_style_on_change = true;
           modules-center = [ "hyprland/workspaces" ];
@@ -22,49 +21,55 @@
               chat = "󰭹";
               media = "󰐎";
               games = "󰊖";
-
-              default = "";
             };
           };
         };
 
-        style = with scheme.withHashtag; /* css */ ''
-          window#waybar {
-            background-color: transparent;
-            color: ${base04};
-          }
+        style =
+          with scheme.withHashtag;
+          let
+            foreground = base00;
+            highlight = bright-cyan;
+          in
+          /* css */ ''
+            window#waybar {
+              background-color: transparent;
+              color: ${foreground};
+              font-family: "Chicago";
+            }
 
-          /* non-empty workspaces */
-          #workspaces button, #workspaces button:hover {
-            font-size: 14pt;
-            color: ${base04};
+            #workspaces button, #workspaces button:hover {
+              text-shadow: none;
+              box-shadow: none;
+              background: none;
+              border: none;
 
-            padding: 0 8px 0 0;
+              font-size: 14pt;
+              color: ${foreground};
 
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-          }
+              padding: 0 3px;
+              transition: color 0.3s ease, text-shadow 0.1s linear;
+            }
 
-          #workspaces button:hover {
-            text-shadow: none;
-            box-shadow: none;
-            background: none;
-            border: none;
-          }
+            #workspaces button.active {
+              color: ${highlight};
+              text-shadow: 
+                 1px  0px 2px rgba(0, 0, 0, 0.5),
+                 0px  1px 2px rgba(0, 0, 0, 0.5),
+                -1px  0px 2px rgba(0, 0, 0, 0.5),
+                 0px -1px 2px rgba(0, 0, 0, 0.5);
+            }
 
-          #workspaces button.active {
-            color: ${base05};
-          }
+            #workspaces button.urgent {
+              color: ${bright-red};
+            }
 
-          #workspaces button.urgent {
-            color: ${bright-red};
-          }
-
-          @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-          }
-        '';
+            @keyframes pulse {
+              0% { opacity: 1; }
+              50% { opacity: 0.5; }
+              100% { opacity: 1; }
+            }
+          '';
       };
     };
 }

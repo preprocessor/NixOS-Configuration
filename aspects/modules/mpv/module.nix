@@ -49,22 +49,37 @@
               };
             in
             wrapPackage (
-              { wlib, ... }:
+              { files, ... }:
               {
                 package = pkgs.mpv;
+                env.MPV_HOME = files.mpv.dir;
                 files = {
-                  "configuration/mpv.conf" = cfg.conf;
-                  "configuration/input.conf" = cfg.input;
-                  "configuration/scripts" = "${mpvScripts}/share/mpv/scripts";
-                  "configuration/fonts" = "${mpvScripts}/share/fonts";
-                  "configuration/script-opts/modernz.conf" = lib.generators.toKeyValue { } {
-                    download_path = "${config.hj.directory}/Videos/mpv";
-                    osc_on_start = "no";
-                    osc_on_seek = "no";
-                    showonpause = "no";
+                  mpv = {
+                    relPath = "config/mpv.conf";
+                    file = cfg.conf;
+                  };
+                  input = {
+                    relPath = "config/input.conf";
+                    file = cfg.input;
+                  };
+                  scripts = {
+                    relPath = "config/scripts";
+                    file = "${mpvScripts}/share/mpv/scripts";
+                  };
+                  fonts = {
+                    relPath = "config/fonts";
+                    file = "${pkgs.mpvScripts.modernz}/share/fonts/truetype/";
+                  };
+                  modernz = {
+                    relPath = "config/script-opts/modernz.conf";
+                    file = lib.generators.toKeyValue { } {
+                      download_path = "${config.hj.directory}/Videos/mpv";
+                      osc_on_start = "no";
+                      osc_on_seek = "no";
+                      showonpause = "no";
+                    };
                   };
                 };
-                env.MPV_HOME = "${wlib.files}/configuration";
               }
             );
         };
@@ -72,13 +87,19 @@
         image-viewer = lib.mkOption {
           type = lib.types.package;
           default = wrapPackage (
-            { wlib, ... }:
+            { files, ... }:
             {
               package = pkgs.mpv;
-              env.MPV_HOME = "${wlib.files}/configuration";
+              env.MPV_HOME = files.mpv.dir;
               files = {
-                "configuration/mpv.conf" = cfg.image-conf;
-                "configuration/input.conf" = cfg.image-input;
+                mpv = {
+                  relPath = "config/mpv.conf";
+                  file = cfg.image-conf;
+                };
+                input = {
+                  relPath = "configuration/input.conf";
+                  file = cfg.image-input;
+                };
               };
             }
           );

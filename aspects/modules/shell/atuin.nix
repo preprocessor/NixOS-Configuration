@@ -46,17 +46,14 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { files, wlib, ... }:
             {
               package = pkgs.atuin;
-              env.ATUIN_CONFIG_DIR = wlib.files;
-              files =
-                "config.toml"
-                |> wlib.buildAndAppend' {
-                  formatter = toml;
-                  buildFrom = cfg.settings;
-                  appendString = cfg.moreCfg;
-                };
+              env.ATUIN_CONFIG_DIR = files.config.dir;
+              files.config = {
+                relPath = "config/config.toml";
+                file = wlib.toml "config.toml" cfg.settings;
+              };
             }
           );
         };

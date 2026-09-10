@@ -53,41 +53,66 @@
         package = mkOption {
           type = types.package;
           default = wrapPackage (
-            { wlib, ... }:
+            { files, wlib, ... }:
             {
               package = self'.packages.yazi;
-              extraPkgs = with pkgs; [
+              env.YAZI_CONFIG_HOME = files.yazi.dir;
+              runtimePackages = with pkgs; [
                 ouch-rar
                 ffmpeg
                 xxhash
                 exiv2
               ];
-              files =
-                let
-                  tomlFormat = pkgs.formats.toml { };
-                in
-                (lib.optionalAttrs (cfg.settings != { }) {
-                  "yazi-config/yazi.toml" = tomlFormat.generate "yazi.toml" cfg.settings;
+              files = lib.mkMerge [
+                {
+                  yazi = {
+                    relPath = "config/yazi.toml";
+                    file = wlib.toml "yazi.toml" cfg.settings;
+                  };
+                }
+
+                (lib.optionalAttrs (cfg.keymap != { }) {
+                  keymap = {
+                    relPath = "config/keymap.toml";
+                    file = wlib.toml "keymap.toml" cfg.keymap;
+                  };
                 })
-                // (lib.optionalAttrs (cfg.keymap != { }) {
-                  "yazi-config/keymap.toml" = tomlFormat.generate "keymap.toml" cfg.keymap;
+
+                (lib.optionalAttrs (cfg.theme != { }) {
+                  theme = {
+                    relPath = "config/theme.toml";
+                    file = wlib.toml "theme.toml" cfg.theme;
+                  };
                 })
-                // (lib.optionalAttrs (cfg.theme != { }) {
-                  "yazi-config/theme.toml" = tomlFormat.generate "theme.toml" cfg.theme;
+
+                (lib.optionalAttrs (cfg.initLua != "") {
+                  init = {
+                    relPath = "config/init.lua";
+                    file = cfg.initLua;
+                  };
                 })
-                // (lib.mapAttrs' (name: path: {
-                  name = "yazi-config/plugins/${name}.yazi";
-                  value = path;
-                }) (lib.filterAttrs (_: path: path != null) cfg.plugins))
-                // (lib.optionalAttrs (cfg.initLua != "") {
-                  "yazi-config/init.lua" = cfg.initLua;
+
+                (lib.optionalAttrs (cfg.flavorContent != "") {
+                  flavor = {
+                    relPath = "config/flavors/custom.yazi/flavor.toml";
+                    file = cfg.flavorContent;
+                  };
                 })
-                // (lib.optionalAttrs (cfg.flavorContent != "") {
-                  "yazi-config/flavors/wyspr.yazi/flavor.toml" = cfg.flavorContent;
-                });
-              env = {
-                YAZI_CONFIG_HOME = "${wlib.files}/yazi-config";
-              };
+
+                (
+                  lib.optionalAttrs (cfg.plugins != { }) cfg.plugins
+                  |> lib.filterAttrs (_: path: path != null)
+                  |> lib.mapAttrs' (
+                    name: file: {
+                      name = "${name}-yazi-plugin";
+                      value = {
+                        relPath = "config/plugins/${name}.yazi";
+                        inherit file;
+                      };
+                    }
+                  )
+                )
+              ];
             }
           );
         };

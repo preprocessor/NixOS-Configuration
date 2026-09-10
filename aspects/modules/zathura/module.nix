@@ -68,12 +68,13 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { files, ... }:
             {
               package = pkgs.zathura;
-              args = [ "--config-dir ${wlib.files}" ];
-              files = {
-                "config/zathurarc" =
+              args = [ "--config-dir ${files.config.dir}" ];
+              files.config = {
+                relPath = "config/zathurarc";
+                file =
                   lib.concatLines (
                     lib.optional (cfg.moreCfg != "") cfg.moreCfg
                     ++ lib.mapAttrsToList lib.formatLine cfg.options

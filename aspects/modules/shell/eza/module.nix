@@ -39,17 +39,14 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { files, wlib, ... }:
             {
               package = self'.packages.eza;
-              env.EZA_CONFIG_DIR = wlib.files;
-              files =
-                "theme.yml"
-                |> wlib.buildAndAppend' {
-                  formatter = yaml;
-                  buildFrom = cfg.settings;
-                  appendString = cfg.moreCfg;
-                };
+              env.EZA_CONFIG_DIR = files.theme.dir;
+              files.theme = {
+                relPath = "config/theme.yml";
+                file = wlib.yaml "theme.yml" cfg.settings;
+              };
             }
           );
         };

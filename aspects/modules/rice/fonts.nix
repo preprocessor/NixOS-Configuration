@@ -51,15 +51,12 @@
               7z x 'Payload~'
             '';
 
-          nativeBuildInputs = [ pkgs.p7zip ];
+          nativeBuildInputs = with pkgs; [
+            installFonts
+            p7zip
+          ];
 
           setSourceRoot = "sourceRoot=`pwd`";
-
-          installPhase = # bash
-            ''
-              find . -name '*.otf' -exec install -Dm644 -t "$out/share/fonts/opentype" {} +
-              find . -name '*.ttf' -exec install -Dm644 -t "$out/share/fonts/truetype" {} +
-            '';
         };
 
       mkFont =

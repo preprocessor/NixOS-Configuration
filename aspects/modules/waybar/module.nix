@@ -45,16 +45,22 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { files, wlib, ... }:
             {
               package = pkgs.waybar;
               args = [
-                "--config ${wlib.files}/config.jsonc"
-                "--style ${wlib.files}/style.css"
+                "--config ${files.config}"
+                "--style ${files.style}"
               ];
               files = {
-                "config.jsonc" = json.generate "config.jsonc" cfg.config;
-                "style.css" = cfg.style;
+                config = {
+                  relPath = "config/config.jsonc";
+                  file = wlib.json "config.jsonc" cfg.config;
+                };
+                style = {
+                  relPath = "config/style.css";
+                  file = cfg.style;
+                };
               };
             }
           );

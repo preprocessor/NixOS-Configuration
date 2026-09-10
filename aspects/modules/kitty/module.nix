@@ -88,23 +88,24 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { files, ... }:
             {
               package = self'.packages.kitty;
-              env.KITTY_CONFIG_DIRECTORY = wlib.files;
-              files =
-                let
-                  toKittyConfig = lib.generators.toKeyValue {
-                    mkKeyValue =
-                      key: value:
-                      let
-                        value' = value |> (if (lib.isBool value) then lib.boolToYesNo else toString);
-                      in
-                      "${key} ${value'}";
-                  };
-                in
-                {
-                  "kitty.conf" = ''
+              env.KITTY_CONFIG_DIRECTORY = files.config.dir;
+              files.config = {
+                relPath = "config/kitty.conf";
+                file =
+                  let
+                    toKittyConfig = lib.generators.toKeyValue {
+                      mkKeyValue =
+                        key: value:
+                        let
+                          value' = value |> (if (lib.isBool value) then lib.boolToYesNo else toString);
+                        in
+                        "${key} ${value'}";
+                    };
+                  in
+                  ''
                     # Settings
                     ${toKittyConfig cfg.settings}
 
@@ -117,7 +118,7 @@
                     # extraCfg
                     ${cfg.extraCfg}
                   '';
-                };
+              };
             }
           );
         };

@@ -57,17 +57,14 @@
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, ... }:
+            { wlib, files, ... }:
             {
               package = pkgs.fuzzel;
-              args = [ "--config=${wlib.files}/fuzzel.ini" ];
-              files =
-                "fuzzel.ini"
-                |> wlib.buildAndAppend' {
-                  formatter = ini;
-                  buildFrom = cfg.settings;
-                  appendString = "";
-                };
+              args = [ "--config=${files.cfg}" ];
+              files.cfg = {
+                relPath = "config/fuzzel.ini";
+                file = wlib.ini "fuzzel.ini" cfg.settings;
+              };
             }
           );
         };
