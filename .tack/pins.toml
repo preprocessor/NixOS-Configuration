@@ -60,6 +60,7 @@ type = "fetch"
 url = "gh:yayuuu/hyprland-scroll-overview"
 
 [inputs.neovim]
+exclude_follow = ["nixpkgs"]
 url = "gh:preprocessor/neovim"
 
 [inputs.nix-cachyos-kernel]

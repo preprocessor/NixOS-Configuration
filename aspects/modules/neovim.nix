@@ -1,5 +1,8 @@
 {
-  tack.inputs.neovim.url = "gh:preprocessor/neovim";
+  tack.inputs.neovim = {
+    url = "gh:preprocessor/neovim";
+    exclude_follow = [ "nixpkgs" ];
+  };
 
   exo.core =
     {
