@@ -27,8 +27,7 @@
 
       hl.animation({ leaf = "windowsMove", enabled = true, speed = 3.5, bezier = "slow", style = "slide" })
 
-      hl.animation({ leaf = "border", enabled = true, speed = 5, bezier = "linear" })
-      hl.animation({ leaf = "borderangle", enabled = true, speed = 20, bezier = "border_angle" })
+      hl.animation({ leaf = "border", enabled = true, speed = 2.5, bezier = "linear" })
 
       hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "slow" })
 

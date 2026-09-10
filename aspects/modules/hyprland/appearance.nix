@@ -3,38 +3,31 @@
     { scheme, theme, ... }:
     with scheme;
     let
-      active = if (theme == "light") then bright-cyan else base05;
-      inactive = if (theme == "light") then base07 else base04;
+      active = bright-cyan;
+      inactive = if (theme == "light") then base07 else base00;
     in
     {
       my.hyprland.lua.files."appearance".content = /* lua */ ''
         hl.config({
           general = {
-            gaps_in          = 8,
-            gaps_out         = 24,
+            gaps_in     = 12,
+            gaps_out    = 24,
+            border_size = 3,
 
-            border_size      = 1,
-
-            col              = {
-              active_border   = "rgb(${active})",
-              inactive_border = "rgb(${inactive})",
+            col = {
+              active_border   = "0xFF${active}",
+              inactive_border = "0xFF111111",
             },
-
-            layout           = "scrolling",
           },
 
           decoration = {
-            active_opacity   = 1.0,
-
-            inactive_opacity = 1.0,
-
             dim_special = 0.8,
 
             shadow           = {
               enabled        = true,
               range          = 10,
               render_power   = 4,
-              color          = 0x1F${active},
+              color          = 0x8F000000,
               color_inactive = 0x00000000,
             },
 

@@ -2,6 +2,10 @@
   exo.mods.desktop = {
     my.hyprland.lua.files."layouts.scrindle".content = /* lua */ ''
       hl.config({
+        general = {
+          layout = "scrolling",
+        },
+
         layout = {
           single_window_aspect_ratio = { 16, 9 },
         },
