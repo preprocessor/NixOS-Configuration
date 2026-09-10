@@ -94,7 +94,7 @@
 
                 (lib.optionalAttrs (cfg.flavorContent != "") {
                   flavor = {
-                    relPath = "config/flavors/custom.yazi/flavor.toml";
+                    relPath = "config/flavors/wyspr.yazi/flavor.toml";
                     file = cfg.flavorContent;
                   };
                 })
