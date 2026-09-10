@@ -163,9 +163,9 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "9b9402b959a2276982ddd5ad3652a38b97f7c40b",
-    "narHash": "sha256-MFClkboDeW56feBCAeAV3Z3J2quGSZFlAOXQ4JjIlIA=",
-    "lastModified": 1788431191
+    "rev": "a391f95d4557d685fd8e5dc0d4b1f9271aa2f342",
+    "narHash": "sha256-QMX3uerxnW2R5dHcWpIQILHDltOZnon3x3Spq7EzBFI=",
+    "lastModified": 1788922888
   },
   "nixtopsy": {
     "type": "github",
@@ -291,9 +291,9 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "faa20dfb9bebe02dc38549ac7b95d5e480db3581",
-    "narHash": "sha256-KGW23ssyGGKGtwRmpEvYPRfL1T55+6AJ5xhyVx4fg6o=",
-    "lastModified": 1787769359
+    "rev": "8ebf930f1796ae2076b7d6b0c5e93a1002c18134",
+    "narHash": "sha256-KxcEr1HHuJdODs4m8S2WVlmIbTs7KLdTQzlH9uzWUz0=",
+    "lastModified": 1788911610
   },
   "yazi-fuzzy-search": {
     "type": "github",
