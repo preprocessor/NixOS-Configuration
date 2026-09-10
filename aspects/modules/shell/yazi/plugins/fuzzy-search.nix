@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   tack.inputs.yazi-fuzzy-search = {
     url = "gh:onelocked/fuzzy-search.yazi";
@@ -7,26 +6,12 @@
 
   exo.core =
     {
+      packages',
       config,
-      pkgs,
-      lib,
       ...
     }:
-    let
-      fuzzy-search = pkgs.yaziPlugins.mkYaziPlugin {
-        pname = "onelocks-fuzzy-zox";
-        version = "4.20";
-
-        src = lib.cleanSourceWith {
-          src = inputs.yazi-fuzzy-search;
-          filter = name: type: (baseNameOf name == "main.lua");
-        };
-      };
-    in
     {
-      my.yazi.plugins = {
-        inherit fuzzy-search;
-      };
+      my.yazi.plugins = { inherit (packages') fuzzy-search; };
 
       my.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
