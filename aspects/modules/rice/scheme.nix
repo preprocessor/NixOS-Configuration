@@ -7,8 +7,8 @@
         author = "wyspr";
 
         base00 = "#111111"; # Default background
-        base01 = "#484848"; # Lighter bg / status bars
-        base02 = "#9B9B9B"; # Selection background
+        base01 = "#222222"; # Lighter bg / status bars
+        base02 = "#383838"; # Selection background
         base03 = "#B0B0B0"; # Comments, invisibles
         base04 = "#C4C4C8"; # Dark bg highlight (tab_bar_background)
         base05 = "#EC7420"; # Default foreground
