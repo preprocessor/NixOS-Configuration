@@ -14,6 +14,7 @@
 
       config = {
         packages = config.remotePackages;
+
         apps.list-remote-packages = {
           type = "app";
           meta.description = "List packages that will be built remotely (to be used in a Github Action)";
@@ -25,10 +26,8 @@
       };
     };
 
-  exo.core = {
-    nix.settings = {
-      extra-substituters = [ "https://bazinga.cachix.org" ];
-      extra-trusted-public-keys = [ "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU=" ];
-    };
+  exo.core.nix.settings = {
+    extra-substituters = [ "https://bazinga.cachix.org" ];
+    extra-trusted-public-keys = [ "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU=" ];
   };
 }

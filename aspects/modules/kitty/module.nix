@@ -59,6 +59,7 @@
             See <https://sw.kovidgoyal.net/kitty/conf.html>.
           '';
         };
+
         theme = mkOption {
           type = with lib.types; nullOr (either path lines);
           default = "";
