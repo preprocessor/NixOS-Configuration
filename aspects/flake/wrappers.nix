@@ -102,12 +102,6 @@ let
           readOnly = true;
           description = "The built, wrapped derivation.";
         };
-
-        processedFiles = lib.mkOption {
-          type = with lib.types; attrsOf anything;
-          readOnly = true;
-          description = "Output paths corresponding to files.";
-        };
       };
 
       config = {
@@ -209,21 +203,6 @@ let
                 )
               }
             '';
-
-        processedFiles =
-          config.files
-          |> lib.mapAttrs (
-            _:
-            { relPath, ... }:
-            {
-              __toString = _: "${placeholder "out"}/${relPath}";
-              dir =
-                let
-                  dirName = lib.dirOf relPath;
-                in
-                "${placeholder "out"}${if dirName == "." then "" else "/${dirName}"}";
-            }
-          );
       };
     };
 
@@ -231,7 +210,21 @@ let
     { config, pkgs, ... }:
     {
       _module.args = {
-        files = config.processedFiles;
+        files =
+          config.files
+          |> lib.mapAttrs (
+            _:
+            { relPath, ... }:
+            {
+              __toString = _: "${placeholder "out"}/${relPath}";
+
+              dir =
+                let
+                  dirName = lib.dirOf relPath;
+                in
+                "${placeholder "out"}${lib.optionalString (dirName != ".") "/${dirName}"}";
+            }
+          );
 
         wlib = rec {
           out = placeholder "out";

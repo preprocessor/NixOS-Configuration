@@ -1,5 +1,4 @@
 {
-
   exo.mods.desktop =
     { scheme, ... }:
     {
