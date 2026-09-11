@@ -25,9 +25,7 @@
           noto-fonts
         ];
         # extraPackages = [ pkgs.latencyflex-vulkan ];
-        # extraCompatPackages = with pkgs; [
-        #   steamtinkerlaunch
-        # ];
+        # extraCompatPackages =  [ pkgs.steamtinkerlaunch ];
         package = pkgs.steam.override {
           extraPkgs = fpkgs: [ pkgs.modengine3 ];
           extraEnv = {
