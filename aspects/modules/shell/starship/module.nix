@@ -23,12 +23,6 @@
           description = "Options to go into starship's toml config";
         };
 
-        moreCfg = lib.mkOption {
-          type = with lib.types; nullOr (either path lines);
-          default = "";
-          description = "Additional config lines.";
-        };
-
         package = lib.mkOption {
           default = wrapPackage (
             { files, wlib, ... }:

@@ -1,4 +1,8 @@
 {
+  exo.mods.desktop.my.zathura = {
+    enable = true;
+  };
+
   exo.skeleton =
     {
       wrapPackage,
@@ -57,15 +61,6 @@
           };
         };
 
-        moreCfg = lib.mkOption {
-          type = lib.types.lines;
-          default = "";
-          description = ''
-            Additional commands for zathura that will be added to the
-            {file}`zathurarc` file.
-          '';
-        };
-
         package = lib.mkOption {
           default = wrapPackage (
             { files, ... }:
@@ -76,9 +71,7 @@
                 relPath = "config/zathurarc";
                 file =
                   lib.concatLines (
-                    lib.optional (cfg.moreCfg != "") cfg.moreCfg
-                    ++ lib.mapAttrsToList lib.formatLine cfg.options
-                    ++ lib.mapAttrsToList lib.formatMapLine cfg.mappings
+                    lib.mapAttrsToList lib.formatLine cfg.options ++ lib.mapAttrsToList lib.formatMapLine cfg.mappings
                   )
                   + "\n";
               };
@@ -89,6 +82,14 @@
 
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
+
+        my.hyprland.windowrules.zathura = [
+          {
+            name = "float-zathura";
+            match.class = "^org.pwmt.zathura$";
+            rules.float = true;
+          }
+        ];
       };
 
       _file = "zathura_module.nix";

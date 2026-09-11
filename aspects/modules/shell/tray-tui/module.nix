@@ -21,13 +21,6 @@
           description = "Options to go into tray-tui's toml config";
         };
 
-        moreCfg = lib.mkOption {
-          type = with lib.types; nullOr (either path lines);
-          default = "";
-          description = "Additional config lines.";
-          example = lib.literalExpression "./config.toml";
-        };
-
         package = lib.mkOption {
           default = wrapPackage (
             { files, wlib, ... }:
