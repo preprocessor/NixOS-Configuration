@@ -91,7 +91,7 @@
     { self', lib, ... }:
     {
       my.hyprland.lua.files."keybinds.clipboard".content = /* lua */ ''
-        hl.bind("SUPER + V", hl.dsp.exec_cmd('kitty -e ${lib.getExe' self'.packages.cliphist "cliphist-tui"}', {size = { 800, 1200}, float = true, center = true}))
+        hl.bind("SUPER + V", hl.dsp.exec_cmd('kitty -e ${lib.getExe' self'.packages.cliphist-tui}', {size = { 800, 1200}, float = true, center = true}))
       '';
 
       _file = ./clipboard.nix;
