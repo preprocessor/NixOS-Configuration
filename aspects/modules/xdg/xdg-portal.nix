@@ -20,13 +20,9 @@
         };
         terminal-exec = {
           enable = true;
-          settings = {
-            default = [ "kitty.desktop" ];
-          };
+          settings.default = [ "kitty.desktop" ];
         };
       };
-      environment.sessionVariables = {
-        GTK_USE_PORTAL = "0";
-      };
+      environment.sessionVariables.GTK_USE_PORTAL = "0";
     };
 }
