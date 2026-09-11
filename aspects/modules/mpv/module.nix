@@ -68,7 +68,7 @@
                   };
                   fonts = {
                     relPath = "config/fonts";
-                    file = "${pkgs.mpvScripts.modernz}/share/fonts/truetype/";
+                    file = "${pkgs.mpvScripts.modernz}/share/fonts/truetype";
                   };
                   modernz = {
                     relPath = "config/script-opts/modernz.conf";

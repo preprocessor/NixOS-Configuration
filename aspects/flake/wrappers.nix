@@ -136,7 +136,6 @@ let
             wrapperArgs = "${args'}${env'}${runtimePackages'}${runCommand'}";
 
             # Each of the prime (') variables above are the correctly processed values for use with makeWrapper
-
             stringFiles = files |> lib.filterAttrs (_: { file, ... }: lib.isString file);
 
             mainBin = lib.escapeShellArg binName;
@@ -167,8 +166,8 @@ let
                 |> lib.concatMapAttrsStringSep "\n" (
                   attrName:
                   { relPath, file }:
-                  if lib.isString file then
-                    # Files passed in with passAsFile
+                  if lib.isString file && !(lib.hasPrefix "/nix/store/" file) then
+                    # Strings passed in with passAsFile that are not themselves store paths
                     ''install -D "''$${attrName}Path" "$out/${relPath}"''
                   else
                     let
@@ -179,7 +178,7 @@ let
                       ${
                         if lib.hasSuffix "/" relPath then
                           # Directory -> Directory
-                          ''lndir -silent ${file} "$out/${relPath}"''
+                          ''lndir -silent ${file} "$out${lib.optionalString (dirName != ".") "/${relPath}"}"''
                         else
                           # Link an individual file.
                           ''ln -sf ${file} "$out/${relPath}"''
@@ -206,7 +205,7 @@ let
       };
     };
 
-  wlib = (
+  wrapperUtils = (
     { config, pkgs, ... }:
     {
       _module.args = {
@@ -245,7 +244,7 @@ let
       evaluation = lib.evalModules {
         modules = [
           wrapperModule
-          wlib
+          wrapperUtils
           spec
         ];
         specialArgs = { inherit pkgs; };
