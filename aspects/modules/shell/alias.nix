@@ -21,9 +21,6 @@
 
       programs.fish = {
         shellAliases = config.environment.shellAliases // {
-          man = "batman";
-          cat = "bat --plain ";
-
           cp = "cp -r ";
           mkdir = "mkdir -p";
 
@@ -33,7 +30,6 @@
           repl = "nix repl --file ${cfgdir}/repl.nix";
 
           ils = "mcat ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
-
         };
 
         shellAbbrs = {

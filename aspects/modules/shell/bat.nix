@@ -10,12 +10,12 @@
       my.bat = {
         enable = true;
 
-        config.theme = "base16";
+        config.theme = "based";
 
         syntaxes.just = "${inputs.bat-syntax-justfile}/Syntax/Just.sublime-syntax";
 
-        themes.base16 = with scheme; /* xml */ ''
-          '<?xml version="1.0" encoding="UTF-8"?>
+        themes.based = with scheme.withHashtag; /* xml */ ''
+          <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <!-- Original template: https://github.com/sharkdp/bat/blob/master/assets/themes/base16.tmTheme -->
           <!-- Copyright (c) 2018-2023 bat-developers (https://github.com/sharkdp/bat). -->
@@ -68,8 +68,8 @@
                           <string>comment, punctuation.definition.comment</string>
                           <key>settings</key>
                           <dict>
-                              ;<key>foreground</key>
-                              <string>${base03-hex}</string>
+                              <key>foreground</key>
+                              <string>${base02-hex}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -278,7 +278,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base05-hex}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -554,7 +554,8 @@
                   <key>uuid</key>
                   <string>uuid</string>
               </dict>
-          </plist>'';
+          </plist>
+        '';
       };
     };
 
@@ -590,21 +591,23 @@
             attrsOf (oneOf [
               number
               str
+              path
               null
             ]);
         };
 
         package = lib.mkOption {
           default = wrapPackage (
-            { files, ... }:
+            { wlib, files, ... }:
             {
               package = pkgs.bat;
               linkedPackages = [ pkgs.bat-extras.core ];
-              env.BAT_CONFIG_PATH = files.config.dir;
+              # env.XDG_CONFIG_HOME = "${wlib.out}/config";
+              env.BAT_CONFIG_DIR = files.config.dir;
               files = lib.mkMerge [
                 {
                   config = {
-                    relPath = "config/config";
+                    relPath = "config/bat/config";
                     file = cfg.config |> lib.cli.toCommandLineGNU { } |> lib.concatLines;
                   };
                 }
@@ -614,7 +617,7 @@
                     name: value: {
                       name = "${name}Theme";
                       value = {
-                        relPath = "config/themes/${name}.tmTheme";
+                        relPath = "config/bat/themes/${name}.tmTheme";
                         file = value;
                       };
                     }
@@ -626,7 +629,7 @@
                     name: value: {
                       name = "${name}Syntax";
                       value = {
-                        relPath = "config/syntaxes/${name}.sublime-syntax";
+                        relPath = "config/bat/syntaxes/${name}.sublime-syntax";
                         file = value;
                       };
                     }

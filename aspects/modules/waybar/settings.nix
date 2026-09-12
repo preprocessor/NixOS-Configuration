@@ -9,7 +9,7 @@
           layer = "top";
           position = "bottom";
           exclusive = false;
-          margin-bottom = -2;
+          margin-bottom = -1;
           spacing = 0;
           reload_style_on_change = true;
           modules-center = [ "hyprland/workspaces" ];

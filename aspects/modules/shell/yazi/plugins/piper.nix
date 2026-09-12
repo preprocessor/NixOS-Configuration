@@ -18,7 +18,7 @@
         plugin.prepend_previewers =
           let
 
-            bat = "${getExe pkgs.bat} -p --color=always";
+            bat = "${getExe config.my.bat.package} -n --color=always";
             qemu-img = lib.getExe' pkgs.qemu-utils "qemu-img";
           in
           with pkgs;
