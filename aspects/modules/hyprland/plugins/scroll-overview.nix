@@ -5,7 +5,11 @@
   };
 
   perSystem =
-    { inputs, pkgs, ... }:
+    {
+      inputs,
+      pkgs,
+      ...
+    }:
     {
       remotePackages.scrolloverview = pkgs.hyprland.stdenv.mkDerivation (finalAttrs: {
         pname = "scrolloverview";
@@ -45,11 +49,15 @@
       });
     };
 
-  exo.mods.desktop = {
-    my.hyprland.lua.files."plugins/scrolloverview".content = /* lua */ ''
-      hl.bind("SUPER + Tab", function()
-        hl.plugin.scrolloverview.overview("toggle all")
-      end)
-    '';
-  };
+  exo.mods.desktop =
+    { self', ... }:
+    {
+      my.hyprland.plugins = { inherit (self'.packages) scrolloverview; };
+
+      my.hyprland.lua.files."plugins/scrolloverview".content = /* lua */ ''
+        hl.bind("SUPER + Tab", function()
+          hl.plugin.scrolloverview.overview("toggle all")
+        end)
+      '';
+    };
 }
