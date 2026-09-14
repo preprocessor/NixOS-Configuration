@@ -5,18 +5,21 @@
     nixos-core.url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1";
   };
 
+  perSystem =
+    { packages', ... }:
+    {
+      remotePackages = { inherit (packages') nixos-core; };
+    };
+
   exo.core =
     {
       constants,
-      pkgs,
       lib,
       ...
     }:
     {
       imports = [ inputs.nixos-core.nixosModules.default ];
       system.nixos-core.enable = true;
-
-      nix.package = pkgs.nixVersions.latest;
 
       nix.settings = {
         use-xdg-base-directories = true;

@@ -70,6 +70,8 @@
         ...
       }:
       {
+        remotePackages = { inherit (packages') tack; };
+
         apps.write-tack = {
           type = "app";
           meta.description = "A flake-file like tack pins.toml updater";

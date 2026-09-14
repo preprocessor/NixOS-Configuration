@@ -2,6 +2,12 @@
 {
   tack.inputs.hjem.url = "gh:feel-co/hjem";
 
+  perSystem =
+    { packages', ... }:
+    {
+      remotePackages = { inherit (packages') hjem; };
+    };
+
   exo.core =
     {
       constants,
