@@ -15,6 +15,7 @@
       wrapPackage,
       config,
       self',
+      pkgs,
       lib,
       ...
     }:
@@ -39,6 +40,45 @@
     {
       config = lib.mkIf cfg.enable {
         hj.packages = [ cfg.package ];
+
+        fonts.packages = with pkgs; [
+          maple-mono.variable
+          maple-mono.NF
+        ];
+
+        hj.xdg.mime-apps.default-applications =
+          [
+            "inode/directory"
+            "terminal"
+            "x-terminal-emulator"
+            "application/x-shellscript"
+          ]
+          |> map (mime: lib.nameValuePair mime [ "kitty.desktop" ])
+          |> lib.listToAttrs;
+
+        my.hyprland.startup =
+          let
+            cfg = config.my.kitty;
+          in
+          [
+            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev silent" })''
+            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev silent" })''
+          ];
+
+        my.hyprland.lua.files."keybinds.kitty".content = /* lua */ ''
+          hl.bind("SUPER + Return", hl.dsp.exec_raw("kitty -1"), { release = true })
+
+          hl.bind("SUPER + CTRL + Return", hl.dsp.exec_raw("kitty --class float-kitty"), { release = true, center = true })
+        '';
+
+        my.hyprland.windowrules.kitty = [
+          {
+            name = "float-kitty";
+            match.class = "^float-kitty$";
+            rules.float = true;
+          }
+        ];
+
       };
 
       options.my.kitty = {
