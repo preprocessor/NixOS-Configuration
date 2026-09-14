@@ -74,11 +74,22 @@
       }
 
       {
-        name = "games-workspace-move-darksouls";
+        name = "games-workspace-darksouls";
         match = {
           class = "darksoulsremastered.exe";
           title = "DARK SOULS™: REMASTERED";
         };
+        rules = {
+          workspace = "name:games silent";
+          render_unfocused = true;
+          fullscreen = true;
+          content = "game";
+        };
+      }
+
+      {
+        name = "games-workspace-darksouls2";
+        match.title = "DARK SOULS II";
         rules = {
           workspace = "name:games silent";
           render_unfocused = true;
