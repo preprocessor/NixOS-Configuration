@@ -10,6 +10,10 @@
         /* lua */ ''hl.exec_cmd("${lib.getExe packages'.helium}", { workspace = "name:web silent" })''
       ];
 
+      my.hyprland.lua.files."keybinds.helium".content = /* lua */ ''
+        hl.bind("SUPER + B", hl.dsp.exec_raw("helium"), { release = true })
+      '';
+
       xdg.mime = lib.mkIf true {
         defaultApplications =
           [
