@@ -99,7 +99,7 @@
         hj.packages = [ cfg.package ];
 
         my.xdg.desktopTuiEntries."btop" = {
-          package = self'.packages.btop;
+          package = cfg.package;
           width = 2100;
           height = 1200;
         };
