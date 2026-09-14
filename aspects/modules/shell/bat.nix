@@ -592,22 +592,20 @@
               number
               str
               path
-              null
             ]);
         };
 
         package = lib.mkOption {
           default = wrapPackage (
-            { wlib, files, ... }:
+            { files, ... }:
             {
               package = pkgs.bat;
               linkedPackages = [ pkgs.bat-extras.core ];
-              # env.XDG_CONFIG_HOME = "${wlib.out}/config";
               env.BAT_CONFIG_DIR = files.config.dir;
               files = lib.mkMerge [
                 {
                   config = {
-                    relPath = "config/bat/config";
+                    relPath = "config/config";
                     file = cfg.config |> lib.cli.toCommandLineGNU { } |> lib.concatLines;
                   };
                 }
@@ -617,7 +615,7 @@
                     name: value: {
                       name = "${name}Theme";
                       value = {
-                        relPath = "config/bat/themes/${name}.tmTheme";
+                        relPath = "config/themes/${name}.tmTheme";
                         file = value;
                       };
                     }
@@ -629,7 +627,7 @@
                     name: value: {
                       name = "${name}Syntax";
                       value = {
-                        relPath = "config/bat/syntaxes/${name}.sublime-syntax";
+                        relPath = "config/syntaxes/${name}.sublime-syntax";
                         file = value;
                       };
                     }
