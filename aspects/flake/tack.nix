@@ -66,6 +66,7 @@
     perSystem =
       {
         packages',
+        self',
         pkgs,
         ...
       }:
@@ -85,7 +86,7 @@
               };
 
               runtimeInputs = [
-                packages'.tack
+                self'.packages.tack
                 pkgs.delta
                 pkgs.nh
               ];
@@ -123,8 +124,8 @@
                       updates = "tack update ${newInputs |> lib.join " "}";
                     };
                   # Get the content of pins.toml as an attrset
-                  oldTackInputs = lib.importTOML (rootPath + /.tack/pins.toml);
-                  changedInputs = findChangedInputs oldTackInputs.inputs cfg.inputs;
+                  oldTackToml = lib.importTOML (rootPath + /.tack/pins.toml);
+                  changedInputs = findChangedInputs oldTackToml.inputs cfg.inputs;
                 in
                 /* bash */ ''
                   LOCK_FILE="./.tack/pins.toml"
@@ -135,7 +136,7 @@
                   fi
 
                   ${lib.optionalString changedInputs.hasRemovals changedInputs.removals}
-                  ${lib.optionalString (changedInputs.hasRemovals || changedInputs.hasUpdates) /* bash */ ''
+                  ${lib.optionalString (tackToml != oldTackToml) /* bash */ ''
                     delta --dark --diff-highlight "$LOCK_FILE" ${tackToml} || true
                     install -m644 -DT ${tackToml} "$LOCK_FILE"
                   ''}

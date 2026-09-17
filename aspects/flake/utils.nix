@@ -8,7 +8,5 @@ in
 {
   options.utils = utilOption;
 
-  config = {
-    exo.skeleton.options.utils = utilOption;
-  };
+  config.exo.skeleton.options.utils = utilOption;
 }

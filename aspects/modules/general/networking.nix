@@ -1,6 +1,6 @@
 {
   exo.core = {
-    # Enable networking
+    # Enable NetworkManager
     networking.networkmanager.enable = true;
 
     boot = {

@@ -1,4 +1,3 @@
-
 vim:
   just nvim
 nvim:

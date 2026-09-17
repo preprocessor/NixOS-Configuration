@@ -164,7 +164,7 @@
       # topEval: the FIRST of two evalModules passes. This one evaluates the top-level modules
       topEval = lib.evalModules {
         # specialArgs get handed to every module function as extra function arguments.
-        # So, all modules under ./aspects can just write in the top formal
+        # So, all modules under ./aspects can just write in the top-level formal
         #   { inputs, withSystem, rootPath, ... }: { ... }
         # and pull these out of this specialArgs.
         specialArgs = { inherit inputs withSystem rootPath; };

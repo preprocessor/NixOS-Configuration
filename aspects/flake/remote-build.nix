@@ -20,7 +20,7 @@
           meta.description = "List packages that will be built remotely (to be used in a Github Action)";
           program =
             (pkgs.writeShellScript "list-remote-packages" ''
-              echo '${config.remotePackages |> lib.attrNames |> lib.concatLines |> lib.trim}'
+              echo "${config.remotePackages |> lib.attrNames |> lib.concatLines |> lib.trim}"
             '').outPath;
         };
       };
