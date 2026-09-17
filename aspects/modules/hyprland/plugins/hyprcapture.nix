@@ -78,35 +78,39 @@
       my.hyprland.plugins = { inherit (self'.packages) hyprcapture; };
 
       my.hyprland.lua.files."plugins/hyprcapture".content = /* lua */ ''
-        hl.bind("Print", hl.plugin.hyprcapture.open)
+        hl.on("config.reloaded", function()
+          if utils.is_plugin_loaded("HyprCapture") then
+            hl.bind("Print", hl.plugin.hyprcapture.open)
 
-        hl.config({
-          plugin = {
-            hyprcapture = {
-              default_mode = "region",
-              fullscreen_scope = "current",
-              overlay_scope = "fix",
-              window_background = "transparent",
-              window_border = "keep",
-              window_shadow = "remove",
-              notification_backend = "hyprland",
-              screenshot_notification = true,
-              notification_title_template = "Screenshot captured",
-              notification_body_template = "Saved {filename} ({window_title})",
-              save = true,
-              clipboard = true,
-              show_thumbnail = true,
-              fusion_mode = true,
-              capture_fullscreen_clients_as_monitor = false,
-              dynamic_window_metadata = true,
-              window_wheel_scroll = true,
-              save_dir = "$XDG_PICTURES_DIR/Screenshots",
-              filename_template = "Screenshot-%Y-%m-%d-%H:%M:%S.png",
-              record_save_dir = "$XDG_VIDEOS_DIR/Screenrecords",
-              helper = "${self'.packages.hyprcapture}/bin/hyprcapture-ui",
-            },
-          },
-        })
+            hl.config({
+              plugin = {
+                hyprcapture = {
+                  default_mode = "region",
+                  fullscreen_scope = "current",
+                  overlay_scope = "fix",
+                  window_background = "transparent",
+                  window_border = "keep",
+                  window_shadow = "remove",
+                  notification_backend = "hyprland",
+                  screenshot_notification = true,
+                  notification_title_template = "Screenshot captured",
+                  notification_body_template = "Saved {filename} ({window_title})",
+                  save = true,
+                  clipboard = true,
+                  show_thumbnail = true,
+                  fusion_mode = true,
+                  capture_fullscreen_clients_as_monitor = false,
+                  dynamic_window_metadata = true,
+                  window_wheel_scroll = true,
+                  save_dir = "$XDG_PICTURES_DIR/Screenshots",
+                  filename_template = "Screenshot-%Y-%m-%d-%H:%M:%S.png",
+                  record_save_dir = "$XDG_VIDEOS_DIR/Screenrecords",
+                  helper = "${self'.packages.hyprcapture}/bin/hyprcapture-ui",
+                },
+              },
+            })
+          end
+        end)
       '';
 
     };

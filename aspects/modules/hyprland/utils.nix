@@ -254,6 +254,15 @@
             return math.max(min, math.min(max, x))
         end
 
+        utils.is_plugin_loaded =  function(name)
+          for _, p in ipairs(hl.get_loaded_plugins()) do
+            if p.name == name then
+              return true
+            end
+          end
+          return false
+        end
+
         return utils
       '';
     };

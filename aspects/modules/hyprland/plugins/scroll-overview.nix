@@ -55,8 +55,24 @@
       my.hyprland.plugins = { inherit (self'.packages) scrolloverview; };
 
       my.hyprland.lua.files."plugins/scrolloverview".content = /* lua */ ''
-        hl.bind("SUPER + Tab", function()
-          hl.plugin.scrolloverview.overview("toggle all")
+        hl.on("config.reloaded", function()
+          if utils.is_plugin_loaded("scrolloverview") then
+            hl.bind("SUPER + Tab", function()
+              hl.plugin.scrolloverview.overview("toggle all")
+            end)
+
+            hl.config({
+              plugin = {
+                scrolloverview = {
+                  wallpaper = 1,
+                  blur = true,
+                  shadow = {
+                    enabled = true,
+                  },
+                },
+              },
+            })
+          end
         end)
       '';
     };
