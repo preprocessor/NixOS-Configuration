@@ -1,62 +1,104 @@
 {
-  exo.mods.desktop = {
-    my.hyprland.enable = true;
+  tack.inputs.hyprland.url = "gh:hyprwm/Hyprland";
 
-    my.hyprland.lua.files."general".content = /* lua */ ''
-      hl.monitor({
-        output = "DP-2",
-        mode = "3440x1440@74.983",
-        position = "0x0",
-        scale = 1,
-      })
+  perSystem =
+    {
+      packages',
+      self',
+      pkgs,
+      ...
+    }:
+    {
+      packages = {
+        xdg-desktop-portal-hyprland =
+          (packages'.hyprland.xdg-desktop-portal-hyprland.override {
+            inherit (self'.packages) hyprland;
+          }).overrideAttrs
+            {
+              doCheck = false;
+            };
 
-      hl.config({
-        render = {
-          direct_scanout = 2,
-        },
+        hyprland = packages'.hyprland.overrideAttrs {
+          doCheck = false;
+        };
+      };
 
-        cursor = {
-          inactive_timeout = 5,
-          hide_on_key_press = true,
-          zoom_disable_aa = true,
-          no_warps = true,
-          warp_back_after_non_mouse_input = false,
-          warp_on_change_workspace = 2,
-          warp_on_toggle_special = 2,
-        },
+      remotePackages = {
+        hyprland-bundle = pkgs.symlinkJoin {
+          name = "hyprland-bundle";
+          paths = with self'.packages; [
+            xdg-desktop-portal-hyprland
+            scrolloverview
+            hyprcapture
+            hyprland
+          ];
+        };
+      };
+    };
 
-        binds = {
-          workspace_back_and_forth = true,
-        },
+  exo.mods.desktop =
+    { packages', ... }:
+    {
+      my.hyprland = {
+        enable = true;
+        package = packages'.hyprland;
+      };
 
-        misc = {
-          force_default_wallpaper = 0,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-          disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
-          focus_on_activate       = true,
-          middle_click_paste      = false,
-        },
+      my.hyprland.lua.files."general".content = /* lua */ ''
+        hl.monitor({
+          output = "DP-2",
+          mode = "3440x1440@74.983",
+          position = "0x0",
+          scale = 1,
+        })
 
-        input = {
-          kb_layout          = "us",
-          kb_options         = "caps:escape",
+        hl.config({
+          render = {
+            direct_scanout = 2,
+          },
 
-          numlock_by_default = true,
+          cursor = {
+            inactive_timeout = 5,
+            hide_on_key_press = true,
+            zoom_disable_aa = true,
+            no_warps = true,
+            warp_back_after_non_mouse_input = false,
+            warp_on_change_workspace = 2,
+            warp_on_toggle_special = 2,
+          },
 
-          repeat_delay       = 300,
-          repeat_rate        = 40,
+          binds = {
+            workspace_back_and_forth = true,
+          },
 
-          follow_mouse       = 2,
-          mouse_refocus       = false,
+          misc = {
+            force_default_wallpaper = 0,    -- Set to 0 or 1 to disable the anime mascot wallpapers
+            disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
+            focus_on_activate       = true,
+            middle_click_paste      = false,
+          },
 
-          focus_on_close      = 2,
-          float_switch_override_focus = 0,
-        },
-      })
+          input = {
+            kb_layout          = "us",
+            kb_options         = "caps:escape",
 
-      -- Restore wallpaper on monitor reconnect
-      hl.on("monitor.added", function()
-        hl.dispatch(hl.dsp.exec_raw("waypaper --restore"))
-      end)
-    '';
-  };
+            numlock_by_default = true,
+
+            repeat_delay       = 300,
+            repeat_rate        = 40,
+
+            follow_mouse       = 2,
+            mouse_refocus       = false,
+
+            focus_on_close      = 2,
+            float_switch_override_focus = 0,
+          },
+        })
+
+        -- Restore wallpaper on monitor reconnect
+        hl.on("monitor.added", function()
+          hl.dispatch(hl.dsp.exec_raw("waypaper --restore"))
+        end)
+      '';
+    };
 }

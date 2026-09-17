@@ -6,13 +6,17 @@
 
   perSystem =
     {
-      pkgs,
       inputs,
+      self',
+      pkgs,
       lib,
       ...
     }:
+    let
+      hyprland = self'.packages.hyprland;
+    in
     {
-      remotePackages.hyprcapture = pkgs.hyprland.stdenv.mkDerivation (finalAttrs: {
+      packages.hyprcapture = hyprland.stdenv.mkDerivation (finalAttrs: {
         pname = "hyprcapture";
         version = "0.2.7";
         src = inputs.hyprland-hyprcapture;
@@ -24,13 +28,13 @@
         ];
 
         buildInputs =
-          pkgs.hyprland.buildInputs
+          hyprland.buildInputs
+          ++ [ hyprland ]
           ++ (with pkgs; [
             kdePackages.layer-shell-qt
             kdePackages.qtbase
             kdePackages.qtsvg
             nlohmann_json
-            hyprland
             glib
             lua
           ]);
@@ -40,7 +44,7 @@
 
         cmakeFlags = [
           "-DHYPRCAPTURE_DEFAULT_HELPER_PATH=${placeholder "out"}/bin/hyprcapture-ui"
-          "-DHYPRCAPTURE_TRUSTED_BIN_DIRS=${lib.makeBinPath [ pkgs.hyprland ]}"
+          "-DHYPRCAPTURE_TRUSTED_BIN_DIRS=${lib.makeBinPath [ hyprland ]}"
         ];
 
         preCheck = ''
@@ -66,7 +70,7 @@
           homepage = "https://github.com/gfhdhytghd/HyprCapture";
           description = "Hyprland-only screenshot and recording tool";
           license = lib.licenses.gpl3Only;
-          inherit (pkgs.hyprland.meta) platforms;
+          inherit (hyprland.meta) platforms;
           mainProgram = "hyprcapture-ui";
         };
       });

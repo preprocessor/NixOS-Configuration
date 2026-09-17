@@ -7,23 +7,25 @@
   perSystem =
     {
       inputs,
+      self',
       pkgs,
       ...
     }:
+    let
+      hyprland = self'.packages.hyprland;
+    in
     {
-      remotePackages.scrolloverview = pkgs.hyprland.stdenv.mkDerivation (finalAttrs: {
+      packages.scrolloverview = hyprland.stdenv.mkDerivation (finalAttrs: {
         pname = "scrolloverview";
         version = "1.0";
         src = inputs.hyprland-scroll-overview;
 
         nativeBuildInputs = [ pkgs.pkg-config ];
-        buildInputs =
-          with pkgs;
-          [
-            lua5_4
-            hyprland
-          ]
-          ++ pkgs.hyprland.buildInputs;
+        buildInputs = [
+          pkgs.lua5_4
+          hyprland
+        ]
+        ++ hyprland.buildInputs;
 
         enableParallelBuilding = true;
         dontUseCmakeConfigure = true;
@@ -44,7 +46,7 @@
         meta = {
           homepage = "https://github.com/yayuuu/hyprland-scroll-overview";
           description = "scroll overview";
-          platforms = pkgs.hyprland.meta.platforms or [ ];
+          platforms = hyprland.meta.platforms or [ ];
         };
       });
     };
@@ -64,7 +66,8 @@
             hl.config({
               plugin = {
                 scrolloverview = {
-                  wallpaper = 1,
+                  workspace_gap = 100,
+                  wallpaper = 2,
                   blur = true,
                   shadow = {
                     enabled = true,
