@@ -135,15 +135,24 @@ let
 
             wrapperArgs = "${args'}${env'}${runtimePackages'}${runCommand'}";
 
-            # Each of the prime (') variables above are the correctly processed values for use with makeWrapper
-            stringFiles = files |> lib.filterAttrs (_: { file, ... }: lib.isString file);
-
             mainBin = lib.escapeShellArg binName;
+
+            # Each of the prime (') variables above are the correctly processed values for use with makeWrapper
+
+            # Files passed as strings that are NOT store paths
+            stringFiles =
+              files
+              |> lib.filterAttrs (_: { file, ... }: lib.isString file && !lib.hasPrefix builtins.storeDir file);
+            # Files to be symlinked; filter the base `files` attrset via inversion of `stringFiles`
+            symFiles = files |> lib.filterAttrs (name: _: !lib.elem name (lib.attrNames stringFiles));
+            # I'm lazy
+            catmap =
+              f: x: (if lib.isAttrs x then lib.concatMapAttrsStringSep else lib.concatMapStringsSep) "\n" f x;
           in
           pkgs.runCommandLocal "${package.name}-wrapper"
             (
               {
-                passAsFile = stringFiles |> lib.attrNames;
+                passAsFile = lib.attrNames stringFiles;
                 nativeBuildInputs = with pkgs; [
                   makeWrapper
                   lndir
@@ -158,34 +167,16 @@ let
               mkdir -p $out
 
               # Link the main package and any additional packages.
-              ${[ package ] ++ linkedPackages |> lib.concatMapStringsSep "\n" (pkg: "lndir -silent ${pkg} $out")}
+              ${[ package ] ++ linkedPackages |> catmap (pkg: "lndir -silent ${pkg} $out")}
 
-              # Generate files and directories
+              # Generate files with passAsFile
               ${
-                files
-                |> lib.concatMapAttrsStringSep "\n" (
-                  attrName:
-                  { relPath, file }:
-                  if lib.isString file && !(lib.hasPrefix "/nix/store/" file) then
-                    # Strings passed in with passAsFile that are not themselves store paths
-                    ''install -D "''$${attrName}Path" "$out/${relPath}"''
-                  else
-                    let
-                      dirName = lib.dirOf relPath;
-                    in
-                    ''
-                      ${lib.optionalString (dirName != ".") ''mkdir -p "$out/${dirName}"''}
-                      ${
-                        if lib.hasSuffix "/" relPath then
-                          # Directory -> Directory
-                          ''lndir -silent ${file} "$out${lib.optionalString (dirName != ".") "/${relPath}"}"''
-                        else
-                          # Link an individual file.
-                          ''ln -sf ${file} "$out/${relPath}"''
-                      }
-                    ''
-                )
+                stringFiles
+                |> catmap (attrName: { relPath, ... }: ''install -D "''$${attrName}Path" "$out/${relPath}"'')
               }
+
+              # Generate symlinks from external paths
+              ${symFiles |> catmap (_: { relPath, file }: ''ln -sf ${file} "$out/${relPath}"'')}
 
               if [ ! -e $out/bin/${mainBin} ]; then
                 makeWrapper ${
@@ -195,12 +186,7 @@ let
                 wrapProgram $out/bin/${mainBin} ${wrapperArgs}
               fi
 
-              ${
-                aliases
-                |> lib.concatMapStringsSep "\n" (
-                  alias: "ln -sf $out/bin/${mainBin} $out/bin/${lib.escapeShellArg alias}"
-                )
-              }
+              ${aliases |> catmap (alias: "ln -sf $out/bin/${mainBin} $out/bin/${lib.escapeShellArg alias}")}
             '';
       };
     };
