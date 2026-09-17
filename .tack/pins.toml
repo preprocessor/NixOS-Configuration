@@ -51,6 +51,9 @@ url = "gh:Kyles-World/Helvetica-Font"
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
+[inputs.hyprland]
+url = "gh:hyprwm/Hyprland"
+
 [inputs.hyprland-hyprcapture]
 type = "fetch"
 url = "gh:gfhdhytghd/HyprCapture"

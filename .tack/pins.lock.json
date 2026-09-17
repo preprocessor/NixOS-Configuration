@@ -111,6 +111,14 @@
     "narHash": "sha256-0nvWuRbgL4GEKpR8Y4wsB3kmsVgyd0cW8kLHc2BqlTc=",
     "lastModified": 1789234255
   },
+  "hyprland": {
+    "type": "github",
+    "owner": "hyprwm",
+    "repo": "Hyprland",
+    "rev": "d50ca8950ac8753c54e50b6d44f4461df14bfabb",
+    "narHash": "sha256-6BBWoaIXic8TfWaDIFDKF0WL3yNgep4gKuXIBE04nLU=",
+    "lastModified": 1789653023
+  },
   "hyprland-hyprcapture": {
     "type": "github",
     "owner": "gfhdhytghd",
