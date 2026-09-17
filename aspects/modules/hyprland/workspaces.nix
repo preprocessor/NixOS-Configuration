@@ -6,8 +6,6 @@
           hl.workspace_rule({ workspace = tostring(index), default_name = name, persistent = true })
         end
 
-        hl.workspace_rule({ workspace = "name:web", layout = "scrolling" })
-
         hl.window_rule({
           name   = "floating-media-workspace",
           match  = { workspace = "name:media" },
