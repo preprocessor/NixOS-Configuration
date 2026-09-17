@@ -2,6 +2,6 @@
   exo.mods.gaming =
     { pkgs, ... }:
     {
-      hj.packages = [ pkgs.shadps4 ];
+      hj.packages = [ pkgs.shadps4-qtlauncher ];
     };
 }
