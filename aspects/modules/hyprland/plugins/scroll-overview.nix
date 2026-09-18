@@ -1,6 +1,6 @@
 {
   tack.inputs.hyprland-scroll-overview = {
-    url = "gh:yayuuu/hyprland-scroll-overview";
+    url = "gh:yayuuu/hyprland-scroll-overview/new-release";
     type = "fetch";
   };
 

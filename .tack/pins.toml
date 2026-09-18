@@ -60,7 +60,7 @@ url = "gh:gfhdhytghd/HyprCapture"
 
 [inputs.hyprland-scroll-overview]
 type = "fetch"
-url = "gh:yayuuu/hyprland-scroll-overview"
+url = "gh:yayuuu/hyprland-scroll-overview/new-release"
 
 [inputs.neovim]
 exclude_follow = ["nixpkgs"]
