@@ -11,19 +11,31 @@
         '';
       };
 
-      windowrules.hide_windows = [
-        {
-          match.tag = "hidden";
-          rules = {
-            no_screen_share = true;
-            border_color = "#ff0d2d #ff0d2d";
-          };
-        }
-        {
-          match.title = "(login|signin|log in|sign in|mail)";
-          rules.tag = "+hidden";
-        }
-      ];
+      windowrules = {
+        tags = [
+          {
+            match.tag = "hidden";
+            rules = {
+              no_screen_share = true;
+              border_color = "#ff0d2d #ff0d2d";
+            };
+          }
+        ];
+
+        hidden_windows = (
+          [
+            "login"
+            "signin"
+            "[Ll]og in"
+            "[Ss]ign in"
+            "[Mm]ail"
+          ]
+          |> map (title: {
+            match = { inherit title; };
+            rules.tag = "+hidden";
+          })
+        );
+      };
     };
   };
 }

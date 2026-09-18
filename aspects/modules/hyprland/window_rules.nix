@@ -69,7 +69,7 @@
             ];
             pin = true;
             float = true;
-            no_initial_focus = false;
+            no_initial_focus = true;
           };
         }
 

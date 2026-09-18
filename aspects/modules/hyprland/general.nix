@@ -1,41 +1,4 @@
 {
-  tack.inputs.hyprland.url = "gh:hyprwm/Hyprland";
-
-  perSystem =
-    {
-      packages',
-      self',
-      pkgs,
-      ...
-    }:
-    {
-      packages = {
-        xdg-desktop-portal-hyprland =
-          (packages'.hyprland.xdg-desktop-portal-hyprland.override {
-            inherit (self'.packages) hyprland;
-          }).overrideAttrs
-            {
-              doCheck = false;
-            };
-
-        hyprland = packages'.hyprland.overrideAttrs {
-          doCheck = false;
-        };
-      };
-
-      remotePackages = {
-        hyprland-bundle = pkgs.symlinkJoin {
-          name = "hyprland-bundle";
-          paths = with self'.packages; [
-            xdg-desktop-portal-hyprland
-            scrolloverview
-            hyprcapture
-            hyprland
-          ];
-        };
-      };
-    };
-
   exo.mods.desktop =
     { packages', ... }:
     {
