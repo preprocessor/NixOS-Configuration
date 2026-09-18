@@ -1,16 +1,11 @@
 {
   exo.mods.desktop =
     {
-      pkgs,
-      config,
-      lib,
       constants,
+      config,
+      pkgs,
       ...
     }:
-    let
-      inherit (constants) cfgdir;
-      _ = lib.getExe;
-    in
     {
       hj.packages = [ pkgs.uutils-coreutils-noprefix ];
 
@@ -27,7 +22,7 @@
           rmt = "trash-put ";
           rmtdir = "trash-put ";
 
-          repl = "nix repl --file ${cfgdir}/repl.nix";
+          repl = "nix repl --file ${constants.cfgdir}/repl.nix";
 
           ils = "mcat ls --hyprlink --kitty --ls-opts 'height=10%,items_per_row=6'";
         };

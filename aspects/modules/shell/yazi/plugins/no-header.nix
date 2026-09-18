@@ -18,7 +18,7 @@
 
         src = lib.cleanSourceWith {
           src = inputs.yazi-no-header;
-          filter = name: type: (baseNameOf name == "main.lua");
+          filter = name: _: (baseNameOf name == "main.lua");
         };
       };
     in

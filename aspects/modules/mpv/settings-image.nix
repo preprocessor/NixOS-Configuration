@@ -1,8 +1,7 @@
 {
   exo.mods.desktop =
-    { config, lib, ... }:
+    { lib, ... }:
     {
-
       hj.xdg.mime-apps.default-applications =
         [
           "image/bmp"

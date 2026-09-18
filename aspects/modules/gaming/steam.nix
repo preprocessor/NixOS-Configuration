@@ -27,7 +27,7 @@
         # extraPackages = [ pkgs.latencyflex-vulkan ];
         # extraCompatPackages =  [ pkgs.steamtinkerlaunch ];
         package = pkgs.steam.override {
-          extraPkgs = fpkgs: [ pkgs.modengine3 ];
+          extraPkgs = _: [ pkgs.modengine3 ];
           extraEnv = {
             STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.join ":" [
               "\${HOME}/.steam/root/compatibilitytools.d"

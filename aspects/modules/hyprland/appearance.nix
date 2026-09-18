@@ -1,11 +1,6 @@
 {
   exo.mods.desktop =
-    { scheme, theme, ... }:
-    with scheme;
-    let
-      active = bright-cyan;
-      inactive = if (theme == "light") then base07 else base00;
-    in
+    { scheme, ... }:
     {
       my.hyprland.lua.files."appearance".content = /* lua */ ''
         hl.config({
@@ -15,7 +10,7 @@
             border_size = 3,
 
             col = {
-              active_border   = "0xFF${active}",
+              active_border   = "0xFF${scheme.bright-cyan}",
               inactive_border = "0xFF111111",
             },
           },

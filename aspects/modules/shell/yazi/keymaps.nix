@@ -1,11 +1,6 @@
 {
   exo.core =
-    {
-      constants,
-      pkgs,
-      config,
-      ...
-    }:
+    { constants, config, ... }:
     {
       my.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [

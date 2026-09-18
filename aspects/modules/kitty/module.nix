@@ -3,7 +3,7 @@
     { pkgs, ... }:
     {
       remotePackages.kitty = pkgs.kitty.overrideAttrs (
-        finalAttrs: previousAttrs: {
+        _: previousAttrs: {
           patches = (previousAttrs.patches or [ ]) ++ [ ./shade-blocks.patch ];
           doCheck = false;
         }

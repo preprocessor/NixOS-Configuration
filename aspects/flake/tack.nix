@@ -95,7 +95,7 @@
                 let
                   cfg = {
                     inherit (config.tack) all_follow shorturls;
-                    inputs = config.tack.inputs |> lib.filterAttrsRecursive (k: v: v != null);
+                    inputs = config.tack.inputs |> lib.filterAttrsRecursive (_: value: value != null);
                   };
 
                   tomlFormat = pkgs.formats.toml { };

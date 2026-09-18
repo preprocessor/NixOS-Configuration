@@ -6,16 +6,13 @@
 
   perSystem =
     {
+      packages',
       inputs,
-      self',
       pkgs,
       ...
     }:
-    let
-      hyprland = self'.packages.hyprland;
-    in
     {
-      packages.scrolloverview = hyprland.stdenv.mkDerivation (finalAttrs: {
+      packages.scrolloverview = packages'.hyprland.stdenv.mkDerivation {
         pname = "scrolloverview";
         version = "1.0";
         src = inputs.hyprland-scroll-overview;
@@ -23,9 +20,9 @@
         nativeBuildInputs = [ pkgs.pkg-config ];
         buildInputs = [
           pkgs.lua5_4
-          hyprland
+          packages'.hyprland
         ]
-        ++ hyprland.buildInputs;
+        ++ packages'.hyprland.buildInputs;
 
         enableParallelBuilding = true;
         dontUseCmakeConfigure = true;
@@ -46,9 +43,9 @@
         meta = {
           homepage = "https://github.com/yayuuu/hyprland-scroll-overview";
           description = "scroll overview";
-          platforms = hyprland.meta.platforms or [ ];
+          platforms = packages'.hyprland.meta.platforms or [ ];
         };
-      });
+      };
     };
 
   exo.mods.desktop =

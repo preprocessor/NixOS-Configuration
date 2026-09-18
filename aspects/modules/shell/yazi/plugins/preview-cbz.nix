@@ -14,7 +14,7 @@
 
         src = lib.cleanSourceWith {
           src = inputs.yazi-plugins + "/preview-cbz.yazi";
-          filter = name: type: (baseNameOf name == "main.lua");
+          filter = name: _: (baseNameOf name == "main.lua");
         };
       };
     in
