@@ -176,7 +176,17 @@ let
               }
 
               # Generate symlinks from external paths
-              ${symFiles |> catmap (_: { relPath, file }: ''ln -sf ${file} "$out/${relPath}"'')}
+              ${
+                symFiles
+                |> catmap (
+                  _:
+                  { relPath, file }:
+                  ''
+                    mkdir -p "$out/${lib.dirOf relPath}"
+                    ln -sf ${file} "$out/${relPath}"
+                  ''
+                )
+              }
 
               if [ ! -e $out/bin/${mainBin} ]; then
                 makeWrapper ${
@@ -203,11 +213,7 @@ let
             {
               __toString = _: "${placeholder "out"}/${relPath}";
 
-              dir =
-                let
-                  dirName = lib.dirOf relPath;
-                in
-                "${placeholder "out"}${lib.optionalString (dirName != ".") "/${dirName}"}";
+              dir = "${placeholder "out"}/${lib.dirOf relPath}";
             }
           );
 
