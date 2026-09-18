@@ -31,7 +31,7 @@
       # The flake's root directory as a path value so modules can reference files relative to the repo root
       rootPath = ./.;
 
-      # All system-specific flake objects
+      # System-specific flake outputs
       systemOutputKeys = [
         "packages"
         "legacyPackages"
@@ -124,7 +124,7 @@
         };
 
       # Integral options for the configuration, this is merged with topEval's module list
-      topOptions = {
+      topEvalOptions = {
         options = {
           systems = lib.mkOption {
             type = lib.types.listOf lib.types.str;
@@ -163,10 +163,6 @@
 
       # topEval: the FIRST of two evalModules passes. This one evaluates the top-level modules
       topEval = lib.evalModules {
-        # specialArgs get handed to every module function as extra function arguments.
-        # So, all modules under ./aspects can just write in the top-level formal
-        #   { inputs, withSystem, rootPath, ... }: { ... }
-        # and pull these out of this specialArgs.
         specialArgs = { inherit inputs withSystem rootPath; };
         modules =
           (
@@ -177,7 +173,7 @@
             |> lib.fileset.fileFilter (file: file.hasExt "nix" && !lib.hasPrefix "_" file.name)
             |> lib.fileset.toList
           )
-          ++ [ topOptions ];
+          ++ [ topEvalOptions ];
       };
 
       # Evaluate perSystem blocks for each system
@@ -197,8 +193,8 @@
               modules = [
                 topEval.config.perSystem
                 # This is a hand-rolled version of flake-parts' perSystem.
-                # perSystem: the same module gets re-evaluated once per system,
-                # each time with the respective set of specialArgs (a different pkgs, system, inputs', etc).
+                # perSystem: the same module gets evaluated for each system,
+                # each time with the respective set of specialArgs (pkgs, system, inputs', ...).
                 #
                 # Setting freeformType to "lazyAttrsOf unspecified" lets every possible key be valid inside perSystem
                 { config._module.freeformType = lib.types.lazyAttrsOf lib.types.unspecified; }
@@ -209,8 +205,6 @@
           )
         );
 
-      # transposed: swap the attributes
-      #
       # our systemOutputs is shaped
       #   system -> category -> derivation (ex: x86_64-linux.packages.foo)
       # but flake outputs need to be shaped the other way around:
@@ -226,7 +220,7 @@
         #   formatter = { ... }
         # }
         key: lib.genAttrs (lib.attrNames systemOutputs) (system: systemOutputs.${system}.${key} or { })
-        # Within each top-level attrset (packages, devShells),
+        # Within each top-level attrset (packages, devShells, ...),
         #
         # make an attrset for each system, generated from systemOutputs
         # systemOutputs = {
