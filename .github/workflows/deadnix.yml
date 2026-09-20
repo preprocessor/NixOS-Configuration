@@ -1,13 +1,12 @@
+---
 on: [push]
-
 name: Dead code analysis
-
 jobs:
   deadnix:
     name: Deadnix
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v30
       - uses: cachix/cachix-action@v15
         with:
