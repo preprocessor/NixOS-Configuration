@@ -78,7 +78,6 @@
             rules.float = true;
           }
         ];
-
       };
 
       options.my.kitty = {
