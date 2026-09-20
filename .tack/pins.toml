@@ -25,10 +25,6 @@ url = "gh:sentriz/cliphist"
 type = "fetch"
 url = "gh:SHORiN-KiWATA/cliphist-tui"
 
-[inputs.crtty]
-type = "fetch"
-url = "gh:kosa12/CRTty"
-
 [inputs.extra-metadata]
 type = "fetch"
 url = "gh:boydaihungst/file-extra-metadata.yazi"
@@ -54,17 +50,9 @@ url = "gh:feel-co/hjem"
 [inputs.hyprland]
 url = "gh:hyprwm/Hyprland"
 
-[inputs.hyprland-hyprcapture]
-type = "fetch"
-url = "gh:gfhdhytghd/HyprCapture"
-
 [inputs.hyprland-scroll-overview]
 type = "fetch"
 url = "gh:yayuuu/hyprland-scroll-overview/new-release"
-
-[inputs.neovim]
-exclude_follow = ["nixpkgs"]
-url = "gh:preprocessor/neovim"
 
 [inputs.nix-cachyos-kernel]
 exclude_follow = ["nixpkgs"]
@@ -81,6 +69,9 @@ url = "nixpkgs:unstable"
 
 [inputs.nixtopsy]
 url = "gh:amaanq/nixtopsy"
+
+[inputs.nixvim]
+url = "gh:nix-community/nixvim"
 
 [inputs.ny]
 type = "fixed"
@@ -120,14 +111,6 @@ url = "gh:rgwood/systemctl-tui"
 
 [inputs.tack]
 url = "gh:manic-systems/tack"
-
-[inputs.terminal-toys]
-type = "fetch"
-url = "gh:seebass22/terminal-toys"
-
-[inputs.voxcii]
-type = "fetch"
-url = "gh:ashish0kumar/voxcii"
 
 [inputs.yazi]
 url = "gh:sxyazi/yazi"

@@ -39,14 +39,6 @@
     "narHash": "sha256-TtKy57evRwwS2j0CyB4tsiJZD4fkn0OoYuUkbHWiDS8=",
     "lastModified": 1781050727
   },
-  "crtty": {
-    "type": "github",
-    "owner": "kosa12",
-    "repo": "CRTty",
-    "rev": "673f61528a7640299719c07a380d0b87841a4aa3",
-    "narHash": "sha256-KCprd3CCAYMobLF6/tHTtbY+DbZ4l5GwW4sOJXEJOFY=",
-    "lastModified": 1770985802
-  },
   "extra-metadata": {
     "type": "github",
     "owner": "boydaihungst",
@@ -119,14 +111,6 @@
     "narHash": "sha256-6BBWoaIXic8TfWaDIFDKF0WL3yNgep4gKuXIBE04nLU=",
     "lastModified": 1789653023
   },
-  "hyprland-hyprcapture": {
-    "type": "github",
-    "owner": "gfhdhytghd",
-    "repo": "HyprCapture",
-    "rev": "b0747393c25cb936b5803aa217dfc6697ece4613",
-    "narHash": "sha256-Ua7Kfq1bKVJXMAM2NJtPYtabhUe7uj7+CKg+fHg/0pc=",
-    "lastModified": 1786942592
-  },
   "hyprland-scroll-overview": {
     "type": "github",
     "owner": "yayuuu",
@@ -134,14 +118,6 @@
     "rev": "f08c5f7de06c1165952cc1c5318cf6f5c87140ff",
     "narHash": "sha256-2TzMdMGobmWPTeRS4Z305/cjlvHPsyN+rLEF86NsZQg=",
     "lastModified": 1789346277
-  },
-  "neovim": {
-    "type": "github",
-    "owner": "preprocessor",
-    "repo": "neovim",
-    "rev": "219163db9d24f867efa49df1da2cea955bcfa8d8",
-    "narHash": "sha256-TgwIwGKraP1NPWiNeCpq4tOqoJ1xwOVuPlUagbXYqQw=",
-    "lastModified": 1787412047
   },
   "nix-cachyos-kernel": {
     "type": "github",
@@ -182,6 +158,14 @@
     "rev": "45dd9cea7e3bfc51266da94da0b9dec2d3c273ec",
     "narHash": "sha256-3FAA1M8iN3yRuQuH2C7CaIHzosHiVw4QbUaMao+U06M=",
     "lastModified": 1784409959
+  },
+  "nixvim": {
+    "type": "github",
+    "owner": "nix-community",
+    "repo": "nixvim",
+    "rev": "56839cde1c3239470ec38545e8dadc6f9267cc8d",
+    "narHash": "sha256-c25hFVF7muJOFNfvLWyXZh+W9b5rW7mcZ2tTij1jrP8=",
+    "lastModified": 1789740794
   },
   "ny": {
     "type": "fixed",
@@ -278,22 +262,6 @@
     "rev": "62a67545adaf01b48d01ee73c0d16353ca68432e",
     "narHash": "sha256-rTiX4SZ9Sjei3WzsW25nDTZweMRzA7ZunspkhDXkZfY=",
     "lastModified": 1785878583
-  },
-  "terminal-toys": {
-    "type": "github",
-    "owner": "seebass22",
-    "repo": "terminal-toys",
-    "rev": "4d36dfc88825cad8580b431072f8a26d99c3a012",
-    "narHash": "sha256-x/wjqPR0pUTseD+zK5ImKYLIoDIznA33fT6hAw1wvuo=",
-    "lastModified": 1772571788
-  },
-  "voxcii": {
-    "type": "github",
-    "owner": "ashish0kumar",
-    "repo": "voxcii",
-    "rev": "c7ff4ee02db3498fdf3da085a270fabc60fdd49c",
-    "narHash": "sha256-6lMdPBqvegwaBCQ6QZ+iFVSx4kTV9tgXBN0KVL2x3f4=",
-    "lastModified": 1772823789
   },
   "yazi": {
     "type": "github",
