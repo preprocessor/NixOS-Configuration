@@ -50,29 +50,20 @@
             ];
           };
 
-          opener =
-            with pkgs;
-            with lib;
-            {
-              setwallpaper = [
-                {
-                  run = "${getExe' awww "awww"} img --transition-fps 75 %s";
-                  desc = "Set Wallpaper";
-                }
-              ];
-              gimp = [
-                {
-                  run = "${getExe gimp} %s";
-                  desc = "Image Editor";
-                }
-              ];
-              video-trimmer = [
-                {
-                  run = "${getExe video-trimmer} %s";
-                  desc = "Video Trimmer";
-                }
-              ];
-            };
+          opener = {
+            setwallpaper = [
+              {
+                run = "${lib.getExe' pkgs.awww "awww"} img --transition-fps 75 %s";
+                desc = "Set Wallpaper";
+              }
+            ];
+            gimp = [
+              {
+                run = "${lib.getExe pkgs.gimp} %s";
+                desc = "Image Editor";
+              }
+            ];
+          };
 
           preview = {
             wrap = "no";

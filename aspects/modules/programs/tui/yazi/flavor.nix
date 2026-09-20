@@ -51,7 +51,6 @@
           unset_main = { bg = "${bright-magenta}", fg = "${base10}", bold = true }
           unset_alt  = { bg = "${base02}", fg = "${base04}" }
 
-
           [input]
           border = { fg = "${bright-blue}" }
           title = {}
