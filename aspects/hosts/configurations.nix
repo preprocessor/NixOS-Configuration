@@ -50,11 +50,7 @@ in
         )
       );
 
-    perSystem =
-      { pkgs, ... }:
-      {
-        formatter = pkgs.nixfmt-rs;
-      };
+    perSystem = { pkgs, ... }: { formatter = pkgs.nixfmt-rs; };
   };
 
   options.exo = {
