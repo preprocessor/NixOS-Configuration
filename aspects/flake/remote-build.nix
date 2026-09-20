@@ -27,7 +27,13 @@
     };
 
   exo.core.nix.settings = {
-    substituters = [ "https://bazinga.cachix.org" ];
-    trusted-public-keys = [ "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU=" ];
+    substituters = [
+      "https://onelock.cachix.org"
+      "https://bazinga.cachix.org"
+    ];
+    trusted-public-keys = [
+      "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU="
+      "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg="
+    ];
   };
 }

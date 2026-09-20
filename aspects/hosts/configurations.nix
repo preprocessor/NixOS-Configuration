@@ -30,7 +30,7 @@ in
                 inputs
                 self'
                 ;
-              inherit (hostConfig) hardware theme;
+              inherit (hostConfig) system hardware theme;
               constants = {
                 username = hostConfig.user;
                 stateVersion = hostConfig.stateVersion;

@@ -93,11 +93,7 @@
 
               text =
                 let
-                  cfg = {
-                    inherit (config.tack) all_follow shorturls;
-                    inputs = config.tack.inputs |> lib.filterAttrsRecursive (_: value: value != null);
-                  };
-
+                  cfg = config.tack |> lib.filterAttrsRecursive (_: value: !isNull value);
                   tomlFormat = pkgs.formats.toml { };
                   tackToml = cfg |> tomlFormat.generate "pins.toml";
 
