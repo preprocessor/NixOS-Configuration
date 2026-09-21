@@ -28,7 +28,15 @@
           # <c-k>: Toggle signature help
           #
           # See :h blink-cmp-config-keymap for defining your own keymap
-          preset = "super-tab";
+          preset = "enter";
+          "<Tab>" = [
+            "select_next"
+            "fallback"
+          ];
+          "<S-Tab>" = [
+            "select_prev"
+            "fallback"
+          ];
 
           # For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           #    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -45,23 +53,17 @@
         };
 
         completion = {
-          accept = {
-            # experimental auto-brackets support
-            auto_brackets = {
-              enabled = true;
-            };
+          # experimental auto-brackets support
+          accept.auto_brackets.enabled = true;
+          ghost_text.enabled = false;
+          list.selection = {
+            preselect = false;
+            auto_insert = true;
           };
-          menu = {
-            draw = {
-              treesitter = [ "lsp" ];
-            };
-          };
+          menu.draw.treesitter = [ "lsp" ];
           documentation = {
             auto_show = true;
             auto_show_delay_ms = 200;
-          };
-          ghost_text = {
-            enabled = false;
           };
         };
 
