@@ -84,50 +84,17 @@
         }
         // scheme;
 
-      abs = v: if v < 0 then 0 - v else v;
-
-      round =
-        float: # 4.2
-        let
-          int = builtins.floor float; # 4
-          decimal = float - int; # 4.2 - 4 = 0.2
-        in
-        if decimal < 0.5 then int else builtins.ceil float;
-
       stripHashtag = lib.removePrefix "#";
+      normalizeRgb = lib.mapAttrs (_: c: c / 256.0);
     in
     {
-      averageColors =
-        {
-          startColor,
-          endColor,
-          steps ? 1.0,
-        }:
-        let
-          startRgb = hexToRgb (stripHashtag startColor);
-          endRgb = hexToRgb (stripHashtag endColor);
-
-          deltas = {
-            r = startRgb.r - endRgb.r;
-            g = startRgb.g - endRgb.g;
-            b = startRgb.b - endRgb.b;
-          };
-
-          partials = deltas |> lib.mapAttrs (_: c: c / (steps + 1.0));
-        in
-        steps
-        |> builtins.genList (
-          i: startRgb |> lib.mapAttrs (n: v: lib.trivial.toHexString (round (v + ((i + 1) * partials.${n}))))
-        )
-        |> map (v: "#${v.r}${v.g}${v.b}");
-
       mkScheme =
         schema:
         let
           scheme = schema |> ensureBase24 |> addMnemonicNames;
           noHashtag = scheme |> lib.mapAttrs (_: v: stripHashtag v);
           asRgb8 = noHashtag |> lib.mapAttrs (_: v: hexToRgb v);
-          asRgb = asRgb8 |> lib.mapAttrs (_: rgb: lib.mapAttrs (_: c: c / 256.0) rgb);
+          asRgb = asRgb8 |> lib.mapAttrs (_: rgb: normalizeRgb rgb);
         in
         scheme // { inherit noHashtag asRgb8 asRgb; };
     };

@@ -94,10 +94,10 @@
               subtext0 = colors.base07;
               overlay2 = colors.base04;
               overlay1 = colors.base03;
-              overlay0 = builtins.elemAt avg 0;
-              surface2 = builtins.elemAt avg 1;
-              # overlay0 = "#C4C4C4";
-              # surface2 = "#606060";
+              # overlay0 = builtins.elemAt avg 0;
+              # surface2 = builtins.elemAt avg 1;
+              overlay0 = "#C4C4C4";
+              surface2 = "#606060";
               surface1 = colors.base02;
               surface0 = colors.base01;
               base = colors.base00;
