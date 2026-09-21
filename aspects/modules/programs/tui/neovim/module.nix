@@ -6,7 +6,6 @@ top: {
   exo.skeleton =
     {
       inputs,
-      system,
       config,
       scheme,
       pkgs,
@@ -23,7 +22,6 @@ top: {
         package = lib.mkOption {
           default =
             (inputs.nixvim.lib.evalNixvim {
-              inherit system;
               extraSpecialArgs = {
                 inherit scheme inputs;
                 pkgs = pkgs.appendOverlays [

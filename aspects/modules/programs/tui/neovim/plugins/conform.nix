@@ -20,6 +20,12 @@
 
       plugins.conform-nvim = {
         enable = true;
+
+        lazyLoad.settings = {
+          cmd = [ "ConformInfo" ];
+          event = [ "BufWritePre" ];
+        };
+
         settings = {
           default_format_opts.lsp_format = "prefer";
           formatters_by_ft =

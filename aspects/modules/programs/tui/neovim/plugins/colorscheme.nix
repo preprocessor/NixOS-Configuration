@@ -1,10 +1,8 @@
-{ averageColors, ... }:
 {
   exo.mods.neovim =
     { scheme, lib, ... }:
     let
       inherit (lib.nixvim) mkRaw;
-      colors = scheme;
     in
     {
       colorschemes.catppuccin = {
@@ -59,51 +57,41 @@
             };
             inlay_hints.background = true;
           };
-          color_overrides.mocha =
-            let
-              avg = averageColors {
-                startColor = colors.base03;
-                endColor = colors.base02;
-                steps = 2;
-              };
-            in
-            {
-              rosewater = colors.base05;
-              flamingo = colors.base05;
+          color_overrides.mocha = {
+            rosewater = scheme.base05;
+            flamingo = scheme.base05;
 
-              pink = colors.magenta;
-              mauve = colors.magenta;
+            pink = scheme.magenta;
+            mauve = scheme.magenta;
 
-              red = colors.red;
-              maroon = colors.red;
+            red = scheme.red;
+            maroon = scheme.red;
 
-              peach = colors.bright-yellow;
-              yellow = colors.yellow;
+            peach = scheme.bright-yellow;
+            yellow = scheme.yellow;
 
-              green = colors.bright-green;
-              teal = colors.green;
+            green = scheme.bright-green;
+            teal = scheme.green;
 
-              sky = colors.cyan;
-              sapphire = colors.cyan;
+            sky = scheme.cyan;
+            sapphire = scheme.cyan;
 
-              blue = colors.bright-blue;
-              lavender = colors.blue;
+            blue = scheme.bright-blue;
+            lavender = scheme.blue;
 
-              text = colors.base05;
-              subtext1 = colors.base06;
-              subtext0 = colors.base07;
-              overlay2 = colors.base04;
-              overlay1 = colors.base03;
-              # overlay0 = builtins.elemAt avg 0;
-              # surface2 = builtins.elemAt avg 1;
-              overlay0 = "#C4C4C4";
-              surface2 = "#606060";
-              surface1 = colors.base02;
-              surface0 = colors.base01;
-              base = colors.base00;
-              mantle = colors.base10;
-              crust = colors.base11;
-            };
+            text = scheme.base05;
+            subtext1 = scheme.base06;
+            subtext0 = scheme.base07;
+            overlay2 = scheme.base04;
+            overlay1 = scheme.base03;
+            overlay0 = "#C4C4C4";
+            surface2 = "#606060";
+            surface1 = scheme.base02;
+            surface0 = scheme.base01;
+            base = scheme.base00;
+            mantle = scheme.base10;
+            crust = scheme.base11;
+          };
           highlight_overrides.mocha = mkRaw /* lua */ ''
             function(mocha)
               return {
@@ -117,7 +105,7 @@
             end
           '';
           default_integrations = true;
-          auto_integrations = true;
+          auto_integrations = false;
           integrations = {
             blink_cmp.style = "bordered";
             blink_indent = true;

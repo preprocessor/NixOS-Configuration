@@ -73,8 +73,8 @@
             "path"
             "snippets"
             "buffer"
-            "dictionary"
             "ripgrep"
+            "dictionary"
           ];
           providers = {
             dictionary = {
