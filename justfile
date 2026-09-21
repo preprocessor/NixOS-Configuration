@@ -1,6 +1,6 @@
 vim:
   just nvim
 nvim:
-  tack update neovim
+  nix run .#nixosConfigurations.ramiel.config.my.nixvim.package
 tack:
   nix run .#write-tack
