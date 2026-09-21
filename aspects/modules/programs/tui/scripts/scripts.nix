@@ -7,7 +7,12 @@
 
         (wrapPackage {
           package = pkgs.writeShellScriptBin "waow" ./bin/waow;
-          env.CLICOLOR_FORCE = 1;
+
+          aliases = [
+            "wot"
+            "huh"
+            "hmm"
+          ];
 
           linkedPackages = [
             (pkgs.writeShellScriptBin "eye" ./bin/eye)
@@ -20,12 +25,6 @@
                 xprop
               ];
             })
-          ];
-
-          aliases = [
-            "wot"
-            "huh"
-            "hmm"
           ];
         })
       ];
