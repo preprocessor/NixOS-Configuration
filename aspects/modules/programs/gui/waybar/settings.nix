@@ -26,7 +26,7 @@
         };
 
         style =
-          with scheme.withHashtag;
+          with scheme;
           let
             foreground = base00;
             highlight = bright-cyan;

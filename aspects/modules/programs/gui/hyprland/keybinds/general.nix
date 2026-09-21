@@ -2,13 +2,12 @@
   exo.mods.desktop =
     {
       scheme,
-      theme,
       pkgs,
       ...
     }:
 
     let
-      highlight = with scheme.withHashtag; if (theme == "light") then bright-cyan else base05;
+      highlight = scheme.base05;
 
       powercontrols = pkgs.writeShellScript "powercontrols" ''
         CHOICE=$(gum choose --cursor=" " --cursor.foreground="#fff" --header="" --no-show-help 'Log Out' 'Reboot' 'Power Off')

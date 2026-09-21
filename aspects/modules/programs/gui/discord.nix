@@ -2,7 +2,7 @@
   exo.mods.comms =
     { scheme, ... }:
     {
-      my.vesktop = with scheme.withHashtag; {
+      my.vesktop = with scheme; {
         enable = true;
 
         settings = {

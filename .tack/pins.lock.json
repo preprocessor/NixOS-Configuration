@@ -1,12 +1,4 @@
 {
-  "base16": {
-    "type": "github",
-    "owner": "senchopens",
-    "repo": "base16.nix",
-    "rev": "75ed5e5e3fce37df22e49125181fa37899c3ccd6",
-    "narHash": "sha256-qcMhnL7aGAuFuutH4rq9fvAhCpJWVHLcHVZLtPctPlo=",
-    "lastModified": 1755819240
-  },
   "bat-syntax-justfile": {
     "type": "github",
     "owner": "nk9",

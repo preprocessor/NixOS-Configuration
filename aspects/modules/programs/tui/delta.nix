@@ -33,7 +33,7 @@
         package = lib.mkOption {
           default = wrapPackage {
             package = pkgs.delta;
-            args = with scheme.withHashtag; [
+            args = with scheme; [
               "--dark"
               "--diff-highlight"
               "--line-numbers"

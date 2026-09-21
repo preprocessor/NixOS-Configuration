@@ -1,5 +1,6 @@
 {
   withSystem,
+  mkScheme,
   config,
   inputs,
   lib,
@@ -30,7 +31,8 @@ in
                 inputs
                 self'
                 ;
-              inherit (hostConfig) system hardware theme;
+              inherit (hostConfig) system hardware;
+              scheme = mkScheme config.schemes.${hostConfig.scheme};
               constants = {
                 username = hostConfig.user;
                 stateVersion = hostConfig.stateVersion;
@@ -86,13 +88,9 @@ in
                 description = "The hardware profile for this system.";
               };
 
-              theme = lib.mkOption {
-                type = lib.types.enum [
-                  "light"
-                  "dark"
-                ];
-                default = "dark";
-                description = "The color theme for this system.";
+              scheme = lib.mkOption {
+                type = lib.types.enum (lib.attrNames config.schemes);
+                description = "The colorscheme for this system.";
               };
 
               modules = lib.mkOption {

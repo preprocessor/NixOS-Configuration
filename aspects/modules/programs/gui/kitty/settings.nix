@@ -53,7 +53,7 @@
         cursor_shape_unfocused = "hollow";
       };
 
-      theme = with scheme.withHashtag; ''
+      theme = with scheme; ''
         background ${base11}
         foreground ${base05}
         selection_background ${base05}

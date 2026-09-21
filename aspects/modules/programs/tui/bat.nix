@@ -14,7 +14,7 @@
 
         syntaxes.just = "${inputs.bat-syntax-justfile}/Syntax/Just.sublime-syntax";
 
-        themes.based = with scheme.withHashtag; /* xml */ ''
+        themes.based = with scheme; /* xml */ ''
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <!-- Original template: https://github.com/sharkdp/bat/blob/master/assets/themes/base16.tmTheme -->
@@ -33,21 +33,21 @@
                           <key>settings</key>
                           <dict>
                               <key>background</key>
-                              <string>${base00-hex}</string>
+                              <string>${base00}</string>
                               <key>caret</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                               <key>foreground</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                               <key>invisibles</key>
-                              <string>${base03-hex}</string>
+                              <string>${base03}</string>
                               <key>lineHighlight</key>
-                              <string>${base03-hex}</string>
+                              <string>${base03}</string>
                               <key>selection</key>
-                              <string>${base02-hex}</string>
+                              <string>${base02}</string>
                               <key>gutter</key>
-                              <string>${base01-hex}</string>
+                              <string>${base01}</string>
                               <key>gutterForeground</key>
-                              <string>${base03-hex}</string>
+                              <string>${base03}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -58,7 +58,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -69,7 +69,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base02-hex}</string>
+                              <string>${base02}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -80,7 +80,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -91,7 +91,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -102,7 +102,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -113,7 +113,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0E-hex}</string>
+                              <string>${base0E}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -124,7 +124,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -135,7 +135,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0D-hex}</string>
+                              <string>${base0D}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -146,7 +146,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0F-hex}</string>
+                              <string>${base0F}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -157,7 +157,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0A-hex}</string>
+                              <string>${base0A}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -168,7 +168,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base07-hex}</string>
+                              <string>${base07}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -179,7 +179,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0D-hex}</string>
+                              <string>${base0D}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -190,7 +190,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0E-hex}</string>
+                              <string>${base0E}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -201,7 +201,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0C-hex}</string>
+                              <string>${base0C}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -212,7 +212,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0B-hex}</string>
+                              <string>${base0B}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -223,7 +223,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -234,7 +234,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -245,7 +245,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -256,7 +256,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -267,7 +267,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base08-hex}</string>
+                              <string>${base08}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -278,7 +278,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -289,7 +289,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0D-hex}</string>
+                              <string>${base0D}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -300,7 +300,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0E-hex}</string>
+                              <string>${base0E}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -311,7 +311,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -324,7 +324,7 @@
                               <key>fontStyle</key>
                               <string></string>
                               <key>foreground</key>
-                              <string>${base0D-hex}</string>
+                              <string>${base0D}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -335,7 +335,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -348,7 +348,7 @@
                               <key>fontStyle</key>
                               <string>bold</string>
                               <key>foreground</key>
-                              <string>${base0A-hex}</string>
+                              <string>${base0A}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -361,7 +361,7 @@
                               <key>fontStyle</key>
                               <string>italic</string>
                               <key>foreground</key>
-                              <string>${base0E-hex}</string>
+                              <string>${base0E}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -372,7 +372,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0B-hex}</string>
+                              <string>${base0B}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -383,7 +383,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base08-hex}</string>
+                              <string>${base08}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -394,7 +394,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -405,7 +405,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -416,9 +416,9 @@
                           <key>settings</key>
                           <dict>
                               <key>background</key>
-                              <string>${base02-hex}</string>
+                              <string>${base02}</string>
                               <key>foreground</key>
-                              <string>${base05-hex}</string>
+                              <string>${base05}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -429,7 +429,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0B-hex}</string>
+                              <string>${base0B}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -440,7 +440,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base08-hex}</string>
+                              <string>${base08}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -451,7 +451,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0E-hex}</string>
+                              <string>${base0E}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -462,7 +462,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0C-hex}</string>
+                              <string>${base0C}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -473,7 +473,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0C-hex}</string>
+                              <string>${base0C}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -484,7 +484,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0C-hex}</string>
+                              <string>${base0C}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -495,7 +495,7 @@
                           <key>settings</key>
                           <dict>
                               <key>foreground</key>
-                              <string>${base0E-hex}</string>
+                              <string>${base0E}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -506,9 +506,9 @@
                           <key>settings</key>
                           <dict>
                               <key>background</key>
-                              <string>${base08-hex}</string>
+                              <string>${base08}</string>
                               <key>foreground</key>
-                              <string>${base07-hex}</string>
+                              <string>${base07}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -519,9 +519,9 @@
                           <key>settings</key>
                           <dict>
                               <key>background</key>
-                              <string>${base09-hex}</string>
+                              <string>${base09}</string>
                               <key>foreground</key>
-                              <string>${base00-hex}</string>
+                              <string>${base00}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -532,9 +532,9 @@
                           <key>settings</key>
                           <dict>
                               <key>background</key>
-                              <string>${base0F-hex}</string>
+                              <string>${base0F}</string>
                               <key>foreground</key>
-                              <string>${base07-hex}</string>
+                              <string>${base07}</string>
                           </dict>
                       </dict>
                       <dict>
@@ -545,9 +545,9 @@
                           <key>settings</key>
                           <dict>
                               <key>background</key>
-                              <string>${base03-hex}</string>
+                              <string>${base03}</string>
                               <key>foreground</key>
-                              <string>${base07-hex}</string>
+                              <string>${base07}</string>
                           </dict>
                       </dict>
                   </array>

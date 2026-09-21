@@ -4,8 +4,8 @@
     ramiel = {
       user = "wyspr";
       stateVersion = "25.11";
+      scheme = "magi";
       hardware = "desktop-pc";
-      theme = "dark";
       modules = with config.exo.mods; [
         printing
         desktop

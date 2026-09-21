@@ -10,7 +10,7 @@
             border_size = 3,
 
             col = {
-              active_border   = "0xFF${scheme.bright-cyan}",
+              active_border   = "0xFF${scheme.noHashtag.bright-cyan}",
               inactive_border = "0xFF111111",
             },
           },

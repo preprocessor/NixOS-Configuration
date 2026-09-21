@@ -6,9 +6,6 @@ rust-overlay = "rust-overlay"
 systems = "systems"
 treefmt-nix = "treefmt-nix"
 
-[inputs.base16]
-url = "gh:senchopens/base16.nix"
-
 [inputs.bat-syntax-justfile]
 type = "fetch"
 url = "gh:nk9/just_sublime"

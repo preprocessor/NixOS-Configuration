@@ -4,7 +4,7 @@
     {
       my.fzf = {
         enable = true;
-        colors = with scheme.withHashtag; {
+        colors = with scheme; {
           "bg+" = base02; # selection background
           "fg+" = base07; # current item text
           "hl" = base0B; # match chars, unselected

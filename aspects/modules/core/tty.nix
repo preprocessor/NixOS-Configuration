@@ -2,23 +2,23 @@
   exo.core =
     { scheme, ... }:
     {
-      console.colors = with scheme; [
-        base00-hex
+      console.colors = with scheme.noHashtag; [
+        base00
         red
         green
         yellow
         blue
         magenta
         cyan
-        base05-hex
-        base03-hex
+        base05
+        base03
         red
         green
         yellow
         blue
         magenta
         cyan
-        base07-hex
+        base07
       ];
 
       boot = {

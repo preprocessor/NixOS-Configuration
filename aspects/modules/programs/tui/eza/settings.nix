@@ -4,7 +4,7 @@
     {
       my.eza = {
         enable = true;
-        settings = with scheme.withHashtag; {
+        settings = with scheme; {
           colourful = true;
 
           filekinds = {

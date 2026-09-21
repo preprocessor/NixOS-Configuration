@@ -34,7 +34,7 @@
           rounded_corners = false;
         };
 
-        themes.base16 = with scheme.withHashtag; ''
+        themes.base16 = with scheme; ''
           theme[main_bg]="${base11}"
           theme[main_fg]="${base05}"
           theme[title]="${base05}"

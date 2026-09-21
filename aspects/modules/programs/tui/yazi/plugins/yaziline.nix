@@ -22,7 +22,7 @@
       my.yazi.initLua = /* lua */ ''
         require("yaziline"):setup({
           separator_style = "empty",
-          secondary_color = "${scheme.withHashtag.base01}",
+          secondary_color = "${scheme.base01}",
           select_symbol = "",
           yank_symbol = "󰆐",
         })

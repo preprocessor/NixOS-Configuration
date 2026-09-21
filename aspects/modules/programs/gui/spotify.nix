@@ -22,7 +22,7 @@
           programs.spicetify = {
             enable = true;
             theme = spicePkgs.themes.text;
-            customColorScheme = with scheme; {
+            customColorScheme = with scheme.noHashtag; {
               accent = magenta;
               accent-active = green;
               accent-inactive = base03;

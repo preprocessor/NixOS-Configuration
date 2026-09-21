@@ -16,7 +16,7 @@
             prompt = ''"Run: "'';
             font = "SF Pro Display:weight=Medium:size=16";
           };
-          colors = with scheme; {
+          colors = with scheme.noHashtag; {
             background = "${base11}e5";
             text = "${base05}ff";
             match = "${bright-magenta}ff";

@@ -3,7 +3,7 @@
     { scheme, ... }:
     {
       my.yazi = {
-        flavorContent = with scheme.withHashtag; /* toml */ ''
+        flavorContent = with scheme; /* toml */ ''
           [mgr]
           cwd = { fg = "${base05}" }
 
