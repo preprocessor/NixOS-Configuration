@@ -1,3 +1,4 @@
+---
 name: Build and Cache Specific Nix Packages
 on:
   workflow_dispatch:
@@ -70,10 +71,7 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: true
       - name: Build and push ${{ matrix.package }}
-        run: |-
-          nix build ".#packages.x86_64-linux.${{ matrix.package }}" \
-            --print-out-paths --print-build-logs \
-            | cachix push bazinga
+        run: nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs
       - name: Record Build Status
         if: always()
         run: echo "${{ job.status }}" > "status-${{ matrix.package }}.txt"
