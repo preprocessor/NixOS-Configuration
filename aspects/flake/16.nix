@@ -7,13 +7,15 @@
 
   config._module.args =
     let
-      #
-      # This serves as a highly stripped down base16.nix that has no dependency on pkgs
-      #
-      # This does not support loading files, and instead of withHashtag I have inverted this to noHashtag
-      #
-      # much of the following code is directly lifted or adapted from here:
-      #   https://github.com/SenchoPens/base16.nix/blob/75ed5e5e3fce37df22e49125181fa37899c3ccd6/lib/colors.nix
+      /*
+        This serves as a highly stripped down base16.nix that has no dependency on pkgs.
+        As a resilt this does not support loading toml scheme files.
+
+        Also, instead of withHashtag I have inverted this to noHashtag :3
+
+        much of the following code is directly lifted or adapted from here:
+          https://github.com/SenchoPens/base16.nix/blob/75ed5e5e3fce37df22e49125181fa37899c3ccd6/lib/colors.nix
+      */
       primaryHex2Dec =
         hex:
         let

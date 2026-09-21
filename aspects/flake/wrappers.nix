@@ -143,7 +143,7 @@ let
             stringFiles =
               files
               |> lib.filterAttrs (_: { file, ... }: lib.isString file && !lib.hasPrefix builtins.storeDir file);
-            # Files to be symlinked; filter the base `files` attrset via inversion of `stringFiles`
+            # Files to be symlinked; filter the base `files` attrset via inversion of `stringFiles` attrNames
             symFiles = files |> lib.filterAttrs (name: _: !lib.elem name (lib.attrNames stringFiles));
             # I'm lazy
             catmap =
