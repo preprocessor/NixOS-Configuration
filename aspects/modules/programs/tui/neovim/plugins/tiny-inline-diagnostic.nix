@@ -8,7 +8,7 @@
           signs.diag = "";
           options = {
             show_source.if_many = true;
-            set_arrow_to_diag_color = true;
+            # set_arrow_to_diag_color = true;
             # use_icons_from_diagnostic = true;
             multilines = {
               enabled = true;
