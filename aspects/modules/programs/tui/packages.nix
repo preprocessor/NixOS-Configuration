@@ -30,6 +30,7 @@
     {
       hj.packages = with pkgs; [
         (gnuplot.override { withQt = true; })
+        libreoffice-qt
         imagemagick
         mcat
       ];
