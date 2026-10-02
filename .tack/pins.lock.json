@@ -216,7 +216,7 @@
   "sf-compact": {
     "type": "fixed",
     "url": "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg",
-    "sha256": "sha256-LIkAOWe+WaaGeqXeEgZjUtmmtEt4XPK5/4jvDXf/KPw=",
+    "sha256": "sha256-wdDjROut1m62LwP4I3hMzknxeH9WVj+wmPygH8VUE1w=",
     "unpack": "file"
   },
   "sf-mono": {
@@ -228,7 +228,7 @@
   "sf-pro": {
     "type": "fixed",
     "url": "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg",
-    "sha256": "sha256-qQlPDem3idc1RO5Q/FKgiE1Kn3/PYt5Sl04yBPOnSmI=",
+    "sha256": "sha256-loqzuLH5LC2K9h6waA9cIiTE541ZuYa/AEUCp/wBKRg=",
     "unpack": "file"
   },
   "sops-nix": {
@@ -267,9 +267,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "2bd8466510898be1d0bf0a105426463c2ddd8366",
-    "narHash": "sha256-zMmFIA2c9WLzgOHje3OnBI9NkrgCBjx1cck1jGoTRZE=",
-    "lastModified": 1790893986
+    "rev": "59ca13acca2fdc344c5e7d6015e5d04b9fbff66d",
+    "narHash": "sha256-iHFOw3/k8yZ4rKTUCoxV6LrGKrs3RVu7zALSqlzg1yM=",
+    "lastModified": 1790902588
   },
   "yazi": {
     "type": "github",
