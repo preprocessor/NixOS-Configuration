@@ -2,18 +2,9 @@
   exo.mods.desktop = {
     my.hyprland.lua.files = {
       "workspaces".content = /* lua */ ''
-        for index, name in ipairs({ "web", "dev", "chat", "media", "games" }) do
-          hl.workspace_rule({ workspace = tostring(index), default_name = name, persistent = true })
+        for i = 1, 5 do
+          hl.workspace_rule({ workspace = tostring(i), persistent = true })
         end
-
-        hl.window_rule({
-          name   = "floating-media-workspace",
-          match  = { workspace = "name:media" },
-
-          size   = { 1200, 1200 },
-          center = true,
-          float  = true,
-        })
 
         hl.workspace_rule({
           workspace = "special:steam",

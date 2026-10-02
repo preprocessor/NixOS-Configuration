@@ -10,6 +10,7 @@
       ];
 
       hj.systemd.services = {
+
         wallpaper-daemon = {
           description = "Wallpaper daemon";
           after = [ "graphical-session.target" ];
