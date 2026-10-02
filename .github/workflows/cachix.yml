@@ -69,7 +69,6 @@ jobs:
         with:
           name: bazinga
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          skipPush: true
       - name: Build and push ${{ matrix.package }}
         run: nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs
       - name: Record Build Status
