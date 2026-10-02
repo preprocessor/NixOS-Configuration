@@ -1,4 +1,7 @@
 {
+  "$declared": {
+    "hyprland-scroll-overview": "github:yayuuu/hyprland-scroll-overview"
+  },
   "bat-syntax-justfile": {
     "type": "github",
     "owner": "nk9",
@@ -103,21 +106,13 @@
     "narHash": "sha256-tycoVCB2KSVdy9ERT1lJGHdP9Hf4FHanaEY25hUxylw=",
     "lastModified": 1790081753
   },
-  "hyprland": {
-    "type": "github",
-    "owner": "hyprwm",
-    "repo": "Hyprland",
-    "rev": "aed4830efce40190051a085653d7b297877e4068",
-    "narHash": "sha256-8SrSr5ygxUN4VIRFgTuwBCDjxR6yQcvgUhEsBfzbPCU=",
-    "lastModified": 1790891585
-  },
   "hyprland-scroll-overview": {
     "type": "github",
     "owner": "yayuuu",
     "repo": "hyprland-scroll-overview",
-    "rev": "f08c5f7de06c1165952cc1c5318cf6f5c87140ff",
-    "narHash": "sha256-2TzMdMGobmWPTeRS4Z305/cjlvHPsyN+rLEF86NsZQg=",
-    "lastModified": 1789346277
+    "rev": "10eeefa0519e09992b68a1d2949781a876230f5c",
+    "narHash": "sha256-EdtVRpwYkLtqTrNBA2VbGXpt7DMyMlRm6LCDNfI/1pU=",
+    "lastModified": 1789949463
   },
   "microVM": {
     "type": "github",
