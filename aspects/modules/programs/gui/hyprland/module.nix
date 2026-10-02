@@ -1,21 +1,15 @@
 {
-  tack.inputs.hyprland.url = "gh:hyprwm/Hyprland";
-
   perSystem =
-    {
-      packages',
-      self',
-      pkgs,
-      ...
-    }:
+    { packages', pkgs, ... }:
     {
       remotePackages = {
         hyprland-bundle = pkgs.symlinkJoin {
           name = "hyprland-bundle";
           paths = [
-            self'.packages.hyprland-scroll-overview
-            packages'.hyprland.xdg-desktop-portal-hyprland
-            packages'.hyprland.hyprland
+            pkgs.hyprlandPlugins.hypr-dynamic-cursors
+            packages'.hyprland-scroll-overview
+            pkgs.xdg-desktop-portal-hyprland
+            pkgs.hyprland
           ];
         };
       };
@@ -24,7 +18,6 @@
   exo.skeleton =
     {
       config,
-      inputs,
       pkgs,
       lib,
       ...
@@ -238,11 +231,6 @@
             hj.packages = with pkgs; [
               hyprshutdown
               cfg.package
-            ];
-
-            nixpkgs.overlays = [
-              inputs.hyprland.overlays.hyprland-packages
-              inputs.hyprland.overlays.default
             ];
 
             nix.settings = {
