@@ -83,22 +83,6 @@
             governor = "performance";
             energy_perf_preference = "performance";
           };
-          custom = {
-            start = toString (
-              pkgs.writeShellScript "gamemode-start" ''
-                ${pkgs.libnotify}/bin/notify-send -a 'Gamemode' -t 4000 -u low -i steam 'Enjoy the game' 'Praise the Sun!'
-                # ( ${pkgs.coreutils}/bin/sleep 5 && ${pkgs.systemd}/bin/systemctl --user stop tuishell.service ) & disown
-              ''
-            );
-
-            end = toString (
-              pkgs.writeShellScript "gamemode-end" ''
-                # ${pkgs.systemd}/bin/systemctl --user start tuishell.service
-                # ${pkgs.coreutils}/bin/sleep 1
-                ${pkgs.libnotify}/bin/notify-send -a 'Gamemode' -u low -i steam 'Game has been closed' 'Welcome home, Chosen Undead.'
-              ''
-            );
-          };
         };
       };
 
@@ -139,7 +123,6 @@
       };
 
       hj.packages = with pkgs; [
-        prismlauncher # Minecraft
         dualsensectl # Dualsense Controller
         protonup-rs
         ckan # KSP mod loader

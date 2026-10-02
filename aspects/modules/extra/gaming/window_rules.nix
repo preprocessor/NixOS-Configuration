@@ -57,7 +57,7 @@
         name = "games-workspace-move-tag";
         match.xdg_tag = "^proton-game$";
         rules = {
-          workspace = "name:games silent";
+          workspace = "5 silent";
           fullscreen = true;
           content = "game";
         };
@@ -67,7 +67,7 @@
         name = "games-workspace-move-class";
         match.class = "^steam_app_.*";
         rules = {
-          workspace = "name:games silent";
+          workspace = "5 silent";
           fullscreen = true;
           content = "game";
         };
@@ -80,7 +80,7 @@
           title = "DARK SOULS™: REMASTERED";
         };
         rules = {
-          workspace = "name:games silent";
+          workspace = "5 silent";
           render_unfocused = true;
           fullscreen = true;
           content = "game";
@@ -91,7 +91,7 @@
         name = "games-workspace-darksouls2";
         match.title = "DARK SOULS II";
         rules = {
-          workspace = "name:games silent";
+          workspace = "5 silent";
           render_unfocused = true;
           fullscreen = true;
           content = "game";
@@ -102,8 +102,7 @@
         name = "games-workspace-move-content";
         match.content = "game";
         rules = {
-          workspace = "name:games silent";
-          fullscreen = true;
+          workspace = "5 silent";
         };
       }
     ];
