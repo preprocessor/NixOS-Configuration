@@ -12,7 +12,7 @@
       ...
     }:
     {
-      packages.scrolloverview = packages'.hyprland.stdenv.mkDerivation {
+      packages.hyprland-scroll-overview = packages'.hyprland.stdenv.mkDerivation {
         pname = "scrolloverview";
         version = "1.0";
         src = inputs.hyprland-scroll-overview;
@@ -51,7 +51,7 @@
   exo.mods.desktop =
     { self', ... }:
     {
-      my.hyprland.plugins = { inherit (self'.packages) scrolloverview; };
+      my.hyprland.plugins = { inherit (self'.packages) hyprland-scroll-overview; };
 
       my.hyprland.lua.files."plugins/scrolloverview".content = /* lua */ ''
         hl.on("config.reloaded", function()
