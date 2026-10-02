@@ -16,11 +16,11 @@
           "hyprland/workspaces" = {
             format = "{icon}";
             format-icons = {
-              web = "󰖟";
-              dev = "";
-              chat = "󰭹";
-              media = "󰐎";
-              games = "󰊖";
+              "1" = "󰖟";
+              "2" = "";
+              "3" = "󰭹";
+              "4" = "󰐎";
+              "5" = "󰊖";
             };
           };
         };

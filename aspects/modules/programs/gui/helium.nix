@@ -7,12 +7,34 @@
       hj.packages = [ packages'.helium ];
 
       my.hyprland.startup = [
-        /* lua */ ''hl.exec_cmd("${lib.getExe packages'.helium}", { workspace = "name:web silent" })''
+        /* lua */ ''hl.exec_cmd("${lib.getExe packages'.helium}", { workspace = "1 silent" })''
       ];
 
       my.hyprland.lua.files."keybinds.helium".content = /* lua */ ''
         hl.bind("SUPER + B", hl.dsp.exec_raw("helium"), { release = true })
       '';
+
+      my.xdg.desktopEntries."helium" = {
+        name = "Helium";
+        exec = "helium --new-window %U";
+        terminal = false;
+        type = "Application";
+        icon = "helium";
+        mimeType = [
+          "application/x-extension-shtml"
+          "application/x-extension-xhtml"
+          "application/x-extension-html"
+          "application/x-extension-xht"
+          "application/x-extension-htm"
+          "x-scheme-handler/unknown"
+          "x-scheme-handler/https"
+          "x-scheme-handler/http"
+          "application/xhtml+xml"
+          "application/json"
+          "application/pdf"
+          "text/html"
+        ];
+      };
 
       xdg.mime = lib.mkIf true {
         defaultApplications =

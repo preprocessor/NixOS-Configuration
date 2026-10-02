@@ -61,8 +61,8 @@
             cfg = config.my.kitty;
           in
           [
-            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev silent" })''
-            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev silent" })''
+            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "2 silent" })''
+            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "2 silent" })''
           ];
 
         my.hyprland.lua.files."keybinds.kitty".content = /* lua */ ''
