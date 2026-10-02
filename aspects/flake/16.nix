@@ -5,19 +5,19 @@
     description = "A set of base16/24 colorschemes";
   };
 
-  config._module.args =
+  config._module.args.mkScheme =
     let
       /*
-        This serves as a highly stripped down base16.nix that has no dependency on pkgs.
-        As a resilt this does not support loading toml scheme files.
+        This serves as a highly stripped down base16.nix that has no dependency on nixpkgs.
+        As a result this does not support loading toml files.
 
         Also, instead of withHashtag I have inverted this to noHashtag :3
 
-        much of the following code is directly lifted or adapted from here:
+        Much of the following code is directly lifted or adapted from here:
           https://github.com/SenchoPens/base16.nix/blob/75ed5e5e3fce37df22e49125181fa37899c3ccd6/lib/colors.nix
       */
       primaryHex2Dec =
-        hex:
+        h1: h2:
         let
           hex2decDigits = rec {
             "0" = 0;
@@ -44,13 +44,19 @@
             f = F;
           };
         in
-        16 * hex2decDigits."${builtins.substring 0 1 hex}" + hex2decDigits."${builtins.substring 1 1 hex}";
+        16 * hex2decDigits."${h1}" + hex2decDigits."${h2}";
 
-      hexToRgb = hex: {
-        r = primaryHex2Dec (builtins.substring 0 2 hex);
-        g = primaryHex2Dec (builtins.substring 2 2 hex);
-        b = primaryHex2Dec (builtins.substring 4 2 hex);
-      };
+      hexToRgb =
+        hex:
+        let
+          chars = lib.stringToCharacters hex;
+          char = lib.elemAt chars;
+        in
+        {
+          r = primaryHex2Dec (char 0) (char 1);
+          g = primaryHex2Dec (char 2) (char 3);
+          b = primaryHex2Dec (char 4) (char 5);
+        };
 
       ensureBase24 =
         scheme:
@@ -89,15 +95,12 @@
       stripHashtag = lib.removePrefix "#";
       normalizeRgb = lib.mapAttrs (_: c: c / 256.0);
     in
-    {
-      mkScheme =
-        schema:
-        let
-          scheme = schema |> ensureBase24 |> addMnemonicNames;
-          noHashtag = scheme |> lib.mapAttrs (_: v: stripHashtag v);
-          asRgb8 = noHashtag |> lib.mapAttrs (_: v: hexToRgb v);
-          asRgb = asRgb8 |> lib.mapAttrs (_: rgb: normalizeRgb rgb);
-        in
-        scheme // { inherit noHashtag asRgb8 asRgb; };
-    };
+    schema:
+    let
+      scheme = schema |> ensureBase24 |> addMnemonicNames;
+      noHashtag = scheme |> lib.mapAttrs (_: v: stripHashtag v);
+      asRgb8 = noHashtag |> lib.mapAttrs (_: v: hexToRgb v);
+      asRgb = asRgb8 |> lib.mapAttrs (_: rgb: normalizeRgb rgb);
+    in
+    scheme // { inherit noHashtag asRgb8 asRgb; };
 }
