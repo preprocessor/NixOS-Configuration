@@ -107,7 +107,7 @@
               return space.id + 1
             end
           elseif dir == "k" then
-            return "-1"
+            return "e-1"
           end
           return nil
         end
@@ -213,24 +213,12 @@
           end
         end
 
-        utils.count_tiled_windows = function(ws)
-          local window_count = 0
-          for _, w in pairs(hl.get_workspace_windows(ws)) do
-            if not w.floating then
-              window_count = window_count + 1
-            end
-          end
-          return window_count
+        utils.get_tiled_windows = function(ws)
+          return hl.get_windows({ workspace = ws, floating = false })
         end
 
-        utils.get_tiled_windows = function(ws)
-          local windows = {}
-          for _, w in pairs(hl.get_workspace_windows(ws)) do
-            if not w.floating then
-              table.insert(windows, w)
-            end
-          end
-          return windows
+        utils.count_tiled_windows = function(ws)
+          return #utils.get_tiled_windows(ws)
         end
 
         utils.sort_windows_ltr = function(windows)
