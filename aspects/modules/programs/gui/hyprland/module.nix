@@ -2,16 +2,20 @@
   tack.inputs.hyprland.url = "gh:hyprwm/Hyprland";
 
   perSystem =
-    { pkgs, ... }:
+    {
+      packages',
+      self',
+      pkgs,
+      ...
+    }:
     {
       remotePackages = {
         hyprland-bundle = pkgs.symlinkJoin {
           name = "hyprland-bundle";
-          paths = with pkgs; [
-            xdg-desktop-portal-hyprland
-            scrolloverview
-            hyprcapture
-            hyprland
+          paths = [
+            self'.packages.hyprland-scroll-overview
+            packages'.hyprland.xdg-desktop-portal-hyprland
+            packages'.hyprland.hyprland
           ];
         };
       };
