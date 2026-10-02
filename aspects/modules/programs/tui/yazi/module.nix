@@ -102,7 +102,7 @@
 
                 (
                   lib.optionalAttrs (cfg.plugins != { }) cfg.plugins
-                  |> lib.filterAttrs (_: path: !isNull path)
+                  |> lib.filterAttrs (_: file: !isNull file)
                   |> lib.mapAttrs' (
                     name: file: {
                       name = "${name}-yazi-plugin";
