@@ -48,12 +48,8 @@ url = "gh:Kyles-World/Helvetica-Font"
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 
-[inputs.hyprland]
-url = "gh:hyprwm/Hyprland"
-
 [inputs.hyprland-scroll-overview]
-type = "fetch"
-url = "gh:yayuuu/hyprland-scroll-overview/new-release"
+url = "gh:yayuuu/hyprland-scroll-overview"
 
 [inputs.microVM]
 url = "gh:microvm-nix/microvm.nix"
