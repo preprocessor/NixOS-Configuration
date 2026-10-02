@@ -1,8 +1,8 @@
 diff --git a/kitty/decorations.c b/kitty/decorations.c
-index 5279cce62..5be38259e 100644
+index a34b231e2..020112097 100644
 --- a/kitty/decorations.c
 +++ b/kitty/decorations.c
-@@ -1076,105 +1076,37 @@ typedef struct Shade {
+@@ -1433,118 +1433,55 @@ typedef struct Shade {
 
  static void
  shade(Canvas *self, Shade s) {
@@ -28,15 +28,33 @@ index 5279cce62..5be38259e 100644
 -    uint excess_rows = minus(self->height, square_height * number_of_rows);
 -    double square_height_extension = (double)excess_rows / number_of_rows;
 -
--    Range rows = {.end=number_of_rows}, cols = {.end=number_of_cols};
-     switch(s.which_half) {
+-    Range rows = {.end = number_of_rows}, cols = {.end = number_of_cols};
+     switch (s.which_half) {
 -        // this is to remove gaps between half-filled characters
--        case TOP_EDGE: rows.end /= 2; square_height_extension *= 2; break;
--        case BOTTOM_EDGE: rows.start = number_of_rows / 2; square_height_extension *= 2; break;
--        case LEFT_EDGE: cols.end /= 2; square_width_extension *= 2; break;
--        case RIGHT_EDGE: cols.start = number_of_cols / 2; square_width_extension *= 2; break;
--    }
--
+         case TOP_EDGE:
+-            rows.end /= 2;
+-            square_height_extension *= 2;
++            r_end = self->height / 2;
+             break;
+         case BOTTOM_EDGE:
+-            rows.start = number_of_rows / 2;
+-            square_height_extension *= 2;
++            r_start = self->height / 2;
+             break;
+         case LEFT_EDGE:
+-            cols.end /= 2;
+-            square_width_extension *= 2;
++            c_end = self->width / 2;
+             break;
+         case RIGHT_EDGE:
+-            cols.start = number_of_cols / 2;
+-            square_width_extension *= 2;
++            c_start = self->width / 2;
++            break;
++        default:
+             break;
+     }
+
 -    bool extra_row = false;
 -    uint ey = 0, old_ey = 0, drawn_rows = 0;
 -
@@ -85,13 +103,7 @@ index 5279cce62..5be38259e 100644
 -                uint offset = self->width * y;
 -                self->mask[offset + x] = 50;
 -            }
-+        case TOP_EDGE: r_end = self->height / 2; break;
-+        case BOTTOM_EDGE: r_start = self->height / 2; break;
-+        case LEFT_EDGE: c_end = self->width / 2; break;
-+        case RIGHT_EDGE: c_start = self->width / 2; break;
-+        default: break;
-+    }
-
+-
 -            const bool is_blank = s.invert ^ (is_odd(r) != is_odd(c) || (s.light && is_odd(r)));
 -            if (!is_blank) {
 -                // Fill the square
@@ -110,19 +122,29 @@ index 5279cce62..5be38259e 100644
      }
 +
      if (!s.fill_blank) return;
--    cols = (Range){.end=self->width}; rows = (Range){.end=self->height};
+-    cols = (Range){.end = self->width};
+-    rows = (Range){.end = self->height};
 +    uint br_start = 0, br_end = self->height;
 +    uint bc_start = 0, bc_end = self->width;
-     switch(s.which_half) {
+     switch (s.which_half) {
 -        case BOTTOM_EDGE: rows.end = self->height / 2; break;
 -        case TOP_EDGE: rows.start = minus(self->height / 2, 1); break;
 -        case RIGHT_EDGE: cols.end = self->width / 2; break;
 -        case LEFT_EDGE: cols.start = minus(self->width / 2, 1); break;
-+        case BOTTOM_EDGE: br_end = self->height / 2; break;
-+        case TOP_EDGE: br_start = minus(self->height / 2, 1); break;
-+        case RIGHT_EDGE: bc_end = self->width / 2; break;
-+        case LEFT_EDGE: bc_start = minus(self->width / 2, 1); break;
-+        default: break;
++        case BOTTOM_EDGE:
++            br_end = self->height / 2;
++            break;
++        case TOP_EDGE:
++            br_start = minus(self->height / 2, 1);
++            break;
++        case RIGHT_EDGE:
++            bc_end = self->width / 2;
++            break;
++        case LEFT_EDGE:
++            bc_start = minus(self->width / 2, 1);
++            break;
++        default:
++            break;
 +    }
 +    for (uint y = br_start; y < br_end; y++) {
 +        memset(self->mask + y * self->width + bc_start, 255, bc_end - bc_start);
@@ -131,5 +153,3 @@ index 5279cce62..5be38259e 100644
  }
 
  static void
---
-2.53.0
