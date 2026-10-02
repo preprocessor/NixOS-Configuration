@@ -34,20 +34,6 @@
           hl.bind("SUPER + Backslash", function() utils.float_center() end)
         '';
 
-        "keybinds.powercontrols".content = /* lua */ ''
-          -- Power Controls
-          hl.bind("CTRL + ALT + Delete", function()
-            utils.toggle_window("powercontrols", "kitty --class powercontrols -e ${powercontrols}", {
-              border_size  = 2,
-              pin = true,
-              float = true,
-              center = true,
-              stay_focused = true,
-              size = { 260, 110 },
-            })
-          end)
-        '';
-
         "keybinds.zoom".content = /* lua */ ''
           local MAX_ZOOM = 5
           local MIN_ZOOM = 1
