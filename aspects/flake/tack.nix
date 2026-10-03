@@ -5,14 +5,18 @@
   ...
 }:
 {
-  # Create a top-level option for tack, to be used like flake-file
   options.tack = {
     shorturls = lib.mkOption {
-      type = with lib.types; nullOr (attrsOf str);
+      type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
     };
 
     all_follow = lib.mkOption {
-      type = with lib.types; nullOr (attrsOf str);
+      type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+    };
+
+    omit_inputs.names = lib.mkOption {
+      type = lib.types.nullOr (lib.types.listOf lib.types.str);
+      default = [ ];
     };
 
     inputs = lib.mkOption {
@@ -29,14 +33,42 @@
                   "fixed"
                 ]
               );
+              description = ''
+                Tag pins with a group to print them under headers in tack look and tack update, or group 
+              '';
+            };
+
+            group = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              description = ''
+                Tag pins with a group to print them under headers in tack look and tack update.
+              '';
+            };
+
+            frozen = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              description = ''
+                A frozen pin stays at its locked rev through tack update, and only moves when named directly.
+              '';
+            };
+
+            patches = lib.mkOption {
+              type = lib.types.nullOr (lib.types.listOf lib.types.str);
+            };
+
+            submodules = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              description = ''
+                Recursively fetch git submodules, disabled by default.
+              '';
             };
 
             follows = lib.mkOption {
-              type = with lib.types; nullOr (attrsOf str);
+              type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
             };
 
             exclude_follow = lib.mkOption {
-              type = with lib.types; nullOr (listOf str);
+              type = lib.types.nullOr (lib.types.listOf lib.types.str);
             };
           };
         }
@@ -61,6 +93,11 @@
         rust-overlay = "rust-overlay";
         treefmt-nix = "treefmt-nix";
       };
+      omit_inputs.names = [
+        "flake-compat"
+        "pre-commit-hooks"
+        "treefmt-nix"
+      ];
     };
 
     perSystem =
@@ -75,7 +112,7 @@
 
         apps.write-tack = {
           type = "app";
-          meta.description = "A flake-file like tack pins.toml updater";
+          meta.description = "A flake-file like, pins.toml updater for tack";
           program = lib.getExe (
             pkgs.writeShellApplication {
               name = "write-tack";
@@ -93,50 +130,94 @@
 
               text =
                 let
-                  cfg = config.tack |> lib.filterAttrsRecursive (_: value: !isNull value);
-                  tomlFormat = pkgs.formats.toml { };
-                  tackToml = cfg |> tomlFormat.generate "pins.toml";
+                  cfg = config.tack;
 
-                  findChangedInputs =
-                    old: new:
-                    let
-                      oldKeys = lib.attrNames old;
-                      newKeys = lib.attrNames new;
-                      # Inputs that exist in new but not in old
-                      newInputNames = newKeys |> lib.subtractLists oldKeys;
-                      # Inputs that exist in both but have different URLs
-                      changedInputNames =
-                        (lib.intersectLists oldKeys newKeys) |> lib.filter (name: old.${name}.url != new.${name}.url);
+                  joinMapAttrs = lib.concatMapAttrsStringSep;
+                  toTomlStr = s: ''"${s}"'';
+                  toTomlAttrs = attr: "{ ${joinMapAttrs ", " (name: value: ''${name} = "${value}"'') attr} }";
+                  toTomlList = list: "[${list |> map toTomlStr |> lib.join ", "}]";
 
-                      # Merge the new and changed inputs into a single list
-                      newInputs = (newInputNames ++ changedInputNames);
-                      # Find removed inputs
-                      removedInputs = oldKeys |> lib.subtractLists newKeys;
-                    in
-                    {
-                      hasUpdates = newInputs != [ ];
-                      hasRemovals = removedInputs != [ ];
-                      removals = removedInputs |> map (remKey: "tack rm ${remKey}") |> lib.concatLines;
-                      updates = "tack update ${newInputs |> lib.join " "}";
-                    };
-                  # Get the content of pins.toml as an attrset
-                  oldTackToml = lib.importTOML (rootPath + /.tack/pins.toml);
-                  changedInputs = findChangedInputs oldTackToml.inputs cfg.inputs;
+                  fromAttrValue =
+                    value:
+                    (
+                      if lib.isAttrs value then
+                        toTomlAttrs
+                      else if lib.isList value then
+                        toTomlList
+                      else if lib.isString value then
+                        toTomlStr
+                      else
+                        toString
+                    )
+                      value;
+
+                  mapAttrValuesToToml = joinMapAttrs "\n" (n: v: "${n} = ${v |> fromAttrValue}");
+
+                  tackOptsToml =
+                    cfg
+                    |> lib.flip lib.removeAttrs [ "inputs" ]
+                    |> joinMapAttrs "\n" (
+                      name: value: ''
+                        [${name}]
+                        ${value |> mapAttrValuesToToml}
+                      ''
+                    );
+
+                  tackInputsToml =
+                    cfg.inputs
+                    |> joinMapAttrs "\n" (
+                      name: value: ''
+                        [inputs.${name}]
+                        ${value |> lib.filterAttrs (_: value: !isNull value) |> mapAttrValuesToToml}
+                      ''
+                    );
+
+                  tackTomlString =
+                    ''
+                      ${tackOptsToml}
+                      ${tackInputsToml}
+                    ''
+                    |> lib.trim;
+
+                  # Get the content of pins.toml as a string
+                  oldTackTomlString = lib.readFile (rootPath + /.tack/pins.toml);
+
+                  # Parse pins.toml for the inputs section
+                  oldInputs = (lib.fromTOML oldTackTomlString).inputs;
+                  newInputs = cfg.inputs;
+
+                  oldKeys = lib.attrNames oldInputs;
+                  newKeys = lib.attrNames newInputs;
+                  # Inputs that exist in new but not in old
+                  newInputNames = newKeys |> lib.subtractLists oldKeys;
+                  # Inputs that exist in both but have different URLs
+                  changedInputNames =
+                    (lib.intersectLists oldKeys newKeys)
+                    |> lib.filter (name: oldInputs.${name}.url != newInputs.${name}.url);
+
+                  # Merge the new and changed inputs into a single list
+                  updatedInputs = (newInputNames ++ changedInputNames);
+                  # Find removed inputs
+                  removedInputs = oldKeys |> lib.subtractLists newKeys;
                 in
                 /* bash */ ''
-                  LOCK_FILE="./.tack/pins.toml"
+                  PINS_FILE="./.tack/pins.toml"
+                  TMP_PINS="/tmp/old_pins.toml"
 
-                  if [[ ! -f "$LOCK_FILE" ]]; then
-                    echo "Error: file not found: $LOCK_FILE" >&2
+                  if [[ ! -f "$PINS_FILE" ]]; then
+                    echo "Error: file not found: $PINS_FILE" >&2
                     exit 1
                   fi
 
-                  ${lib.optionalString changedInputs.hasRemovals changedInputs.removals}
-                  ${lib.optionalString (tackToml != oldTackToml) /* bash */ ''
-                    delta --dark --diff-highlight "$LOCK_FILE" ${tackToml} || true
-                    install -m644 -DT ${tackToml} "$LOCK_FILE"
+                  ${removedInputs |> map (remKey: "tack rm ${remKey}") |> lib.concatLines}
+                  ${lib.optionalString (tackTomlString != oldTackTomlString) /* bash */ ''
+                    mv "$PINS_FILE" "$TMP_PINS"
+                    cat << EOF > "$PINS_FILE"
+                    ${tackTomlString}
+                    EOF
+                    delta --dark --diff-highlight "$TMP_PINS" "$PINS_FILE" || true
                   ''}
-                  ${lib.optionalString changedInputs.hasUpdates changedInputs.updates}
+                  ${lib.optionalString (updatedInputs != [ ]) "tack update ${lib.join " " updatedInputs}"}
 
                   if [[ $# -gt 0 ]]; then
                     nh os "$@"
@@ -148,17 +229,12 @@
       };
 
     exo.core =
+      { packages', ... }:
       {
-        constants,
-        packages',
-        ...
-      }:
-      {
-        hj.packages = [ packages'.tack ];
-
-        programs.fish.shellAliases.tack-write = "cd ${constants.cfgdir} && nix run .#tack-write";
-
-        hj.environment.sessionVariables.TACK_NIX_CONF_TOKENS = 1;
+        hj = {
+          packages = [ packages'.tack ];
+          environment.sessionVariables.TACK_NIX_CONF_TOKENS = 1;
+        };
       };
   };
 }
