@@ -6,7 +6,6 @@
         hyprland-bundle = pkgs.symlinkJoin {
           name = "hyprland-bundle";
           paths = [
-            pkgs.hyprlandPlugins.hypr-dynamic-cursors
             packages'.hyprland-scroll-overview
             pkgs.xdg-desktop-portal-hyprland
             pkgs.hyprland

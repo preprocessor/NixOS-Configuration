@@ -1,18 +1,69 @@
 {
-  tack.inputs.hyprland-scroll-overview.url = "gh:yayuuu/hyprland-scroll-overview";
+  tack.inputs.hyprland-scroll-overview = {
+    url = "gh:yayuuu/hyprland-scroll-overview";
+    type = "fetch";
+  };
+
+  perSystem =
+    { inputs, pkgs, ... }:
+    {
+      packages.hyprland-scroll-overview = pkgs.hyprland.stdenv.mkDerivation {
+        pname = "scrolloverview";
+        version = "1.0";
+        src = inputs.hyprland-scroll-overview;
+
+        nativeBuildInputs = [ pkgs.pkg-config ];
+        buildInputs = [
+          pkgs.lua5_4
+          pkgs.hyprland
+        ]
+        ++ pkgs.hyprland.buildInputs;
+
+        enableParallelBuilding = true;
+        dontUseCmakeConfigure = true;
+
+        buildPhase = ''
+          runHook preBuild
+          export SCROLLOVERVIEW_BUILD_VERSION="1.0"
+          make all
+          runHook postBuild
+        '';
+
+        installPhase = ''
+          runHook preInstall
+          install -m555 -DT scrolloverview.so "$out/lib/libscrolloverview.so"
+          runHook postInstall
+        '';
+
+        meta = {
+          homepage = "https://github.com/yayuuu/hyprland-scroll-overview";
+          description = "scroll overview";
+          platforms = pkgs.hyprland.meta.platforms or [ ];
+        };
+      };
+    };
 
   exo.mods.desktop =
-    { packages', ... }:
+    { self', ... }:
     {
-      my.hyprland.plugins = { inherit (packages') hyprland-scroll-overview; };
+      my.hyprland.plugins = { inherit (self'.packages) hyprland-scroll-overview; };
 
       my.hyprland.lua.files."plugins/scrolloverview".content = /* lua */ ''
         hl.on("config.reloaded", function()
-          if hl.plugins.scrolloverview then
+          if utils.is_plugin_loaded("scrolloverview") then
+            hl.bind("SUPER + Tab", function()
+              hl.plugin.scrolloverview.overview("toggle all")
+            end)
+
             hl.config({
               plugin = {
-                dynamic_cursors = {
-                  mode = "rotate"
+                scrolloverview = {
+                  workspace_gap = 100,
+                  wallpaper = 2,
+                  blur = true,
+                  shadow = {
+                    enabled = true,
+                  },
                 },
               },
             })
