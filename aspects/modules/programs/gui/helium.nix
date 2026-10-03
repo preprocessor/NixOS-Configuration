@@ -1,7 +1,7 @@
 {
   tack.inputs.helium.url = "gh:amaanq/helium-flake/";
 
-  exo.skeleton =
+  exo.mods.desktop =
     { packages', lib, ... }:
     {
       hj.packages = [ packages'.helium ];
