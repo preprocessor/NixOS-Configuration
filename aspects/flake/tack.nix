@@ -145,6 +145,14 @@ in
               ];
             };
 
+            omit_inputs = mkOption {
+              type = types.nullOr (types.listOf types.str);
+            };
+
+            keep_inputs = mkOption {
+              type = types.nullOr (types.listOf types.str);
+            };
+
             signers = mkOption {
               type = types.nullOr (types.listOf types.str);
               description = ''
@@ -239,19 +247,17 @@ in
 
               text =
                 let
-                  cfg = config.tack |> lib.filterAttrsRecursive (_: value: !isNull value);
-                  nameValuePairToToml = # This represents a simple Nix -> TOML name-value pair
-                    name: value: "${lib.strings.escapeNixIdentifier name} = ${mapValueToTomlRhs value}";
+                  cfg = config.tack |> lib.filterAttrsRecursive (_: value: !isNull value); # Toml parser does not like null values
+                  nameValuePairToToml = n: v: "${lib.strings.escapeNixIdentifier n} = ${mapValueToTomlRhs v}";
                   mapAttrSetToToml = sep: lib.concatMapAttrsStringSep sep nameValuePairToToml;
                   mapValueToTomlRhs = v: if lib.isAttrs v then "{ ${mapAttrSetToToml ", " v} }" else lib.toJSON v;
                   tackOptsToml = # Tack options section
                     cfg
                     |> lib.flip lib.removeAttrs [ "inputs" ]
-                    |> lib.concatMapAttrsStringSep "" (
+                    |> lib.concatMapAttrsStringSep "\n" (
                       name: value: ''
                         [${name}]
                         ${value |> mapAttrSetToToml "\n"}
-
                       ''
                     );
                   tackInputsToml = # Tack inputs section
@@ -263,7 +269,7 @@ in
                       ''
                     );
                   # The contents of pins.toml generated via nix
-                  tackTomlString = "${tackOptsToml}${tackInputsToml}";
+                  tackTomlString = "${tackOptsToml}\n${tackInputsToml}";
                   oldTackTomlString = lib.readFile (rootPath + /.tack/pins.toml);
                   oldTackToml = lib.fromTOML oldTackTomlString;
                   oldInputs = oldTackToml.inputs;
@@ -293,18 +299,20 @@ in
 
                   rmPatchCommands =
                     newKeys
-                    |> lib.concatMap (
+                    |> lib.concatMapStringsSep "\n" (
                       name:
                       lib.subtractLists (currPatches name) (prevPatches name)
                       |> map (patch: "tack patch rm ${name} ${lib.escapeShellArg patch}")
-                    )
-                    |> lib.concatLines;
+                    );
 
                   addPatchCommands =
-                    newKeys
-                    |> lib.filter (name: lib.subtractLists (prevPatches name) (currPatches name) != [ ])
-                    |> map (name: "tack patch update ${name}")
-                    |> lib.concatLines;
+                    let
+                      updatedPatchInputs =
+                        newKeys
+                        |> lib.filter (name: lib.subtractLists (prevPatches name) (currPatches name) != [ ])
+                        |> lib.join " ";
+                    in
+                    "tack patch update ${updatedPatchInputs}";
                 in
                 /* bash */ ''
                   PINS_FILE="''${TACK_DIR:-.tack}/pins.toml"
