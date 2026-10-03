@@ -1,10 +1,8 @@
 [all_follow]
-flake-compat = "flake-compat"
 flake-utils = "flake-utils"
 nixpkgs = "nixpkgs"
 rust-overlay = "rust-overlay"
 systems = "systems"
-treefmt-nix = "treefmt-nix"
 
 [omit_inputs]
 names = ["flake-compat", "pre-commit-hooks", "treefmt-nix"]
@@ -42,10 +40,6 @@ url = "gh:iynaix/fish-completion-sync"
 type = "fetch"
 url = "gh:dtinth/fragment-mono-weights"
 
-[inputs.fvwm95]
-type = "fetch"
-url = "gh:Mintsuki/fvwm95"
-
 [inputs.helium]
 url = "gh:amaanq/helium-flake/"
 
@@ -59,9 +53,6 @@ url = "gh:feel-co/hjem"
 [inputs.hyprland-scroll-overview]
 type = "fetch"
 url = "gh:yayuuu/hyprland-scroll-overview"
-
-[inputs.microVM]
-url = "gh:microvm-nix/microvm.nix"
 
 [inputs.nix-cachyos-kernel]
 exclude_follow = ["nixpkgs"]
@@ -105,6 +96,7 @@ type = "fixed"
 url = "applefont:SF-Mono"
 
 [inputs.sf-pro]
+follows = { "flake:systems" = "systems", nixpkgs = "nixpkgs", nixpkgs2 = "nixpkgs" }
 type = "fixed"
 url = "applefont:SF-Pro"
 
