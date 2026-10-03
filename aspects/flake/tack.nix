@@ -299,11 +299,12 @@ in
 
                   rmPatchCommands =
                     newKeys
-                    |> lib.concatMapStringsSep "\n" (
+                    |> lib.concatMap (
                       name:
                       lib.subtractLists (currPatches name) (prevPatches name)
                       |> map (patch: "tack patch rm ${name} ${lib.escapeShellArg patch}")
-                    );
+                    )
+                    |> lib.concatLines;
 
                   addPatchCommands =
                     let
@@ -337,10 +338,13 @@ in
                     cat << 'EOF' > "$PINS_FILE"
                     ${tackTomlString}
                     EOF
-                    delta --dark --paging=never --diff-highlight "$TMP_PINS" "$PINS_FILE" || true
                   ''}
 
                   ${lib.optionalString (updatedInputs != [ ]) "tack update ${lib.join " " updatedInputs}"}
+
+                  ${lib.optionalString (cfg != oldTackToml) /* bash */ ''
+                    delta --dark --paging=never --diff-highlight "$TMP_PINS" "$PINS_FILE" || true
+                  ''}
                 '';
             }
           );
