@@ -6,6 +6,14 @@ rust-overlay = "rust-overlay"
 systems = "systems"
 treefmt-nix = "treefmt-nix"
 
+[omit_inputs]
+names = ["flake-compat", "pre-commit-hooks", "treefmt-nix"]
+
+[shorturls]
+applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dmg"
+gh = "github:{path}"
+nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}"
+
 [inputs.bat-syntax-justfile]
 type = "fetch"
 url = "gh:nk9/just_sublime"
@@ -49,6 +57,7 @@ url = "gh:Kyles-World/Helvetica-Font"
 url = "gh:feel-co/hjem"
 
 [inputs.hyprland-scroll-overview]
+type = "fetch"
 url = "gh:yayuuu/hyprland-scroll-overview"
 
 [inputs.microVM]
@@ -130,8 +139,3 @@ url = "gh:AminurAlam/yazi-plugins"
 [inputs.yaziline]
 type = "fetch"
 url = "gh:llanosrocas/yaziline.yazi"
-
-[shorturls]
-applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dmg"
-gh = "github:{path}"
-nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}"

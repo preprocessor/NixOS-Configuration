@@ -1,7 +1,4 @@
 {
-  "$declared": {
-    "hyprland-scroll-overview": "github:yayuuu/hyprland-scroll-overview"
-  },
   "bat-syntax-justfile": {
     "type": "github",
     "owner": "nk9",
@@ -94,9 +91,9 @@
     "type": "github",
     "owner": "Kyles-World",
     "repo": "Helvetica-Font",
-    "rev": "7df3d08472dbca59bfedc5c9cc2febebc4281100",
-    "narHash": "sha256-REt9r0YrozpX0p6Xltv3oqaGIXrkR32ltbkqjT29IMw=",
-    "lastModified": 1790776383
+    "rev": "78e643b6f6ead8b49e6d7d5805745f2268c19bf3",
+    "narHash": "sha256-KYG2QYHIGFAYUJG74ho2xRfo9BA9HPZWezJ4xCi8by4=",
+    "lastModified": 1790928789
   },
   "hjem": {
     "type": "github",
@@ -262,9 +259,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "59ca13acca2fdc344c5e7d6015e5d04b9fbff66d",
-    "narHash": "sha256-iHFOw3/k8yZ4rKTUCoxV6LrGKrs3RVu7zALSqlzg1yM=",
-    "lastModified": 1790902588
+    "rev": "4aaed84df55c1f116ccd81d7bc0fb818a068955f",
+    "narHash": "sha256-5fc6+wvlE5yUPkrbgi9xSWsaVRA54qLuMot4sCoLm2E=",
+    "lastModified": 1790920390
   },
   "yazi": {
     "type": "github",
