@@ -60,7 +60,10 @@
             preselect = false;
             auto_insert = true;
           };
-          menu.draw.treesitter = [ "lsp" ];
+          menu = {
+            auto_show_delay_ms = 100;
+            draw.treesitter = [ "lsp" ];
+          };
           documentation = {
             auto_show = true;
             auto_show_delay_ms = 200;

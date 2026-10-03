@@ -1,6 +1,6 @@
 {
   exo.mods.neovim =
-    { lib, ... }:
+    { pkgs, lib, ... }:
     {
       diagnostic.settings = {
         virtual_lines = false;
@@ -59,6 +59,49 @@
 
       lsp = {
         inlayHints.enable = true;
+        servers = {
+          "*" = {
+            config = {
+              capabilities = {
+                textDocument = {
+                  semanticTokens = {
+                    multilineTokenSupport = true;
+                  };
+                };
+              };
+            };
+          };
+          bashls.enable = true;
+          cmake.enable = true;
+          copilot.enable = true;
+          cssls.enable = true;
+          dockerls.enable = true;
+          docker_language_server.enable = true;
+          eslint = {
+            enable = true;
+            config.settings = {
+              # Keep formatting with conform/prettier/biome and let ESLint focus on
+              # diagnostics and fix/code-action workflows.
+              format = false;
+              # Upstream can resolve a workspace-local ESLint install on its own,
+              # but Nix-managed projects need an explicit global fallback.
+              nodePath = "${pkgs.eslint}/lib/node_modules";
+            };
+          };
+          fsautocomplete.enable = true;
+          gopls.enable = true;
+          html.enable = true;
+          jsonls.enable = true;
+          qmlls.enable = true;
+          statix.enable = true;
+          stylelint_lsp = {
+            enable = true;
+            config.workspace_required = true;
+          };
+          svls.enable = true;
+          systemd_lsp.enable = true;
+          yamlls.enable = true;
+        };
         keymaps = [
           {
             key = "<leader>l";
