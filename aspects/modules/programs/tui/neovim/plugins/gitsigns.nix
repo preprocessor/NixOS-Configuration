@@ -2,6 +2,10 @@
   exo.mods.neovim = {
     plugins.gitsigns = {
       enable = true;
+      lazyLoad.settings.event = [
+        "BufReadPre"
+        "BufNewFile"
+      ];
       settings = {
         signs = {
           add.text = "▎";

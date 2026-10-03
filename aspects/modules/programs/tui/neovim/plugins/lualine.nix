@@ -12,6 +12,28 @@
           "BufReadPost"
           "BufNewFile"
         ];
+        luaConfig.pre = ''
+          local trouble_symbols = function()
+            local ok, trouble = pcall(require, "trouble")
+            if not ok then return { function() return "" end, cond = function() return false end } end
+            local symbols = trouble.statusline({
+              -- mode = "symbols",
+              mode = "symbols",
+              groups = {},
+              title = false,
+              max_items = 5,
+              filter = { range = true },
+              format = "{kind_icon}{symbol.name:Normal}",
+              hl_group = "lualine_c_normal",
+            })
+            return {
+              symbols.get,
+              cond = function()
+                return vim.b.trouble_lualine ~= false and symbols.has()
+              end,
+            }
+          end
+        '';
         settings = {
           options = {
             globalstatus = true;
@@ -84,7 +106,7 @@
                   hint = "󰝶 ";
                 };
               }
-              { __unkeyed-1 = "navic"; }
+              { __raw = "trouble_symbols()"; }
             ];
           };
 
@@ -142,13 +164,7 @@
                 right = 1;
               };
             }
-            {
-              __unkeyed-1 = mkRaw "location";
-              padding = {
-                left = 0;
-                right = 1;
-              };
-            }
+            { __unkeyed-1 = mkRaw "location"; }
           ];
         };
       };
