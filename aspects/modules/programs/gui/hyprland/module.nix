@@ -1,12 +1,12 @@
 {
   perSystem =
-    { packages', pkgs, ... }:
+    { self', pkgs, ... }:
     {
       remotePackages = {
         hyprland-bundle = pkgs.symlinkJoin {
           name = "hyprland-bundle";
           paths = [
-            packages'.hyprland-scroll-overview
+            self'.packages.hyprland-scroll-overview
             pkgs.xdg-desktop-portal-hyprland
             pkgs.hyprland
           ];
