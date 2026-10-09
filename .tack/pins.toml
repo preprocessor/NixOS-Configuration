@@ -18,6 +18,9 @@ frozen = true
 group = "tui"
 type = "fetch"
 
+[inputs.cade]
+url = "github:manic-systems/cade"
+
 [inputs.chicago-font]
 url = "gh:nikdog/chicago-font"
 frozen = true
@@ -122,7 +125,6 @@ type = "fixed"
 
 [inputs.sf-pro]
 url = "applefont:SF-Pro"
-follows = { nixpkgs = "nixpkgs" }
 frozen = true
 group = "fonts"
 type = "fixed"
@@ -168,4 +170,3 @@ url = "gh:llanosrocas/yaziline.yazi"
 group = "yazi"
 patches = ["https://github.com/llanosrocas/yaziline.yazi/pull/10"]
 type = "fetch"
-

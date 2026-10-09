@@ -1,6 +1,7 @@
 {
   "$declared": {
     "bat-syntax-justfile": "github:nk9/just_sublime",
+    "cade": "github:manic-systems/cade",
     "chicago-font": "github:nikdog/chicago-font",
     "cliphist-src": "github:sentriz/cliphist",
     "cliphist-tui-src": "github:SHORiN-KiWATA/cliphist-tui",
@@ -40,6 +41,14 @@
     "rev": "2dcc60286d1af6a4c6c2c03d50bc03230dc56ce3",
     "narHash": "sha256-XlxItYVL9I612DhfCGHiUdv6U6Nv9LOlEbJVf1zTwPg=",
     "lastModified": 1775998107
+  },
+  "cade": {
+    "type": "github",
+    "owner": "manic-systems",
+    "repo": "cade",
+    "rev": "21c2c4186b42906e7584a29f7a17fdcfda7220be",
+    "narHash": "sha256-7ZBsJljIPTFfXdLjkMJoKtnPq3L0eOS/suou37wE0Bo=",
+    "lastModified": 1791544967
   },
   "chicago-font": {
     "type": "github",
@@ -303,6 +312,20 @@
     "repo": "yaziline.yazi",
     "rev": "029b27d55361b4b87d0982237f9730b49b4e7a3a",
     "narHash": "sha256-oYvbhAi1xHn8XKgnwBYrHBqRReX4kJDkmSTs15RS/2U=",
-    "lastModified": 1786810126
+    "lastModified": 1786810126,
+    "patched": {
+      "path": "/nix/store/lasxg6f9cfhb0y1b4b67dgfqqz0mwvy8-source",
+      "narHash": "sha256-V0NaOdpsLo3K6gM7iy8rrVurgg0VfQ1xjgbPcwkTLIY=",
+      "lastModified": 1786810126,
+      "patches": [
+        {
+          "source": "https://github.com/llanosrocas/yaziline.yazi/pull/10",
+          "url": "https://github.com/llanosrocas/yaziline.yazi/pull/10",
+          "file": "patches/yaziline/pr-10.patch",
+          "sha256": "5cd038d9ecb53614655cfa3bd99d604df9f00961bd8fb53344bf0a2b04417b83",
+          "head": "1affbc840537f9d290f8ebadae81618024fd57b5"
+        }
+      ]
+    }
   }
 }
