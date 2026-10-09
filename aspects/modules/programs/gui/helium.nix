@@ -1,5 +1,8 @@
 {
-  tack.inputs.helium.url = "gh:amaanq/helium-flake/";
+  tack.inputs.helium = {
+    url = "gh:amaanq/helium-flake/";
+    group = "general";
+  };
 
   exo.mods.desktop =
     { packages', lib, ... }:

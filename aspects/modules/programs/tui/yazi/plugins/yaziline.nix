@@ -3,6 +3,8 @@
   tack.inputs.yaziline = {
     url = "gh:llanosrocas/yaziline.yazi";
     type = "fetch";
+    group = "yazi";
+    patches = [ "https://github.com/llanosrocas/yaziline.yazi/pull/10" ];
   };
 
   exo.core =

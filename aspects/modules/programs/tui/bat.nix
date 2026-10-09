@@ -1,7 +1,9 @@
 {
   tack.inputs.bat-syntax-justfile = {
     url = "gh:nk9/just_sublime";
+    frozen = true;
     type = "fetch";
+    group = "tui";
   };
 
   exo.mods.desktop =

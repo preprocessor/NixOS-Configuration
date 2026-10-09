@@ -2,6 +2,7 @@
   tack.inputs.yazi-fuzzy-search = {
     url = "gh:onelocked/fuzzy-search.yazi";
     type = "fetch";
+    group = "yazi";
   };
 
   exo.core =

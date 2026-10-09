@@ -22,9 +22,7 @@
     { self, ... }:
     let
       # Import inputs from tack: https://github.com/manic-systems/tack/
-      inputs = (import ./.tack) // {
-        inherit self;
-      };
+      inputs = import ./.tack;
 
       inherit (inputs.nixpkgs) lib;
 

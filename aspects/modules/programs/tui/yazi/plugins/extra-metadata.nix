@@ -3,6 +3,7 @@
   tack.inputs.extra-metadata = {
     url = "gh:boydaihungst/file-extra-metadata.yazi";
     type = "fetch";
+    group = "yazi";
   };
 
   exo.core =

@@ -1,6 +1,7 @@
 {
   tack.inputs.systemctl-tui = {
     url = "gh:rgwood/systemctl-tui";
+    group = "tui";
     type = "fetch";
   };
 

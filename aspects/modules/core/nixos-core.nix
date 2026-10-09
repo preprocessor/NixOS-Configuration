@@ -1,5 +1,8 @@
 {
-  tack.inputs.nixos-core.url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1";
+  tack.inputs.nixos-core = {
+    url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1";
+    group = "nix";
+  };
 
   perSystem =
     { packages', ... }:

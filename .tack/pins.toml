@@ -5,7 +5,7 @@ rust-overlay = "rust-overlay"
 systems = "systems"
 
 [omit_inputs]
-names = ["flake-compat", "pre-commit-hooks", "treefmt-nix"]
+names = ["flake-compat","pre-commit-hooks","treefmt-nix"]
 
 [shorturls]
 applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dmg"
@@ -13,121 +13,159 @@ gh = "github:{path}"
 nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}"
 
 [inputs.bat-syntax-justfile]
-type = "fetch"
 url = "gh:nk9/just_sublime"
+frozen = true
+group = "tui"
+type = "fetch"
 
 [inputs.chicago-font]
-type = "fetch"
 url = "gh:nikdog/chicago-font"
+frozen = true
+group = "fonts"
+type = "fetch"
 
 [inputs.cliphist-src]
-type = "fetch"
 url = "gh:sentriz/cliphist"
+group = "cliphist"
+type = "fetch"
 
 [inputs.cliphist-tui-src]
-type = "fetch"
 url = "gh:SHORiN-KiWATA/cliphist-tui"
+group = "cliphist"
+type = "fetch"
 
 [inputs.extra-metadata]
-type = "fetch"
 url = "gh:boydaihungst/file-extra-metadata.yazi"
+group = "yazi"
+type = "fetch"
 
 [inputs.fish-completion-sync]
-type = "fetch"
 url = "gh:iynaix/fish-completion-sync"
+group = "tui"
+type = "fetch"
 
 [inputs.fragment-mono]
-type = "fetch"
 url = "gh:dtinth/fragment-mono-weights"
+frozen = true
+group = "fonts"
+type = "fetch"
 
 [inputs.helium]
 url = "gh:amaanq/helium-flake/"
+group = "general"
 
 [inputs.helvetica-font]
-type = "fetch"
 url = "gh:Kyles-World/Helvetica-Font"
+frozen = true
+group = "fonts"
+type = "fetch"
 
 [inputs.hjem]
 url = "gh:feel-co/hjem"
+group = "nix"
 
 [inputs.hyprland-scroll-overview]
-type = "fetch"
 url = "gh:yayuuu/hyprland-scroll-overview"
+group = "general"
+type = "fetch"
 
 [inputs.nix-cachyos-kernel]
-exclude_follow = ["nixpkgs"]
 url = "gh:xddxdd/nix-cachyos-kernel/release"
+exclude_follow = ["nixpkgs"]
+group = "gaming"
 
 [inputs.nix-gaming-edge]
 url = "gh:powerofthe69/nix-gaming-edge"
+group = "gaming"
 
 [inputs.nixos-core]
 url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1"
+group = "nix"
 
 [inputs.nixpkgs]
 url = "nixpkgs:unstable"
+group = "nix"
 
 [inputs.nixtopsy]
 url = "gh:amaanq/nixtopsy"
+group = "nix"
 
 [inputs.nixvim]
 url = "gh:nix-community/nixvim"
+group = "tui"
 
 [inputs.ny]
-type = "fixed"
 url = "applefont:NY"
+frozen = true
+group = "fonts"
+type = "fixed"
 
 [inputs.pixprint]
 url = "gh:preprocessor/pixprint"
-
-[inputs.pond]
-type = "fetch"
-url = "gitlab:alice-lefebvre/pond"
+group = "tui"
 
 [inputs.rsakura]
 url = "gh:preprocessor/rsakura"
+group = "tui"
 
 [inputs.sf-compact]
-type = "fixed"
 url = "applefont:SF-Compact"
+frozen = true
+group = "fonts"
+type = "fixed"
 
 [inputs.sf-mono]
-type = "fixed"
 url = "applefont:SF-Mono"
+frozen = true
+group = "fonts"
+type = "fixed"
 
 [inputs.sf-pro]
-follows = { "flake:systems" = "systems", nixpkgs = "nixpkgs", nixpkgs2 = "nixpkgs" }
-type = "fixed"
 url = "applefont:SF-Pro"
+follows = { nixpkgs = "nixpkgs" }
+frozen = true
+group = "fonts"
+type = "fixed"
 
 [inputs.sops-nix]
 url = "gh:Mic92/sops-nix"
+group = "nix"
 
 [inputs.spicetify-nix]
 url = "gh:Gerg-L/spicetify-nix"
+group = "general"
+
+[inputs.sxyazi]
+url = "gh:sxyazi/yazi"
+group = "yazi"
 
 [inputs.systemctl-tui]
-type = "fetch"
 url = "gh:rgwood/systemctl-tui"
+group = "tui"
+type = "fetch"
 
 [inputs.tack]
 url = "gh:manic-systems/tack"
-
-[inputs.yazi]
-url = "gh:sxyazi/yazi"
+group = "nix"
 
 [inputs.yazi-fuzzy-search]
-type = "fetch"
 url = "gh:onelocked/fuzzy-search.yazi"
+group = "yazi"
+type = "fetch"
 
 [inputs.yazi-no-header]
-type = "fetch"
 url = "gh:onelocked/no-header-prompt.yazi"
+group = "yazi"
+type = "fetch"
 
 [inputs.yazi-plugins]
-type = "fetch"
 url = "gh:AminurAlam/yazi-plugins"
+group = "yazi"
+type = "fetch"
 
 [inputs.yaziline]
-type = "fetch"
 url = "gh:llanosrocas/yaziline.yazi"
+group = "yazi"
+patches = ["https://github.com/llanosrocas/yaziline.yazi/pull/10"]
+type = "fetch"
+

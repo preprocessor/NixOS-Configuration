@@ -3,6 +3,7 @@
   tack.inputs.yazi-plugins = {
     url = "gh:AminurAlam/yazi-plugins";
     type = "fetch";
+    group = "yazi";
   };
 
   exo.core =

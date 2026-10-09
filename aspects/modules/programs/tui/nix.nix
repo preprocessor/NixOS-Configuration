@@ -1,5 +1,8 @@
 {
-  tack.inputs.nixtopsy.url = "gh:amaanq/nixtopsy";
+  tack.inputs.nixtopsy = {
+    url = "gh:amaanq/nixtopsy";
+    group = "nix";
+  };
 
   exo.core =
     { pkgs, packages', ... }:

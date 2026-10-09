@@ -1,6 +1,9 @@
 { inputs, ... }:
 {
-  tack.inputs.hjem.url = "gh:feel-co/hjem";
+  tack.inputs.hjem = {
+    url = "gh:feel-co/hjem";
+    group = "nix";
+  };
 
   perSystem =
     { packages', ... }:

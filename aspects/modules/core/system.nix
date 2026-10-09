@@ -1,5 +1,8 @@
 {
-  tack.inputs.nixpkgs.url = "nixpkgs:unstable";
+  tack.inputs.nixpkgs = {
+    url = "nixpkgs:unstable";
+    group = "nix";
+  };
 
   exo.core =
     { constants, ... }:

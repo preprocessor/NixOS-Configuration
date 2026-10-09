@@ -1,6 +1,7 @@
 {
   tack.inputs.nix-cachyos-kernel = {
     url = "gh:xddxdd/nix-cachyos-kernel/release";
+    group = "gaming";
     exclude_follow = [ "nixpkgs" ];
   };
 

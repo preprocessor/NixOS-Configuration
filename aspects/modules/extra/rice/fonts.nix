@@ -1,38 +1,51 @@
+{ lib, ... }:
 {
   tack = {
     shorturls.applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dmg";
 
-    inputs = {
-      sf-pro = {
-        url = "applefont:SF-Pro";
-        type = "fixed";
-      };
-      sf-mono = {
-        url = "applefont:SF-Mono";
-        type = "fixed";
-      };
-      sf-compact = {
-        url = "applefont:SF-Compact";
-        type = "fixed";
-      };
-      ny = {
-        url = "applefont:NY";
-        type = "fixed";
-      };
+    inputs =
+      {
+        sf-pro = {
+          url = "applefont:SF-Pro";
+          type = "fixed";
+          follows = {
+            nixpkgs = "nixpkgs";
+          };
+        };
+        sf-mono = {
+          url = "applefont:SF-Mono";
+          type = "fixed";
+        };
+        sf-compact = {
+          url = "applefont:SF-Compact";
+          type = "fixed";
+        };
+        ny = {
+          url = "applefont:NY";
+          type = "fixed";
+        };
 
-      fragment-mono = {
-        url = "gh:dtinth/fragment-mono-weights";
-        type = "fetch";
-      };
-      chicago-font = {
-        url = "gh:nikdog/chicago-font";
-        type = "fetch";
-      };
-      helvetica-font = {
-        url = "gh:Kyles-World/Helvetica-Font";
-        type = "fetch";
-      };
-    };
+        fragment-mono = {
+          url = "gh:dtinth/fragment-mono-weights";
+          type = "fetch";
+        };
+        chicago-font = {
+          url = "gh:nikdog/chicago-font";
+          type = "fetch";
+        };
+        helvetica-font = {
+          url = "gh:Kyles-World/Helvetica-Font";
+          type = "fetch";
+        };
+      }
+      |> lib.mapAttrs (
+        _: value:
+        value
+        // {
+          group = "fonts";
+          frozen = true;
+        }
+      );
   };
 
   perSystem =
@@ -44,12 +57,16 @@
           inherit name src;
           allowSubstitutes = false;
           preferLocalBuild = true;
-          unpackPhase = # bash
-            ''
-              7z x $src
+
+          unpackPhase = /* bash */ ''
+            runHook preUnpack
+            7z x $src
+            if [ ! -f 'Payload~' ]; then
               7z x './*/${pkgName}'
-              7z x 'Payload~'
-            '';
+            fi
+            7z x -tcpio 'Payload~'
+            runHook postUnpack
+          '';
 
           nativeBuildInputs = with pkgs; [
             installFonts

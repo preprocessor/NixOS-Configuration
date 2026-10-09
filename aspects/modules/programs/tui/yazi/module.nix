@@ -1,10 +1,13 @@
 {
-  tack.inputs.yazi.url = "gh:sxyazi/yazi";
+  tack.inputs.sxyazi = {
+    url = "gh:sxyazi/yazi";
+    group = "yazi";
+  };
 
   perSystem =
     { packages', ... }:
     {
-      remotePackages.yazi = packages'.yazi.overrideAttrs {
+      remotePackages.yazi = packages'.sxyazi.overrideAttrs {
         doCheck = false;
       };
     };

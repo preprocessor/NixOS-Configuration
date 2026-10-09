@@ -1,5 +1,8 @@
 {
-  tack.inputs.nix-gaming-edge.url = "gh:powerofthe69/nix-gaming-edge";
+  tack.inputs.nix-gaming-edge = {
+    url = "gh:powerofthe69/nix-gaming-edge";
+    group = "gaming";
+  };
 
   exo.mods.gaming =
     {

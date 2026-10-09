@@ -2,6 +2,7 @@
   tack.inputs.fish-completion-sync = {
     url = "gh:iynaix/fish-completion-sync";
     type = "fetch";
+    group = "tui";
   };
 
   exo.core =

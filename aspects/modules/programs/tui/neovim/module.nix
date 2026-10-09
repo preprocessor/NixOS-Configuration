@@ -1,5 +1,8 @@
 top: {
-  tack.inputs.nixvim.url = "gh:nix-community/nixvim";
+  tack.inputs.nixvim = {
+    url = "gh:nix-community/nixvim";
+    group = "tui";
+  };
 
   exo.core.my.nixvim.enable = true;
 

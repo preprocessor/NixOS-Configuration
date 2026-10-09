@@ -19,16 +19,15 @@
     "nixvim": "github:nix-community/nixvim",
     "ny": "https://devimages-cdn.apple.com/design/resources/download/NY.dmg",
     "pixprint": "github:preprocessor/pixprint",
-    "pond": "gitlab:alice-lefebvre/pond",
     "rsakura": "github:preprocessor/rsakura",
     "sf-compact": "https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg",
     "sf-mono": "https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg",
     "sf-pro": "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg",
     "sops-nix": "github:Mic92/sops-nix",
     "spicetify-nix": "github:Gerg-L/spicetify-nix",
+    "sxyazi": "github:sxyazi/yazi",
     "systemctl-tui": "github:rgwood/systemctl-tui",
     "tack": "github:manic-systems/tack",
-    "yazi": "github:sxyazi/yazi",
     "yazi-fuzzy-search": "github:onelocked/fuzzy-search.yazi",
     "yazi-no-header": "github:onelocked/no-header-prompt.yazi",
     "yazi-plugins": "github:AminurAlam/yazi-plugins",
@@ -192,14 +191,6 @@
     "narHash": "sha256-c41Mzol6LXxWJsRf0HzSJGsk4TRFNG5+udSV7sknBHo=",
     "lastModified": 1778293486
   },
-  "pond": {
-    "type": "gitlab",
-    "owner": "alice-lefebvre",
-    "repo": "pond",
-    "rev": "6f7620940d896a1717e764da0b4b41c96362ac8d",
-    "narHash": "sha256-qQxtEJHRMvR9hmpRbEBmKwuFjjb9FeGLY/LlHdHh+rI=",
-    "lastModified": 1735912577
-  },
   "rsakura": {
     "type": "github",
     "owner": "preprocessor",
@@ -212,9 +203,9 @@
     "type": "github",
     "owner": "oxalica",
     "repo": "rust-overlay",
-    "rev": "35ca0490d13a3d38c4602d0eb9600a30fa63a367",
-    "narHash": "sha256-45ikFmtfgBZgMePIm4GevJ9VjDSWO3PGQgOuuwHDpes=",
-    "lastModified": 1789543870
+    "rev": "7470661ba2b51156048af08464b82020223dc942",
+    "narHash": "sha256-BiFPwFsbFnZH5GfWbQFKYuQNg+67aNQCoRSRNTeJFQc=",
+    "lastModified": 1791013993
   },
   "sf-compact": {
     "type": "fixed",
@@ -250,6 +241,14 @@
     "narHash": "sha256-eR6P8ZCyYqrdvuOANIOE78t4qqm6wSTBKLP/aW8nwJE=",
     "lastModified": 1790502898
   },
+  "sxyazi": {
+    "type": "github",
+    "owner": "sxyazi",
+    "repo": "yazi",
+    "rev": "1091972581e0d23ed575be967e9a6ef75a17474b",
+    "narHash": "sha256-KcNMm4C+07B4ukgs23tQYUi8DDGljSdQBZl3+Ibt0Pk=",
+    "lastModified": 1791533868
+  },
   "systemctl-tui": {
     "type": "github",
     "owner": "rgwood",
@@ -273,14 +272,6 @@
     "rev": "b1fc7d5d34a43931ef1206aa635c20d4c3e3e386",
     "narHash": "sha256-5q5nsALiZTavGBtJP/YWe1RMPCDf5PL4JO0NY85sUNw=",
     "lastModified": 1790979535
-  },
-  "yazi": {
-    "type": "github",
-    "owner": "sxyazi",
-    "repo": "yazi",
-    "rev": "a190600208717bcd3a0ed2ddae22035adaf1f6ab",
-    "narHash": "sha256-8Y1XqFDxpsQY1V1qdzYsZFZj0BK0D3u5OpRtxHE+pJg=",
-    "lastModified": 1790953599
   },
   "yazi-fuzzy-search": {
     "type": "github",

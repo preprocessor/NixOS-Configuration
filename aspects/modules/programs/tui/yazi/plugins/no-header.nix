@@ -3,6 +3,7 @@
   tack.inputs.yazi-no-header = {
     url = "gh:onelocked/no-header-prompt.yazi";
     type = "fetch";
+    group = "yazi";
   };
 
   exo.core =

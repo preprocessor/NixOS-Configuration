@@ -1,19 +1,21 @@
-{ inputs, ... }:
 {
   tack.inputs = {
     cliphist-src = {
       url = "gh:sentriz/cliphist";
       type = "fetch";
+      group = "cliphist";
     };
     cliphist-tui-src = {
       url = "gh:SHORiN-KiWATA/cliphist-tui";
       type = "fetch";
+      group = "cliphist";
     };
   };
 
   perSystem =
     {
       wrapPackage,
+      inputs,
       pkgs,
       ...
     }:

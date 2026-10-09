@@ -2,6 +2,7 @@
   tack.inputs.hyprland-scroll-overview = {
     url = "gh:yayuuu/hyprland-scroll-overview";
     type = "fetch";
+    group = "general";
   };
 
   perSystem =
