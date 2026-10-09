@@ -269,7 +269,12 @@ in
                       name: value: ''
                         [inputs.${name}]
                         url = "${value.url}"
-                        ${value |> lib.flip lib.removeAttrs [ "url" ] |> mapAttrSetToToml "\n"}
+                        ${
+                          value
+                          |> lib.flip lib.removeAttrs [ "url" ]
+                          |> mapAttrSetToToml "\n"
+                          |> lib.trim
+                        }
                       ''
                     );
                   # The above is as minimal of a pins.toml generator that I can cook up. I did this because I was not a fan
