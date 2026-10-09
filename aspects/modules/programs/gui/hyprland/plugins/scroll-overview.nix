@@ -64,6 +64,7 @@
                   blur = true,
                   shadow = {
                     enabled = true,
+                    range = 50,
                   },
                 },
               },

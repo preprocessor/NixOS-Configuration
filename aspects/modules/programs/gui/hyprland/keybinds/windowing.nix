@@ -1,11 +1,7 @@
 {
   exo.mods.desktop = {
     my.hyprland.lua.files = {
-      "keybinds.windowing.base".content = /* lua */ ''
-        -- ░█░█░▀█▀░█▀█░█▀▄░█▀█░█░█░▀█▀░█▀█░█▀▀
-        -- ░█▄█░░█░░█░█░█░█░█░█░█▄█░░█░░█░█░█░█
-        -- ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀
-
+      "keybinds.windowing".content = /* lua */ ''
         -- Focus windows or workspaces with j/k
         -- Focus windows or  monitors  with h/l
         -- + CTRL = Move window
@@ -20,30 +16,6 @@
           hl.bind("SUPER + CTRL + " .. key, utils.move(key))
         end
 
-        -- Switch workspaces with SUPER + [0-9]
-        -- Move active window to a workspace with SUPER + CTRL + [0-9]
-        -- Special workspaces with F1-10
-        for i = 1, 10 do
-          local key = i % 10 -- 10 maps to key 0
-          hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = i }))
-          hl.bind("SUPER + CTRL + " .. key, hl.dsp.window.move({ workspace = i }))
-          hl.bind("SUPER + KP_" .. key, hl.dsp.workspace.toggle_special(i))
-          hl.bind("SUPER + CTRL + KP_" .. key, hl.dsp.window.move({ workspace = "special:" .. i }))
-        end
-
-        -- Named special workspaces
-        for key, name in pairs({
-          ["X"] = "scratch",
-          ["S"] = "steam",
-          ["A"] = "rice",
-          ["D"] = "dashboard"
-        }) do
-          hl.bind("SUPER + " .. key, hl.dsp.workspace.toggle_special(name))
-          hl.bind("SUPER + CTRL + " .. key, hl.dsp.window.move({ workspace = "special:" .. name }))
-        end
-      '';
-
-      "keybinds.windowing.management".content = /* lua */ ''
         -- Consume/Expel
         hl.bind("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
         hl.bind("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
