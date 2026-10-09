@@ -1,7 +1,8 @@
 ---
 on:
-  push:
   workflow_dispatch:
+  push:
+    branches: [main]
 name: Dead code analysis
 jobs:
   deadnix:
