@@ -2,12 +2,12 @@
   exo.mods.gaming = {
     my.hyprland.windowrules.steam = [
       {
-        name = "games-workspace-move-steam";
+        name = "move-steam-windows-to-ws";
         match = {
           class = "^steam$";
           title = "negative:^(notificationtoasts_.*_desktop)$";
         };
-        rules.workspace = "special:steam";
+        rules.workspace = "steam";
       }
 
       {
@@ -16,32 +16,7 @@
           class = "^steam$";
           title = "^$";
         };
-        rules.workspace = "special:steam";
-      }
-
-      {
-        name = "float-games-workspace";
-        match = {
-          title = "negative:^(Steam|Friends List)$";
-          workspace = "special:steam";
-        };
-        rules.float = true;
-      }
-
-      {
-        name = "float-non-steam-apps-games-workspace";
-        match = {
-          title = "negative:^(Steam|Friends List)$";
-          class = "negative:^steam$";
-          workspace = "special:steam";
-        };
-        rules = {
-          size = [
-            1700
-            1300
-          ];
-          center = true;
-        };
+        rules.workspace = "steam";
       }
 
       {
@@ -57,7 +32,7 @@
         name = "games-workspace-move-tag";
         match.xdg_tag = "^proton-game$";
         rules = {
-          workspace = "5 silent";
+          workspace = "special:games silent";
           fullscreen = true;
           content = "game";
         };
@@ -67,7 +42,7 @@
         name = "games-workspace-move-class";
         match.class = "^steam_app_.*";
         rules = {
-          workspace = "5 silent";
+          workspace = "special:games silent";
           fullscreen = true;
           content = "game";
         };
@@ -80,7 +55,7 @@
           title = "DARK SOULS™: REMASTERED";
         };
         rules = {
-          workspace = "5 silent";
+          workspace = "special:games silent";
           render_unfocused = true;
           fullscreen = true;
           content = "game";
@@ -91,7 +66,7 @@
         name = "games-workspace-darksouls2";
         match.title = "DARK SOULS II";
         rules = {
-          workspace = "5 silent";
+          workspace = "special:games silent";
           render_unfocused = true;
           fullscreen = true;
           content = "game";
@@ -102,7 +77,7 @@
         name = "games-workspace-move-content";
         match.content = "game";
         rules = {
-          workspace = "5 silent";
+          workspace = "special:games silent";
         };
       }
     ];
