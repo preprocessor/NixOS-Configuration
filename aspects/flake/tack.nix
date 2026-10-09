@@ -265,11 +265,14 @@ in
                     );
                   tackInputsToml = # Tack inputs section
                     tack.inputs
-                    |> lib.concatMapAttrsStringSep "\n" (
-                      name: value: ''
-                        [inputs.${name}]
-                        ${{ inherit (value) url; } // lib.removeAttrs value [ "url" ] |> mapAttrSetToToml "\n"}
+                    |> lib.concatMapAttrsStringSep "\n\n" (
+                      name: value:
                       ''
+                        [inputs.${name}]
+                        url = "${value.url}"
+                        ${value |> lib.flip lib.removeAttrs [ "url" ] |> mapAttrSetToToml "\n"}
+                      ''
+                      |> lib.trim
                     );
                   # The above is as minimal of a pins.toml generator that I can cook up. I did this because I was not a fan
                   # of how pkgs.formats.toml handles nested attributes. This also lets the file be written so that the inputs
@@ -303,9 +306,10 @@ in
                     exit 1
                   fi
 
-                  TMP_PINS="$(mktemp old_pins.toml.XXXXX)"
-                  # Delete temp file on script exit
-                  trap 'rm -f "$TMP_PINS"' EXIT
+                  TMP_PINS="$(mktemp -t old_pins.toml.XXXXX)"
+                  trap 'rm -f "$TMP_PINS"' EXIT # Delete temp file on script exit
+
+                  ${lib.optionalString (tack != oldTackToml) /* bash */ ''cp "$PINS_FILE" "$TMP_PINS"''}
 
                   ${
                     newKeys
@@ -318,15 +322,6 @@ in
                   }
 
                   ${
-                    let
-                      updatedPatchInputs =
-                        newKeys |> lib.filter (name: lib.subtractLists (prevPatches name) (currPatches name) != [ ]);
-                    in
-                    lib.optionalString (updatedPatchInputs != [ ])
-                      "tack patch update ${updatedPatchInputs |> lib.join " "}"
-                  }
-
-                  ${
                     oldKeys
                     |> lib.subtractLists newKeys
                     |> map (removedInput: "tack rm ${removedInput}")
@@ -334,12 +329,21 @@ in
                   }
 
                   ${lib.optionalString (tack != oldTackToml) /* bash */ ''
-                    mv "$PINS_FILE" "$TMP_PINS"
                     cat << 'EOF' > "$PINS_FILE"
                     ${tackOptsToml}
                     ${tackInputsToml}
                     EOF
                   ''}
+
+                  ${
+                    let
+                      updatedPatchInputs =
+                        newKeys |> lib.filter (name: lib.subtractLists (prevPatches name) (currPatches name) != [ ]);
+                    in
+                    lib.optionalString (
+                      updatedPatchInputs != [ ]
+                    ) "tack patch update ${lib.join " " updatedPatchInputs}"
+                  }
 
                   ${
                     let

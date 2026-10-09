@@ -26,7 +26,6 @@ let
     match
     pathExists
     readFile
-    removeAttrs
     split
     stringLength
     substring
@@ -165,15 +164,21 @@ let
         else
           let
             node = lock.${name};
+            type = node.type or "";
           in
-          if (node.type or "") == "path" then
+          if type == "path" then
             {
-              outPath = if substring 0 1 node.path == "/" then node.path else resolverDir + ("/" + node.path);
+              outPath = if substring 0 1 node.path == "/" then node.path else resolverDir + "/" + node.path;
               lastModified = node.lastModified or 0;
             }
-            // (if node ? narHash then { inherit (node) narHash; } else { })
-          else if !(elem (node.type or "") knownTypes) then
-            throw "tack: unknown lock type '${node.type or "?"}' for pin '${name}'"
+          else if type == "tarball" then
+            {
+              outPath = fetchTarball (
+                { inherit (node) url; } // (if node ? narHash then { sha256 = node.narHash; } else { })
+              );
+            }
+          else if !(elem type knownTypes) then
+            throw "tack: unknown lock type '${type}' for pin '${name}'"
           else
             fetchTree (intersectAttrs fetchTreeAttrs node);
 
@@ -534,7 +539,7 @@ let
           inherit side;
           follows = policy.global;
           location = "all_follow";
-          excluded = policy.excluded;
+          inherit (policy) excluded;
         })
         // resolve (projectFollows {
           inherit side;
@@ -552,7 +557,7 @@ let
         followLayersForSide {
           inherit side policy;
           resolve = resolveFollows;
-          inherited = policy.inherited;
+          inherit (policy) inherited;
         };
 
       followMetaForSide =
