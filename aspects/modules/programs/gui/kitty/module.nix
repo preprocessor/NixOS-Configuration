@@ -26,15 +26,6 @@
         literalExpression
         ;
 
-      settingsValueType =
-        with types;
-        oneOf [
-          str
-          bool
-          int
-          float
-        ];
-
       cfg = config.my.kitty;
     in
     {
@@ -61,8 +52,8 @@
             cfg = config.my.kitty;
           in
           [
-            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "2 silent" })''
-            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "2 silent" })''
+            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev silent" })''
+            ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:dev silent" })''
           ];
 
         my.hyprland.lua.files."keybinds.kitty".content = /* lua */ ''
@@ -84,7 +75,20 @@
         enable = lib.mkEnableOption { };
 
         settings = mkOption {
-          type = types.attrsOf settingsValueType;
+          type =
+            with types;
+            attrsOf (oneOf [
+              str
+              bool
+              int
+              float
+              (listOf (oneOf [
+                str
+                bool
+                int
+                float
+              ]))
+            ]);
           default = { };
           example = literalExpression ''
             {
@@ -136,14 +140,16 @@
                 relPath = "config/kitty.conf";
                 file =
                   let
-                    toKittyConfig = lib.generators.toKeyValue {
-                      mkKeyValue =
-                        key: value:
-                        let
-                          value' = value |> (if (lib.isBool value) then lib.boolToYesNo else toString);
-                        in
-                        "${key} ${value'}";
-                    };
+                    toKittyConfig = lib.concatMapAttrsStringSep "\n" (
+                      name: value:
+                      let
+                        mkValue = v: v |> (if lib.isBool v then lib.boolToYesNo else toString);
+                      in
+                      if lib.isList value then
+                        value |> lib.concatMapStringsSep "\n" (v: "${name} ${mkValue v}")
+                      else
+                        "${name} ${mkValue value}"
+                    );
                   in
                   ''
                     # Settings
@@ -154,9 +160,6 @@
 
                     # Theme
                     ${cfg.theme}
-
-                    # extraCfg
-                    ${cfg.extraCfg}
                   '';
               };
             }

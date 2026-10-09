@@ -10,7 +10,7 @@
       hj.packages = [ packages'.helium ];
 
       my.hyprland.startup = [
-        /* lua */ ''hl.exec_cmd("${lib.getExe packages'.helium}", { workspace = "1 silent" })''
+        /* lua */ ''hl.exec_cmd("${lib.getExe packages'.helium}", { workspace = "name:web silent" })''
       ];
 
       my.hyprland.lua.files."keybinds.helium".content = /* lua */ ''

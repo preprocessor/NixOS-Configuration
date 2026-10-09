@@ -53,7 +53,7 @@
               name = "spotify";
               match.class = "spotify";
               rules = {
-                workspace = "4 silent";
+                workspace = "name:media silent";
                 scrolling_width = 0.5;
               };
             }
