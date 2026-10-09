@@ -31,7 +31,6 @@
               oldHighlight = "red bold 52";
               newNormal = "green bold";
               newHighlight = "green bold 22";
-
             };
 
             diff = {
@@ -54,17 +53,34 @@
             showRandomTip = false;
             sidePanelWidth = 0.25;
             border = "single";
+
+            sidePanels = [
+              [
+                "files"
+                "worktrees"
+                "submodules"
+              ]
+              [
+                "branches"
+                "remotes"
+                "tags"
+              ]
+              [
+                "commits"
+                "reflog"
+                "stash"
+              ]
+            ];
           };
 
           keybinding = {
             universal = {
               jumpToBlock = [
-                "0"
                 "1"
                 "2"
                 "3"
-                "4"
               ];
+              focusMainView = "4";
             };
           };
 
