@@ -10,6 +10,24 @@
         bold_italic_font = ''family="Maple Mono NF" style="ExtraBold Italic"'';
         font_size = "14.5";
 
+        font_features =
+          let
+            font-features = "+cv01 +cv02 +cv03 +cv09 +cv10 +cv38 +cv40 +cv41 +cv42 +cv43 +cv64 +cv66 +ss03 +ss07 +ss08 +ss09 +ss10 +ss11";
+          in
+          [
+            "MapleMono-NF-Medium ${font-features}"
+            "MapleMono-NF-ExtraBold ${font-features}"
+            "MapleMono-NF-Italic ${font-features}"
+            "MapleMono-NF-ExtraBoldItalic ${font-features}"
+          ];
+
+        mouse_map = [
+          "right press ungrabbed combine : copy_to_clipboard : clear_selection"
+          "left press ungrabbed mouse_selection drag_or_normal_select"
+        ];
+
+        env = "TERMINAL=kitty";
+
         resize_debounce_time = "0 0";
 
         disable_ligatures = "cursor";
@@ -86,9 +104,9 @@
         color9   ${bright-red}
         color10  ${bright-green}
         color11  ${bright-yellow}
-        color12  ${bright-cyan}
-        color13  ${bright-blue}
-        color14  ${bright-magenta}
+        color12  ${bright-blue}
+        color13  ${bright-magenta}
+        color14  ${bright-cyan}
         color15  ${base04}
 
         # extended base16 colors
@@ -116,22 +134,6 @@
         "ctrl+shift+k" = "neighboring_window up";
         "ctrl+shift+j" = "neighboring_window down";
       };
-
-      extraCfg =
-        let
-          font-features = "+cv01 +cv02 +cv03 +cv09 +cv10 +cv38 +cv40 +cv41 +cv42 +cv43 +cv64 +cv66 +ss03 +ss07 +ss08 +ss09 +ss10 +ss11";
-        in
-        ''
-          font_features MapleMono-NF-Medium ${font-features}
-          font_features MapleMono-NF-ExtraBold ${font-features}
-          font_features MapleMono-NF-Italic ${font-features}
-          font_features MapleMono-NF-ExtraBoldItalic ${font-features}
-          mouse_map right press ungrabbed combine : copy_to_clipboard : clear_selection
-          mouse_map left press ungrabbed mouse_selection drag_or_normal_select
-
-          env TERMINAL=kitty
-        '';
     };
   };
-
 }
