@@ -12,6 +12,9 @@ applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dm
 gh = "github:{path}"
 nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}"
 
+[inputs.amane]
+url = "github:MystiaFin/amane"
+
 [inputs.bat-syntax-justfile]
 url = "gh:nk9/just_sublime"
 frozen = true
@@ -53,6 +56,10 @@ frozen = true
 group = "fonts"
 type = "fetch"
 
+[inputs.fvwm95]
+url = "gh:Mintsuki/fvwm95"
+type = "fetch"
+
 [inputs.helium]
 url = "gh:amaanq/helium-flake/"
 group = "general"
@@ -71,6 +78,10 @@ group = "nix"
 url = "gh:yayuuu/hyprland-scroll-overview"
 group = "general"
 type = "fetch"
+
+[inputs.microVM]
+url = "gh:microvm-nix/microvm.nix"
+group = "nix"
 
 [inputs.nix-cachyos-kernel]
 url = "gh:xddxdd/nix-cachyos-kernel/release"

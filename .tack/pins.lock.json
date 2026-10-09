@@ -1,5 +1,6 @@
 {
   "$declared": {
+    "amane": "github:MystiaFin/amane",
     "bat-syntax-justfile": "github:nk9/just_sublime",
     "cade": "github:manic-systems/cade",
     "chicago-font": "github:nikdog/chicago-font",
@@ -8,10 +9,12 @@
     "extra-metadata": "github:boydaihungst/file-extra-metadata.yazi",
     "fish-completion-sync": "github:iynaix/fish-completion-sync",
     "fragment-mono": "github:dtinth/fragment-mono-weights",
+    "fvwm95": "github:Mintsuki/fvwm95",
     "helium": "github:amaanq/helium-flake/",
     "helvetica-font": "github:Kyles-World/Helvetica-Font",
     "hjem": "github:feel-co/hjem",
     "hyprland-scroll-overview": "github:yayuuu/hyprland-scroll-overview",
+    "microVM": "github:microvm-nix/microvm.nix",
     "nix-cachyos-kernel": "github:xddxdd/nix-cachyos-kernel/release",
     "nix-gaming-edge": "github:powerofthe69/nix-gaming-edge",
     "nixos-core": "github:manic-systems/nixos-core/refs/tags/v1.0.1",
@@ -33,6 +36,14 @@
     "yazi-no-header": "github:onelocked/no-header-prompt.yazi",
     "yazi-plugins": "github:AminurAlam/yazi-plugins",
     "yaziline": "github:llanosrocas/yaziline.yazi"
+  },
+  "amane": {
+    "type": "github",
+    "owner": "MystiaFin",
+    "repo": "amane",
+    "rev": "7cf5fac4a98a13ca7098766b9118806073f57952",
+    "narHash": "sha256-bjJ5K6EEeo8UA97DemyaLLEaLQdNgi0U18in1slP/IM=",
+    "lastModified": 1791437618
   },
   "bat-syntax-justfile": {
     "type": "github",
@@ -106,6 +117,14 @@
     "narHash": "sha256-TF0LW+4axEQvmNRvRL7zZACkALA7SgM2EKZiqJQj7x0=",
     "lastModified": 1705316590
   },
+  "fvwm95": {
+    "type": "github",
+    "owner": "Mintsuki",
+    "repo": "fvwm95",
+    "rev": "93534427893b2e6f93c2612c8e9d82ec82cb07aa",
+    "narHash": "sha256-bkEpO11yXI4S66b74/bx+pb/b8ng/2tmWIFXloEke0g=",
+    "lastModified": 1700693215
+  },
   "helium": {
     "type": "github",
     "owner": "amaanq",
@@ -137,6 +156,14 @@
     "rev": "10eeefa0519e09992b68a1d2949781a876230f5c",
     "narHash": "sha256-EdtVRpwYkLtqTrNBA2VbGXpt7DMyMlRm6LCDNfI/1pU=",
     "lastModified": 1789949463
+  },
+  "microVM": {
+    "type": "github",
+    "owner": "microvm-nix",
+    "repo": "microvm.nix",
+    "rev": "f13928fe9900e91709d7ce581eefa47eaafa79e1",
+    "narHash": "sha256-jTx3O3MKqPjv+cDfBFQ5zlKECBEwzF91scC+mSumZyE=",
+    "lastModified": 1791551030
   },
   "nix-cachyos-kernel": {
     "type": "github",
