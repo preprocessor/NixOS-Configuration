@@ -1,9 +1,6 @@
 {
   exo.mods.neovim =
     { lib, ... }:
-    let
-      inherit (lib.nixvim) mkRaw;
-    in
     {
       plugins.snacks = {
         enable = true;
