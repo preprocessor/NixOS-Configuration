@@ -24,7 +24,6 @@
   exo.core =
     {
       packages',
-      self',
       pkgs,
       lib,
       ...
@@ -42,16 +41,16 @@
           chafa
           wget
           tree
-          just # a command runnner
+          just # a command runner
           fd # faster find
           sd # sed alternative
           jq # parse json
           cbonsai
           pipes-rs
           drift
+          pond
           neo
         ]
-        ++ [ self'.packages.pond ]
         ++ (with packages'; [
           pixprint
           rsakura
