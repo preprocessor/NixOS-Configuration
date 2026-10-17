@@ -74,12 +74,15 @@
         |> lib.flip lib.genAttrs (key: input.${key}.${system});
 
       # This is a hand-rolled version of flake-parts' withSystem.
-      # withSystem: builds the "perSystem args" bundle for one system and hands it to a callback f.
+      # withSystem: builds the "perSystem specialArgs" bundle for one system and hands it to a callback f.
       withSystem =
         system: f:
         f rec {
           # re-expose these so every module gets them for free
           inherit system inputs rootPath;
+
+          # Expose tack's meta section as a special arg
+          meta = inputs._meta;
 
           # The nixpkgs package set for this specific system
           pkgs = inputs.nixpkgs.legacyPackages.${system};
