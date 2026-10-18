@@ -125,7 +125,7 @@
           let
             cfg = config.my.vesktop;
           in
-          [ /* lua */ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:chat silent" })'' ];
+          [ /* lua */ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "3 silent" })'' ];
 
         my.hyprland.windowrules.vesktop = [
           {

@@ -11,7 +11,7 @@
         let
           cfg = config.programs.steam;
         in
-        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "name:steam silent" })'' ];
+        [ ''hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "5 silent" })'' ];
 
       hardware.steam-hardware.enable = true; # controller / Steam Deck input udev rules
       programs.steam = {
