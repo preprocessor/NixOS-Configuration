@@ -9,8 +9,8 @@
     { inputs', ... }:
     {
       nix.settings = {
-        substituters = [ "https://attic.xuyh0120.win/lantian" ];
-        trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
+        substituters = [ "https://cache.xinux.uz" ];
+        trusted-public-keys = [ "cache.xinux.uz:BXCrtqejFjWzWEB9YuGB7X2MV4ttBur1N8BkwQRdH+0=" ];
       };
 
       boot.kernelPackages =
