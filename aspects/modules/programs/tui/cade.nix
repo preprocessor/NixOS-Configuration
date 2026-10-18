@@ -1,7 +1,7 @@
 {
-  tack.inputs.cade.url = "github:manic-systems/cade";
+  tack.inputs.cade.url = "gh:manic-systems/cade";
 
-  exo.mods.core = { inputs, ... }: {
+  exo.core = { inputs, ... }: {
     imports = [ inputs.cade.nixosModules.default ];
 
     programs.cade.enable = true;
