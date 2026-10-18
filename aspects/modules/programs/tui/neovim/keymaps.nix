@@ -215,6 +215,30 @@
       -- jk/kj to exit insert mode
       map('i', 'jk', '<Esc>')
       map('i', 'kj', '<Esc>')
+
+      map('n', '<MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('i', '<MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('v', '<MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      -- Disable multi-click middle mouse
+      map('n', '<2-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('i', '<2-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('v', '<2-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+
+      map('n', '<3-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('i', '<3-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('v', '<3-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+
+      map('n', '<4-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('i', '<4-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('v', '<4-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+
+      map('n', '<5-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('i', '<5-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      map('v', '<5-MiddleMouse>', '<Nop>', { noremap = true, silent = true })
+      -- Disable middle mouse drag just in case
+      map('n', '<MiddleDrag>', '<Nop>', { noremap = true, silent = true })
+      map('i', '<MiddleDrag>', '<Nop>', { noremap = true, silent = true })
+      map('v', '<MiddleDrag>', '<Nop>', { noremap = true, silent = true })
     '';
 
     _file = ./keymaps.nix;

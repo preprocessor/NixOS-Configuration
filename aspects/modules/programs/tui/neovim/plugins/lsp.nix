@@ -126,9 +126,9 @@
             mode = "n";
           }
           {
-            key = "ga";
+            key = "<leader>ca";
             lspBufAction = "code_action";
-            options.desc = "[G]oto Code [A]ction";
+            options.desc = "Goto [C]ode [A]ction";
             mode = [
               "n"
               "x"
