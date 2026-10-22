@@ -122,6 +122,32 @@ in
               '';
             };
 
+            tag = mkOption {
+              type = types.nullOr types.str;
+              description = ''
+                Follow the newest release tag matching this template instead of a
+                branch. `{version}` matches numbers joined by `.`, `-` or `_`, and
+                the highest version wins; tags with words in the version are
+                skipped. A trailing `*` matches anything after the template, such
+                as a build hash, and ranks by the version alone; it can't be used
+                with `tags_from`. For `type = "fixed"` the url may name the release
+                asset with `{tag}` and `{version}`, where `{version}` is the matched
+                version.
+              '';
+              example = "GE-Proton{version}";
+            };
+
+            tags_from = mkOption {
+              type = types.nullOr types.str;
+              description = ''
+                Only with `tag` and `type = "fixed"`: read tags from this repo url
+                or http(s) page, such as a download listing, where every name the
+                template matches counts as a tag. tack takes the newest matching
+                tag whose release already has the asset.
+              '';
+              example = "https://download.linphone.org/releases/linux/app/";
+            };
+
             group = mkOption {
               type = types.nullOr types.str;
               description = ''
@@ -340,9 +366,10 @@ in
                       updatedPatchInputs =
                         newKeys |> lib.filter (name: lib.subtractLists (prevPatches name) (currPatches name) != [ ]);
                     in
-                    lib.optionalString (
-                      updatedPatchInputs != [ ]
-                    ) "tack patch update ${lib.join " " updatedPatchInputs}"
+                    lib.optionalString (updatedPatchInputs != [ ]) /* bash */ ''
+                      tack patch update ${lib.join " " updatedPatchInputs}
+                      git add "''${TACK_DIR:-.tack}/patches"
+                    ''
                   }
 
                   ${
