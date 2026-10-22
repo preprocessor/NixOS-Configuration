@@ -16,10 +16,6 @@
           hl.bind("SUPER + CTRL + " .. key, utils.move(key))
         end
 
-        -- Consume/Expel
-        hl.bind("SUPER + bracketright", hl.dsp.layout("consume_or_expel next"))
-        hl.bind("SUPER + bracketleft", hl.dsp.layout("consume_or_expel prev"))
-
         -- Move/resize windows with mainMod + LMB/RMB and dragging
         hl.bind("SUPER + mouse:272", function()
           local win = hl.get_active_window()
@@ -36,17 +32,17 @@
 
         hl.bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "toggle", layout_aware = false }))
 
-        hl.bind("SUPER + R", hl.dsp.layout("colresize +conf"))
+        hl.bind("SUPER + S", hl.dsp.layout("swapsplit"))
 
-        hl.bind("SUPER + SHIFT + R", hl.dsp.layout("colresize -conf"))
+        hl.bind("SUPER + M", hl.dsp.layout("movetoroot active unstable"))
 
-        hl.bind("SUPER + C", function()
-          local prev = hl.get_config("scrolling.focus_fit_method")
+        hl.bind("SUPER + R", hl.dsp.layout("rotatesplit 90"))
 
-          hl.config({ scrolling = { focus_fit_method = 0 } })
-          hl.dispatch(hl.dsp.layout("center"))
-          hl.config({ scrolling = { focus_fit_method = prev } })
-        end)
+        hl.bind("SUPER + SHIFT + R", hl.dsp.layout("rotatesplit -90"))
+
+        hl.bind("SUPER + bracketleft", hl.dsp.layout("splitratio -0.1"))
+
+        hl.bind("SUPER + bracketright", hl.dsp.layout("splitratio +0.1"))
 
         hl.bind("ALT + TAB", function()
           local window = hl.get_active_window()

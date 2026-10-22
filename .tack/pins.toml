@@ -12,9 +12,6 @@ applefont = "https://devimages-cdn.apple.com/design/resources/download/{path}.dm
 gh = "github:{path}"
 nixpkgs = "github:NixOS/nixpkgs/nixpkgs-{path}"
 
-[inputs.amane]
-url = "github:MystiaFin/amane"
-
 [inputs.bat-syntax-justfile]
 url = "gh:nk9/just_sublime"
 frozen = true
@@ -22,7 +19,7 @@ group = "tui"
 type = "fetch"
 
 [inputs.cade]
-url = "github:manic-systems/cade"
+url = "gh:manic-systems/cade"
 
 [inputs.chicago-font]
 url = "gh:nikdog/chicago-font"
@@ -73,11 +70,6 @@ type = "fetch"
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 group = "nix"
-
-[inputs.hyprland-scroll-overview]
-url = "gh:yayuuu/hyprland-scroll-overview"
-group = "general"
-type = "fetch"
 
 [inputs.microVM]
 url = "gh:microvm-nix/microvm.nix"

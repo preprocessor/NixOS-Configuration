@@ -6,7 +6,6 @@
         hyprland-bundle = pkgs.symlinkJoin {
           name = "hyprland-bundle";
           paths = [
-            self'.packages.hyprland-scroll-overview
             pkgs.xdg-desktop-portal-hyprland
             pkgs.hyprland
           ];
@@ -331,7 +330,7 @@
 
           plugins = mkOption {
             type = with lib.types; attrsOf (either package path);
-            default = [ ];
+            default = { };
             description = ''
               List of Hyprland plugins to use. Can either be packages or
               absolute plugin paths.
