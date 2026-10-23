@@ -263,9 +263,9 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "7c45837d553b6cb8032bd7fec2106fdb628e4017",
-    "narHash": "sha256-EEfOrxveuFcXigE5frf6U5rzw1JdzRZ9IcSZzysnHGA=",
-    "lastModified": 1792507858
+    "rev": "40a91421893bfd1ae02ef7a55afd41f886558d8c",
+    "narHash": "sha256-j8WhDW2kjCiTu+nrfLBGUDmARbNet4wa6UeMEqtlOdM=",
+    "lastModified": 1792730142
   },
   "systemctl-tui": {
     "type": "github",
