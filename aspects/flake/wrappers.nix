@@ -23,7 +23,7 @@ let
 
             This differs from runtimePackages, which links packages for use at runtime with the makeWrapper lib
 
-            Note: As of writing, packages in extraPackages do not inherit environment variables passed to the wrapper.
+            Note: As of writing, packages in linkedPackages do not inherit environment variables passed to the wrapper.
           '';
         };
 

@@ -1,4 +1,6 @@
 {
+  # base24 Scheme format (for base16 skip base10+)
+  #
   # base00: background
   # base01: lighter bg
   # base02: selection background
