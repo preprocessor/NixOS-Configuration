@@ -5,12 +5,10 @@
 
     inputs =
       {
+        # Apple fonts
         sf-pro = {
           url = "applefont:SF-Pro";
           type = "fixed";
-          follows = {
-            nixpkgs = "nixpkgs";
-          };
         };
         sf-mono = {
           url = "applefont:SF-Mono";
@@ -25,6 +23,7 @@
           type = "fixed";
         };
 
+        # Individual fonts
         fragment-mono = {
           url = "gh:dtinth/fragment-mono-weights";
           type = "fetch";
@@ -37,14 +36,15 @@
           url = "gh:Kyles-World/Helvetica-Font";
           type = "fetch";
         };
+
       }
       |> lib.mapAttrs (
         _: value:
-        value
-        // {
+        {
           group = "fonts";
           frozen = true;
         }
+        // value # Rhs prio lets value override the above attrs if we ever need to
       );
   };
 
@@ -90,6 +90,7 @@
         };
     in
     {
+      # legacyPackages so that `nix flake show` does not have fonts in the packages list
       legacyPackages = {
         apple-fonts =
           let
@@ -117,6 +118,25 @@
         fragment-mono-font =
           mkFont "fragment-mono" inputs.fragment-mono
             "install -m444 -Dt $out/share/fonts/truetype $src/fonts/ttf/*.ttf $src/weights/*.ttf";
+
+        # https://int10h.org/oldschool-pc-fonts/fontlist/
+        oldschool-pc-fonts = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+          allowSubstitutes = false;
+          preferLocalBuild = true;
+          pname = "oldschool-pc-fonts";
+          src = pkgs.fetchzip {
+            url = "https://int10h.org/oldschool-pc-fonts/download/oldschool_pc_font_pack_v2.2_linux.zip";
+            hash = "sha256-54U8tZzvivTSOgmGesj9QbIgkSTm9w4quMhsuEc0Xy4=";
+          };
+
+          version = "0.1";
+
+          dontBuild = true;
+          dontConfigure = true;
+          nativeBuildInputs = [ pkgs.installFonts ];
+
+          sourceRoot = "${finalAttrs.src.name}/ttf - Px (pixel outline)/";
+        });
       };
     };
 
@@ -125,7 +145,9 @@
     {
       # hj.packages = [ pkgs.font-manager ];
 
-      fonts.packages = [ self'.legacyPackages.helvetica-font ];
+      fonts.packages = with self'.legacyPackages; [
+        helvetica-font
+      ];
 
       my.gtk.fonts = {
         serif = {
@@ -153,11 +175,17 @@
     };
 
   exo.host.ramiel =
-    { self', ... }:
+    { pkgs, self', ... }:
     {
-      fonts.packages = with self'.legacyPackages; [
-        chicago-font
-        fragment-mono-font
-      ];
+      fonts.packages =
+        with self'.legacyPackages;
+        [
+          chicago-font
+          fragment-mono-font
+          oldschool-pc-fonts
+        ]
+        ++ [
+          pkgs.termsyn
+        ];
     };
 }
