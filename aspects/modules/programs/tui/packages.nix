@@ -17,6 +17,7 @@
         (gnuplot.override { withQt = true; })
         libreoffice-qt
         imagemagick
+        libnotify
         mcat
       ];
     };
@@ -39,6 +40,7 @@
           trash-cli
           ripgrep
           chafa
+          croc
           wget
           tree
           just # a command runner
