@@ -1,6 +1,6 @@
 {
   perSystem =
-    { self', pkgs, ... }:
+    { pkgs, ... }:
     {
       remotePackages = {
         hyprland-bundle = pkgs.symlinkJoin {
