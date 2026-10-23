@@ -47,9 +47,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "cade",
-    "rev": "429c5f5a64bc410333240c244614ce2847abc0c7",
-    "narHash": "sha256-9TTpgk5rErE3jsT8/idoncoPylNl6+61f9WnI59O2WQ=",
-    "lastModified": 1792574240
+    "rev": "2cd50bdd6901ab61c65fc22cab834527a439899a",
+    "narHash": "sha256-tQdJkyme27yMAOLq4rVu7uvATSHIfNTELmzO3c2eSzk=",
+    "lastModified": 1792741313
   },
   "chicago-font": {
     "type": "github",
@@ -71,9 +71,9 @@
     "type": "github",
     "owner": "SHORiN-KiWATA",
     "repo": "cliphist-tui",
-    "rev": "3b1a0c983adc8933953dd90b41c41da8b00e11ea",
-    "narHash": "sha256-fOwy54AF5qZkJPpfKvV0Hv/Nnrjzbt4uqVqbZZs3JX8=",
-    "lastModified": 1791519338
+    "rev": "c54f131bb680b433022df0f5e363793646640d7e",
+    "narHash": "sha256-GtRI74NdZNmIOh8xlgWdMTmW7wCpLpMNDQ1NClr99NY=",
+    "lastModified": 1792771539
   },
   "extra-metadata": {
     "type": "github",
@@ -247,9 +247,9 @@
     "type": "github",
     "owner": "Mic92",
     "repo": "sops-nix",
-    "rev": "a1438ca361b05d1e70854d5495abcb34fdf6ff47",
-    "narHash": "sha256-r4G33ygU307QCwyngAS6E9BMhnCRPyZrL7UxRCMrqo0=",
-    "lastModified": 1792308394
+    "rev": "e80b8b733d8452a751a25d0063abc9683b6c8185",
+    "narHash": "sha256-4ChDjNgJM5uKwTuecLHxGlafAtoyKo5a7ip23J5IG3M=",
+    "lastModified": 1792655475
   },
   "spicetify-nix": {
     "type": "github",
