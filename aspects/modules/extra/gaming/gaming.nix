@@ -116,13 +116,9 @@
         }
       ];
 
-      programs.obs-studio = {
+      programs.gpu-screen-recorder = {
         enable = true;
-        plugins = with pkgs.obs-studio-plugins; [
-          obs-pipewire-audio-capture
-          input-overlay
-          obs-vaapi # better amd support
-        ];
+        ui.enable = true; # For overlay
       };
 
       hj.packages = with pkgs; [
