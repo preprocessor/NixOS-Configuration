@@ -132,7 +132,7 @@
             name = "hide vesktop";
             match.class = "^vesktop$";
             rules = {
-              workspace = "name:chat silent";
+              workspace = "3 silent";
               tag = "+hidden";
             };
           }
