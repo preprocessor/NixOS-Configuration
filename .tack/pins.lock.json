@@ -12,6 +12,7 @@
     "helium": "github:amaanq/helium-flake/",
     "helvetica-font": "github:Kyles-World/Helvetica-Font",
     "hjem": "github:feel-co/hjem",
+    "lithic": "github:NotAShelf/lithic",
     "microVM": "github:microvm-nix/microvm.nix",
     "nix-cachyos-kernel": "github:xddxdd/nix-cachyos-kernel/release",
     "nix-gaming-edge": "github:powerofthe69/nix-gaming-edge",
@@ -30,6 +31,7 @@
     "sxyazi": "github:sxyazi/yazi",
     "systemctl-tui": "github:rgwood/systemctl-tui",
     "tack": "github:manic-systems/tack",
+    "vintage-story-nix": "github:PierreBorine/vintagestory-nix",
     "yazi-fuzzy-search": "github:onelocked/fuzzy-search.yazi",
     "yazi-no-header": "github:onelocked/no-header-prompt.yazi",
     "yazi-plugins": "github:AminurAlam/yazi-plugins",
@@ -138,6 +140,14 @@
     "rev": "4cd448d5b3220b8bbccdb6e7e8185b515f63a776",
     "narHash": "sha256-xj1hq1P05Lekx9tAtyJGSMFw8Z5oK4jh+n7Qr0Q1m5k=",
     "lastModified": 1792547720
+  },
+  "lithic": {
+    "type": "github",
+    "owner": "NotAShelf",
+    "repo": "lithic",
+    "rev": "2c5667e1b65ee74c238b8375fa9b74cc7ba8a6c0",
+    "narHash": "sha256-oTAvrP0geu+XZ89FI+mE65aA7CtRT+Ltm8x3h5FWlzw=",
+    "lastModified": 1791542020
   },
   "microVM": {
     "type": "github",
@@ -290,6 +300,14 @@
     "rev": "f7cce4f7e53c9482661b158824522fefef2d7920",
     "narHash": "sha256-vOIIx/QU6xEjMZTMZM8GNNXS/p4Idvw8V09KT5zNwTI=",
     "lastModified": 1792630541
+  },
+  "vintage-story-nix": {
+    "type": "github",
+    "owner": "PierreBorine",
+    "repo": "vintagestory-nix",
+    "rev": "5353839b03bd8aaa18d0fc1e3e04c7f8dd5bf1f0",
+    "narHash": "sha256-3KEB/yZKGkqBU7BtzrTq7kMWzp16NHI0bItZZdDbAMI=",
+    "lastModified": 1792146607
   },
   "yazi-fuzzy-search": {
     "type": "github",

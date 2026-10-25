@@ -71,6 +71,10 @@ type = "fetch"
 url = "gh:feel-co/hjem"
 group = "nix"
 
+[inputs.lithic]
+url = "gh:NotAShelf/lithic"
+group = "gaming"
+
 [inputs.microVM]
 url = "gh:microvm-nix/microvm.nix"
 group = "nix"
@@ -152,6 +156,10 @@ type = "fetch"
 [inputs.tack]
 url = "gh:manic-systems/tack"
 group = "nix"
+
+[inputs.vintage-story-nix]
+url = "gh:PierreBorine/vintagestory-nix"
+group = "gaming"
 
 [inputs.yazi-fuzzy-search]
 url = "gh:onelocked/fuzzy-search.yazi"
