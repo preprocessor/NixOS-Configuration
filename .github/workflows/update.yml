@@ -1,0 +1,83 @@
+---
+name: Update
+on:
+  schedule:
+    # Run every day at noon
+    - cron: 0 12 * * *
+  workflow_dispatch:  # Allow manual triggering
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: update
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.diff.outputs.changed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+      - name: Update pins.lock.json
+        run: nix run .#update-tack
+      - name: Diff
+        id: diff
+        run: |
+          if git diff --quiet .tack/pins.lock.json; then
+            echo "Nothing ever happens."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "SOMETHING HAPPENED"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Upload pins.lock.json
+        if: steps.diff.outputs.changed == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: pins
+          path: |
+            .tack/pins.lock.json
+  check:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Download versions.json
+        uses: actions/download-artifact@v8
+        with:
+          name: pins
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+      - name: Check
+        run: nix flake check --print-build-logs
+  commit:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Download versions.json
+        uses: actions/download-artifact@v8
+        with:
+          name: versions
+      - name: Commit, PR, Merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |-
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git switch --create "update-versions-${{ github.run_id }}-${{ github.run_attempt }}"
+          git add .tack/pins.lock.json
+          git commit --message "tack: update inputs"
+          git push origin HEAD
+          { echo '```diff'; git diff HEAD^ -- .tack/pins.lock.json; echo '```'; } \
+          | gh pr create --title "$title" --body-file -
+          gh pr merge --rebase --delete-branch || { gh pr close --delete-branch; exit 1; }
