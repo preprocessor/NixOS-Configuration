@@ -3,7 +3,7 @@ name: Update
 on:
   schedule:
     # Run every day at noon
-    - cron: 0 12 * * *
+    - cron: 0 */12 * * *
   workflow_dispatch:  # Allow manual triggering
 permissions:
   contents: write
@@ -20,7 +20,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Install Nix
-        uses: cachix/install-nix-action@v31
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            experimental-features = pipe-operators
       - name: Update pins.lock.json
         run: nix run .#update-tack
       - name: Diff
@@ -55,7 +58,10 @@ jobs:
         with:
           name: pins
       - name: Install Nix
-        uses: cachix/install-nix-action@v31
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            experimental-features = pipe-operators
       - name: Check
         run: nix flake check --print-build-logs
   commit:
