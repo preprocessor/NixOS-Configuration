@@ -179,5 +179,4 @@ type = "fetch"
 [inputs.yaziline]
 url = "gh:llanosrocas/yaziline.yazi"
 group = "yazi"
-patches = ["https://github.com/llanosrocas/yaziline.yazi/pull/10"]
 type = "fetch"
