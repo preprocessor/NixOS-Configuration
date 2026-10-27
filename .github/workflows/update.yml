@@ -1,8 +1,8 @@
 ---
-name: Update
+name: Update pins
 on:
   schedule:
-    # Run every day at noon
+    # Run every ~12 hours
     - cron: 0 */12 * * *
   workflow_dispatch:  # Allow manual triggering
 permissions:
@@ -25,7 +25,9 @@ jobs:
           extra-conf: |
             experimental-features = pipe-operators
       - name: Update pins.lock.json
-        run: nix run .#update-tack
+        run: |
+          nix run .#tack materialize
+          nix run .#tack update
       - name: Diff
         id: diff
         run: |
@@ -53,7 +55,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Download versions.json
+      - name: Download pins.lock.json
         uses: actions/download-artifact@v8
         with:
           name: pins
@@ -70,20 +72,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Download versions.json
+      - name: Download pins.lock.json
         uses: actions/download-artifact@v8
         with:
-          name: versions
+          name: pins
       - name: Commit, PR, Merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |-
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git switch --create "update-versions-${{ github.run_id }}-${{ github.run_attempt }}"
+          git switch --create "update-inputs-${{ github.run_id }}-${{ github.run_attempt }}"
+          mv pins.lock.json .tack
           git add .tack/pins.lock.json
           git commit --message "tack: update inputs"
           git push origin HEAD
           { echo '```diff'; git diff HEAD^ -- .tack/pins.lock.json; echo '```'; } \
-          | gh pr create --title "$title" --body-file -
+          | gh pr create --title "Update tack inputs" --body-file -
           gh pr merge --rebase --delete-branch || { gh pr close --delete-branch; exit 1; }

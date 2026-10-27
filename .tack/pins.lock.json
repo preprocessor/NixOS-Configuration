@@ -8,12 +8,10 @@
     "extra-metadata": "github:boydaihungst/file-extra-metadata.yazi",
     "fish-completion-sync": "github:iynaix/fish-completion-sync",
     "fragment-mono": "github:dtinth/fragment-mono-weights",
-    "fvwm95": "github:Mintsuki/fvwm95",
     "helium": "github:amaanq/helium-flake/",
     "helvetica-font": "github:Kyles-World/Helvetica-Font",
     "hjem": "github:feel-co/hjem",
     "lithic": "github:NotAShelf/lithic",
-    "microVM": "github:microvm-nix/microvm.nix",
     "nix-cachyos-kernel": "github:xddxdd/nix-cachyos-kernel/release",
     "nix-gaming-edge": "github:powerofthe69/nix-gaming-edge",
     "nixos-core": "github:manic-systems/nixos-core/refs/tags/v1.0.1",
@@ -109,14 +107,6 @@
     "narHash": "sha256-TF0LW+4axEQvmNRvRL7zZACkALA7SgM2EKZiqJQj7x0=",
     "lastModified": 1705316590
   },
-  "fvwm95": {
-    "type": "github",
-    "owner": "Mintsuki",
-    "repo": "fvwm95",
-    "rev": "93534427893b2e6f93c2612c8e9d82ec82cb07aa",
-    "narHash": "sha256-bkEpO11yXI4S66b74/bx+pb/b8ng/2tmWIFXloEke0g=",
-    "lastModified": 1700693215
-  },
   "helium": {
     "type": "github",
     "owner": "amaanq",
@@ -148,14 +138,6 @@
     "rev": "2c5667e1b65ee74c238b8375fa9b74cc7ba8a6c0",
     "narHash": "sha256-oTAvrP0geu+XZ89FI+mE65aA7CtRT+Ltm8x3h5FWlzw=",
     "lastModified": 1791542020
-  },
-  "microVM": {
-    "type": "github",
-    "owner": "microvm-nix",
-    "repo": "microvm.nix",
-    "rev": "4876e2ae2de6ce225f4ccf664ae441128aa3f03a",
-    "narHash": "sha256-0DS+A3BsygKRpKe0qmUWVDSfKqpIHZCpHJagAklE0o4=",
-    "lastModified": 1792810338
   },
   "nix-cachyos-kernel": {
     "type": "github",
@@ -339,6 +321,20 @@
     "repo": "yaziline.yazi",
     "rev": "029b27d55361b4b87d0982237f9730b49b4e7a3a",
     "narHash": "sha256-oYvbhAi1xHn8XKgnwBYrHBqRReX4kJDkmSTs15RS/2U=",
-    "lastModified": 1786810126
+    "lastModified": 1786810126,
+    "patched": {
+      "path": "/nix/store/lasxg6f9cfhb0y1b4b67dgfqqz0mwvy8-source",
+      "narHash": "sha256-V0NaOdpsLo3K6gM7iy8rrVurgg0VfQ1xjgbPcwkTLIY=",
+      "lastModified": 1786810126,
+      "patches": [
+        {
+          "source": "https://github.com/llanosrocas/yaziline.yazi/pull/10",
+          "url": "https://github.com/llanosrocas/yaziline.yazi/pull/10",
+          "file": "patches/yaziline/pr-10.patch",
+          "sha256": "5cd038d9ecb53614655cfa3bd99d604df9f00961bd8fb53344bf0a2b04417b83",
+          "head": "1affbc840537f9d290f8ebadae81618024fd57b5"
+        }
+      ]
+    }
   }
 }

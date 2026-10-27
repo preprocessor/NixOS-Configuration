@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+  workflow_run:
+    workflows: [Update pins]
+    types: [completed]
 jobs:
   prepare-matrix:
     name: Check Cache

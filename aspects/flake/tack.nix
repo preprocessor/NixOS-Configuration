@@ -257,157 +257,134 @@ in
       {
         remotePackages = { inherit (packages') tack; };
 
-        apps = {
-          write-tack = {
-            type = "app";
-            meta.description = "A flake-file like, pins.toml updater for tack";
-            program = lib.getExe (
-              pkgs.writeShellApplication {
-                name = "write-tack";
+        apps.write-tack = {
+          type = "app";
+          meta.description = "A flake-file like, pins.toml updater for tack";
+          program = lib.getExe (
+            pkgs.writeShellApplication {
+              name = "write-tack";
 
-                derivationArgs = {
-                  allowSubstitutes = false;
-                  preferLocalBuild = true;
-                };
+              derivationArgs = {
+                allowSubstitutes = false;
+                preferLocalBuild = true;
+              };
 
-                runtimeInputs = [
-                  self'.packages.tack
-                  pkgs.delta
-                ];
+              runtimeInputs = [
+                self'.packages.tack
+                pkgs.delta
+              ];
 
-                text =
-                  let
-                    tack = config.tack |> lib.filterAttrsRecursive (_: value: !isNull value); # Toml generator does not like null values
-                    nameValuePairToToml = n: v: "${lib.strings.escapeNixIdentifier n} = ${mapValueToTomlRhs v}";
-                    mapAttrSetToToml = sep: lib.concatMapAttrsStringSep sep nameValuePairToToml;
-                    mapValueToTomlRhs = v: if lib.isAttrs v then "{ ${mapAttrSetToToml ", " v} }" else lib.toJSON v;
-                    tackOptsToml = # Tack options section
-                      tack
-                      |> lib.flip lib.removeAttrs [ "inputs" ]
-                      |> lib.concatMapAttrsStringSep "\n" (
-                        name: value: ''
-                          [${name}]
-                          ${value |> mapAttrSetToToml "\n"}
-                        ''
-                      );
-                    tackInputsToml = # Tack inputs section
-                      tack.inputs
-                      |> lib.concatMapAttrsStringSep "\n\n" (
-                        name: value:
-                        ''
-                          [inputs.${name}]
-                          url = "${value.url}"
-                          ${value |> lib.flip lib.removeAttrs [ "url" ] |> mapAttrSetToToml "\n"}
-                        ''
-                        |> lib.trim
-                      );
-                    # The above is as minimal of a pins.toml generator that I can cook up. I did this because I was not a fan
-                    # of how pkgs.formats.toml handles nested attributes. This also lets the file be written so that the inputs
-                    # are last and the first item of each input is it's url.
-                    oldTackToml = lib.importTOML (rootPath + /.tack/pins.toml); # Read the current pins.toml
-                    oldInputs = oldTackToml.inputs;
-                    newInputs = tack.inputs;
-                    oldKeys = lib.attrNames oldInputs;
-                    newKeys = lib.attrNames newInputs;
-                    # Inputs that exist in new but not in old
-                    newInputNames = newKeys |> lib.subtractLists oldKeys;
-                    # Input-level options that, if changed, should *not* trigger a `tack update`
-                    normalizeInput = lib.flip lib.removeAttrs [
-                      "patches" # patches are managed via a separate method below
-                      "frozen"
-                      "group"
-                    ];
-                    # Inputs that exist in both but have changed enough to need a `tack update`
-                    changedInputNames =
-                      lib.intersectLists oldKeys newKeys
-                      |> lib.filter (name: normalizeInput oldInputs.${name} != normalizeInput newInputs.${name});
-
-                    prevPatches = name: oldInputs.${name}.patches or [ ];
-                    currPatches = name: newInputs.${name}.patches or [ ];
-                  in
-                  /* bash */ ''
-                    PINS_FILE="''${TACK_DIR:-.tack}/pins.toml"
-
-                    if [[ ! -f "$PINS_FILE" ]]; then
-                      echo "Error: file not found: $PINS_FILE" >&2
-                      exit 1
-                    fi
-
-                    TMP_PINS="$(mktemp -t old_pins.toml.XXXXX)"
-                    trap 'rm -f "$TMP_PINS"' EXIT # Delete temp file on script exit
-
-                    ${lib.optionalString (tack != oldTackToml) /* bash */ ''cp "$PINS_FILE" "$TMP_PINS"''}
-
-                    ${
-                      newKeys
-                      |> lib.concatMap (
-                        name:
-                        lib.subtractLists (currPatches name) (prevPatches name)
-                        |> map (patch: "tack patch rm ${name} ${lib.escapeShellArg patch}")
-                      )
-                      |> lib.concatLines
-                    }
-
-                    ${
-                      oldKeys
-                      |> lib.subtractLists newKeys
-                      |> map (removedInput: "tack rm ${removedInput}")
-                      |> lib.concatLines
-                    }
-
-                    ${lib.optionalString (tack != oldTackToml) /* bash */ ''
-                      cat << 'EOF' > "$PINS_FILE"
-                      ${tackOptsToml}
-                      ${tackInputsToml}
-                      EOF
-                    ''}
-
-                    ${
-                      let
-                        updatedPatchInputs =
-                          newKeys |> lib.filter (name: lib.subtractLists (prevPatches name) (currPatches name) != [ ]);
-                      in
-                      lib.optionalString (updatedPatchInputs != [ ]) /* bash */ ''
-                        tack patch update ${lib.join " " updatedPatchInputs}
-                        git add "''${TACK_DIR:-.tack}/patches"
+              text =
+                let
+                  tack = config.tack |> lib.filterAttrsRecursive (_: value: !isNull value); # Toml generator does not like null values
+                  nameValuePairToToml = n: v: "${lib.strings.escapeNixIdentifier n} = ${mapValueToTomlRhs v}";
+                  mapAttrSetToToml = sep: lib.concatMapAttrsStringSep sep nameValuePairToToml;
+                  mapValueToTomlRhs = v: if lib.isAttrs v then "{ ${mapAttrSetToToml ", " v} }" else lib.toJSON v;
+                  tackOptsToml = # Tack options section
+                    tack
+                    |> lib.flip lib.removeAttrs [ "inputs" ]
+                    |> lib.concatMapAttrsStringSep "\n" (
+                      name: value: ''
+                        [${name}]
+                        ${value |> mapAttrSetToToml "\n"}
                       ''
-                    }
+                    );
+                  tackInputsToml = # Tack inputs section
+                    tack.inputs
+                    |> lib.concatMapAttrsStringSep "\n\n" (
+                      name: value:
+                      ''
+                        [inputs.${name}]
+                        url = "${value.url}"
+                        ${value |> lib.flip lib.removeAttrs [ "url" ] |> mapAttrSetToToml "\n"}
+                      ''
+                      |> lib.trim
+                    );
+                  # The above is as minimal of a pins.toml generator that I can cook up. I did this because I was not a fan
+                  # of how pkgs.formats.toml handles nested attributes. This also lets the file be written so that the inputs
+                  # are last and the first item of each input is it's url.
+                  oldTackToml = lib.importTOML (rootPath + /.tack/pins.toml); # Read the current pins.toml
+                  oldInputs = oldTackToml.inputs;
+                  newInputs = tack.inputs;
+                  oldKeys = lib.attrNames oldInputs;
+                  newKeys = lib.attrNames newInputs;
+                  # Inputs that exist in new but not in old
+                  newInputNames = newKeys |> lib.subtractLists oldKeys;
+                  # Input-level options that, if changed, should *not* trigger a `tack update`
+                  normalizeInput = lib.flip lib.removeAttrs [
+                    "patches" # patches are managed via a separate method below
+                    "frozen"
+                    "group"
+                  ];
+                  # Inputs that exist in both but have changed enough to need a `tack update`
+                  changedInputNames =
+                    lib.intersectLists oldKeys newKeys
+                    |> lib.filter (name: normalizeInput oldInputs.${name} != normalizeInput newInputs.${name});
 
-                    ${
-                      let
-                        updatedInputs = newInputNames ++ changedInputNames;
-                      in
-                      lib.optionalString (updatedInputs != [ ]) "tack update ${lib.join " " updatedInputs}"
-                    }
+                  prevPatches = name: oldInputs.${name}.patches or [ ];
+                  currPatches = name: newInputs.${name}.patches or [ ];
+                in
+                /* bash */ ''
+                  PINS_FILE="''${TACK_DIR:-.tack}/pins.toml"
 
-                    ${lib.optionalString (tack != oldTackToml) /* bash */ ''
-                      delta --dark --paging=never --diff-highlight "$TMP_PINS" "$PINS_FILE" || true
-                    ''}
-                  '';
-              }
-            );
-          };
+                  if [[ ! -f "$PINS_FILE" ]]; then
+                    echo "Error: file not found: $PINS_FILE" >&2
+                    exit 1
+                  fi
 
-          update-tack = {
-            type = "app";
-            meta.description = "Update tack, for use with workflows";
-            program = lib.getExe (
-              pkgs.writeShellApplication {
-                name = "update-remotes";
+                  TMP_PINS="$(mktemp -t old_pins.toml.XXXXX)"
+                  trap 'rm -f "$TMP_PINS"' EXIT # Delete temp file on script exit
 
-                derivationArgs = {
-                  allowSubstitutes = false;
-                  preferLocalBuild = true;
-                };
+                  ${lib.optionalString (tack != oldTackToml) /* bash */ ''cp "$PINS_FILE" "$TMP_PINS"''}
 
-                runtimeInputs = [
-                  self'.packages.tack
-                ];
+                  ${
+                    newKeys
+                    |> lib.concatMap (
+                      name:
+                      lib.subtractLists (currPatches name) (prevPatches name)
+                      |> map (patch: "tack patch rm ${name} ${lib.escapeShellArg patch}")
+                    )
+                    |> lib.concatLines
+                  }
 
-                text = "tack update";
-              }
-            );
-          };
+                  ${
+                    oldKeys
+                    |> lib.subtractLists newKeys
+                    |> map (removedInput: "tack rm ${removedInput}")
+                    |> lib.concatLines
+                  }
+
+                  ${lib.optionalString (tack != oldTackToml) /* bash */ ''
+                    cat << 'EOF' > "$PINS_FILE"
+                    ${tackOptsToml}
+                    ${tackInputsToml}
+                    EOF
+                  ''}
+
+                  ${
+                    let
+                      updatedPatchInputs =
+                        newKeys |> lib.filter (name: lib.subtractLists (prevPatches name) (currPatches name) != [ ]);
+                    in
+                    lib.optionalString (updatedPatchInputs != [ ]) /* bash */ ''
+                      tack patch update ${lib.join " " updatedPatchInputs}
+                      git add "''${TACK_DIR:-.tack}/patches"
+                    ''
+                  }
+
+                  ${
+                    let
+                      updatedInputs = newInputNames ++ changedInputNames;
+                    in
+                    lib.optionalString (updatedInputs != [ ]) "tack update ${lib.join " " updatedInputs}"
+                  }
+
+                  ${lib.optionalString (tack != oldTackToml) /* bash */ ''
+                    delta --dark --paging=never --diff-highlight "$TMP_PINS" "$PINS_FILE" || true
+                  ''}
+                '';
+            }
+          );
         };
       };
 

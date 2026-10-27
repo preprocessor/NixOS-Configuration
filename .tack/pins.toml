@@ -53,10 +53,6 @@ frozen = true
 group = "fonts"
 type = "fetch"
 
-[inputs.fvwm95]
-url = "gh:Mintsuki/fvwm95"
-type = "fetch"
-
 [inputs.helium]
 url = "gh:amaanq/helium-flake/"
 group = "general"
@@ -74,10 +70,6 @@ group = "nix"
 [inputs.lithic]
 url = "gh:NotAShelf/lithic"
 group = "gaming"
-
-[inputs.microVM]
-url = "gh:microvm-nix/microvm.nix"
-group = "nix"
 
 [inputs.nix-cachyos-kernel]
 url = "gh:xddxdd/nix-cachyos-kernel/release"
@@ -179,4 +171,5 @@ type = "fetch"
 [inputs.yaziline]
 url = "gh:llanosrocas/yaziline.yazi"
 group = "yazi"
+patches = ["https://github.com/llanosrocas/yaziline.yazi/pull/10"]
 type = "fetch"
