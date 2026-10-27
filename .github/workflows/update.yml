@@ -25,7 +25,7 @@ jobs:
           extra-conf: |
             experimental-features = pipe-operators
       - name: Update pins.lock.json
-        run: nix run .#update-tack
+        run: nix run nixpkgs#tack update
       - name: Diff
         id: diff
         run: |
@@ -53,7 +53,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Download versions.json
+      - name: Download pins.lock.json
         uses: actions/download-artifact@v8
         with:
           name: pins
@@ -70,17 +70,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Download versions.json
+      - name: Download pins.lock.json
         uses: actions/download-artifact@v8
         with:
-          name: versions
+          name: pins
       - name: Commit, PR, Merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |-
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git switch --create "update-versions-${{ github.run_id }}-${{ github.run_attempt }}"
+          git switch --create "update-inputs-${{ github.run_id }}-${{ github.run_attempt }}"
+          mv pins.lock.json .tack
           git add .tack/pins.lock.json
           git commit --message "tack: update inputs"
           git push origin HEAD
