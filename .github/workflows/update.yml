@@ -26,8 +26,8 @@ jobs:
             experimental-features = pipe-operators
       - name: Update pins.lock.json
         run: |
-          nix run .#tack materialize
-          nix run .#tack update
+          nix run --accept-flake-config github:manic-systems/tack materialize
+          nix run --accept-flake-config github:manic-systems/tack update
       - name: Diff
         id: diff
         run: |
@@ -38,13 +38,15 @@ jobs:
             echo "SOMETHING HAPPENED"
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
-      - name: Upload pins.lock.json
+      - name: Upload pins
         if: steps.diff.outputs.changed == 'true'
         uses: actions/upload-artifact@v7
         with:
           name: pins
           path: |
             .tack/pins.lock.json
+            .tack/pins.toml
+            .tack/patches/*
   check:
     needs: update
     if: needs.update.outputs.changed == 'true'
@@ -55,17 +57,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Download pins.lock.json
+      - name: Download pins
         uses: actions/download-artifact@v8
         with:
           name: pins
+          path: .tack
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
         with:
           extra-conf: |
             experimental-features = pipe-operators
       - name: Check
-        run: nix flake check --print-build-logs
+        run: |
+          tree -a
+          nix flake check --print-build-logs
   commit:
     needs: check
     runs-on: ubuntu-latest
@@ -76,6 +81,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: pins
+          path: .tack
       - name: Commit, PR, Merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -83,9 +89,8 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git switch --create "update-inputs-${{ github.run_id }}-${{ github.run_attempt }}"
-          mv pins.lock.json .tack
-          git add .tack/pins.lock.json
-          git commit --message "tack: update inputs"
+          git add .tack
+          git commit --message "Updated inputs"
           git push origin HEAD
           { echo '```diff'; git diff HEAD^ -- .tack/pins.lock.json; echo '```'; } \
           | gh pr create --title "Update tack inputs" --body-file -
