@@ -25,6 +25,8 @@ jobs:
           extra-conf: |
             experimental-features = pipe-operators
       - name: Update pins.lock.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           nix run --accept-flake-config github:manic-systems/tack materialize
           nix run --accept-flake-config github:manic-systems/tack update

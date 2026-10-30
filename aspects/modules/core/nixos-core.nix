@@ -14,6 +14,6 @@
     { inputs, ... }:
     {
       imports = [ inputs.nixos-core.nixosModules.default ];
-      system.nixos-core.enable = true;
+      system.nixos-core.enable = false; # enable when initrd
     };
 }
