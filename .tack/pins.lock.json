@@ -111,9 +111,9 @@
     "type": "github",
     "owner": "amaanq",
     "repo": "helium-flake",
-    "rev": "c81f2a0b0b62bd9ac63a4db382fc5d61263d1253",
-    "narHash": "sha256-JK7KcDzslwangCgo2n6UNPR5dEgtFIe9wx5qFZYcgfg=",
-    "lastModified": 1793233101
+    "rev": "6d6114ae2fbb1a895bc89ed05eca6a9b28465c6c",
+    "narHash": "sha256-VZDg+XLqxhu2t740bXuelxoPPHHLeLoJL7ojOrFjrb4=",
+    "lastModified": 1793365859
   },
   "helvetica-font": {
     "type": "github",
@@ -127,9 +127,9 @@
     "type": "github",
     "owner": "feel-co",
     "repo": "hjem",
-    "rev": "d219ef55ab7311d884cf33e114561082fec95f34",
-    "narHash": "sha256-BohcZsIqBOd6YL6+jUkdM4GE+aQc72E6yrqVyt1z5X4=",
-    "lastModified": 1793026809
+    "rev": "8408642aa3035135fa6d70269dc93e0814e2a4f6",
+    "narHash": "sha256-hmlUXxCk6On7Hrop/TyS3//dgI2BLvaN4TEsOq1ma+Y=",
+    "lastModified": 1793333241
   },
   "lithic": {
     "type": "github",
@@ -151,9 +151,9 @@
     "type": "github",
     "owner": "powerofthe69",
     "repo": "nix-gaming-edge",
-    "rev": "aca764af36fb627650cbd798754a3d9c981dfeaa",
-    "narHash": "sha256-yi3wClBcb4WGSkwSBcMCdl3jZA4ggZdxkz+xTIiYt+0=",
-    "lastModified": 1793164364
+    "rev": "d225a803ea04fadcfabce3470eae9fee71e06c7a",
+    "narHash": "sha256-LCbhlI55ueI5Rm6tZCMEoD8ICZXDmzQQc8GYlZZLM9c=",
+    "lastModified": 1793360292
   },
   "nixos-core": {
     "type": "github",
@@ -279,9 +279,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "c5b02fb90d4ec5f74e90710e4d2aa335b1d6c280",
-    "narHash": "sha256-jIDNBwu9nXXu7iGWiQ9QpUIeC0IzloDdYuqvzlBfqr4=",
-    "lastModified": 1793235360
+    "rev": "ae4e10ee310a169ebeca050fd3a4d778f5f4e008",
+    "narHash": "sha256-lIjyz0oblEd74AfJviLzijEgefoE10CbrCqk4fAJycY=",
+    "lastModified": 1793365221
   },
   "vintage-story-nix": {
     "type": "github",
@@ -334,7 +334,8 @@
           "sha256": "5cd038d9ecb53614655cfa3bd99d604df9f00961bd8fb53344bf0a2b04417b83",
           "head": "1affbc840537f9d290f8ebadae81618024fd57b5"
         }
-      ]
+      ],
+      "diff": "1096985b51922ad5ab1023528118d37efc25e0b80f81002bef097b0919477ccb"
     }
   }
 }
