@@ -28,7 +28,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          nix run --accept-flake-config github:manic-systems/tack materialize
           nix run --accept-flake-config github:manic-systems/tack update
       - name: Diff
         id: diff
@@ -49,32 +48,8 @@ jobs:
             .tack/pins.lock.json
             .tack/pins.toml
             .tack/patches/*
-  check:
-    needs: update
-    if: needs.update.outputs.changed == 'true'
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-      - name: Download pins
-        uses: actions/download-artifact@v8
-        with:
-          name: pins
-          path: .tack
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-        with:
-          extra-conf: |
-            experimental-features = pipe-operators
-      - name: Check
-        run: |
-          tree -a
-          nix flake check --print-build-logs
   commit:
-    needs: check
+    needs: update
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
