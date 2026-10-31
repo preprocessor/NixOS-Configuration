@@ -4,10 +4,10 @@ This is my personal NixOS setup, and it's kind of grown into its own little flak
 framework. Instead of pulling in flake-parts, flake-file, wrapper-modules, stylix, base16.nix,
 and a pile of other helpers, it reimplements the pieces I actually use with `lib` and `nixpkgs`.
 
-I did this because:
-1. To learn more about NixOS and the Nix expression language.
-2. To have exactly the features I desire and nothing more.
-3. To make each abstraction (*hopefully*) small enough to read in one sitting.
+I did this to:
+1. Learn more about NixOS and the Nix expression language.
+2. Have exactly the features I desire and nothing more.
+3. Make each abstraction (*hopefully*) small enough to read in one sitting.
 
 ## Design Philosophy
 ### Self-reliance
@@ -59,7 +59,7 @@ If you're here to get ideas, these are worth reading:
 
 > file: [`flake.nix`](./flake.nix)
 
-This is the part that replaces flake-parts. It runs two `evalModules` passes: the first
+This is the part that replaces flake-parts perSystem. It runs two `evalModules` passes: the first
 evaluates the top-level `./aspects` tree (flake-level options, tack pins, schemes), and
 the second re-runs one `perSystem` module once per system with extra arguments.
 
@@ -76,16 +76,16 @@ The glue is a handful of small helpers:
 
 The result is a flake that still looks normal from the outside (`packages.x86_64-linux.*`,
 `nixosConfigurations.*`) but gives every module the same ergonomic arguments
-flake-parts users get.
+flake-parts users get, then extends those further.
 
 ## Composable host configurations
 
 > file: [`aspects/hosts/configurations.nix`](./aspects/hosts/configurations.nix)
 
-Hosts are declared as submodules, so `exo.configurations.ramiel` only accepts the fields
-it should: `system`, `stateVersion`, `user`, `hardware`, `scheme`, `modules`, and
-`extraConfig`. From each entry, the module builds a `nixosSystem` with the right
-`specialArgs` (`scheme`, `pkgs`, `inputs'`, `hostname`, `constants`, ..).
+Hosts are declared as submodules, so `exo.configurations.ramiel` only accepts the fields:
+`system`, `stateVersion`, `user`, `hardware`, `scheme`, `modules`, and `extraConfig`.
+From each entry, the module builds a `nixosSystem` with the right `specialArgs`
+(`scheme`, `pkgs`, `inputs'`, `hostname`, `constants`, ...)
 
 The composition is the important part. We merge deferred modules into sets:
 
@@ -137,7 +137,7 @@ there's no `flake.lock` and no `inputs` block to hand-edit. This module gives th
 a typed option schema (`tack.inputs.*`, `tack.shorturls`, `tack.signers`, `all_follow`,
 patches, follows, and so on) and then writes it back out with `write-tack`.
 
-`write-tack`: a shell app that turns the evaluated options into TOML with a custom generator,
+`write-tack`: a flake app that turns the evaluated options into TOML using a custom generator,
 diffs them against the current file, and only runs `tack update` or `tack patch` for
 inputs that actually changed. It also rewrites the file so every input starts with its
 `url`, which makes the diffs much nicer to read. Think of it as flake-file, except the
@@ -159,8 +159,11 @@ Then:
 ```sh
 nix run .#write-tack
 ```
-`.tack/pins.toml`
+
+Produces:
+
 ```toml
+# .tack/pins.toml
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 group = "nix"
