@@ -27,7 +27,7 @@
   # base17: bright-magenta
 
   schemes = {
-    magi = {
+    amber = {
       base00 = "#111111";
       base01 = "#222222";
       base02 = "#383838";
