@@ -279,9 +279,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "ae4e10ee310a169ebeca050fd3a4d778f5f4e008",
-    "narHash": "sha256-lIjyz0oblEd74AfJviLzijEgefoE10CbrCqk4fAJycY=",
-    "lastModified": 1793365221
+    "rev": "e23a2e52e369636d3f753c1e6a1929a9c2f23cf6",
+    "narHash": "sha256-GmTLGnYVdPmmh/DRfL3hQDChNnJoYw31F0zmmbG2sjc=",
+    "lastModified": 1793433204
   },
   "vintage-story-nix": {
     "type": "github",
