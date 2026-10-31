@@ -13,7 +13,8 @@
   exo.core =
     { inputs, ... }:
     {
-      imports = [ inputs.nixos-core.nixosModules.default ];
-      system.nixos-core.enable = false; # enable when initrd
+      # imports = [ inputs.nixos-core.nixosModules.default ];
+      # system.nixos-core.enable = true;
+      # enable when initrd issue is resolved
     };
 }

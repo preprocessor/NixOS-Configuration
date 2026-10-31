@@ -42,7 +42,7 @@
 
         shell_integration = "no-cursor";
 
-        background_opacity = "0.95";
+        background_opacity = "0.98";
 
         scrollback_lines = "10000";
         wheel_scroll_multiplier = "5.0";

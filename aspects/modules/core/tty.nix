@@ -27,7 +27,7 @@
           efi.canTouchEfiVariables = true;
         };
 
-        initrd.systemd.enable = true;
+        # initrd.systemd.enable = true;
         consoleLogLevel = 3;
         loader.timeout = 1;
         kernelParams = [

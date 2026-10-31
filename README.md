@@ -143,6 +143,29 @@ inputs that actually changed. It also rewrites the file so every input starts wi
 `url`, which makes the diffs much nicer to read. Think of it as flake-file, except the
 output is a tack `pins.toml` file.
 
+Inputs can be declared as children of the top-level tack option.
+
+```nix
+{
+  tack.inputs.hjem = {
+    url = "gh:feel-co/hjem";
+    group = "nix";
+  };
+
+  ...
+}
+```
+Then:
+```sh
+nix run .#write-tack
+```
+`.tack/pins.toml`
+```toml
+[inputs.hjem]
+url = "gh:feel-co/hjem"
+group = "nix"
+```
+
 ## Package wrappers
 
 > file: [`./aspects/flake/wrappers.nix`](./aspects/flake/wrappers.nix)
