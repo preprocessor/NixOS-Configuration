@@ -10,7 +10,7 @@ I did this because:
 3. To make each abstraction (*hopefully*) small enough to read in one sitting.
 
 ## Design Philosophy
-### Nixpkgs is the only dependency
+### Self-reliance
 
 The interesting machinery is built from `lib` and `nixpkgs` — no
 flake-parts, no flake-utils, no stylix, no base16.nix. Fewer moving parts means fewer
@@ -32,20 +32,20 @@ deferred modules instead of hand-rolled merging.
 
 ### Pins are data, not flake inputs
 
-Tack replaces `inputs` with a declarative, signed, patchable `pins.toml`. My own
+Tack replaces `inputs` with a declarative, signed, patchable `pins.toml`.
 `tack.nix` exposes that file as top-level nix options and generates it, ala flake-file.
 Dependencies show up in a reviewable diff instead of hiding in a `flake.lock`.
 
 ### Compose hosts from modules, not one giant config
 
-A host just declares its user, state version, colorscheme, hardware profile, and which
+A host declares its user, state version, colorscheme, hardware profile, and which
 modules it wants. Modules organize themselves into `core`, `skeleton`, `host`, `hardware`, or
 a named module, and `configurations.nix` assembles the final `nixosSystem`. Adding
 a capability is opt-in, and adding a host is about a dozen lines.
 
 ## Areas of interest
 
-If you're here to steal ideas, these are worth reading:
+If you're here to get ideas, these are worth reading:
 
 | # | Area | What it is |
 |---|------|------------|
@@ -65,7 +65,7 @@ the second re-runs one `perSystem` module once per system with extra arguments.
 
 The glue is a handful of small helpers:
 
-- `projectInput` narrows a flake-shaped input to a single system, dropping the system
+- `systemInput` narrows a flake-shaped input to a single system, dropping the system
   layer so `inputs'.foo.packages.bar` means `inputs.foo.packages.${system}.bar`.
 - `withSystem` builds the per-system argument bundle: `pkgs`, `inputs'`, `self'`,
   `packages'`, `meta`, `system`, `rootPath`.
@@ -87,16 +87,46 @@ it should: `system`, `stateVersion`, `user`, `hardware`, `scheme`, `modules`, an
 `extraConfig`. From each entry, the module builds a `nixosSystem` with the right
 `specialArgs` (`scheme`, `pkgs`, `inputs'`, `hostname`, `constants`, ..).
 
-The composition is the good part. Modules contribute deferred modules to buckets:
+The composition is the important part. We merge deferred modules into sets:
 
-- `exo.core` — stuff every host needs
-- `exo.skeleton` — the shared base
-- `exo.hardware.<profile>` — hardware-specific bits
+- `exo.core` — common configuration modules provided to every host
+- `exo.skeleton` — the shared base of options modules
+- `exo.hardware.<profile>` — hardware-specific modules
+- `exo.host.<hostname>` — per host modules
 - `exo.mods.<name>` — opt-in feature sets like `desktop`, `gaming`, `comms`
-- `exo.host.<hostname>` — one-off host tweaks
 
 A host just lists the modules it wants, and the final module list is assembled from those
-buckets. So enabling gaming on a second machine is one word, not a copy-paste of config.
+sets. So enabling gaming on a second machine is one word, not a copy-paste of config.
+
+> file: [`aspects/hosts/configurations.nix`](./aspects/hosts/ramiel/ramiel.nix)
+```nix
+{ config, ... }:
+{
+  exo.configurations.ramiel = {
+    user = "wyspr";
+    stateVersion = "25.11";
+    scheme = "amber";
+    hardware = "desktop-pc";
+    modules = with config.exo.mods; [
+      printing
+      desktop
+      gaming
+      comms
+    ];
+  };
+}
+```
+This will receive the following modules:
+```
+exo.core
+exo.skeleton
+exo.hardware.desktop-pc
+exo.host.ramiel
+exo.mods.printing
+exo.mods.desktop
+exo.mods.gaming
+exo.mods.comms
+```
 
 ## [Tack](https://github.com/manic-systems/tack), not flake inputs
 

@@ -39,7 +39,7 @@
         "formatter"
       ];
 
-      # projectInput: take one flake-shaped input and project it down to just the outputs it has for one
+      # systemInput: take one flake-shaped input and project it down to just the outputs it has for one
       # specific system ("x86_64-linux").
       #
       # A raw flake output set looks like:
@@ -61,7 +61,7 @@
       #     }
       #
       # it strips the system layer out and only keeps the categories that actually exist for that system.
-      projectInput =
+      systemInput =
         system: input:
         systemOutputKeys
         # Keep only the category names that
@@ -87,15 +87,15 @@
           # The nixpkgs package set for this specific system
           pkgs = inputs.nixpkgs.legacyPackages.${system};
 
-          # Every input, projected down to the input's system-specific outputs via projectInput.
+          # Every input, projected down to the input's system-specific outputs via systemInput.
           # So now:
           #   inputs'.someFlake.packages.foo
           # is shorthand for:
           #   inputs.someFlake.packages.${system}.foo
-          inputs' = inputs |> lib.mapAttrs (_: projectInput system);
+          inputs' = inputs |> lib.mapAttrs (_: systemInput system);
 
           # Same idea but for this flake's own outputs, this gives you self'.packages.foo.
-          self' = projectInput system self;
+          self' = systemInput system self;
 
           # packages': a convenience layer on top of inputs'.<name>.packages
           #
