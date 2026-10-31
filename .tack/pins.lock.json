@@ -111,9 +111,9 @@
     "type": "github",
     "owner": "amaanq",
     "repo": "helium-flake",
-    "rev": "6d6114ae2fbb1a895bc89ed05eca6a9b28465c6c",
-    "narHash": "sha256-VZDg+XLqxhu2t740bXuelxoPPHHLeLoJL7ojOrFjrb4=",
-    "lastModified": 1793365859
+    "rev": "01339298dd9165e961a6975e35364eb49fe929e8",
+    "narHash": "sha256-jVx5cGTxU862QnrWyQrz1nkc4NHF81ZRpicjQ9JEX4o=",
+    "lastModified": 1793407847
   },
   "helvetica-font": {
     "type": "github",
@@ -151,9 +151,9 @@
     "type": "github",
     "owner": "powerofthe69",
     "repo": "nix-gaming-edge",
-    "rev": "d225a803ea04fadcfabce3470eae9fee71e06c7a",
-    "narHash": "sha256-LCbhlI55ueI5Rm6tZCMEoD8ICZXDmzQQc8GYlZZLM9c=",
-    "lastModified": 1793360292
+    "rev": "26dc5d9b084782d1acb02ee30251b0876ced0f80",
+    "narHash": "sha256-QuvephRMWtX3Qnw/BdIqmuclYaVl/z2SSZLWIKJYVUQ=",
+    "lastModified": 1793395858
   },
   "nixos-core": {
     "type": "github",
@@ -167,9 +167,9 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "e62746b0b472753ef019baceab6f1e2e52014980",
-    "narHash": "sha256-sx1f99WGrDfJ83KKuQrqGPmot0rnDgmpLJDzpU2oHQQ=",
-    "lastModified": 1793225069
+    "rev": "885ba4d038f10c3d17d7a92e8c3cc185b99c9158",
+    "narHash": "sha256-e/yiZ31gXRROBDcnOtT3YwDQ73NVG9Cepccbt86LIn8=",
+    "lastModified": 1793345420
   },
   "nixtopsy": {
     "type": "github",
