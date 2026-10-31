@@ -68,7 +68,7 @@ let
           type = lib.types.attrsOf (
             lib.types.submodule {
               options = {
-                relPath = lib.mkOption {
+                path = lib.mkOption {
                   type = lib.types.str;
                   description = "Path relative to the root of the output.";
                 };
@@ -172,7 +172,7 @@ let
               # Generate files with passAsFile
               ${
                 stringFiles
-                |> catmap (attrName: { relPath, ... }: ''install -D "''$${attrName}Path" "$out/${relPath}"'')
+                |> catmap (attrName: { path, ... }: ''install -D "''$${attrName}Path" "$out/${path}"'')
               }
 
               # Generate symlinks from external paths
@@ -180,10 +180,10 @@ let
                 symFiles
                 |> catmap (
                   _:
-                  { relPath, file }:
+                  { path, file }:
                   ''
-                    mkdir -p "$out/${lib.dirOf relPath}"
-                    ln -sf ${file} "$out/${relPath}"
+                    mkdir -p "$out/${lib.dirOf path}"
+                    ln -sf ${file} "$out/${path}"
                   ''
                 )
               }
@@ -209,11 +209,11 @@ let
           config.files
           |> lib.mapAttrs (
             _:
-            { relPath, ... }:
+            { path, ... }:
             {
-              __toString = _: "${placeholder "out"}/${relPath}";
+              __toString = _: "${placeholder "out"}/${path}";
 
-              dir = "${placeholder "out"}/${lib.dirOf relPath}";
+              dir = "${placeholder "out"}/${lib.dirOf path}";
             }
           );
 

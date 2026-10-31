@@ -137,7 +137,7 @@
               package = self'.packages.kitty;
               env.KITTY_CONFIG_DIRECTORY = files.config.dir;
               files.config = {
-                relPath = "config/kitty.conf";
+                path = "config/kitty.conf";
                 file =
                   let
                     toKittyConfig = lib.concatMapAttrsStringSep "\n" (

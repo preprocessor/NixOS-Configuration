@@ -71,7 +71,7 @@
               package = pkgs.zathura;
               args = [ "--config-dir ${files.config.dir}" ];
               files.config = {
-                relPath = "config/zathurarc";
+                path = "config/zathurarc";
                 file =
                   lib.concatLines (
                     lib.mapAttrsToList lib.formatLine cfg.options ++ lib.mapAttrsToList lib.formatMapLine cfg.mappings

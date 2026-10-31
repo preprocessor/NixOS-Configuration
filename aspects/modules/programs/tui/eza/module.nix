@@ -38,7 +38,7 @@
               package = self'.packages.eza;
               env.EZA_CONFIG_DIR = files.theme.dir;
               files.theme = {
-                relPath = "config/theme.yml";
+                path = "config/theme.yml";
                 file = wlib.yaml "theme.yml" cfg.settings;
               };
             }

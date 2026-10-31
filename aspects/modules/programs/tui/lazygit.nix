@@ -138,7 +138,7 @@
               package = pkgs.lazygit;
               env.LG_CONFIG_FILE = files.config;
               files.config = {
-                relPath = "config/config.yml";
+                path = "config/config.yml";
                 file = wlib.yaml "config.yml" cfg.settings;
               };
             }

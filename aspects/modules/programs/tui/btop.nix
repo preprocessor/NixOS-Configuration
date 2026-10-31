@@ -137,7 +137,7 @@
               files = lib.mkMerge [
                 {
                   config = {
-                    relPath = "config/btop.conf";
+                    path = "config/btop.conf";
                     file = lib.generators.toKeyValue {
                       mkKeyValue = lib.generators.mkKeyValueDefault { } " = ";
                     } cfg.settings;
@@ -147,7 +147,7 @@
                   lib.optionalAttrs (cfg.themes != { }) cfg.themes
                   |> lib.mapAttrs (
                     name: file: {
-                      relPath = "config/themes/${name}.theme";
+                      path = "config/themes/${name}.theme";
                       inherit file;
                     }
                   )

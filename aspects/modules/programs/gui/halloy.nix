@@ -39,13 +39,13 @@
               env.XDG_CONFIG_HOME = wlib.out;
               files = {
                 config = {
-                  relPath = "halloy/config.toml";
+                  path = "halloy/config.toml";
                   file = wlib.toml "halloy-config" cfg.settings // {
                     settings.theme = "theme";
                   };
                 };
                 theme = {
-                  relPath = "halloy/themes/theme.toml";
+                  path = "halloy/themes/theme.toml";
                   file = wlib.toml "halloy-theme" cfg.theme;
                 };
               };

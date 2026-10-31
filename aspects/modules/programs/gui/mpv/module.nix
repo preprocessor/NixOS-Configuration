@@ -55,23 +55,23 @@
                 env.MPV_HOME = files.mpv.dir;
                 files = {
                   mpv = {
-                    relPath = "config/mpv.conf";
+                    path = "config/mpv.conf";
                     file = cfg.conf;
                   };
                   input = {
-                    relPath = "config/input.conf";
+                    path = "config/input.conf";
                     file = cfg.input;
                   };
                   scripts = {
-                    relPath = "config/scripts";
+                    path = "config/scripts";
                     file = "${mpvScripts}/share/mpv/scripts";
                   };
                   fonts = {
-                    relPath = "config/fonts";
+                    path = "config/fonts";
                     file = "${pkgs.mpvScripts.modernz}/share/fonts/truetype";
                   };
                   modernz = {
-                    relPath = "config/script-opts/modernz.conf";
+                    path = "config/script-opts/modernz.conf";
                     file = lib.generators.toKeyValue { } {
                       download_path = "${config.hj.directory}/Videos/mpv";
                       osc_on_start = "no";
@@ -93,11 +93,11 @@
               env.MPV_HOME = files.mpv.dir;
               files = {
                 mpv = {
-                  relPath = "config/mpv.conf";
+                  path = "config/mpv.conf";
                   file = cfg.image-conf;
                 };
                 input = {
-                  relPath = "configuration/input.conf";
+                  path = "configuration/input.conf";
                   file = cfg.image-input;
                 };
               };

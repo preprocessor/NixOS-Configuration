@@ -607,7 +607,7 @@
               files = lib.mkMerge [
                 {
                   config = {
-                    relPath = "config/config";
+                    path = "config/config";
                     file = cfg.config |> lib.cli.toCommandLineGNU { } |> lib.concatLines;
                   };
                 }
@@ -617,7 +617,7 @@
                     name: value: {
                       name = "${name}Theme";
                       value = {
-                        relPath = "config/themes/${name}.tmTheme";
+                        path = "config/themes/${name}.tmTheme";
                         file = value;
                       };
                     }
@@ -629,7 +629,7 @@
                     name: value: {
                       name = "${name}Syntax";
                       value = {
-                        relPath = "config/syntaxes/${name}.sublime-syntax";
+                        path = "config/syntaxes/${name}.sublime-syntax";
                         file = value;
                       };
                     }

@@ -2,7 +2,6 @@
   tack.inputs.helium = {
     url = "gh:amaanq/helium-flake/";
     group = "general";
-    patches = [ "https://github.com/amaanq/helium-flake/pull/88" ];
   };
 
   exo.mods.desktop =

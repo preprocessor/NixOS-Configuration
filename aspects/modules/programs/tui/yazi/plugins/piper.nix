@@ -17,7 +17,6 @@
       my.yazi.settings = {
         plugin.prepend_previewers =
           let
-
             bat = "${getExe config.my.bat.package} -n --color=always";
             qemu-img = lib.getExe' pkgs.qemu-utils "qemu-img";
           in

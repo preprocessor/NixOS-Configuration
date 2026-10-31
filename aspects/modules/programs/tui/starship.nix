@@ -30,7 +30,7 @@
               package = pkgs.starship;
               env.STARSHIP_CONFIG = files.config;
               files.config = {
-                relPath = "config/starship.toml";
+                path = "config/starship.toml";
                 file = wlib.toml "starship.toml" cfg.settings;
               };
             }

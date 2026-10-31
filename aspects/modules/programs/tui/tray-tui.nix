@@ -81,7 +81,7 @@
                 ''--config-path "${files.config}"''
               ];
               files.config = {
-                relPath = "config/config.toml";
+                path = "config/config.toml";
                 file = wlib.toml "config.toml" cfg.settings;
               };
             }

@@ -70,35 +70,35 @@
               files = lib.mkMerge [
                 {
                   yazi = {
-                    relPath = "config/yazi.toml";
+                    path = "config/yazi.toml";
                     file = wlib.toml "yazi.toml" cfg.settings;
                   };
                 }
 
                 (lib.optionalAttrs (cfg.keymap != { }) {
                   keymap = {
-                    relPath = "config/keymap.toml";
+                    path = "config/keymap.toml";
                     file = wlib.toml "keymap.toml" cfg.keymap;
                   };
                 })
 
                 (lib.optionalAttrs (cfg.theme != { }) {
                   theme = {
-                    relPath = "config/theme.toml";
+                    path = "config/theme.toml";
                     file = wlib.toml "theme.toml" cfg.theme;
                   };
                 })
 
                 (lib.optionalAttrs (cfg.initLua != "") {
                   init = {
-                    relPath = "config/init.lua";
+                    path = "config/init.lua";
                     file = cfg.initLua;
                   };
                 })
 
                 (lib.optionalAttrs (cfg.flavorContent != "") {
                   flavor = {
-                    relPath = "config/flavors/wyspr.yazi/flavor.toml";
+                    path = "config/flavors/wyspr.yazi/flavor.toml";
                     file = cfg.flavorContent;
                   };
                 })
@@ -110,7 +110,7 @@
                     name: file: {
                       name = "${name}-yazi-plugin";
                       value = {
-                        relPath = "config/plugins/${name}.yazi";
+                        path = "config/plugins/${name}.yazi";
                         inherit file;
                       };
                     }

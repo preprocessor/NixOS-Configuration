@@ -62,7 +62,7 @@
               package = pkgs.fuzzel;
               args = [ "--config=${files.cfg}" ];
               files.cfg = {
-                relPath = "config/fuzzel.ini";
+                path = "config/fuzzel.ini";
                 file = wlib.ini "fuzzel.ini" cfg.settings;
               };
             }

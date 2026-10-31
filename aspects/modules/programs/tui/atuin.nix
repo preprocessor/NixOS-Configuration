@@ -45,7 +45,7 @@
               package = pkgs.atuin;
               env.ATUIN_CONFIG_DIR = files.config.dir;
               files.config = {
-                relPath = "config/config.toml";
+                path = "config/config.toml";
                 file = wlib.toml "config.toml" cfg.settings;
               };
             }
