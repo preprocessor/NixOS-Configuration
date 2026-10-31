@@ -1,8 +1,6 @@
 {
   exo.mods.desktop =
     {
-      scheme,
-      pkgs,
       ...
     }:
 
