@@ -167,9 +167,9 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "a0788123ada57ec92a79ab2581cda6d3c6cca75f",
-    "narHash": "sha256-pt+peAEoOK3lLLdtbnQ1AGIBTZbdB6jrkgmurfcQwig=",
-    "lastModified": 1793466162
+    "rev": "d357a2b54f0b6dc4aeb4e993190a52cf151b6f24",
+    "narHash": "sha256-Thn0OE71NF80ZfOMGCgJvKtbCcnnz0fToT/qsvb/Gtc=",
+    "lastModified": 1793494649
   },
   "nixtopsy": {
     "type": "github",
@@ -247,17 +247,17 @@
     "type": "github",
     "owner": "Gerg-L",
     "repo": "spicetify-nix",
-    "rev": "f6eb8135c060130150c8fbcc6b7cf5e22e5179d8",
-    "narHash": "sha256-gJ8uPmQFhJ98X+VWPpD+o0tnQ0nJjbG+Z3QDHcSJKw0=",
-    "lastModified": 1792919014
+    "rev": "d818ab64010272bc0072d0c325838a63038796e9",
+    "narHash": "sha256-rbmfLn4/UWs1mrMJgMEJXMfdhN7o7i++c5jPtUdlP+8=",
+    "lastModified": 1793531264
   },
   "sxyazi": {
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "ec4ce8f27d7a34045791606ebe83b0795defe4b6",
-    "narHash": "sha256-S+4LGf9l8RDFqAJ87HUorHPVasfnnMTE/ysaj3SWIk8=",
-    "lastModified": 1793195788
+    "rev": "456727d3d8513d6a7f8478fd4857e1073dc16568",
+    "narHash": "sha256-L8O7nHQkIvp/aFLoBvo2K3H16IxC9yOyPb4SYm6zsKc=",
+    "lastModified": 1793540392
   },
   "systemctl-tui": {
     "type": "github",
