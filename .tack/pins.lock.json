@@ -111,9 +111,9 @@
     "type": "github",
     "owner": "amaanq",
     "repo": "helium-flake",
-    "rev": "01339298dd9165e961a6975e35364eb49fe929e8",
-    "narHash": "sha256-jVx5cGTxU862QnrWyQrz1nkc4NHF81ZRpicjQ9JEX4o=",
-    "lastModified": 1793407847
+    "rev": "a371b8d10579a66ae67d8b132c6bbb7c8b20126f",
+    "narHash": "sha256-1uEypOIoirefc7eJt/M7VJRqSjHzRPcC3khUalQFZkE=",
+    "lastModified": 1793623677
   },
   "helvetica-font": {
     "type": "github",
@@ -167,9 +167,9 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "d357a2b54f0b6dc4aeb4e993190a52cf151b6f24",
-    "narHash": "sha256-Thn0OE71NF80ZfOMGCgJvKtbCcnnz0fToT/qsvb/Gtc=",
-    "lastModified": 1793494649
+    "rev": "df1e6651c16c38563a164037647a5f00704b3e41",
+    "narHash": "sha256-3t7xlnGR8DYoMIISMPqE4CwjRzw3J/3ympUKMu8pC4o=",
+    "lastModified": 1793616200
   },
   "nixtopsy": {
     "type": "github",
@@ -255,9 +255,9 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "ed3322186eaaed20132edd0f798a783b6b6f4cd2",
-    "narHash": "sha256-qL6W5FGz587fW5iMhd2IFV7ORHK02LuYw4x6MUUje0Y=",
-    "lastModified": 1793562752
+    "rev": "606096f6af225d0d433d77fa77cff074bde63279",
+    "narHash": "sha256-9va+t2rfZX2ghIBhQanuM0v85vXEv0vfOlp4qbHyGnU=",
+    "lastModified": 1793625688
   },
   "systemctl-tui": {
     "type": "github",
@@ -279,9 +279,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "e23a2e52e369636d3f753c1e6a1929a9c2f23cf6",
-    "narHash": "sha256-GmTLGnYVdPmmh/DRfL3hQDChNnJoYw31F0zmmbG2sjc=",
-    "lastModified": 1793433204
+    "rev": "aea40b8c73e6e7552229d87885fde8d1f69a060a",
+    "narHash": "sha256-MkkhlJZhaUzGRu1XbAg2y77B9/qUZZaItZRv3e6Hinc=",
+    "lastModified": 1793636072
   },
   "vintage-story-nix": {
     "type": "github",
