@@ -135,17 +135,17 @@
     "type": "github",
     "owner": "NotAShelf",
     "repo": "lithic",
-    "rev": "2c5667e1b65ee74c238b8375fa9b74cc7ba8a6c0",
-    "narHash": "sha256-oTAvrP0geu+XZ89FI+mE65aA7CtRT+Ltm8x3h5FWlzw=",
-    "lastModified": 1791542020
+    "rev": "d954a6ca6897d1c9c066270481d83edc2be3176b",
+    "narHash": "sha256-3bL3VZpTFAGO0bwrZ/nK7amhfS0EmbAdI6xYF1deFMc=",
+    "lastModified": 1793580471
   },
   "nix-cachyos-kernel": {
     "type": "github",
     "owner": "xddxdd",
     "repo": "nix-cachyos-kernel",
-    "rev": "baa4163a89b8c008039dc115ca225507d706b769",
-    "narHash": "sha256-2Cs9aEZlLlRsm8Kcj/ZGgEmlGLOEnFkk2X+bCVg4PW0=",
-    "lastModified": 1793311259
+    "rev": "697211adfa90ee3d355f61da1dbcc62fb68e6775",
+    "narHash": "sha256-tOuBdSRJPkrsYq2ECK+h0zHDjuSFmVeMug+d3JrqLqk=",
+    "lastModified": 1793568255
   },
   "nix-gaming-edge": {
     "type": "github",
@@ -213,9 +213,9 @@
     "type": "github",
     "owner": "oxalica",
     "repo": "rust-overlay",
-    "rev": "7470661ba2b51156048af08464b82020223dc942",
-    "narHash": "sha256-BiFPwFsbFnZH5GfWbQFKYuQNg+67aNQCoRSRNTeJFQc=",
-    "lastModified": 1791013993
+    "rev": "42076d1c6a0fb405ed04f9a674e4a8f69de62ba3",
+    "narHash": "sha256-wJgFFtw/vlzsjWrQFmTn40TTkSkqHM4XXN0nh4q4uMk=",
+    "lastModified": 1792307278
   },
   "sf-compact": {
     "type": "fixed",
@@ -255,17 +255,17 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "456727d3d8513d6a7f8478fd4857e1073dc16568",
-    "narHash": "sha256-L8O7nHQkIvp/aFLoBvo2K3H16IxC9yOyPb4SYm6zsKc=",
-    "lastModified": 1793540392
+    "rev": "ed3322186eaaed20132edd0f798a783b6b6f4cd2",
+    "narHash": "sha256-qL6W5FGz587fW5iMhd2IFV7ORHK02LuYw4x6MUUje0Y=",
+    "lastModified": 1793562752
   },
   "systemctl-tui": {
     "type": "github",
     "owner": "rgwood",
     "repo": "systemctl-tui",
-    "rev": "05d9eb561c81b1eab260edb03e9264ffccac3e9d",
-    "narHash": "sha256-29Pa7VIh1uyDP9HnJx3rxBtUG7pzv5REjU1vtbgab6M=",
-    "lastModified": 1790991413
+    "rev": "053e865b549c5d3604c348ed7a2e68ce7cd6deca",
+    "narHash": "sha256-fQaGaasX5NDSYpLPYb7gUD9G2n9oSKE9mAwZMgFpaHg=",
+    "lastModified": 1793559810
   },
   "systems": {
     "type": "github",
