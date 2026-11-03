@@ -143,17 +143,17 @@
     "type": "github",
     "owner": "xddxdd",
     "repo": "nix-cachyos-kernel",
-    "rev": "697211adfa90ee3d355f61da1dbcc62fb68e6775",
-    "narHash": "sha256-tOuBdSRJPkrsYq2ECK+h0zHDjuSFmVeMug+d3JrqLqk=",
-    "lastModified": 1793568255
+    "rev": "755712deee259ef7efbfe9154038a270c3d75a87",
+    "narHash": "sha256-XnxQUJMkFHQtDT52J1cqCm6QX/Fk5oCv1p9pvfOiaHg=",
+    "lastModified": 1793664202
   },
   "nix-gaming-edge": {
     "type": "github",
     "owner": "powerofthe69",
     "repo": "nix-gaming-edge",
-    "rev": "26dc5d9b084782d1acb02ee30251b0876ced0f80",
-    "narHash": "sha256-QuvephRMWtX3Qnw/BdIqmuclYaVl/z2SSZLWIKJYVUQ=",
-    "lastModified": 1793395858
+    "rev": "71d99e91e3610c44557c97d39bdebdc1214d7e97",
+    "narHash": "sha256-u0oz0wLBwYxf5L7LijGpt5pA3oY8PwLYm8XuSPD5kww=",
+    "lastModified": 1793656227
   },
   "nixos-core": {
     "type": "github",
@@ -167,9 +167,9 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "df1e6651c16c38563a164037647a5f00704b3e41",
-    "narHash": "sha256-3t7xlnGR8DYoMIISMPqE4CwjRzw3J/3ympUKMu8pC4o=",
-    "lastModified": 1793616200
+    "rev": "f9887a8a434bfba06e20dfc77bc8e0628266af84",
+    "narHash": "sha256-yRzh4uc8uxFv5+5TROEIH1rUL2FF1/cvfc+uq5JGGHY=",
+    "lastModified": 1793645915
   },
   "nixtopsy": {
     "type": "github",
@@ -239,17 +239,17 @@
     "type": "github",
     "owner": "Mic92",
     "repo": "sops-nix",
-    "rev": "60182817ee048ac94b4c68ea76d5ef2e8aac730d",
-    "narHash": "sha256-Y/JIHTnMlOabDfyaSBubWGLDIVGihLEUuoMhFvQKaDo=",
-    "lastModified": 1793052255
+    "rev": "b18e01ce148eb3efff5de2f2d3181ca53b2b2a54",
+    "narHash": "sha256-GoOvpdsjO5hqZuO6T6ok9u6sJEjO0iPli2zRr9oNUNw=",
+    "lastModified": 1793657466
   },
   "spicetify-nix": {
     "type": "github",
     "owner": "Gerg-L",
     "repo": "spicetify-nix",
-    "rev": "d818ab64010272bc0072d0c325838a63038796e9",
-    "narHash": "sha256-rbmfLn4/UWs1mrMJgMEJXMfdhN7o7i++c5jPtUdlP+8=",
-    "lastModified": 1793531264
+    "rev": "13e6fed4eb99f809d390fb50f591bed6cb716dc0",
+    "narHash": "sha256-a+za5QCDlOe/PsuMlZiBcQ13cyiyOscK17BAJFu1/dE=",
+    "lastModified": 1793662659
   },
   "sxyazi": {
     "type": "github",
