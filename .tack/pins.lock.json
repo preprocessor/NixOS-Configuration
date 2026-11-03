@@ -175,9 +175,9 @@
     "type": "github",
     "owner": "amaanq",
     "repo": "nixtopsy",
-    "rev": "752c14876ee14cb47bab5c72024f2377caddf425",
-    "narHash": "sha256-9bRgcG72LFGjlD5HyODxUd5Fo9YrnUdbIrixc90DZjU=",
-    "lastModified": 1793147509
+    "rev": "f6a49b08caf9257f608200907d1a99823d8f7381",
+    "narHash": "sha256-1N3XF7Uo/EFFPgcbfpfnIIcIBbjDebJPG2LI6/tHfdI=",
+    "lastModified": 1793726513
   },
   "nixvim": {
     "type": "github",
