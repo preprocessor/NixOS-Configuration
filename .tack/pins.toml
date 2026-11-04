@@ -67,6 +67,9 @@ type = "fetch"
 url = "gh:feel-co/hjem"
 group = "nix"
 
+[inputs.hypr-motif]
+url = "gh:preprocessor/hypr-motif"
+
 [inputs.lithic]
 url = "gh:NotAShelf/lithic"
 group = "gaming"
