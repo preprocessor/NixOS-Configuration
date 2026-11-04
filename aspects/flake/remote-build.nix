@@ -35,10 +35,12 @@
     substituters = [
       "https://onelock.cachix.org"
       "https://bazinga.cachix.org"
+      "https://nix-community.cachix.org"
     ];
     trusted-public-keys = [
       "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU="
       "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
 }
