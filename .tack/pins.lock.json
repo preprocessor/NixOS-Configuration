@@ -47,9 +47,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "cade",
-    "rev": "ee902c44750567241c3969703945c924a97bc9c4",
-    "narHash": "sha256-YTWz7Tqd8zJPfLRiAmcOPHHhq6xBJCKrjwdjFhRUyRA=",
-    "lastModified": 1793178999
+    "rev": "249ef691155259f0f345e80ed28390755f3d9be3",
+    "narHash": "sha256-Uky5jpgAijchZhsYNtk67JlO3zPeZJnX3Hi4c92W8ko=",
+    "lastModified": 1793784182
   },
   "chicago-font": {
     "type": "github",
@@ -151,9 +151,9 @@
     "type": "github",
     "owner": "powerofthe69",
     "repo": "nix-gaming-edge",
-    "rev": "71d99e91e3610c44557c97d39bdebdc1214d7e97",
-    "narHash": "sha256-u0oz0wLBwYxf5L7LijGpt5pA3oY8PwLYm8XuSPD5kww=",
-    "lastModified": 1793656227
+    "rev": "747a9b0c0489e527f7b19f2b563c6a91134f9f57",
+    "narHash": "sha256-LhZJ5jVxnU0WdgYSIV3r/VZ4fTgGz4Ez5mOwLnv9hpQ=",
+    "lastModified": 1793798100
   },
   "nixos-core": {
     "type": "github",
@@ -167,9 +167,9 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "f9887a8a434bfba06e20dfc77bc8e0628266af84",
-    "narHash": "sha256-yRzh4uc8uxFv5+5TROEIH1rUL2FF1/cvfc+uq5JGGHY=",
-    "lastModified": 1793645915
+    "rev": "9d3b8db48266c17be0b5f9c6360c3ecfbac3d1f5",
+    "narHash": "sha256-smoxPKrzAhdGuFd2LLnG4m8P6IrZuW95DVyzjnlab7w=",
+    "lastModified": 1793735720
   },
   "nixtopsy": {
     "type": "github",
@@ -255,9 +255,9 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "606096f6af225d0d433d77fa77cff074bde63279",
-    "narHash": "sha256-9va+t2rfZX2ghIBhQanuM0v85vXEv0vfOlp4qbHyGnU=",
-    "lastModified": 1793625688
+    "rev": "b4f0d123952e52c4dafe874178de2b34c82f1ab2",
+    "narHash": "sha256-bdtI/iaTGxPESkd/DR4lDh/CEOcJylH4aJQRutNRjn8=",
+    "lastModified": 1793817076
   },
   "systemctl-tui": {
     "type": "github",
