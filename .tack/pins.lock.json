@@ -11,6 +11,7 @@
     "helium": "github:amaanq/helium-flake/",
     "helvetica-font": "github:Kyles-World/Helvetica-Font",
     "hjem": "github:feel-co/hjem",
+    "hypr-motif": "github:preprocessor/hypr-motif",
     "lithic": "github:NotAShelf/lithic",
     "nix-cachyos-kernel": "github:xddxdd/nix-cachyos-kernel/release",
     "nix-gaming-edge": "github:powerofthe69/nix-gaming-edge",
@@ -130,6 +131,14 @@
     "rev": "8408642aa3035135fa6d70269dc93e0814e2a4f6",
     "narHash": "sha256-hmlUXxCk6On7Hrop/TyS3//dgI2BLvaN4TEsOq1ma+Y=",
     "lastModified": 1793333241
+  },
+  "hypr-motif": {
+    "type": "github",
+    "owner": "preprocessor",
+    "repo": "hypr-motif",
+    "rev": "99114f98590c881142d22b62d15e665dcfef8036",
+    "narHash": "sha256-44Bh7uh5NQsYzWNH9Rap1G7W49ihpUTaqySFMdAZA5E=",
+    "lastModified": 1793540663
   },
   "lithic": {
     "type": "github",
