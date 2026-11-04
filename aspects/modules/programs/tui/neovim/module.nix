@@ -59,6 +59,7 @@ top: {
         environment.variables = {
           EDITOR = "nvim";
           VISUAL = "nvim";
+          MANPAGER = "nvim +Man!";
         };
 
         hj.xdg.mime-apps.default-applications = {
