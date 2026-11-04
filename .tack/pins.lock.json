@@ -143,9 +143,9 @@
     "type": "github",
     "owner": "xddxdd",
     "repo": "nix-cachyos-kernel",
-    "rev": "755712deee259ef7efbfe9154038a270c3d75a87",
-    "narHash": "sha256-XnxQUJMkFHQtDT52J1cqCm6QX/Fk5oCv1p9pvfOiaHg=",
-    "lastModified": 1793664202
+    "rev": "f20c85dac2eef06564ebc27729264f4f75ae7e1c",
+    "narHash": "sha256-5LscvsaetrpuLTGJFU6zZ5n4m6aMJt2PELarem20IQo=",
+    "lastModified": 1793745112
   },
   "nix-gaming-edge": {
     "type": "github",
@@ -279,9 +279,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "aea40b8c73e6e7552229d87885fde8d1f69a060a",
-    "narHash": "sha256-MkkhlJZhaUzGRu1XbAg2y77B9/qUZZaItZRv3e6Hinc=",
-    "lastModified": 1793636072
+    "rev": "4ec7cc54362fdc2aa062ccb38b5b826b31921261",
+    "narHash": "sha256-WFAX4R64cjol4+w1KPTTnq58qm5G/QXCInxLY1pIVIk=",
+    "lastModified": 1793758878
   },
   "vintage-story-nix": {
     "type": "github",
