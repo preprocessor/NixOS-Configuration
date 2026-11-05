@@ -152,9 +152,9 @@
     "type": "github",
     "owner": "xddxdd",
     "repo": "nix-cachyos-kernel",
-    "rev": "f20c85dac2eef06564ebc27729264f4f75ae7e1c",
-    "narHash": "sha256-5LscvsaetrpuLTGJFU6zZ5n4m6aMJt2PELarem20IQo=",
-    "lastModified": 1793745112
+    "rev": "25112ab9d0ecb94f7c6e11f363d033ddbe79cbe8",
+    "narHash": "sha256-IzzZu1ADb/zEYQbTLb0K3b2Zm/FDEudgxDtl+N26qQ8=",
+    "lastModified": 1793832759
   },
   "nix-gaming-edge": {
     "type": "github",
@@ -176,9 +176,9 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "9d3b8db48266c17be0b5f9c6360c3ecfbac3d1f5",
-    "narHash": "sha256-smoxPKrzAhdGuFd2LLnG4m8P6IrZuW95DVyzjnlab7w=",
-    "lastModified": 1793735720
+    "rev": "13e53762c5afaf384d4614e94527a9ccfafe41d0",
+    "narHash": "sha256-pgG/CO+txdf2sA2z6DsM+2G3F9ajfIp/3BMC4wfKMDY=",
+    "lastModified": 1793795574
   },
   "nixtopsy": {
     "type": "github",
@@ -288,9 +288,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "4ec7cc54362fdc2aa062ccb38b5b826b31921261",
-    "narHash": "sha256-WFAX4R64cjol4+w1KPTTnq58qm5G/QXCInxLY1pIVIk=",
-    "lastModified": 1793758878
+    "rev": "d50504eb3c803090b299ef02e45186269fc9135b",
+    "narHash": "sha256-8CFNpGShjQDBWIeUIy+DUi25zv5cGbkLHNq+/9ZgPlw=",
+    "lastModified": 1793840241
   },
   "vintage-story-nix": {
     "type": "github",
