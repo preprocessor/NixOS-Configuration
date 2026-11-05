@@ -77,6 +77,7 @@ group = "gaming"
 [inputs.nix-cachyos-kernel]
 url = "gh:xddxdd/nix-cachyos-kernel/release"
 exclude_follow = ["nixpkgs"]
+frozen = true
 group = "gaming"
 
 [inputs.nix-gaming-edge]
