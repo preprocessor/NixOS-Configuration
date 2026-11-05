@@ -112,9 +112,9 @@
     "type": "github",
     "owner": "amaanq",
     "repo": "helium-flake",
-    "rev": "a371b8d10579a66ae67d8b132c6bbb7c8b20126f",
-    "narHash": "sha256-1uEypOIoirefc7eJt/M7VJRqSjHzRPcC3khUalQFZkE=",
-    "lastModified": 1793623677
+    "rev": "a7a4fc5016d1f33abfa534fa494dae540a7b7ef8",
+    "narHash": "sha256-Mt7SC8lr9XisvIsPGSIqHWLeM2x5sVB+Qtx5SYcWxlI=",
+    "lastModified": 1793905744
   },
   "helvetica-font": {
     "type": "github",
@@ -264,9 +264,9 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "b4f0d123952e52c4dafe874178de2b34c82f1ab2",
-    "narHash": "sha256-bdtI/iaTGxPESkd/DR4lDh/CEOcJylH4aJQRutNRjn8=",
-    "lastModified": 1793817076
+    "rev": "6882e1ac279b3df2722aaa0ab5dc049ce02d21eb",
+    "narHash": "sha256-eF9lJNbiFsAbHlidr0zlpBti93s6C+Pu/dTo6sE+af0=",
+    "lastModified": 1793868243
   },
   "systemctl-tui": {
     "type": "github",
@@ -288,9 +288,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "d50504eb3c803090b299ef02e45186269fc9135b",
-    "narHash": "sha256-8CFNpGShjQDBWIeUIy+DUi25zv5cGbkLHNq+/9ZgPlw=",
-    "lastModified": 1793840241
+    "rev": "8162a7e9d098f6ea0fc00404014a732b8e768da8",
+    "narHash": "sha256-dMyQFIkLF3f0sQFMSzlEWFZV2q4SG5Zrdbon5fbCbdA=",
+    "lastModified": 1793888518
   },
   "vintage-story-nix": {
     "type": "github",
