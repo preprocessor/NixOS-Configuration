@@ -2,6 +2,7 @@
   tack.inputs.nix-gaming-edge = {
     url = "gh:powerofthe69/nix-gaming-edge";
     group = "gaming";
+    frozen = true;
   };
 
   exo.mods.gaming =

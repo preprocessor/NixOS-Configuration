@@ -82,6 +82,7 @@ group = "gaming"
 
 [inputs.nix-gaming-edge]
 url = "gh:powerofthe69/nix-gaming-edge"
+frozen = true
 group = "gaming"
 
 [inputs.nixos-core]
