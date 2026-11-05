@@ -14,7 +14,8 @@
         trusted-public-keys = [ "cache.xinux.uz:BXCrtqejFjWzWEB9YuGB7X2MV4ttBur1N8BkwQRdH+0=" ];
       };
 
-      boot.kernelPackages = inputs'.nix-cachyos-kernel.legacyPackages.linux-cachyos-bore-lto-x86_64-v4;
+      boot.kernelPackages =
+        inputs'.nix-cachyos-kernel.legacyPackages.linuxPackages-cachyos-bore-lto-x86_64-v4;
 
       _file = ./catchy-os-kernel.nix;
     };
