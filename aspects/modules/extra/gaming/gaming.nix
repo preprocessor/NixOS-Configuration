@@ -66,13 +66,11 @@
         "idle=nomwait"
       ];
 
-      services = {
-        scx = {
-          enable = true;
-          package = pkgs.scx.rustscheds;
-          scheduler = lib.mkForce "scx_cake"; # 🎂
-        };
-        lact.enable = true;
+      services.lact.enable = true;
+      services.scx-loader = {
+        enable = true;
+        package = pkgs.scx.rustscheds;
+        config.scheduler = lib.mkForce "scx_cake"; # 🎂
       };
 
       programs.gamemode = {
