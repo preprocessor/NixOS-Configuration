@@ -1,6 +1,6 @@
 {
   exo.mods.neovim =
-    { lib, ... }:
+    { ... }:
     {
       plugins.snacks = {
         enable = true;
