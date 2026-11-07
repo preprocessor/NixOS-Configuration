@@ -52,9 +52,9 @@
 
   exo.skeleton =
     {
+      wrapPackage,
       config,
       pkgs,
-      wrapPackage,
       lib,
       ...
     }:
