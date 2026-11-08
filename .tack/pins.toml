@@ -37,6 +37,10 @@ url = "gh:SHORiN-KiWATA/cliphist-tui"
 group = "cliphist"
 type = "fetch"
 
+[inputs.diffview-plus]
+url = "gh:dlyongemallo/diffview-plus.nvim/ba05af7a295dcd8449bd03ebb3aead8268a5c379"
+type = "fetch"
+
 [inputs.extra-metadata]
 url = "gh:boydaihungst/file-extra-metadata.yazi"
 group = "yazi"
@@ -72,12 +76,6 @@ url = "gh:preprocessor/hypr-motif"
 
 [inputs.lithic]
 url = "gh:NotAShelf/lithic"
-group = "gaming"
-
-[inputs.nix-cachyos-kernel]
-url = "gh:xddxdd/nix-cachyos-kernel/release"
-exclude_follow = ["nixpkgs"]
-frozen = true
 group = "gaming"
 
 [inputs.nix-gaming-edge]
@@ -154,6 +152,12 @@ type = "fetch"
 url = "gh:manic-systems/tack"
 group = "nix"
 
+[inputs.tiny5-mono]
+url = "gh:Gissio/font_Tiny5Mono"
+frozen = true
+group = "fonts"
+type = "fetch"
+
 [inputs.vintage-story-nix]
 url = "gh:PierreBorine/vintagestory-nix"
 group = "gaming"
@@ -168,8 +172,13 @@ url = "gh:onelocked/no-header-prompt.yazi"
 group = "yazi"
 type = "fetch"
 
-[inputs.yazi-plugins]
+[inputs.yazi-plugin-cbz]
 url = "gh:AminurAlam/yazi-plugins"
+group = "yazi"
+type = "fetch"
+
+[inputs.yazi-plugins]
+url = "gh:yazi-rs/plugins"
 group = "yazi"
 type = "fetch"
 

@@ -5,6 +5,7 @@
     "chicago-font": "github:nikdog/chicago-font",
     "cliphist-src": "github:sentriz/cliphist",
     "cliphist-tui-src": "github:SHORiN-KiWATA/cliphist-tui",
+    "diffview-plus": "github:dlyongemallo/diffview-plus.nvim/ba05af7a295dcd8449bd03ebb3aead8268a5c379",
     "extra-metadata": "github:boydaihungst/file-extra-metadata.yazi",
     "fish-completion-sync": "github:iynaix/fish-completion-sync",
     "fragment-mono": "github:dtinth/fragment-mono-weights",
@@ -13,7 +14,6 @@
     "hjem": "github:feel-co/hjem",
     "hypr-motif": "github:preprocessor/hypr-motif",
     "lithic": "github:NotAShelf/lithic",
-    "nix-cachyos-kernel": "github:xddxdd/nix-cachyos-kernel/release",
     "nix-gaming-edge": "github:powerofthe69/nix-gaming-edge",
     "nixos-core": "github:manic-systems/nixos-core/refs/tags/v1.0.1",
     "nixpkgs": "github:NixOS/nixpkgs/nixpkgs-unstable",
@@ -30,10 +30,12 @@
     "sxyazi": "github:sxyazi/yazi",
     "systemctl-tui": "github:rgwood/systemctl-tui",
     "tack": "github:manic-systems/tack",
+    "tiny5-mono": "github:Gissio/font_Tiny5Mono",
     "vintage-story-nix": "github:PierreBorine/vintagestory-nix",
     "yazi-fuzzy-search": "github:onelocked/fuzzy-search.yazi",
     "yazi-no-header": "github:onelocked/no-header-prompt.yazi",
-    "yazi-plugins": "github:AminurAlam/yazi-plugins",
+    "yazi-plugin-cbz": "github:AminurAlam/yazi-plugins",
+    "yazi-plugins": "github:yazi-rs/plugins",
     "yaziline": "github:llanosrocas/yaziline.yazi"
   },
   "bat-syntax-justfile": {
@@ -75,6 +77,18 @@
     "rev": "c54f131bb680b433022df0f5e363793646640d7e",
     "narHash": "sha256-GtRI74NdZNmIOh8xlgWdMTmW7wCpLpMNDQ1NClr99NY=",
     "lastModified": 1792771539
+  },
+  "diffview-plus": {
+    "type": "github",
+    "owner": "dlyongemallo",
+    "repo": "diffview-plus.nvim",
+    "rev": "ba05af7a295dcd8449bd03ebb3aead8268a5c379",
+    "narHash": "sha256-sDsHjvQRpPRk6HCUU2mtdqkzH9uJ0ccZjk7Y9HUVWvI=",
+    "lastModified": 1788720452,
+    "archive": {
+      "hash": "sha256-Wa/o7PhPrU7W9hqLGMUMr/pVVpsSNNRQDm9Gb4z9mtQ=",
+      "outHash": "sha256-BiV/VfiqYuGwJ6f3GO1oN8yfpKuDGMZ/socAX/nOECE="
+    }
   },
   "extra-metadata": {
     "type": "github",
@@ -147,14 +161,6 @@
     "rev": "d954a6ca6897d1c9c066270481d83edc2be3176b",
     "narHash": "sha256-3bL3VZpTFAGO0bwrZ/nK7amhfS0EmbAdI6xYF1deFMc=",
     "lastModified": 1793580471
-  },
-  "nix-cachyos-kernel": {
-    "type": "github",
-    "owner": "xddxdd",
-    "repo": "nix-cachyos-kernel",
-    "rev": "25112ab9d0ecb94f7c6e11f363d033ddbe79cbe8",
-    "narHash": "sha256-IzzZu1ADb/zEYQbTLb0K3b2Zm/FDEudgxDtl+N26qQ8=",
-    "lastModified": 1793832759
   },
   "nix-gaming-edge": {
     "type": "github",
@@ -292,6 +298,18 @@
     "narHash": "sha256-dMyQFIkLF3f0sQFMSzlEWFZV2q4SG5Zrdbon5fbCbdA=",
     "lastModified": 1793888518
   },
+  "tiny5-mono": {
+    "type": "github",
+    "owner": "Gissio",
+    "repo": "font_Tiny5Mono",
+    "rev": "36478e1f5abba5f4215ec7d9e6e59888d4c97cb5",
+    "narHash": "sha256-jXNwK3Ayp5dpfs2ucfqjvT3Akr7GUmlIhd7+ikiwILI=",
+    "lastModified": 1794022314,
+    "archive": {
+      "hash": "sha256-3vfHdnaWAu/cJFvvmTrzJjez2dOVXMuqB73Pm3JTCkI=",
+      "outHash": "sha256-qg71QbhOr/1NOQVfMJadHAj/SIwnyFWSUDTNaLOw4Eo="
+    }
+  },
   "vintage-story-nix": {
     "type": "github",
     "owner": "PierreBorine",
@@ -316,13 +334,29 @@
     "narHash": "sha256-dHJNk3o9vMGUnO/KAl7R6UdEq1giyp2DNXzxmAKBZP0=",
     "lastModified": 1779745693
   },
-  "yazi-plugins": {
+  "yazi-plugin-cbz": {
     "type": "github",
     "owner": "AminurAlam",
     "repo": "yazi-plugins",
-    "rev": "50d82a7232cfa58f25cf95ca7c532a427263d682",
-    "narHash": "sha256-dU/X7bJpdKj8E3hqfa9y3HwHqqQZN9Xu5RXxWx21bTs=",
-    "lastModified": 1793032830
+    "rev": "937ae3b151155f9c571c51b8ee5f43115d3872c7",
+    "narHash": "sha256-Sc452SDksieYR85wpXpE4h35Ijomm3OPlMuWNCbu6rI=",
+    "lastModified": 1794051266,
+    "archive": {
+      "hash": "sha256-O30P8RTAoDNcwFux/FgT8qH/xNF7m+jITPcZqQY6QQU=",
+      "outHash": "sha256-Aval19f2Kgvvq/pfteYEwnhzpsaEXC8R5zWntJEE40g="
+    }
+  },
+  "yazi-plugins": {
+    "type": "github",
+    "owner": "yazi-rs",
+    "repo": "plugins",
+    "rev": "c0529fc34e4649effb79ff6f4a86aec46beebb7f",
+    "narHash": "sha256-Wf10m6iY4xWKALLFQBOz1vgGXOQpPzryPnFS+s40QFg=",
+    "lastModified": 1793904305,
+    "archive": {
+      "hash": "sha256-HMq2RgD/8+3vCiU+fX/Ffihb4qdxVSuUsHMkAX4sUaY=",
+      "outHash": "sha256-aMgiq3f4yPZHQgx0sEry/aJr5gYIAWgA38FhDLPt/7c="
+    }
   },
   "yaziline": {
     "type": "github",
