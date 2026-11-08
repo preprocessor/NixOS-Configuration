@@ -7,6 +7,7 @@
       modules = {
         icons = { };
         surround = { };
+        ai = { };
       };
     };
   };
