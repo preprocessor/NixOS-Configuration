@@ -75,9 +75,9 @@
             "lsp"
             "path"
             "snippets"
-            "buffer"
-            "ripgrep"
-            "dictionary"
+            # "buffer"
+            # "ripgrep"
+            # "dictionary"
           ];
           providers = {
             dictionary = {

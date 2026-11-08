@@ -35,7 +35,7 @@
             package = pkgs.delta;
             args = with scheme; [
               "--dark"
-              "--diff-highlight"
+              # "--diff-highlight"
               "--line-numbers"
               "--hyperlinks"
               "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"

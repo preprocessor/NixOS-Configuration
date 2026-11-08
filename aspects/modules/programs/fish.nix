@@ -1,3 +1,4 @@
+{ rootPath, ... }:
 {
   tack.inputs.fish-completion-sync = {
     url = "gh:iynaix/fish-completion-sync";
@@ -26,6 +27,7 @@
           source ${inputs.fish-completion-sync}/init.fish
 
           bind Z __onelockeds_fuzzy_zox
+          bind N __nixos_dir
           bind -M insert Z __onelockeds_fuzzy_zox
         '';
 
@@ -70,6 +72,8 @@
           '';
 
           starship_transient_prompt_func.body = ''printf " \e[94m  \e[0m"'';
+
+          __nixos_dir.body = "cd ${rootPath}";
 
           __onelockeds_fuzzy_zox.body = /* fish */ ''
             set -l dir (

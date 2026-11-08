@@ -157,35 +157,36 @@ top: {
 
         package = lib.mkOption {
           default =
-            (inputs.nixvim.lib.evalNixvim {
-              extraSpecialArgs = {
-                inherit scheme inputs pkgs;
+            let
+              nixvim = inputs.nixvim.lib.evalNixvim {
+                extraSpecialArgs = {
+                  inherit scheme inputs pkgs;
 
-                dependencies = lib.genAttrs [ "yazi" "lazygit" ] (pkg: {
-                  package = config.my.${pkg}.package;
-                });
+                  dependencies = lib.genAttrs [ "yazi" "lazygit" ] (pkg: {
+                    package = config.my.${pkg}.package;
+                  });
+                };
+                modules = [
+                  top.config.exo.mods.neovim
+                  (
+                    { dependencies, pkgs, ... }:
+                    {
+                      inherit dependencies;
+                      nixpkgs = { inherit pkgs; };
+                      enableMan = false;
+                      luaLoader.enable = false;
+                      performance.byteCompileLua = {
+                        enable = true;
+                        plugins = true;
+                        nvimRuntime = true;
+                      };
+                    }
+                  )
+                ];
               };
-              modules = [
-                top.config.exo.mods.neovim
-                (
-                  { dependencies, pkgs, ... }:
-                  {
-                    inherit dependencies;
-                    nixpkgs = { inherit pkgs; };
-                    enableMan = false;
-                    luaLoader.enable = false;
-                    performance.byteCompileLua = {
-                      enable = true;
-                      plugins = true;
-                      nvimRuntime = true;
-                    };
-                  }
-                )
-              ];
-            }).config.build.package;
+            in
+            nixvim.config.build.package;
         };
       };
-
-      _file = ./module.nix;
     };
 }
