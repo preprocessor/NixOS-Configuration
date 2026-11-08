@@ -2,3 +2,4 @@ result
 .env
 .direnv
 *.qcow2
+*.profile
