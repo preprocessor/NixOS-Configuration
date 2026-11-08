@@ -14,11 +14,9 @@
       windowrules = {
         tags = [
           {
+            name = "hide rule";
             match.tag = "hidden";
-            rules = {
-              no_screen_share = true;
-              border_color = "#ff0d2d #ff0d2d";
-            };
+            rules.no_screen_share = true;
           }
         ];
 

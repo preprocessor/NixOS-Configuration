@@ -34,12 +34,14 @@
             })
 
             hl.window_rule({
+              name = "steam no motif",
               match = { class = "^steam$" },
               ["cde:show_titlebar"] = false,
               ["cde:show_border"] = false,
             })
 
             hl.window_rule({
+              name = "hidden motif colors",
               match = { tag = "hidden" },
 
               ["cde:color_face"] = "#dc7a00",
