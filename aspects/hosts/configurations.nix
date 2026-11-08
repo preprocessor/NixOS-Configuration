@@ -20,6 +20,7 @@ in
             packages',
             inputs',
             self',
+            meta,
             ...
           }:
           inputs.nixpkgs.lib.nixosSystem {
@@ -30,6 +31,7 @@ in
                 inputs'
                 inputs
                 self'
+                meta
                 ;
               inherit (hostConfig) system hardware;
               scheme = mkScheme config.schemes.${hostConfig.scheme};
