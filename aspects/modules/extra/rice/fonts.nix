@@ -36,7 +36,10 @@
           url = "gh:Kyles-World/Helvetica-Font";
           type = "fetch";
         };
-
+        tiny5-mono = {
+          url = "gh:Gissio/font_Tiny5Mono";
+          type = "fetch";
+        };
       }
       |> lib.mapAttrs (
         _: value:
@@ -119,6 +122,11 @@
           mkFont "fragment-mono" inputs.fragment-mono
             "install -m444 -Dt $out/share/fonts/truetype $src/fonts/ttf/*.ttf $src/weights/*.ttf";
 
+        # https://github.com/Gissio/font_Tiny5Mono
+        tiny5-mono =
+          mkFont "tiny5-mono" inputs.tiny5-mono
+            "install -m444 -Dt $out/share/fonts/opentype $src/fonts/otf/*.otf";
+
         # https://int10h.org/oldschool-pc-fonts/fontlist/
         oldschool-pc-fonts = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
           allowSubstitutes = false;
@@ -180,12 +188,11 @@
       fonts.packages =
         with self'.legacyPackages;
         [
-          chicago-font
           fragment-mono-font
           oldschool-pc-fonts
+          chicago-font
+          tiny5-mono
         ]
-        ++ [
-          pkgs.termsyn
-        ];
+        ++ [ pkgs.termsyn ];
     };
 }
