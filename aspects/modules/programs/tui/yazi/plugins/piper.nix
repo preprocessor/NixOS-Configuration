@@ -1,8 +1,8 @@
 {
   exo.core =
     {
-      pkgs,
       lib,
+      pkgs,
       config,
       ...
     }:
@@ -10,10 +10,6 @@
       inherit (lib) getExe;
     in
     {
-      my.yazi.plugins = {
-        inherit (pkgs.yaziPlugins) piper;
-      };
-
       my.yazi.settings = {
         plugin.prepend_previewers =
           let

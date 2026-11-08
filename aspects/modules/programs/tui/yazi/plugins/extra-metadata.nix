@@ -9,22 +9,18 @@
   exo.core =
     { pkgs, ... }:
     {
-      my.yazi.plugins = {
-        extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {
-          src = inputs.extra-metadata;
-          pname = "yazi-extra-metadata";
-          version = "git";
-        };
+      my.yazi.plugins.extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {
+        src = inputs.extra-metadata;
+        pname = "yazi-extra-metadata";
+        version = "git";
       };
 
-      my.yazi.settings = {
-        spotters = [
-          {
-            url = "*";
-            run = "extra-metadata";
-          }
-        ];
-      };
+      my.yazi.settings.spotters = [
+        {
+          url = "*";
+          run = "extra-metadata";
+        }
+      ];
 
       _file = ./extra-metadata.nix;
     };

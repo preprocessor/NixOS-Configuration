@@ -26,8 +26,6 @@
           version = "0-unstable-2026-04-26";
           cargoLock.lockFile = final.src + "/Cargo.lock";
           src = inputs.cliphist-tui-src;
-          allowSubstitutes = false;
-          preferLocalBuild = true;
         });
 
         runtimePackages = [
@@ -41,8 +39,6 @@
           pname = "cliphist";
           version = "0-unstable-2026-04-21";
           src = inputs.cliphist-src;
-          allowSubstitutes = false;
-          preferLocalBuild = true;
           vendorHash = "sha256-fDl+ul1t2Ux1w5WcCo6YMJtrcC20o+eUEO3NNycSNvI=";
           buildInputs = [ pkgs.bash ];
           postInstall = "cp ${final.src}/contrib/* $out/bin/ ";

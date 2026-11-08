@@ -96,10 +96,10 @@
                   };
                 })
 
-                (lib.optionalAttrs (cfg.flavorContent != "") {
+                (lib.optionalAttrs (cfg.flavor != "") {
                   flavor = {
                     path = "config/flavors/wyspr.yazi/flavor.toml";
-                    file = cfg.flavorContent;
+                    file = wlib.toml "flafor.toml" cfg.flavor;
                   };
                 })
 
@@ -154,10 +154,10 @@
           description = "Theme settings";
         };
 
-        flavorContent = lib.mkOption {
-          type = with lib.types; nullOr lines;
-          default = "";
-          description = "Raw TOML content for the flavor file";
+        flavor = lib.mkOption {
+          type = lib.types.toml;
+          default = { };
+          description = "TOML content for the flavor file";
         };
 
         settings = mkOption {

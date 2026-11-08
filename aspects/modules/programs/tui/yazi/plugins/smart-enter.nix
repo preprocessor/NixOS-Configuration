@@ -8,10 +8,6 @@
         }
       '';
 
-      my.yazi.plugins = {
-        inherit (pkgs.yaziPlugins) smart-enter;
-      };
-
       my.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
           (yaziKeymap [ "l" ] "plugin bypass smart-enter" "Enter the child directory, or open the file")

@@ -1,6 +1,6 @@
 { inputs, ... }:
 {
-  tack.inputs.yazi-plugins = {
+  tack.inputs.yazi-plugin-cbz = {
     url = "gh:AminurAlam/yazi-plugins";
     type = "fetch";
     group = "yazi";
@@ -14,7 +14,7 @@
         version = "0.67";
 
         src = lib.cleanSourceWith {
-          src = inputs.yazi-plugins + "/preview-cbz.yazi";
+          src = inputs.yazi-plugin-cbz + "/preview-cbz.yazi";
           filter = name: _: (baseNameOf name == "main.lua");
         };
       };
