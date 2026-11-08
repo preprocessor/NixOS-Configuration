@@ -49,7 +49,7 @@
       #     devShells.x86_64-linux.foo = ...;
       #     ...
       #  }
-      # and this turns that into:
+      # and this function turns that into:
       #   for system = "x86_64-linux":
       #     {
       #       packages.foo = ...;
