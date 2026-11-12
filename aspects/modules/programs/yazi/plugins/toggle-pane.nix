@@ -1,6 +1,6 @@
 {
   modules.core =
-    { config, pkgs, ... }:
+    { config, ... }:
     {
       my.yazi.keymap = {
         mgr.prepend_keymap = with config.utils; [
