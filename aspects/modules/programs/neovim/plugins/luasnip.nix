@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     plugins = {
       luasnip = {
         enable = true;

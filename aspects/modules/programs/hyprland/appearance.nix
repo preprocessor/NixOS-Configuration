@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop = {
+  modules.features.desktop = {
     my.hyprland.lua.files."appearance".content = /* lua */ ''
       hl.config({
         general = {

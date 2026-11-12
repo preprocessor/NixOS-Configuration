@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  modules.features.desktop =
     { pkgs, ... }:
     let
       bin = pkgs.writeShellScript "color-picker" ''

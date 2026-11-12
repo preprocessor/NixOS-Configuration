@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop = { pkgs, lib, ... }: {
+  modules.features.desktop = { pkgs, lib, ... }: {
     hj.packages = with pkgs; [
       lutgen-studio
       hyprpaper

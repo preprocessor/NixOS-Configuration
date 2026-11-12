@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  modules.features.desktop =
     { pkgs, lib, ... }:
     let
       playerctl = lib.getExe pkgs.playerctl;

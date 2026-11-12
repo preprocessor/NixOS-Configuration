@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     globals.loaded_netrwPlugin = 1;
 
     keymaps = [

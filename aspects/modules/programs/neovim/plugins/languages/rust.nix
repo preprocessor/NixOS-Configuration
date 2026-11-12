@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     plugins = {
       lsp.servers.rust_analyzer = {
         enable = true;

@@ -6,11 +6,66 @@
     group = "tui";
   };
 
-  exo.mods.desktop =
-    { inputs, scheme, ... }:
+  modules.features.desktop =
     {
+      wrapPackage,
+      inputs,
+      scheme,
+      config,
+      pkgs,
+      self,
+      lib,
+      ...
+    }:
+    let
+      cfg = config.my.bat;
+    in
+    {
+      imports = [ self.hjemModules.bat ];
+
       my.bat = {
         enable = true;
+
+        package = wrapPackage (
+          { files, ... }:
+          {
+            package = pkgs.bat;
+            linkedPackages = [ pkgs.bat-extras.core ];
+            env.BAT_CONFIG_DIR = files.config.dir;
+            files = lib.mkMerge [
+              {
+                config = {
+                  path = "config/config";
+                  file = cfg.config |> lib.cli.toCommandLineGNU { } |> lib.concatLines;
+                };
+              }
+              (
+                lib.optionalAttrs (cfg.themes != { }) cfg.themes
+                |> lib.mapAttrs' (
+                  name: value: {
+                    name = "${name}Theme";
+                    value = {
+                      path = "config/themes/${name}.tmTheme";
+                      file = value;
+                    };
+                  }
+                )
+              )
+              (
+                lib.optionalAttrs (cfg.syntaxes != { }) cfg.syntaxes
+                |> lib.mapAttrs' (
+                  name: value: {
+                    name = "${name}Syntax";
+                    value = {
+                      path = "config/syntaxes/${name}.sublime-syntax";
+                      file = value;
+                    };
+                  }
+                )
+              )
+            ];
+          }
+        );
 
         config.theme = "based";
 
@@ -557,96 +612,6 @@
                   <string>uuid</string>
               </dict>
           </plist>
-        '';
-      };
-    };
-
-  exo.skeleton =
-    {
-      wrapPackage,
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    let
-      cfg = config.my.bat;
-    in
-    {
-      options.my.bat = {
-        enable = lib.mkEnableOption { };
-
-        syntaxes = lib.mkOption {
-          type = with lib.types; attrsOf (either str path);
-          default = { };
-        };
-
-        themes = lib.mkOption {
-          type = with lib.types; attrsOf (either str path);
-          default = { };
-        };
-
-        config = lib.mkOption {
-          default = { };
-          type =
-            with lib.types;
-            attrsOf (oneOf [
-              number
-              str
-              path
-            ]);
-        };
-
-        package = lib.mkOption {
-          default = wrapPackage (
-            { files, ... }:
-            {
-              package = pkgs.bat;
-              linkedPackages = [ pkgs.bat-extras.core ];
-              env.BAT_CONFIG_DIR = files.config.dir;
-              files = lib.mkMerge [
-                {
-                  config = {
-                    path = "config/config";
-                    file = cfg.config |> lib.cli.toCommandLineGNU { } |> lib.concatLines;
-                  };
-                }
-                (
-                  lib.optionalAttrs (cfg.themes != { }) cfg.themes
-                  |> lib.mapAttrs' (
-                    name: value: {
-                      name = "${name}Theme";
-                      value = {
-                        path = "config/themes/${name}.tmTheme";
-                        file = value;
-                      };
-                    }
-                  )
-                )
-                (
-                  lib.optionalAttrs (cfg.syntaxes != { }) cfg.syntaxes
-                  |> lib.mapAttrs' (
-                    name: value: {
-                      name = "${name}Syntax";
-                      value = {
-                        path = "config/syntaxes/${name}.sublime-syntax";
-                        file = value;
-                      };
-                    }
-                  )
-                )
-              ];
-            }
-          );
-        };
-      };
-
-      config = lib.mkIf cfg.enable {
-        hj.packages = [ cfg.package ];
-
-        programs.fish.interactiveShellInit = /* fish */ ''
-          ${lib.getExe' cfg.package "batman"} --export-env | source
-          eval (${lib.getExe' cfg.package "batpipe"})
         '';
       };
     };

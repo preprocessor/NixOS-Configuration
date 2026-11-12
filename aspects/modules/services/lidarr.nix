@@ -1,5 +1,5 @@
 {
-  exo.host.ramiel = {
+  modules.host.ramiel = {
     services.lidarr = {
       enable = true;
       user = "wyspr";

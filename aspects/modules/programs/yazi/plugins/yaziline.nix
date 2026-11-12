@@ -7,7 +7,7 @@
     patches = [ "https://github.com/llanosrocas/yaziline.yazi/pull/10" ];
   };
 
-  exo.core =
+  modules.core =
     {
       scheme,
       pkgs,

@@ -1,24 +1,13 @@
 {
-  exo.core =
+  modules.core =
     {
       pkgs,
+      self,
       lib,
       ...
     }:
     {
-      hj.packages = [ pkgs.ouch-rar ]; # general de/compression utility
-
-      my.hyprland.lua.files."keybinds.yazi".content = /* lua */ ''
-        hl.bind("SUPER + E", function()
-          utils.toggle_window("yazi-explorer", "kitty --app-id=yazi-explorer -e yazi ~",
-            {
-              size   = { 1700, 1100 },
-              center = true,
-              float  = true,
-              pin    = true,
-            })
-        end)
-      '';
+      imports = [ self.hjemModules.yazi ];
 
       my.yazi = {
         enable = true;
@@ -85,7 +74,5 @@
           };
         };
       };
-
-      _file = ./settings.nix;
     };
 }

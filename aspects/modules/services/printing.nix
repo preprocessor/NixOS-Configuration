@@ -1,5 +1,5 @@
 {
-  exo.mods.printing =
+  modules.features.printing =
     { pkgs, ... }:
     {
       my.xdg.desktopEntries."cups".noDisplay = true;

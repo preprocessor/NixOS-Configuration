@@ -6,7 +6,7 @@
     group = "yazi";
   };
 
-  exo.core =
+  modules.core =
     { pkgs, ... }:
     {
       my.yazi.plugins.extra-metadata = pkgs.yaziPlugins.mkYaziPlugin {

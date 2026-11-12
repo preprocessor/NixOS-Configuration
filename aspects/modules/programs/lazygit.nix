@@ -1,14 +1,17 @@
 {
-  exo.core =
+  modules.core =
     {
-      config,
       pkgs,
+      self,
       lib,
       ...
     }:
     {
+      imports = [ self.hjemModules.lazygit ];
+
       my.lazygit = {
         enable = true;
+
         settings = {
           git = {
             autoFetch = false;
@@ -18,14 +21,10 @@
               days = 365;
               method = "never";
             };
-            diffRenderers =
-              let
-                delta = config.my.delta;
-              in
-              [
-                { command = "${lib.getExe delta.package}"; }
-                { command = "${lib.getExe delta.package} --side-by-side"; }
-              ];
+            diffRenderers = [
+              { command = "${lib.getExe pkgs.hunk} pager --transparent-bg"; }
+              { command = "${lib.getExe pkgs.hunk} pager --transparent-bg --mode=split"; }
+            ];
           };
 
           color = {
@@ -58,6 +57,8 @@
             showRandomTip = false;
             sidePanelWidth = 0.25;
             border = "single";
+            mouseEvents = false;
+            showBottomLine = false;
 
             sidePanels = [
               [
@@ -98,59 +99,4 @@
       };
     };
 
-  exo.skeleton =
-    {
-      wrapPackage,
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    let
-      cfg = config.my.lazygit;
-      yaml = pkgs.formats.yaml { };
-    in
-    {
-      config = lib.mkIf cfg.enable {
-        hj.packages = [ cfg.package ];
-
-        programs.fish.shellFunctions.lg = {
-          modifiers.wraps = "lazygit";
-          body = /* fish */ ''
-            set -x LAZYGIT_NEW_DIR_FILE ${config.hj.xdg.config.directory}/lazygit/newdir
-            command lazygit $argv
-            if test -f $LAZYGIT_NEW_DIR_FILE
-              cd (cat $LAZYGIT_NEW_DIR_FILE)
-                rm -f $LAZYGIT_NEW_DIR_FILE
-                end
-          '';
-        };
-      };
-
-      options.my.lazygit = {
-        enable = lib.mkEnableOption { };
-
-        settings = lib.mkOption {
-          inherit (yaml) type;
-          default = { };
-          description = "Options to go into lazygit's yaml config";
-        };
-
-        package = lib.mkOption {
-          default = wrapPackage (
-            { files, wlib, ... }:
-            {
-              package = pkgs.lazygit;
-              env.LG_CONFIG_FILE = files.config;
-              files.config = {
-                path = "config/config.yml";
-                file = wlib.yaml "config.yml" cfg.settings;
-              };
-            }
-          );
-        };
-      };
-
-      _file = ./lazygit.nix;
-    };
 }

@@ -1,0 +1,123 @@
+diff --git a/crates/systemctl-tui/src/components/home.rs b/crates/systemctl-tui/src/components/home.rs
+--- a/crates/systemctl-tui/src/components/home.rs
++++ b/crates/systemctl-tui/src/components/home.rs
+@@ -2072,7 +2072,7 @@
+       .block(
+         Block::default()
+           .borders(Borders::ALL)
+-          .border_type(BorderType::Rounded)
++          .border_type(BorderType::Plain)
+           .border_style(if self.mode == Mode::ServiceList {
+             Style::default().fg(theme.accent)
+           } else {
+@@ -2286,7 +2286,7 @@
+     let logs_panel = right_panel[1];
+ 
+     let details_block =
+-      Block::default().title(block_title("Details")).borders(Borders::ALL).border_type(BorderType::Rounded);
++      Block::default().title(block_title("Details")).borders(Borders::ALL).border_type(BorderType::Plain);
+     let details_inner = details_block.inner(details_panel);
+     f.render_widget(details_block, details_panel);
+ 
+@@ -2448,7 +2448,7 @@
+         Block::default()
+           .title(block_title(format!("Logs — {logs_unit} [{order_label}; ctrl+r to reverse]")))
+           .borders(Borders::ALL)
+-          .border_type(BorderType::Rounded),
++          .border_type(BorderType::Plain),
+       )
+       .style(Style::default())
+       .wrap(Wrap { trim: true });
+@@ -2536,7 +2536,7 @@
+         _ => Style::default(),
+       })
+       .scroll((0, scroll as u16))
+-      .block(Block::default().borders(Borders::ALL).border_type(BorderType::Rounded).title(block_title(Line::from(
++      .block(Block::default().borders(Borders::ALL).border_type(BorderType::Plain).title(block_title(Line::from(
+         vec![
+           Span::raw("Search "),
+           Span::styled("(", Style::default().fg(theme.muted_alt)),
+@@ -2601,7 +2601,7 @@
+       let title = format!("Help for {name} v{version}");
+ 
+       let paragraph = Paragraph::new(help_lines)
+-        .block(Block::default().title(block_title(title)).borders(Borders::ALL).border_type(BorderType::Rounded))
++        .block(Block::default().title(block_title(title)).borders(Borders::ALL).border_type(BorderType::Plain))
+         .style(Style::default())
+         .wrap(Wrap { trim: true });
+ 
+@@ -2617,7 +2617,7 @@
+           Block::default()
+             .title(block_title("Error"))
+             .borders(Borders::ALL)
+-            .border_type(BorderType::Rounded)
++            .border_type(BorderType::Plain)
+             .border_style(Style::default().fg(Color::Red)),
+         )
+         .wrap(Wrap { trim: true });
+@@ -2654,7 +2654,7 @@
+           Block::default()
+             .title(block_title(title))
+             .borders(Borders::ALL)
+-            .border_type(BorderType::Rounded)
++            .border_type(BorderType::Plain)
+             .border_style(Style::default().fg(theme.accent))
+             .padding(ratatui::widgets::Padding::horizontal(1)),
+         )
+@@ -2773,7 +2773,7 @@
+       let paragraph = Paragraph::new(lines).block(
+         Block::default()
+           .borders(Borders::ALL)
+-          .border_type(BorderType::Rounded)
++          .border_type(BorderType::Plain)
+           .border_style(Style::default().fg(theme.accent))
+           .title(block_title("Unit filters")),
+       );
+@@ -2849,7 +2849,7 @@
+ 
+       let outer = Block::default()
+         .borders(Borders::ALL)
+-        .border_type(BorderType::Rounded)
++        .border_type(BorderType::Plain)
+         .border_style(Style::default().fg(theme.accent))
+         .title(block_title("All commands"));
+       f.render_widget(Clear, popup);
+@@ -2861,7 +2861,7 @@
+       let search_width = search_rect.width.saturating_sub(2).max(1);
+       let scroll = self.command_input.visual_scroll(search_width as usize);
+       let search = Paragraph::new(self.command_input.value()).scroll((0, scroll as u16)).block(
+-        Block::default().borders(Borders::ALL).border_type(BorderType::Rounded).title(block_title("Search commands")),
++        Block::default().borders(Borders::ALL).border_type(BorderType::Plain).title(block_title("Search commands")),
+       );
+       f.render_widget(search, search_rect);
+ 
+@@ -2913,7 +2913,7 @@
+         .block(
+           Block::default()
+             .borders(Borders::ALL)
+-            .border_type(BorderType::Rounded)
++            .border_type(BorderType::Plain)
+             .border_style(Style::default().fg(theme.accent))
+             .title(block_title(title)),
+         )
+@@ -2948,7 +2948,7 @@
+         .block(
+           Block::default()
+             .title(block_title("Processing"))
+-            .border_type(BorderType::Rounded)
++            .border_type(BorderType::Plain)
+             .borders(Borders::ALL)
+             .border_style(Style::default().fg(theme.accent)),
+         )
+diff --git a/crates/systemctl-tui/src/components/logger.rs b/crates/systemctl-tui/src/components/logger.rs
+--- a/crates/systemctl-tui/src/components/logger.rs
++++ b/crates/systemctl-tui/src/components/logger.rs
+@@ -28,7 +28,7 @@
+         Block::default()
+           .title(block_title("systemctl-tui logs"))
+           .borders(Borders::ALL)
+-          .border_type(BorderType::Rounded),
++          .border_type(BorderType::Plain),
+       )
+       .style_error(Style::default().fg(Color::Red))
+       .style_debug(Style::default().fg(Color::Green))

@@ -280,7 +280,21 @@
     "repo": "systemctl-tui",
     "rev": "053e865b549c5d3604c348ed7a2e68ce7cd6deca",
     "narHash": "sha256-fQaGaasX5NDSYpLPYb7gUD9G2n9oSKE9mAwZMgFpaHg=",
-    "lastModified": 1793559810
+    "lastModified": 1793559810,
+    "patched": {
+      "path": "/nix/store/af98sizfh6qli702ahbp81jjz50qc6af-source",
+      "narHash": "sha256-0uZ+SJcBo9IgjNinCMZFiKNLNuqTJt7kBRg6Tl7KXKk=",
+      "lastModified": 1793559810,
+      "patches": [
+        {
+          "source": "https://gist.githubusercontent.com/preprocessor/9cfc416aef8684374849a14284639be9/raw/5447789e89192e5ec6acdb959f88a20d0cbbd5a6/systemctl-tui_square_borders.patch",
+          "url": "https://gist.githubusercontent.com/preprocessor/9cfc416aef8684374849a14284639be9/raw/5447789e89192e5ec6acdb959f88a20d0cbbd5a6/systemctl-tui_square_borders.patch",
+          "file": "patches/systemctl-tui/systemctl-tui_square_borders.patch",
+          "sha256": "f272de08387c4555494793ab404f31357f6a65d9fb36fc3c303df757390c063d"
+        }
+      ],
+      "diff": "e1918c3323d850147b27d5de5f1eb7b2ca20e9d52bc45bc3983c5aac28fe909f"
+    }
   },
   "systems": {
     "type": "github",

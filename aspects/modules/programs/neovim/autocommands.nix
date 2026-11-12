@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     extraConfigLua = /* lua */ ''
       local api = vim.api
       local autocmd = api.nvim_create_autocmd

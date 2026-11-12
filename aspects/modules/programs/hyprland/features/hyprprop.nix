@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  modules.features.desktop =
     { pkgs, ... }:
     let
       hyprprop = pkgs.writeShellScriptBin "hyprprop" ''

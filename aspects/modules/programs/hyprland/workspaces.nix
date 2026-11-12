@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop = {
+  modules.features.desktop = {
     my.hyprland.lua.files = {
       "workspaces".content = /* lua */ ''
         for i = 1, 5 do

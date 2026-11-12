@@ -1,5 +1,5 @@
 {
-  exo.host.ramiel = {
+  modules.host.ramiel = {
     services.jellyfin = {
       enable = true;
       user = "wyspr";

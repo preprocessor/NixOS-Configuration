@@ -1,5 +1,5 @@
 {
-  exo.core = {
+  modules.core = {
     my.yazi.initLua = /* lua */ ''
       require("git"):setup {
       	order = 1500, -- Order of status signs showing in the line mode

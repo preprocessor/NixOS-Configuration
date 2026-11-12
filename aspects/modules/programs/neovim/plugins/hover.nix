@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim =
+  modules.features.neovim =
     { pkgs, ... }:
     {
       extraPlugins = [ pkgs.vimPlugins.hover-nvim ];

@@ -1,5 +1,5 @@
 {
-  exo.core =
+  modules.core =
     { pkgs, ... }:
     {
       security.polkit.enable = true;

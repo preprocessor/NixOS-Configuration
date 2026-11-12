@@ -44,7 +44,7 @@
       };
     };
 
-  exo.mods.desktop =
+  modules.features.desktop =
     { self', ... }:
     {
       my.hyprland.plugins = { inherit (self'.packages) hyprland-scroll-overview; };

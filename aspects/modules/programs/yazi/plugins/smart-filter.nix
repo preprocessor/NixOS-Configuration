@@ -1,5 +1,5 @@
 {
-  exo.core = {
+  modules.core = {
     my.yazi.keymap = {
       mgr.prepend_keymap = [
         {

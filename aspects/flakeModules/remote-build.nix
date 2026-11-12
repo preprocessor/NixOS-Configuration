@@ -1,0 +1,48 @@
+{
+  perSystem =
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      options.remotePackages = lib.mkOption {
+        type = with lib.types; lazyAttrsOf package;
+        default = { };
+      };
+
+      config = {
+        packages = config.remotePackages;
+
+        apps.list-remote-packages = {
+          type = "app";
+          meta.description = "List packages that will be built remotely (to be used in a Github Action)";
+          program =
+            (pkgs.writeShellScript "list-remote-packages" ''
+              echo "${
+                config.remotePackages
+                |> lib.attrNames
+                |> lib.concatLines
+                |> lib.trim
+              }"
+            '').outPath;
+        };
+      };
+    };
+
+  modules.core = {
+    nix.settings = {
+      substituters = [
+        "https://onelock.cachix.org"
+        "https://bazinga.cachix.org"
+        "https://nix-community.cachix.org"
+      ];
+      trusted-public-keys = [
+        "bazinga.cachix.org-1:WI9TV6l0gBVhcfY7OQM5zWqYmESIarKME0fjVN6yDYU="
+        "onelock.cachix.org-1:Wyy9XrWqFKcPxkZXQg5yZXtsbKTbkaga44UWRJfgqEg="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+  };
+}

@@ -3,11 +3,12 @@
   mkScheme,
   config,
   inputs,
+  self,
   lib,
   ...
 }:
 let
-  cfg = config.exo;
+  cfg = config.modules;
 in
 {
   config = {
@@ -31,6 +32,7 @@ in
                 inputs'
                 inputs
                 self'
+                self
                 meta
                 ;
               inherit (hostConfig) system hardware;
@@ -43,7 +45,6 @@ in
               };
             };
             modules = hostConfig.modules ++ [
-              cfg.skeleton
               cfg.core
               cfg.hardware.${hostConfig.hardware}
               (cfg.host.${hostname} or { })
@@ -57,7 +58,7 @@ in
     perSystem = { pkgs, ... }: { formatter = pkgs.nixfmt-rs; };
   };
 
-  options.exo = {
+  options.modules = {
     configurations = lib.mkOption {
       description = "NixOS Configuration";
       default = { };
@@ -111,16 +112,13 @@ in
         )
       );
     };
-    mods = lib.mkOption {
+    features = lib.mkOption {
       type = lib.types.lazyAttrsOf lib.types.deferredModule;
     };
     host = lib.mkOption {
       type = lib.types.lazyAttrsOf lib.types.deferredModule;
     };
     core = lib.mkOption {
-      type = lib.types.deferredModule;
-    };
-    skeleton = lib.mkOption {
       type = lib.types.deferredModule;
     };
     hardware = lib.mkOption {

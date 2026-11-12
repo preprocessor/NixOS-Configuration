@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     plugins = {
       render-markdown = {
         enable = true;

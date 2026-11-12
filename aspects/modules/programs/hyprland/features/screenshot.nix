@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  modules.features.desktop =
     { pkgs, ... }:
     {
       hj.packages = with pkgs; [

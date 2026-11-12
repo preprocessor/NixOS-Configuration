@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     plugins.blink-ripgrep.enable = true;
     plugins.blink-cmp-dictionary.enable = true;
 

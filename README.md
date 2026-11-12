@@ -25,8 +25,8 @@ understanding a framework first.
 
 ### Everything is a module
 
-`evalModules` isn't just for lib.nixosSystem here. The flake top level, every `perSystem`
-fragment, every wrapped package, and each host config are all evaluated as modules
+The flake top level, every `perSystem` fragment, every wrapped package,
+and each host config are all evaluated as modules
 with typed options. The schemas document themselves, and composition happens through
 deferred modules instead of hand-rolled merging.
 
@@ -39,9 +39,8 @@ Dependencies show up in a reviewable diff instead of hiding in a `flake.lock`.
 ### Compose hosts from modules, not one giant config
 
 A host declares its user, state version, colorscheme, hardware profile, and which
-modules it wants. Modules organize themselves into `core`, `skeleton`, `host`, `hardware`, or
-a named module, and `configurations.nix` assembles the final `nixosSystem`. Adding
-a capability is opt-in, and adding a host is about a dozen lines.
+modules it wants. Modules organize themselves into `core`, `host`, `hardware`, or
+a named module within `modules`, and `configurations.nix` assembles the final `nixosSystem`.
 
 ## Areas of interest
 
@@ -82,18 +81,17 @@ flake-parts users get, then extends those further.
 
 > file: [`aspects/hosts/configurations.nix`](./aspects/hosts/configurations.nix)
 
-Hosts are declared as submodules, so `exo.configurations.ramiel` only accepts the fields:
+Hosts are declared as submodules, so `modules.configurations.ramiel` only accepts the fields:
 `system`, `stateVersion`, `user`, `hardware`, `scheme`, `modules`, and `extraConfig`.
 From each entry, the module builds a `nixosSystem` with the right `specialArgs`
 (`scheme`, `pkgs`, `inputs'`, `hostname`, `constants`, ...)
 
 The composition is the important part. We merge deferred modules into sets:
 
-- `exo.core` — common configuration modules provided to every host
-- `exo.skeleton` — the shared base of options modules
-- `exo.hardware.<profile>` — hardware-specific modules
-- `exo.host.<hostname>` — per host modules
-- `exo.mods.<name>` — opt-in feature sets like `desktop`, `gaming`, `comms`
+- `modules.core` — common configuration modules provided to every host
+- `modules.hardware.<profile>` — hardware-specific modules
+- `modules.host.<hostname>` — per host modules
+- `modules.mods.<name>` — opt-in feature sets like `desktop`, `gaming`, `comms`
 
 A host just lists the modules it wants, and the final module list is assembled from those
 sets. So enabling gaming on a second machine is one word, not a copy-paste of config.
@@ -102,12 +100,12 @@ sets. So enabling gaming on a second machine is one word, not a copy-paste of co
 ```nix
 { config, ... }:
 {
-  exo.configurations.ramiel = {
+  modules.configurations.ramiel = {
     user = "wyspr";
     stateVersion = "25.11";
     scheme = "amber";
     hardware = "desktop-pc";
-    modules = with config.exo.mods; [
+    modules = with config.modules.mods; [
       printing
       desktop
       gaming
@@ -118,30 +116,30 @@ sets. So enabling gaming on a second machine is one word, not a copy-paste of co
 ```
 This will receive the following modules:
 ```
-exo.core
-exo.skeleton
-exo.hardware.desktop-pc
-exo.host.ramiel
-exo.mods.printing
-exo.mods.desktop
-exo.mods.gaming
-exo.mods.comms
+modules.core
+modules.hardware.desktop-pc
+modules.host.ramiel
+modules.mods.printing
+modules.mods.desktop
+modules.mods.gaming
+modules.mods.comms
 ```
 
-## [Tack](https://github.com/manic-systems/tack), not flake inputs
+## [Tack](https://github.com/manic-systems/tack) ~~flake~~ inputs
 
 > file: [`aspects/flake/tack.nix`](./aspects/flake/tack.nix)
 
-Dependencies live in `.tack/pins.toml` and get imported straight into the flake, so
-there's no `flake.lock` and no `inputs` block to hand-edit. This module gives that file
+Dependencies live in `.tack/pins.toml` and get imported into the flake, so
+there's no `flake.lock` and no `inputs` block to edit. This module gives that file
 a typed option schema (`tack.inputs.*`, `tack.shorturls`, `tack.signers`, `all_follow`,
 patches, follows, and so on) and then writes it back out with `write-tack`.
 
-`write-tack`: a flake app that turns the evaluated options into TOML using a custom generator,
-diffs them against the current file, and only runs `tack update` or `tack patch` for
-inputs that actually changed. It also rewrites the file so every input starts with its
-`url`, which makes the diffs much nicer to read. Think of it as flake-file, except the
-output is a tack `pins.toml` file.
+`write-tack` is a flake app that:
+1. Turns the evaluated options into TOML using a custom generator
+2. Diffs them against the current file
+3. Only runs `tack update` or `tack patch` for inputs that have changed or updated
+It also rewrites the file so every input starts with its
+`url`, which makes the diffs much nicer to read. Its like flake-file, for tack.
 
 Inputs can be declared as children of the top-level tack option.
 
@@ -173,9 +171,7 @@ group = "nix"
 
 > file: [`./aspects/flake/wrappers.nix`](./aspects/flake/wrappers.nix)
 
-`wrapPackage` is a module-based wrapper around `makeWrapper`. Instead of assembling
-`--set` and `--prefix` flags by hand, you describe what you want and let the options do
-the work:
+`wrapPackage` is a module-based wrapper around `makeWrapper`
 
 ```nix
 wrapPackage {
@@ -221,7 +217,7 @@ YAML, or INI inside the wrapper.
 
 > file: [`aspects/flake/16.nix`](./aspects/flake/16.nix)
 
-This is a stripped-down base16.nix with no dependency on nixpkgs. Give it a scheme and
+This is a stripped-down base16.nix with no dependency on pkgs. Give it a scheme and
 `mkScheme` normalizes it to base24, adds mnemonic names (`red`, `bright-blue`, ..), and
 exposes a few useful forms:
 
@@ -232,17 +228,6 @@ exposes a few useful forms:
 
 The schemes themselves live in [`schemes.nix`](./aspects/flake/schemes.nix), and hosts
 pick one by name. No external theming framework, just a bit of hex math in `lib`.
-
-## Honerable mentions
-
-A few smaller modules round things out:
-
-- [`schemes.nix`](./aspects/flake/schemes.nix) — the actual base24 palettes.
-- [`sops.nix`](./aspects/flake/sops.nix) — sops-nix wiring with age keys and secrets.
-- [`remote-build.nix`](./aspects/flake/remote-build.nix) — remote package builds plus the
-  Cachix substituters, with a `list-remote-packages` app for CI.
-- [`utils.nix`](./aspects/flake/utils.nix) — a shared `utils` option passed through to
-  the skeleton, used mainly to share functions across multiple modules/files.
 
 ## Repository layout
 

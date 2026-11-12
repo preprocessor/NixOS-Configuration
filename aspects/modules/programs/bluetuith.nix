@@ -1,5 +1,9 @@
 {
-  exo.core =
+  modules.core = { pkgs, ... }: {
+    hj.packages = [ pkgs.bluetuith ];
+  };
+
+  modules.features.desktop =
     { pkgs, ... }:
     {
       my.xdg.desktopTuiEntries."Bluetuith" = {

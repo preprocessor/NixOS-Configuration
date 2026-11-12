@@ -5,7 +5,7 @@
     type = "fetch";
   };
 
-  exo.core =
+  modules.core =
     {
       inputs,
       meta,

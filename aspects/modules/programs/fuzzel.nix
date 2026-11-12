@@ -1,107 +1,37 @@
 {
-  exo.mods.desktop =
-    { scheme, ... }:
-    {
-      my.fuzzel = {
-        enable = true;
+  modules.features.desktop = { scheme, self, ... }: {
+    imports = [ self.hjemModules.fuzzel ];
 
-        settings = {
-          main = {
-            launch-prefix = "app2unit --";
-            namespace = "fuzzel";
-            render-workers = 10;
-            match-workers = 10;
-            horizontal-pad = 14;
-            vertical-pad = 14;
-            prompt = ''"Run: "'';
-            font = "SF Pro Display:weight=Medium:size=16";
-          };
-          colors = with scheme.noHashtag; {
-            background = "${base11}e5";
-            text = "${base05}ff";
-            match = "${bright-magenta}ff";
-            selection-match = "${bright-magenta}ff";
-            selection = "${base00}ff";
-            selection-text = "${bright-cyan}ff";
-            border = "${bright-cyan}ff";
-          };
-          border = {
-            radius = 0;
-            selection-radius = 0;
-          };
+    my.fuzzel = {
+      enable = true;
+
+      settings = {
+        main = {
+          launch-prefix = "app2unit --";
+          namespace = "fuzzel";
+          render-workers = 10;
+          match-workers = 10;
+          horizontal-pad = 14;
+          vertical-pad = 14;
+          prompt = ''"Run: "'';
+          font = "SF Pro Display:weight=Medium:size=16";
+        };
+
+        colors = with scheme.noHashtag; {
+          background = "${base11}e5";
+          text = "${base05}ff";
+          match = "${bright-magenta}ff";
+          selection-match = "${bright-magenta}ff";
+          selection = "${base00}ff";
+          selection-text = "${bright-cyan}ff";
+          border = "${bright-cyan}ff";
+        };
+
+        border = {
+          radius = 0;
+          selection-radius = 0;
         };
       };
     };
-
-  exo.skeleton =
-    {
-      wrapPackage,
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    let
-      cfg = config.my.fuzzel;
-      ini = pkgs.formats.ini { };
-    in
-    {
-      options.my.fuzzel = {
-        enable = lib.mkEnableOption { };
-
-        settings = lib.mkOption {
-          inherit (ini) type;
-          default = { };
-          description = "Options to go into fuzzel's ini config";
-        };
-
-        package = lib.mkOption {
-          default = wrapPackage (
-            { wlib, files, ... }:
-            {
-              package = pkgs.fuzzel;
-              args = [ "--config=${files.cfg}" ];
-              files.cfg = {
-                path = "config/fuzzel.ini";
-                file = wlib.ini "fuzzel.ini" cfg.settings;
-              };
-            }
-          );
-        };
-      };
-
-      config = lib.mkIf (cfg.enable) {
-        hj.packages = [ cfg.package ];
-
-        my.hyprland.lua.files = {
-          "layer_rules.fuzzel".content = /* lua */ ''
-            hl.layer_rule({
-              match = { namespace = "^fuzzel$" },
-              blur = true,
-            })
-          '';
-
-          "keybinds.fuzzel".content = /* lua */ ''
-            hl.bind("SUPER + Space", function()
-              local fuzzel_open = false
-
-              for _, value in pairs(hl.get_layers()) do
-                if value.namespace == "fuzzel" then
-                  fuzzel_open = true
-                  break
-                end
-              end
-
-              if fuzzel_open then
-                hl.dispatch(hl.dsp.exec_raw("pkill fuzzel"))
-              else
-                hl.dispatch(hl.dsp.exec_raw("fuzzel"))
-              end
-            end)
-          '';
-        };
-      };
-
-      _file = ./module.nix;
-    };
+  };
 }

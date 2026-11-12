@@ -18,8 +18,6 @@
               url = "https://github.com/xero/figlet-fonts/archive/refs/heads/main.zip";
               hash = "sha256-QogGNQ772bcYLOzgO0i6ydbzxjn5jnXNav72vW/SXm8=";
             };
-            allowSubstitutes = false;
-            preferLocalBuild = true;
             dontUnpack = true;
             dontBuild = true;
             dontConfigure = true;
@@ -32,7 +30,7 @@
       };
     };
 
-  exo.core =
+  modules.core =
     { self', ... }:
     {
       hj.packages = [ self'.packages.toilet ];

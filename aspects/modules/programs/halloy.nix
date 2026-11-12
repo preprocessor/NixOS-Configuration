@@ -1,63 +1,10 @@
 {
-  exo.skeleton =
-    {
-      wrapPackage,
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    let
-      cfg = config.my.halloy;
-      toml = pkgs.formats.toml { };
-    in
-    {
-      config = lib.mkIf cfg.enable {
-        hj.packages = [ cfg.package ];
-      };
+  modules.features.comms = { self, ... }: {
+    imports = [ self.hjemModules.halloy ];
 
-      options.my.halloy = {
-        enable = lib.mkEnableOption { };
-
-        settings = lib.mkOption {
-          inherit (toml) type;
-          default = { };
-          description = "Options to go into halloy's yaml config";
-        };
-
-        theme = lib.mkOption {
-          inherit (toml) type;
-          default = { };
-          description = "Additional config lines.";
-        };
-
-        package = lib.mkOption {
-          default = wrapPackage (
-            { wlib, ... }:
-            {
-              package = pkgs.halloy;
-              env.XDG_CONFIG_HOME = wlib.out;
-              files = {
-                config = {
-                  path = "halloy/config.toml";
-                  file = wlib.toml "halloy-config" cfg.settings // {
-                    settings.theme = "theme";
-                  };
-                };
-                theme = {
-                  path = "halloy/themes/theme.toml";
-                  file = wlib.toml "halloy-theme" cfg.theme;
-                };
-              };
-            }
-          );
-        };
-      };
-    };
-
-  exo.mods.comms = {
     my.halloy = {
       enable = true;
+
       settings = {
         # For a complete list of available options,
         # please visit https://halloy.chat/configuration.html

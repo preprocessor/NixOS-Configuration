@@ -1,5 +1,5 @@
 {
-  exo.core =
+  modules.features.desktop =
     { pkgs, lib, ... }:
     {
       my.xdg.desktopTuiEntries."Cyme" = {

@@ -4,7 +4,7 @@
     group = "general";
   };
 
-  exo.mods.desktop =
+  modules.features.desktop =
     {
       inputs',
       inputs,
@@ -15,7 +15,6 @@
     }:
     let
       spicePkgs = inputs'.spicetify-nix.legacyPackages;
-      cfg = config.programs.spicetify;
     in
     {
       imports = [ inputs.spicetify-nix.nixosModules.default ];
@@ -47,7 +46,7 @@
           };
         }
 
-        (lib.mkIf cfg.enable {
+        (lib.mkIf (config.programs.spicetify.enable && config.my.hyprland.enable) {
           my.hyprland.windowrules.spotify = [
             {
               name = "spotify";

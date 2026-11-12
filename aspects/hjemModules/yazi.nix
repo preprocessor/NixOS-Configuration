@@ -1,0 +1,283 @@
+{
+  flake.hjemModules.yazi =
+    {
+      self',
+      config,
+      pkgs,
+      wrapPackage,
+      lib,
+      ...
+    }:
+    let
+      inherit (lib) mkOption types;
+
+      mkMapOption =
+        description:
+        lib.mkOption {
+          inherit description;
+          type = toml;
+          default = { };
+        };
+
+      toml = lib.types.toml;
+      cfg = config.my.yazi;
+    in
+    {
+      config = lib.mkIf (cfg.enable) (
+        lib.mkMerge [
+          {
+            hj.packages = [ cfg.package ];
+
+            utils.yaziKeymap = on: run: desc: { inherit on run desc; };
+
+            my.xdg.desktopEntries."yazi".noDisplay = true;
+          }
+
+          (lib.mkIf config.programs.fish.enable {
+            programs.fish.shellFunctions.y.body = /* fish */ ''
+              set -l tmp (mktemp -t "yazi-cwd.XXXXX")
+              command yazi $argv --cwd-file="$tmp"
+              if read cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+                builtin cd -- "$cwd"
+              end
+              rm -f -- "$tmp"
+            '';
+          })
+
+          (lib.mkIf config.my.hyprland.enable {
+            my.hyprland.lua.files."keybinds.yazi".content = /* lua */ ''
+              hl.bind("SUPER + E", function()
+                utils.toggle_window("yazi-explorer", "kitty --app-id=yazi-explorer -e yazi ~",
+                  {
+                    size   = { 1700, 1100 },
+                    center = true,
+                    float  = true,
+                    pin    = true,
+                  })
+              end)
+            '';
+          })
+        ]
+      );
+
+      options.my.yazi = {
+        package = mkOption {
+          type = types.package;
+          default = wrapPackage (
+            { files, wlib, ... }:
+            {
+              package = self'.packages.yazi;
+              env.YAZI_CONFIG_HOME = files.yazi.dir;
+              runtimePackages = with pkgs; [
+                ouch-rar
+                ffmpeg
+                xxhash
+                exiv2
+              ];
+              files = lib.mkMerge [
+                {
+                  yazi = {
+                    path = "config/yazi.toml";
+                    file = wlib.toml "yazi.toml" cfg.settings;
+                  };
+                }
+
+                (lib.optionalAttrs (cfg.keymap != { }) {
+                  keymap = {
+                    path = "config/keymap.toml";
+                    file = wlib.toml "keymap.toml" cfg.keymap;
+                  };
+                })
+
+                (lib.optionalAttrs (cfg.theme != { }) {
+                  theme = {
+                    path = "config/theme.toml";
+                    file = wlib.toml "theme.toml" cfg.theme;
+                  };
+                })
+
+                (lib.optionalAttrs (cfg.initLua != "") {
+                  init = {
+                    path = "config/init.lua";
+                    file = cfg.initLua;
+                  };
+                })
+
+                (lib.optionalAttrs (cfg.flavor != "") {
+                  flavor = {
+                    path = "config/flavors/wyspr.yazi/flavor.toml";
+                    file = wlib.toml "flafor.toml" cfg.flavor;
+                  };
+                })
+
+                (
+                  lib.optionalAttrs (cfg.plugins != { }) cfg.plugins
+                  |> lib.filterAttrs (_: file: !isNull file)
+                  |> lib.mapAttrs' (
+                    name: file: {
+                      name = "${name}-yazi-plugin";
+                      value = {
+                        path = "config/plugins/${name}.yazi";
+                        inherit file;
+                      };
+                    }
+                  )
+                )
+              ];
+            }
+          );
+        };
+
+        enable = lib.mkEnableOption { };
+
+        initLua = mkOption {
+          type = with types; nullOr (either path lines);
+          default = "";
+          description = "The init.lua for Yazi itself.";
+          example = lib.literalExpression "./init.lua";
+        };
+
+        plugins = mkOption {
+          type = with types; attrsOf (nullOr path);
+          default = { };
+          description = "An attribute set of plugin names and their paths";
+          example = lib.literalMD ''
+            ```nix
+            with pkgs.yaziPlugins; {
+              smart-enter = smart-enter;
+              drag = inputs.drag;
+              gvfs = inputs.gvfs-yazi;
+              git = git;
+              starship = starship;
+              full-border = full-border;
+            };
+            ```
+          '';
+        };
+
+        theme = lib.mkOption {
+          type = toml;
+          default = { };
+          description = "Theme settings";
+        };
+
+        flavor = lib.mkOption {
+          type = lib.types.toml;
+          default = { };
+          description = "TOML content for the flavor file";
+        };
+
+        settings = mkOption {
+          default = { };
+          description = ''
+            Content of yazi.toml file.
+            See the configuration reference at <https://yazi-rs.github.io/docs/configuration/yazi>
+          '';
+
+          type = types.submodule {
+            freeformType = toml;
+            options = {
+              mgr = mkMapOption ''
+                Manager settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#mgr>
+              '';
+
+              preview = mkMapOption ''
+                Preview settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#preview>
+              '';
+
+              opener = mkMapOption ''
+                Opener settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#opener>
+              '';
+
+              open = mkMapOption ''
+                Open settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#open>
+              '';
+
+              plugin = mkMapOption ''
+                Plugin settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#plugin>
+              '';
+
+              input = mkMapOption ''
+                Input settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#input>
+              '';
+
+              confirm = mkMapOption ''
+                Confirm settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#confirm>
+              '';
+
+              pick = mkMapOption ''
+                Pick settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#pick>
+              '';
+
+              which = mkMapOption ''
+                Which settings
+                See <https://yazi-rs.github.io/docs/configuration/yazi#which>
+              '';
+
+            };
+          };
+        };
+
+        keymap = mkOption {
+          default = { };
+          description = ''
+            Content of keymap.toml file.
+            See the configuration reference at <https://yazi-rs.github.io/docs/configuration/keymap>
+          '';
+
+          type = types.submodule {
+            freeformType = toml;
+            options = {
+              mgr = mkMapOption ''
+                Keymap mgr settings
+                See <https://yazi-rs.github.io/docs/configuration/keymap#mgr>
+              '';
+
+              tasks = mkMapOption ''
+                Keymap tasks settings
+                See <https://yazi-rs.github.io/docs/configuration/keymap#tasks>
+              '';
+
+              spot = mkMapOption ''
+                Keymap spot settings
+                See <https://yazi-rs.github.io/docs/configuration/keymap#spot>
+              '';
+
+              pick = mkMapOption ''
+                Keymap pick settings
+                See <https://yazi-rs.github.io/docs/configuration/keymap#pick>
+              '';
+
+              input = mkMapOption ''
+                Keymap input settings
+                See <https://yazi-rs.github.io/docs/configuration/keymap#input>
+              '';
+
+              confirm = mkMapOption ''
+                 Keymap confirm settings
+                See < https://yazi-rs.github.io/docs/configuration/keymap#confirm>
+              '';
+
+              cmp = mkMapOption ''
+                 Keymap cmp settings
+                See < https://yazi-rs.github.io/docs/configuration/keymap#cmp>
+              '';
+
+              help = mkMapOption ''
+                 Keymap help settings
+                See < https://yazi-rs.github.io/docs/configuration/keymap#help>
+              '';
+            };
+          };
+        };
+      };
+    };
+}

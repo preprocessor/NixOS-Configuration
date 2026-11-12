@@ -1,5 +1,6 @@
 {
-  exo.mods.desktop = {
+  modules.features.desktop = { self, ... }: {
+    imports = [ self.hjemModules.hyprland ];
     my.hyprland.enable = true;
 
     my.hyprland.lua.files."general".content = /* lua */ ''

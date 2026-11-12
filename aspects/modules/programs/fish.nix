@@ -1,4 +1,3 @@
-{ rootPath, ... }:
 {
   tack.inputs.fish-completion-sync = {
     url = "gh:iynaix/fish-completion-sync";
@@ -6,8 +5,9 @@
     group = "tui";
   };
 
-  exo.core =
+  modules.core =
     {
+      constants,
       inputs,
       config,
       ...
@@ -16,7 +16,6 @@
       programs.fish = {
         enable = true;
         extraCompletionPackages = config.hj.packages;
-
         shellInit = /* fish */ ''
           fish_vi_key_bindings # Vim mode
 
@@ -73,7 +72,7 @@
 
           starship_transient_prompt_func.body = ''printf " \e[94m  \e[0m"'';
 
-          __nixos_dir.body = "cd ${rootPath}";
+          __nixos_dir.body = "cd ${constants.cfgdir}";
 
           __onelockeds_fuzzy_zox.body = /* fish */ ''
             set -l dir (

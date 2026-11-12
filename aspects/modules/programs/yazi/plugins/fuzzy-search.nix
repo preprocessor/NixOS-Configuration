@@ -5,7 +5,7 @@
     group = "yazi";
   };
 
-  exo.core =
+  modules.core =
     {
       inputs,
       config,

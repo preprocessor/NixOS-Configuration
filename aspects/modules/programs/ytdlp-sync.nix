@@ -1,5 +1,5 @@
 {
-  exo.host.ramiel = { pkgs, ... }: {
+  modules.host.ramiel = { pkgs, ... }: {
     hj.packages =
       let
         yt-dlp-sync = pkgs.writers.writePython3Bin "yt-dlp-sync" { flakeIgnore = [ "E501" ]; } /* python */ ''

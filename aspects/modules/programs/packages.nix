@@ -10,19 +10,17 @@
     };
   };
 
-  exo.mods.desktop =
-    { pkgs, ... }:
-    {
-      hj.packages = with pkgs; [
-        (gnuplot.override { withQt = true; })
-        libreoffice-qt
-        imagemagick
-        libnotify
-        mcat
-      ];
-    };
+  modules.features.desktop = { pkgs, ... }: {
+    hj.packages = with pkgs; [
+      (gnuplot.override { withQt = true; })
+      libreoffice-qt
+      imagemagick
+      libnotify
+      mcat
+    ];
+  };
 
-  exo.core =
+  modules.core =
     {
       packages',
       pkgs,

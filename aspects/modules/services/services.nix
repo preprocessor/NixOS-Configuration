@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop =
+  modules.features.desktop =
     { lib, ... }:
     {
       my.xdg.desktopEntries."uuctl".noDisplay = true;

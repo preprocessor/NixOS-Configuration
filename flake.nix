@@ -79,7 +79,12 @@
         system: f:
         f rec {
           # re-expose these so every module gets them for free
-          inherit system inputs rootPath;
+          inherit
+            self
+            system
+            inputs
+            rootPath
+            ;
 
           # Expose tack's meta section as a special arg
           meta = inputs._meta;
@@ -164,7 +169,14 @@
 
       # topEval: the FIRST of two evalModules passes. This one evaluates the top-level modules
       topEval = lib.evalModules {
-        specialArgs = { inherit inputs withSystem rootPath; };
+        specialArgs = {
+          inherit
+            self
+            inputs
+            withSystem
+            rootPath
+            ;
+        };
         modules =
           (
             ./aspects

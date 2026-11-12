@@ -1,5 +1,5 @@
 {
-  exo.core = {
+  modules.core = {
     # Enable NetworkManager
     networking.networkmanager.enable = true;
 

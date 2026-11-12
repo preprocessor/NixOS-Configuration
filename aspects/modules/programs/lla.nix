@@ -1,40 +1,11 @@
 {
-  perSystem =
-    { pkgs, ... }:
-    {
-      remotePackages.lla = pkgs.lla.overrideAttrs {
-        doCheck = false;
-        postPatch = ''
-          substituteInPlace lla/src/formatter/column_config.rs \
-            --replace-fail '"Permissions".to_string()' '"Perms".to_string()'
-        '';
-      };
-    };
+  modules.core = { self, ... }: {
+    imports = [ self.hjemModules.lla ];
 
-  exo.core =
-    {
-      pkgs,
-      self',
-      lib,
-      ...
-    }:
-    let
-      lla = self'.packages.lla;
-      tomlFormat = pkgs.formats.toml { };
-    in
-    {
-      programs.fish.shellFunctions = {
-        l.body = "${lib.getExe lla} -T";
-        ls.body = "${lib.getExe lla}";
-        la.body = "${lib.getExe lla} -AT";
-        ll.body = "${lib.getExe lla} -Al";
-        lss.body = "${lib.getExe lla} -s";
-      };
+    my.lla = {
+      enable = true;
 
-      hj.packages = [ lla ];
-
-      # [todo] wrap + create options
-      hj.xdg.config.files."lla/config.toml".source = tomlFormat.generate "lla-config" {
+      settings = {
         default_sort = "name";
         default_format = "grid";
 
@@ -153,6 +124,6 @@
           # editor = "";
         };
       };
-
     };
+  };
 }

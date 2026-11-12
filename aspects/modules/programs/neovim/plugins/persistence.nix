@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     plugins.persistence = {
       enable = true;
       lazyLoad.settings.event = "BufReadPre";

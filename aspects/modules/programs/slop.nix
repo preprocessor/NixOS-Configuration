@@ -1,5 +1,5 @@
 {
-  exo.host.ramiel = { pkgs, ... }: {
+  modules.host.ramiel = { pkgs, ... }: {
     hj.packages = with pkgs; [
       worktrunk
       opencode

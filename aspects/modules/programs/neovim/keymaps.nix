@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     extraConfigLua = /* lua */ ''
       local map = vim.keymap.set
       local api = vim.api

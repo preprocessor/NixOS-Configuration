@@ -1,5 +1,5 @@
 {
-  exo.core =
+  modules.features.desktop =
     { pkgs, ... }:
     {
       my.xdg.desktopTuiEntries."Wiremix" = {

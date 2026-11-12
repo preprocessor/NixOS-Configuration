@@ -4,7 +4,7 @@
     type = "fetch";
   };
 
-  exo.mods.neovim =
+  modules.features.neovim =
     {
       inputs,
       pkgs,

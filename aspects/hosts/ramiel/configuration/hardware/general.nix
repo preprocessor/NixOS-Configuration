@@ -1,5 +1,5 @@
 {
-  exo.hardware.desktop-pc =
+  modules.hardware.desktop-pc =
     { pkgs, ... }:
     {
       hardware.bluetooth.enable = true;

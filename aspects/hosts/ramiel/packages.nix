@@ -1,5 +1,5 @@
 {
-  exo.host.ramiel =
+  modules.host.ramiel =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [

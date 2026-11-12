@@ -1,5 +1,5 @@
 {
-  exo.core =
+  modules.core =
     { scheme, ... }:
     {
       my.yazi.flavor = with scheme; {

@@ -1,5 +1,5 @@
 {
-  exo.mods.desktop = {
+  modules.features.desktop = {
     my.hyprland.lua.files = {
       "keybinds.windowing".content = /* lua */ ''
         -- Focus windows or workspaces with j/k

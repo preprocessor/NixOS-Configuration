@@ -4,17 +4,15 @@
     group = "nix";
   };
 
-  exo.core =
-    { pkgs, packages', ... }:
-    {
-      hj.packages =
-        with pkgs;
-        [
-          nix-output-monitor
-          nix-inspect
-          nixfmt-rs
-          nurl
-        ]
-        ++ [ packages'.nixtopsy ];
-    };
+  modules.core = { pkgs, packages', ... }: {
+    hj.packages =
+      with pkgs;
+      [
+        nix-output-monitor
+        nix-inspect
+        nixfmt-rs
+        nurl
+      ]
+      ++ [ packages'.nixtopsy ];
+  };
 }

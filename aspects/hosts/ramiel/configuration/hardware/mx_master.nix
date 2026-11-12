@@ -1,5 +1,5 @@
 {
-  exo.hardware.desktop-pc =
+  modules.hardware.desktop-pc =
     { pkgs, ... }:
     {
       environment.systemPackages = [ pkgs.logiops ];

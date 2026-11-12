@@ -4,9 +4,7 @@ top: {
     group = "tui";
   };
 
-  exo.core.my.nixvim.enable = true;
-
-  exo.skeleton =
+  modules.core =
     {
       inputs,
       config,
@@ -153,7 +151,9 @@ top: {
       };
 
       options.my.nixvim = {
-        enable = lib.mkEnableOption { };
+        enable = lib.mkEnableOption { } // {
+          default = true;
+        };
 
         package = lib.mkOption {
           default =
@@ -167,7 +167,7 @@ top: {
                   });
                 };
                 modules = [
-                  top.config.exo.mods.neovim
+                  top.config.modules.features.neovim
                   (
                     { dependencies, pkgs, ... }:
                     {

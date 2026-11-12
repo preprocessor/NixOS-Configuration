@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = { pkgs, ... }: {
+  modules.features.neovim = { pkgs, ... }: {
     plugins.lsp.servers.qmlls = {
       enable = true;
       package = pkgs.qt6.qtdeclarative;

@@ -1,5 +1,5 @@
 {
-  exo.host.ramiel =
+  modules.host.ramiel =
     { pkgs, constants, ... }:
     {
       environment.etc.issue.source = pkgs.writeText "etc/issue" ''

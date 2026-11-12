@@ -1,5 +1,5 @@
 {
-  exo.mods.winboat =
+  modules.features.winboat =
     { constants, pkgs, ... }:
     {
       environment.systemPackages = [ pkgs.winboat ];

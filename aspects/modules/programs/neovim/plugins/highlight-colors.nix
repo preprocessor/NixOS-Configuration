@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim = {
+  modules.features.neovim = {
     plugins.highlight-colors = {
       enable = true;
       settings.enable_named_colors = false;

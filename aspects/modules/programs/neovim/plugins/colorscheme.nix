@@ -1,5 +1,5 @@
 {
-  exo.mods.neovim =
+  modules.features.neovim =
     { scheme, lib, ... }:
     let
       inherit (lib.nixvim) mkRaw;
