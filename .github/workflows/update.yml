@@ -50,6 +50,7 @@ jobs:
             .tack/patches/*
   commit:
     needs: update
+    if: needs.update.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -67,7 +68,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git switch --create "update-inputs-${{ github.run_id }}-${{ github.run_attempt }}"
           git add .tack
-          git commit --message "Updated inputs"
+          git commit --message "tack: update inputs"
           git push origin HEAD
           { echo '```diff'; git diff HEAD^ -- .tack/pins.lock.json; echo '```'; } \
           | gh pr create --title "Update tack inputs" --body-file -
