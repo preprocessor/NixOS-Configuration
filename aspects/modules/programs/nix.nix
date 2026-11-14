@@ -16,8 +16,14 @@
       ++ [ packages'.nixtopsy ];
 
     programs.fish.shellFunctions = {
-      runpkgs.body = "nix run nixpkgs#$argv[1]";
-      shpkgs.body = "nix shell nixpkgs#$argv[1]";
+      nrun.body = /* fish */ ''
+        set -l package $argv[1]
+        nix run "nixpkgs#$package" -- $argv[2..-1]
+      '';
+      nshell.body = /* fish */ ''
+        set -l package $argv[1]
+        nix shell "nixpkgs#$package" -- $argv[2..-1]
+      '';
     };
   };
 }
