@@ -1,11 +1,13 @@
 {
   modules.features.comms =
-    { self, ... }:
+    { self', self, ... }:
     {
-      imports = [ self.hjemModules.vesktop ];
+      imports = [ self.hjemModules.equibop ];
 
-      my.vesktop = {
+      my.equibop = {
         enable = true;
+
+        package = self'.packages.equibop;
 
         settings = {
           appBadge = false;
@@ -22,7 +24,7 @@
           splashTheming = true;
         };
 
-        vencord.settings = {
+        equicord.settings = {
           autoUpdate = false;
           autoUpdateNotification = false;
           notifyAboutUpdates = false;

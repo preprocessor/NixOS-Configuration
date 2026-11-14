@@ -14,5 +14,10 @@
         nurl
       ]
       ++ [ packages'.nixtopsy ];
+
+    programs.fish.shellFunctions = {
+      runpkgs.body = "nix run nixpkgs#$argv[1]";
+      shpkgs.body = "nix shell nixpkgs#$argv[1]";
+    };
   };
 }

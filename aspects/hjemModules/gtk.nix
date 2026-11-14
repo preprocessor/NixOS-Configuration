@@ -100,6 +100,15 @@
           ".icons/default/index.theme".text = default_index_theme;
         };
 
+        hj.xdg.config.files = lib.optionalAttrs (cfg.theme.css != "") (
+          [
+            "4.0"
+            "3.0"
+          ]
+          |> map (version: lib.nameValuePair "gtk-${version}/gtk.css" { text = cfg.theme.css; })
+          |> builtins.listToAttrs
+        );
+
         programs.dconf = {
           enable = true;
           profiles.user.databases = [
@@ -167,6 +176,7 @@
 
           css = lib.mkOption {
             type = with lib.types; nullOr lines;
+            default = "";
             description = "Raw css content";
           };
 

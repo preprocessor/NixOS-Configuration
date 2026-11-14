@@ -16,6 +16,7 @@
     {
       wrapPackage,
       inputs,
+      meta,
       pkgs,
       ...
     }:
@@ -23,7 +24,7 @@
       remotePackages.cliphist-tui = wrapPackage {
         package = pkgs.rustPlatform.buildRustPackage (final: {
           pname = "cliphist-tui";
-          version = "0-unstable-2026-04-26";
+          version = meta.cliphist-tui-src.rev;
           cargoLock.lockFile = final.src + "/Cargo.lock";
           src = inputs.cliphist-tui-src;
         });
@@ -37,7 +38,7 @@
       remotePackages.cliphist = wrapPackage {
         package = pkgs.buildGoModule (final: {
           pname = "cliphist";
-          version = "0-unstable-2026-04-21";
+          version = meta.cliphist-src.rev;
           src = inputs.cliphist-src;
           vendorHash = "sha256-fDl+ul1t2Ux1w5WcCo6YMJtrcC20o+eUEO3NNycSNvI=";
           buildInputs = [ pkgs.bash ];

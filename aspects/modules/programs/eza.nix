@@ -1,5 +1,7 @@
 {
-  modules.core = { scheme, ... }: {
+  modules.core = { scheme, self, ... }: {
+    imports = [ self.hjemModules.eza ];
+
     my.eza = {
       enable = true;
       settings = with scheme; {

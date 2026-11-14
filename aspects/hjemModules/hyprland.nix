@@ -293,6 +293,7 @@
           withTermFileChooser = mkEnableOption "FileChooser" // {
             default = true;
           };
+
           withUWSM = mkEnableOption "UWSM" // {
             default = true;
             description = ''

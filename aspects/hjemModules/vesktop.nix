@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.vesktop =
+  flake.hjemModules.equibop =
     {
       config,
       pkgs,
@@ -8,24 +8,24 @@
     }:
     let
       json = pkgs.formats.json { };
-      cfg = config.my.vesktop;
+      cfg = config.my.equibop;
     in
     {
-      options.my.vesktop = {
+      options.my.equibop = {
         enable = lib.mkEnableOption { };
 
-        package = lib.mkPackageOption pkgs "vesktop" { };
+        package = lib.mkPackageOption pkgs "equibop" { };
 
         settings = lib.mkOption {
           inherit (json) type;
-          description = "Vesktop settings";
+          description = "equibop settings";
           default = { };
         };
 
-        vencord.settings = lib.mkOption {
+        equicord.settings = lib.mkOption {
           inherit (json) type;
           default = { };
-          description = "Vencord settings";
+          description = "equicord settings";
         };
       };
 
@@ -35,12 +35,12 @@
             hj.packages = [ cfg.package ];
 
             hj.xdg.config.files = {
-              "vesktop/settings.json".source = json.generate "vesktop-settings" cfg.settings;
-              "vesktop/settings/settings.json".source = json.generate "vencord-settings" cfg.vencord.settings;
+              "equibop/settings.json".source = json.generate "equibop-settings" cfg.settings;
+              "equibop/settings/settings.json".source = json.generate "equicord-settings" cfg.equicord.settings;
             };
 
             hj.xdg.mime-apps.default-applications = {
-              "x-scheme-handler/discord" = [ "vesktop.desktop" ];
+              "x-scheme-handler/discord" = [ "equibop.desktop" ];
             };
           }
 
@@ -51,10 +51,10 @@
               ''
             ];
 
-            my.hyprland.windowrules.vesktop = [
+            my.hyprland.windowrules.equibop = [
               {
-                name = "hide vesktop";
-                match.class = "^vesktop$";
+                name = "hide equibop";
+                match.class = "^equibop$";
                 rules = {
                   workspace = "3 silent";
                   tag = "hidden";
@@ -62,8 +62,8 @@
               }
             ];
 
-            my.hyprland.lua.files."keybinds/vesktop".content = /* lua */ ''
-              hl.bind("SUPER + F1", hl.dsp.send_shortcut({ mods = "CTRL + SHIFT", key = "M", window = "class:(vesktop)" }))
+            my.hyprland.lua.files."keybinds/equibop".content = /* lua */ ''
+              hl.bind("SUPER + F1", hl.dsp.send_shortcut({ mods = "CTRL + SHIFT", key = "M", window = "class:(equibop)" }))
             '';
           })
         ]
