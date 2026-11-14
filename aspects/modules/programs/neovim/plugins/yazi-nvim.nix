@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     globals.loaded_netrwPlugin = 1;
 
     keymaps = [

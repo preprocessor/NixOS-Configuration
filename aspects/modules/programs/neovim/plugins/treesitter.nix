@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     plugins.treesitter = {
       enable = true;
       highlight.enable = true;

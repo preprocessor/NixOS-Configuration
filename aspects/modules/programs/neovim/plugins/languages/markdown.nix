@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     plugins = {
       render-markdown = {
         enable = true;

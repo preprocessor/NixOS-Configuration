@@ -4,7 +4,7 @@
     type = "fetch";
   };
 
-  modules.features.neovim =
+  modules.features.nixvim =
     {
       inputs,
       pkgs,

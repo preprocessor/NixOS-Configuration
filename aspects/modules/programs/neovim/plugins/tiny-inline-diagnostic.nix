@@ -1,5 +1,5 @@
 {
-  modules.features.neovim =
+  modules.features.nixvim =
     { lib, ... }:
     {
       plugins.tiny-inline-diagnostic = {

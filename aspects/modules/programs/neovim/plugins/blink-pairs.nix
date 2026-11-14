@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     plugins.blink-pairs = {
       enable = true;
       lazyLoad.settings.event = [

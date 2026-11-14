@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = { pkgs, ... }: {
+  modules.features.nixvim = { pkgs, ... }: {
     plugins.lsp.servers.qmlls = {
       enable = true;
       package = pkgs.qt6.qtdeclarative;

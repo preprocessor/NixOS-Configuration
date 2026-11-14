@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     plugins.snacks = {
       enable = true;
       settings = {

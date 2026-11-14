@@ -1,5 +1,5 @@
 {
-  modules.features.neovim =
+  modules.features.nixvim =
     { lib, ... }:
     let
       inherit (lib.nixvim) listToUnkeyedAttrs;

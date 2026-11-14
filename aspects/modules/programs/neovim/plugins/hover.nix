@@ -1,5 +1,5 @@
 {
-  modules.features.neovim =
+  modules.features.nixvim =
     { pkgs, ... }:
     {
       extraPlugins = [ pkgs.vimPlugins.hover-nvim ];

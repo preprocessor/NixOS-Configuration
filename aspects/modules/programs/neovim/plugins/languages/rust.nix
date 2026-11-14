@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     plugins = {
       lsp.servers.rust_analyzer = {
         enable = true;

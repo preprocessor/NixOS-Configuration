@@ -4,7 +4,7 @@ top: {
     group = "tui";
   };
 
-  modules.core =
+  modules.features.neovim =
     {
       inputs,
       config,
@@ -167,7 +167,7 @@ top: {
                   });
                 };
                 modules = [
-                  top.config.modules.features.neovim
+                  (top.config.modules.features.nixvim or { })
                   (
                     { dependencies, pkgs, ... }:
                     {

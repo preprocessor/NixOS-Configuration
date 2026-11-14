@@ -1,5 +1,5 @@
 {
-  modules.features.neovim =
+  modules.features.nixvim =
     { pkgs, lib, ... }:
     {
       diagnostic.settings = {

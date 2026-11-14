@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     plugins.blink-ripgrep.enable = true;
     plugins.blink-cmp-dictionary.enable = true;
 

@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     extraConfigLua = /* lua */ ''
       local api = vim.api
       local autocmd = api.nvim_create_autocmd

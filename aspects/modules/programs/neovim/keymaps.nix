@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     extraConfigLua = /* lua */ ''
       local map = vim.keymap.set
       local api = vim.api

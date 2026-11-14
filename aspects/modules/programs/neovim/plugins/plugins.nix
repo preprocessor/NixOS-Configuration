@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     plugins = {
       ts-comments.enable = true;
       ts-context-commentstring.enable = true;

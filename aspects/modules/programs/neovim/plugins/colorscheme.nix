@@ -1,5 +1,5 @@
 {
-  modules.features.neovim =
+  modules.features.nixvim =
     { scheme, lib, ... }:
     let
       inherit (lib.nixvim) mkRaw;

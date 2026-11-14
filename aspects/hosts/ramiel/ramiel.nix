@@ -10,6 +10,7 @@
       desktop
       gaming
       comms
+      neovim
     ];
   };
 }

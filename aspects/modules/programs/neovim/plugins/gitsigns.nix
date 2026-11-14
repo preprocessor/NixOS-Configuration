@@ -1,5 +1,5 @@
 {
-  modules.features.neovim = {
+  modules.features.nixvim = {
     plugins.gitsigns = {
       enable = true;
       lazyLoad.settings.event = [
