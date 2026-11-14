@@ -41,6 +41,11 @@ type = "fetch"
 url = "gh:dlyongemallo/diffview-plus.nvim/ba05af7a295dcd8449bd03ebb3aead8268a5c379"
 type = "fetch"
 
+[inputs.equicord]
+url = "gh:Equicord/Equicord"
+frozen = true
+type = "fetch"
+
 [inputs.extra-metadata]
 url = "gh:boydaihungst/file-extra-metadata.yazi"
 group = "yazi"
@@ -57,8 +62,12 @@ frozen = true
 group = "fonts"
 type = "fetch"
 
+[inputs.gist-nvim]
+url = "gh:rawnly/gist.nvim"
+type = "fetch"
+
 [inputs.helium]
-url = "gh:amaanq/helium-flake/"
+url = "gh:amaanq/helium-flake"
 group = "general"
 
 [inputs.helvetica-font]

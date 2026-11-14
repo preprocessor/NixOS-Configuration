@@ -6,10 +6,12 @@
     "cliphist-src": "github:sentriz/cliphist",
     "cliphist-tui-src": "github:SHORiN-KiWATA/cliphist-tui",
     "diffview-plus": "github:dlyongemallo/diffview-plus.nvim/ba05af7a295dcd8449bd03ebb3aead8268a5c379",
+    "equicord": "github:Equicord/Equicord",
     "extra-metadata": "github:boydaihungst/file-extra-metadata.yazi",
     "fish-completion-sync": "github:iynaix/fish-completion-sync",
     "fragment-mono": "github:dtinth/fragment-mono-weights",
-    "helium": "github:amaanq/helium-flake/",
+    "gist-nvim": "github:rawnly/gist.nvim",
+    "helium": "github:amaanq/helium-flake",
     "helvetica-font": "github:Kyles-World/Helvetica-Font",
     "hjem": "github:feel-co/hjem",
     "hypr-motif": "github:preprocessor/hypr-motif",
@@ -90,6 +92,18 @@
       "outHash": "sha256-BiV/VfiqYuGwJ6f3GO1oN8yfpKuDGMZ/socAX/nOECE="
     }
   },
+  "equicord": {
+    "type": "github",
+    "owner": "Equicord",
+    "repo": "Equicord",
+    "rev": "577946253e6b62be0740b0ad86969ebc6ffbb2e4",
+    "narHash": "sha256-KKkjr8jFvUZc1HhK+0DH24OV4odEAC82/57oAOinQ1A=",
+    "lastModified": 1794404924,
+    "archive": {
+      "hash": "sha256-wgzdJogTwSt7i40wYa/ntd+clrmL7Op5u9JlHAoWyYE=",
+      "outHash": "sha256-1szO4xHVwXY3dlVLfiapH8yjt8aT3AFNEDM69DZzOa8="
+    }
+  },
   "extra-metadata": {
     "type": "github",
     "owner": "boydaihungst",
@@ -122,13 +136,25 @@
     "narHash": "sha256-TF0LW+4axEQvmNRvRL7zZACkALA7SgM2EKZiqJQj7x0=",
     "lastModified": 1705316590
   },
+  "gist-nvim": {
+    "type": "github",
+    "owner": "rawnly",
+    "repo": "gist.nvim",
+    "rev": "c09e1229527e0dc16de13396cbd9e7a81448a677",
+    "narHash": "sha256-mO8YU8WzADhfefNg90R/hTzxytiRU+LuCtE3S7fmFN0=",
+    "lastModified": 1793219540,
+    "archive": {
+      "hash": "sha256-0GNnffoViLuUWPh4J0SgBQqhJn+SDD8DdHr/20yziwE=",
+      "outHash": "sha256-1If/VwDFHXqCxGphx630k31F/8qXrwJhmwFlwZbVmcM="
+    }
+  },
   "helium": {
     "type": "github",
     "owner": "amaanq",
     "repo": "helium-flake",
-    "rev": "a7a4fc5016d1f33abfa534fa494dae540a7b7ef8",
-    "narHash": "sha256-Mt7SC8lr9XisvIsPGSIqHWLeM2x5sVB+Qtx5SYcWxlI=",
-    "lastModified": 1793905744
+    "rev": "698f12b0a5b93aa2c6b582779bdb683f0d8692a3",
+    "narHash": "sha256-dteS+YYEOrbYupP9U8EvYxBNTTlf4Lup0ji51ubGv+I=",
+    "lastModified": 1794597681
   },
   "helvetica-font": {
     "type": "github",
