@@ -248,10 +248,13 @@ in
     };
 
     modules.core =
-      { packages', ... }:
+      { packages', self', ... }:
       {
         hj = {
-          packages = [ packages'.tack ];
+          packages = [
+            self'.packages.tack-fish-completions
+            packages'.tack
+          ];
           environment.sessionVariables.TACK_NIX_CONF_TOKENS = 1;
         };
       };
@@ -266,6 +269,30 @@ in
       }:
       {
         remotePackages = { inherit (packages') tack; };
+
+        packages.tack-fish-completions =
+          let
+            # Pin names are declared in Nix, so bake them into the fish completions.
+            tackInputNames = lib.concatStringsSep " " (lib.attrNames config.tack.inputs);
+          in
+          pkgs.writeTextDir "share/fish/vendor_completions.d/tack.fish" /* fish */ ''
+            # Generated from config.tack.inputs by aspects/flakeModules/tack.nix.
+            function __tack_patch_subcommand
+                set -l words (commandline -opc)
+                test (count $words) -eq 2; and test "$words[2]" = patch
+            end
+
+            function __tack_patch_name
+                set -l words (commandline -opc)
+                test (count $words) -eq 3; and test "$words[2]" = patch; and contains -- $words[3] add update rm
+            end
+
+            complete -c tack -f
+            complete -c tack -n __fish_use_subcommand -a 'init update look verify tree add rm alias freeze unfreeze signer patch materialize dedup undo redo'
+            complete -c tack -n '__fish_seen_subcommand_from update look tree freeze unfreeze materialize rm' -a '${tackInputNames}'
+            complete -c tack -n __tack_patch_subcommand -a 'add update rm'
+            complete -c tack -n __tack_patch_name -a '${tackInputNames}'
+          '';
 
         apps.write-tack = {
           type = "app";
