@@ -9,8 +9,11 @@
               require('conform').format { async = true, lsp_format = 'fallback' }
             end
           '';
-          key = "<leader>f";
-          mode = "n";
+          key = "<leader>cf";
+          mode = [
+            "n"
+            "x"
+          ];
           options = {
             desc = "[F]ormat buffer";
             silent = true;

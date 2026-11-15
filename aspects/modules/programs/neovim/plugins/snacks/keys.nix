@@ -311,28 +311,6 @@
 
         # git
         {
-          key = "<leader>gd";
-          action = mkRaw ''
-            function()
-              Snacks.picker.git_diff()
-            end
-          '';
-          options = {
-            desc = "Git Diff (hunks)";
-          };
-        }
-        {
-          key = "<leader>gD";
-          action = mkRaw ''
-            function()
-              Snacks.picker.git_diff { base = 'origin', group = true }
-            end
-          '';
-          options = {
-            desc = "Git Diff (origin)";
-          };
-        }
-        {
           key = "<leader>gs";
           action = mkRaw ''
             function()

@@ -8,8 +8,12 @@
     {
       inputs,
       pkgs,
+      lib,
       ...
     }:
+    let
+      inherit (lib.nixvim) mkRaw;
+    in
     {
       plugins.diffview = {
         enable = true;
@@ -17,6 +21,75 @@
           version = inputs._meta.diffview-plus.rev;
           src = inputs.diffview-plus;
         });
+
+        settings = {
+          enhanced_diff_hl = true;
+          use_icons = true;
+
+          view = {
+            default.layout = "diff2_horizontal";
+            merge_tool.layout = "diff3_horizontal";
+          };
+
+          file_panel = {
+            listing_style = "tree";
+            win_config = {
+              position = "left";
+              width = 35;
+            };
+          };
+
+          hooks = {
+            # attach treesitter so diff buffers keep syntax highlighting
+            diff_buf_read = mkRaw /* lua */ ''
+              function(bufnr)
+                pcall(vim.treesitter.start, bufnr)
+              end
+            '';
+
+            diff_buf_win_enter = mkRaw /* lua */ ''
+              function(bufnr, winid, ctx)
+                vim.wo[winid].number = true
+                vim.wo[winid].relativenumber = false
+                -- diffs use less scrolloff than editor buffers
+                vim.wo[winid].scrolloff = 5
+                vim.wo[winid].wrap = true
+
+                if not ctx.layout_name:match('^diff2') then return end
+                if ctx.symbol == 'a' then -- old / left
+                  vim.wo[winid].winhl = table.concat({
+                    'DiffAdd:DiffviewOldLine',
+                    'DiffDelete:DiffviewFiller',
+                    'DiffChange:DiffviewOldLine',
+                    'DiffText:DiffviewOldText',
+                  }, ',')
+                elseif ctx.symbol == 'b' then -- new / right
+                  vim.wo[winid].winhl = table.concat({
+                    'DiffAdd:DiffviewNewLine',
+                    'DiffDelete:DiffviewFiller',
+                    'DiffChange:DiffviewNewLine',
+                    'DiffText:DiffviewNewText',
+                  }, ',')
+                end
+              end
+            '';
+
+            # start with the file panel closed; <leader>b toggles it back inside diffview
+            view_opened = mkRaw /* lua */ ''
+              function(view)
+                -- only for regular diff views, leave the file history log panel alone
+                local ok, DiffView = pcall(function()
+                  return require('diffview.scene.views.diff.diff_view').DiffView
+                end)
+                if not (ok and view:instanceof(DiffView)) then return end
+
+                vim.schedule(function()
+                  pcall(function() view.panel:close() end)
+                end)
+              end
+            '';
+          };
+        };
       };
 
       extraConfigLua = # lua
@@ -38,62 +111,6 @@
           diffview_hl()
           vim.api.nvim_create_autocmd('ColorScheme', { callback = diffview_hl })
 
-          require('diffview').setup({
-            enhanced_diff_hl = true,
-            use_icons = true,
-            view = {
-              default = { layout = 'diff2_horizontal' },
-              merge_tool = { layout = 'diff3_horizontal' },
-            },
-            file_panel = {
-              listing_style = 'tree',
-              win_config = { position = 'left', width = 35 },
-            },
-            hooks = {
-              -- attach treesitter so diff buffers keep syntax highlighting
-              diff_buf_read = function(bufnr)
-                pcall(vim.treesitter.start, bufnr)
-              end,
-
-              diff_buf_win_enter = function(bufnr, winid, ctx)
-                vim.wo[winid].number = true
-                vim.wo[winid].relativenumber = false
-                -- no forced centring inside diffs (overrides global scrolloff = 999)
-                vim.wo[winid].scrolloff = 5
-                vim.wo[winid].wrap = true
-
-                if not ctx.layout_name:match('^diff2') then return end
-                if ctx.symbol == 'a' then -- old / left
-                  vim.wo[winid].winhl = table.concat({
-                    'DiffAdd:DiffviewOldLine',
-                    'DiffDelete:DiffviewFiller',
-                    'DiffChange:DiffviewOldLine',
-                    'DiffText:DiffviewOldText',
-                  }, ',')
-                elseif ctx.symbol == 'b' then -- new / right
-                  vim.wo[winid].winhl = table.concat({
-                    'DiffAdd:DiffviewNewLine',
-                    'DiffDelete:DiffviewFiller',
-                    'DiffChange:DiffviewNewLine',
-                    'DiffText:DiffviewNewText',
-                  }, ',')
-                end
-              end,
-
-              -- start with the file panel closed (toggle it back with your panel key)
-              view_opened = function(view)
-                -- only for regular diff views, leave the file history log panel alone
-                local ok, DiffView = pcall(function()
-                  return require('diffview.scene.views.diff.diff_view').DiffView
-                end)
-                if not (ok and view:instanceof(DiffView)) then return end
-
-                vim.schedule(function()
-                  pcall(function() view.panel:close() end)
-                end)
-              end,
-            },
-          })
           -- make diffview close with regular :q
           local function diffview_close_abbrev(lhs, replacement)
             if vim.fn.getcmdtype() ~= ':' then return lhs end
@@ -137,7 +154,7 @@
           key = "<leader>gd";
           action = ":DiffviewOpen<CR>";
           options = {
-            desc = "Diffview Open";
+            desc = "Diffview Open (working tree)";
             silent = true;
             noremap = true;
           };
@@ -158,6 +175,16 @@
           action = ":DiffviewFileHistory %<CR>";
           options = {
             desc = "Diffview File History (current file)";
+            silent = true;
+            noremap = true;
+          };
+        }
+        {
+          mode = "n";
+          key = "<leader>gH";
+          action = ":DiffviewFileHistory<CR>";
+          options = {
+            desc = "Diffview File History (repo)";
             silent = true;
             noremap = true;
           };

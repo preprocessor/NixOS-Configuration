@@ -41,10 +41,6 @@
         settings.spec =
           listToUnkeyedAttrs [
             {
-              __unkeyed-1 = "<leader><tab>";
-              group = "tabs";
-            }
-            {
               __unkeyed-1 = "<leader>c";
               group = "code";
             }
@@ -65,14 +61,6 @@
               group = "git";
             }
             {
-              __unkeyed-1 = "<leader>gh";
-              group = "hunks";
-            }
-            {
-              __unkeyed-1 = "<leader>q";
-              group = "quit/session";
-            }
-            {
               __unkeyed-1 = "<leader>s";
               group = "search";
             }
@@ -83,10 +71,6 @@
             {
               __unkeyed-1 = "<leader>x";
               group = "diagnostics/quickfix";
-            }
-            {
-              __unkeyed-1 = "<leader>sn";
-              group = "noice";
             }
             {
               __unkeyed-1 = "[";
