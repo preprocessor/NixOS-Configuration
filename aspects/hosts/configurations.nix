@@ -1,10 +1,8 @@
 {
-  withSystem,
-  mkScheme,
-  config,
-  inputs,
-  self,
   lib,
+  config,
+  mkScheme,
+  mkSystem,
   ...
 }:
 let
@@ -15,47 +13,43 @@ in
     flake.nixosConfigurations =
       cfg.configurations
       |> lib.mapAttrs (
-        hostname: hostConfig:
-        withSystem hostConfig.system (
-          {
-            packages',
-            inputs',
-            self',
-            meta,
-            ...
-          }:
-          inputs.nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              inherit
-                packages'
-                hostname
-                inputs'
-                inputs
-                self'
-                self
-                meta
-                ;
-              inherit (hostConfig) system hardware;
-              scheme = mkScheme config.schemes.${hostConfig.scheme};
-              constants = {
-                username = hostConfig.user;
-                stateVersion = hostConfig.stateVersion;
-                homedir = "/home/${hostConfig.user}";
-                cfgdir = "/home/${hostConfig.user}/Configuration/NixOS";
-              };
+        name: hostConfig:
+        mkSystem name {
+          inherit (hostConfig) system;
+
+          modules = hostConfig.modules ++ [
+            cfg.core
+            (cfg.hardware.${hostConfig.hardware}
+              or (throw "Configuration failed: unknown hardware profile '${hostConfig.hardware}' for host '${name}'. Available profiles: ${lib.concatStringsSep ", " (lib.attrNames cfg.hardware)}")
+            )
+            (cfg.host.${name} or { })
+            hostConfig.extraConfig
+          ];
+
+          extraSpecialArgs = {
+            hostname = name;
+            inherit (hostConfig) hardware;
+            scheme = mkScheme config.schemes.${hostConfig.scheme};
+            constants = {
+              username = hostConfig.user;
+              stateVersion = hostConfig.stateVersion;
+              homedir = "/home/${hostConfig.user}";
+              cfgdir = "/home/${hostConfig.user}/Configuration/NixOS";
             };
-            modules = hostConfig.modules ++ [
-              cfg.core
-              cfg.hardware.${hostConfig.hardware}
-              (cfg.host.${hostname} or { })
-              hostConfig.extraConfig
-              { networking.hostName = lib.mkDefault hostname; }
-            ];
-          }
-        )
+          };
+        }
       );
 
-    perSystem = { pkgs, ... }: { formatter = pkgs.nixfmt-rs; };
+    systems = lib.mkDefault (
+      let
+        hostSystems =
+          cfg.configurations
+          |> lib.attrValues
+          |> map (host: host.system)
+          |> lib.unique;
+      in
+      if hostSystems == [ ] then [ "x86_64-linux" ] else hostSystems
+    );
   };
 
   options.modules = {
@@ -64,7 +58,7 @@ in
       default = { };
       type = lib.types.attrsOf (
         lib.types.submodule (
-          { hostName, ... }:
+          { name, ... }:
           {
             options = {
               system = lib.mkOption {
@@ -75,19 +69,19 @@ in
 
               stateVersion = lib.mkOption {
                 type = lib.types.str;
-                default = throw "Configuration failed: You must define a `stateVersion` for the host '${hostName}'.";
-                description = "The primary user for this system.";
+                default = throw "Configuration failed: You must define a `stateVersion` for the host '${name}'.";
+                description = "The NixOS state version for this system.";
               };
 
               user = lib.mkOption {
                 type = lib.types.str;
-                default = throw "Configuration failed: You must define a `user` for the host '${hostName}'.";
+                default = throw "Configuration failed: You must define a `user` for the host '${name}'.";
                 description = "The primary user for this system.";
               };
 
               hardware = lib.mkOption {
                 type = lib.types.str;
-                default = throw "Configuration failed: You must define a `hardware` profile for the host '${hostName}'.";
+                default = throw "Configuration failed: You must define a `hardware` profile for the host '${name}'.";
                 description = "The hardware profile for this system.";
               };
 
@@ -105,7 +99,7 @@ in
               extraConfig = lib.mkOption {
                 type = lib.types.deferredModule;
                 default = { };
-                description = "configurations specific to this host.";
+                description = "Configurations specific to this host.";
               };
             };
           }
@@ -114,15 +108,19 @@ in
     };
     features = lib.mkOption {
       type = lib.types.lazyAttrsOf lib.types.deferredModule;
+      default = { };
     };
     host = lib.mkOption {
       type = lib.types.lazyAttrsOf lib.types.deferredModule;
+      default = { };
     };
     core = lib.mkOption {
       type = lib.types.deferredModule;
+      default = { };
     };
     hardware = lib.mkOption {
       type = lib.types.lazyAttrsOf lib.types.deferredModule;
+      default = { };
     };
   };
 }
