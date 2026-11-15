@@ -1,22 +1,12 @@
 {
-  tack.inputs.nix-gaming-edge = {
-    url = "gh:powerofthe69/nix-gaming-edge";
-    group = "gaming";
-    frozen = true;
-  };
-
   modules.features.gaming =
     {
       lib,
       pkgs,
-      inputs,
       constants,
       ...
     }:
     {
-      imports = [ inputs.nix-gaming-edge.nixosModules.default ];
-      nixpkgs.overlays = [ inputs.nix-gaming-edge.overlays.default ];
-
       hj.environment.sessionVariables = {
         DXVK_ASYNC = "1";
         # Allow GPU render queueing
