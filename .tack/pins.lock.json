@@ -192,9 +192,9 @@
     "type": "github",
     "owner": "powerofthe69",
     "repo": "nix-gaming-edge",
-    "rev": "747a9b0c0489e527f7b19f2b563c6a91134f9f57",
-    "narHash": "sha256-LhZJ5jVxnU0WdgYSIV3r/VZ4fTgGz4Ez5mOwLnv9hpQ=",
-    "lastModified": 1793798100
+    "rev": "defdbf6055f55217b2c5b6fbff055ce9b0312fe7",
+    "narHash": "sha256-m8h9AGx+rWuDyg6wbv59EnMrf+m60+yR1tBSqa7V1vQ=",
+    "lastModified": 1794576936
   },
   "nixos-core": {
     "type": "github",
@@ -273,7 +273,7 @@
   "sf-pro": {
     "type": "fixed",
     "url": "https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg",
-    "sha256": "sha256-loqzuLH5LC2K9h6waA9cIiTE541ZuYa/AEUCp/wBKRg=",
+    "sha256": "sha256-sn/mYi8fqWpwfHPcpmZtQ5w1sxLVsdR+DimA5hjrSyg=",
     "unpack": "file"
   },
   "sops-nix": {
@@ -296,9 +296,9 @@
     "type": "github",
     "owner": "sxyazi",
     "repo": "yazi",
-    "rev": "6882e1ac279b3df2722aaa0ab5dc049ce02d21eb",
-    "narHash": "sha256-eF9lJNbiFsAbHlidr0zlpBti93s6C+Pu/dTo6sE+af0=",
-    "lastModified": 1793868243
+    "rev": "d5e4beb6b5212c28d1026d8e7d4ae985dcf174cb",
+    "narHash": "sha256-shsRyY1D1CLCODB1FXbpv1L+sT6QnlRPb1u0ffxlc2U=",
+    "lastModified": 1794489933
   },
   "systemctl-tui": {
     "type": "github",
@@ -334,9 +334,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "8162a7e9d098f6ea0fc00404014a732b8e768da8",
-    "narHash": "sha256-dMyQFIkLF3f0sQFMSzlEWFZV2q4SG5Zrdbon5fbCbdA=",
-    "lastModified": 1793888518
+    "rev": "c107b0fc252b0b33b01e6b7d6111aaaedc49613e",
+    "narHash": "sha256-bdNCaHUF3c8hgsYw6FCI+lGcZanZIDxt2Sefu5AsERY=",
+    "lastModified": 1794450976
   },
   "tiny5-mono": {
     "type": "github",
@@ -390,12 +390,12 @@
     "type": "github",
     "owner": "yazi-rs",
     "repo": "plugins",
-    "rev": "c0529fc34e4649effb79ff6f4a86aec46beebb7f",
-    "narHash": "sha256-Wf10m6iY4xWKALLFQBOz1vgGXOQpPzryPnFS+s40QFg=",
-    "lastModified": 1793904305,
+    "rev": "1ef5fe02a6122f8f3bb47a41056aab3f4b8598bf",
+    "narHash": "sha256-Nz6AvWAiwdmH2HJ2vA3rMfbDDHSkXG20Ml6vc5yrjRM=",
+    "lastModified": 1794293599,
     "archive": {
-      "hash": "sha256-HMq2RgD/8+3vCiU+fX/Ffihb4qdxVSuUsHMkAX4sUaY=",
-      "outHash": "sha256-aMgiq3f4yPZHQgx0sEry/aJr5gYIAWgA38FhDLPt/7c="
+      "hash": "sha256-8oCPD/WFHN6DnD82o+A4ZHRJrRArHJe5t3WgZw8YYDg=",
+      "outHash": "sha256-2yRN5eaVybu0Wgn4MbqXPL0QsIeJ8+X/et3WfVjevHY="
     }
   },
   "yaziline": {
