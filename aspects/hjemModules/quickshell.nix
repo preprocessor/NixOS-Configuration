@@ -1,9 +1,9 @@
 {
   flake.hjemModules.quickshell =
     {
-      config,
       lib,
       pkgs,
+      config,
       wrapPackage,
       ...
     }:
