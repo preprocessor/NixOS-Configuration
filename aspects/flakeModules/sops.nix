@@ -19,7 +19,6 @@
       nix.extraOptions = "!include ${config.sops.secrets.nix_extra_options.path}";
 
       sops = {
-        defaultSopsFile = rootPath + /.secrets/encrypted.yaml;
         useSystemdActivation = true;
         age.generateKey = true;
         secrets = {
@@ -34,5 +33,6 @@
 
   modules.host.ramiel = { config, ... }: {
     sops.age.keyFile = "${config.hj.xdg.config.directory}/sops/age/keys.txt";
+    sops.defaultSopsFile = rootPath + /.secrets/ramiel.yaml;
   };
 }
