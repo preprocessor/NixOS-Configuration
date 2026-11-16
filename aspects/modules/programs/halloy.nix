@@ -1,7 +1,5 @@
 {
-  modules.features.comms = { self, ... }: {
-    imports = [ self.hjemModules.halloy ];
-
+  modules.features.comms = {
     my.halloy = {
       enable = true;
 

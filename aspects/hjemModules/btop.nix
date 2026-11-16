@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.btop =
+  modules.core = 
     {
       wrapPackage,
       config,

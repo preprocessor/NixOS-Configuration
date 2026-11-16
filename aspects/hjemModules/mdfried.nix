@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.mdfried =
+  modules.core = 
     {
       wrapPackage,
       config,

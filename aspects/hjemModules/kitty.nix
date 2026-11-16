@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.kitty =
+  modules.core = 
     {
       wrapPackage,
       config,

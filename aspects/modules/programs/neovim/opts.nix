@@ -63,7 +63,7 @@
         pumheight = 10; # Maximum number of entries in a popup
 
         ruler = false; # Disable the default ruler
-        scrolloff = 10;
+        scrolloff = 4;
         sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds";
 
         shortmess = "ltToOCFWIcC";

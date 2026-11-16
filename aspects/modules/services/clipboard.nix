@@ -1,5 +1,5 @@
 {
-  modules.core =
+  modules.features.desktop =
     { self', pkgs, ... }:
     {
       hj.packages = [
@@ -35,11 +35,9 @@
       };
     };
 
-  modules.host.ramiel =
-    { self', lib, ... }:
-    {
-      my.hyprland.lua.files."keybinds.clipboard".content = /* lua */ ''
-        hl.bind("SUPER + V", hl.dsp.exec_cmd('kitty -e ${lib.getExe self'.packages.cliphist-tui}', {size = { 800, 1200}, float = true, center = true}))
-      '';
-    };
+  modules.host.ramiel = { self', lib, ... }: {
+    my.hyprland.lua.files."keybinds.clipboard".content = /* lua */ ''
+      hl.bind("SUPER + V", hl.dsp.exec_cmd('kitty -e ${lib.getExe self'.packages.cliphist-tui}', {size = { 800, 1200}, float = true, center = true}))
+    '';
+  };
 }

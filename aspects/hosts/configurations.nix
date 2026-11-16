@@ -2,43 +2,58 @@
   lib,
   config,
   mkScheme,
-  mkSystem,
+  withSystem,
   ...
 }:
 let
   cfg = config.modules;
+
+  mkConfiguration =
+    hostName: hostConfig:
+    withSystem hostConfig.system (
+      systemArgs:
+      lib.nixosSystem {
+        specialArgs = {
+          inherit (systemArgs)
+            inputs'
+            inputs
+            meta
+            packages'
+            self'
+            self
+            rootPath
+            system
+            ;
+          inherit hostName;
+          inherit (hostConfig) hardware;
+          scheme = mkScheme config.schemes.${hostConfig.scheme};
+          constants = {
+            username = hostConfig.user;
+            stateVersion = hostConfig.stateVersion;
+            homedir = "/home/${hostConfig.user}";
+            cfgdir = "/home/${hostConfig.user}/Configuration/NixOS";
+          };
+        };
+
+        modules = hostConfig.modules ++ [
+          cfg.core
+          (cfg.hardware.${hostConfig.hardware}
+            or (throw "Configuration failed: unknown hardware profile '${hostConfig.hardware}' for host '${hostName}'. Available profiles: ${lib.concatStringsSep ", " (lib.attrNames cfg.hardware)}")
+          )
+          (cfg.host.${hostName} or { })
+          {
+            config = {
+              networking.hostName = lib.mkDefault hostName;
+              nixpkgs.hostPlatform = lib.mkDefault hostConfig.system;
+            };
+          }
+        ];
+      }
+    );
 in
 {
   config = {
-    flake.nixosConfigurations =
-      cfg.configurations
-      |> lib.mapAttrs (
-        name: hostConfig:
-        mkSystem name {
-          inherit (hostConfig) system;
-
-          modules = hostConfig.modules ++ [
-            cfg.core
-            (cfg.hardware.${hostConfig.hardware}
-              or (throw "Configuration failed: unknown hardware profile '${hostConfig.hardware}' for host '${name}'. Available profiles: ${lib.concatStringsSep ", " (lib.attrNames cfg.hardware)}")
-            )
-            (cfg.host.${name} or { })
-            hostConfig.extraConfig
-          ];
-
-          extraSpecialArgs = {
-            hostname = name;
-            inherit (hostConfig) hardware;
-            scheme = mkScheme config.schemes.${hostConfig.scheme};
-            constants = {
-              username = hostConfig.user;
-              stateVersion = hostConfig.stateVersion;
-              homedir = "/home/${hostConfig.user}";
-              cfgdir = "/home/${hostConfig.user}/Configuration/NixOS";
-            };
-          };
-        }
-      );
+    flake.nixosConfigurations = cfg.configurations |> lib.mapAttrs mkConfiguration;
 
     systems = lib.mkDefault (
       let
@@ -94,12 +109,6 @@ in
                 type = lib.types.listOf lib.types.deferredModule;
                 default = [ ];
                 description = "List of modules to include.";
-              };
-
-              extraConfig = lib.mkOption {
-                type = lib.types.deferredModule;
-                default = { };
-                description = "Configurations specific to this host.";
               };
             };
           }

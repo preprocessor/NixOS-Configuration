@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.starship =
+  modules.core = 
     {
       wrapPackage,
       config,

@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.mpv =
+  modules.core = 
     {
       wrapPackage,
       config,

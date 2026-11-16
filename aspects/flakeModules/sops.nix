@@ -21,10 +21,7 @@
       sops = {
         defaultSopsFile = rootPath + /.secrets/encrypted.yaml;
         useSystemdActivation = true;
-        age = {
-          keyFile = "${config.hj.xdg.config.directory}/sops/age/keys.txt";
-          generateKey = true;
-        };
+        age.generateKey = true;
         secrets = {
           cachix_key.owner = constants.username;
           email0.owner = constants.username;
@@ -34,4 +31,8 @@
         };
       };
     };
+
+  modules.host.ramiel = { config, ... }: {
+    sops.age.keyFile = "${config.hj.xdg.config.directory}/sops/age/keys.txt";
+  };
 }

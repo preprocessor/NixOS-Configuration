@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.equibop =
+  modules.core = 
     {
       config,
       pkgs,

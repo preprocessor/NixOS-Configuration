@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.bat =
+  modules.core = 
     {
       config,
       pkgs,

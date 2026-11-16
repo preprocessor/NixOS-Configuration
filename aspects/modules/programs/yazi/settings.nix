@@ -2,12 +2,10 @@
   modules.core =
     {
       pkgs,
-      self,
       lib,
       ...
     }:
     {
-      imports = [ self.hjemModules.yazi ];
 
       my.yazi = {
         enable = true;

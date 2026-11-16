@@ -1,6 +1,6 @@
 {
   tack.inputs.nixos-core = {
-    url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1";
+    url = "gh:manic-systems/nixos-core";
     group = "nix";
   };
 
@@ -13,8 +13,7 @@
   modules.core =
     { inputs, ... }:
     {
-      # imports = [ inputs.nixos-core.nixosModules.default ];
-      # system.nixos-core.enable = true;
-      # enable when initrd issue is resolved
+      imports = [ inputs.nixos-core.nixosModules.default ];
+      system.nixos-core.enable = true;
     };
 }

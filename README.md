@@ -40,7 +40,8 @@ Dependencies show up in a reviewable diff instead of hiding in a `flake.lock`.
 
 A host declares its user, state version, colorscheme, hardware profile, and which
 modules it wants. Modules organize themselves into `core`, `host`, `hardware`, or
-a named module within `modules`, and `configurations.nix` assembles the final `nixosSystem`.
+a named module within `modules`, and `configurations.nix` assembles the final
+`nixosSystemMinimal`.
 
 ## Areas of interest
 
@@ -83,8 +84,10 @@ flake-parts users get, then extends those further.
 
 Hosts are declared as submodules, so `modules.configurations.ramiel` only accepts the fields:
 `system`, `stateVersion`, `user`, `hardware`, `scheme`, `modules`, and `extraConfig`.
-From each entry, the module builds a `nixosSystem` with the right `specialArgs`
-(`scheme`, `pkgs`, `inputs'`, `hostname`, `constants`, ...)
+From each entry, the module builds a `nixosSystemMinimal` with the right `specialArgs`
+(`scheme`, `pkgs`, `inputs'`, `hostname`, `constants`, ...). It starts with no NixOS
+modules at all: the base modules we rely on are listed explicitly in
+`aspects/hosts/_base-modules.nix` instead of importing nixpkgs' full module list.
 
 The composition is the important part. We merge deferred modules into sets:
 
@@ -237,7 +240,9 @@ pick one by name. No external theming framework, just a bit of hex math in `lib`
 ├── aspects/
 │   ├── flake/                 # flake-level modules (tack, wrappers, 16, sops, ..)
 │   ├── hosts/
-│   │   ├── configurations.nix # host schema and nixosSystem assembly
+│   │   ├── configurations.nix # host schema and system assembly
+│   │   ├── nixosSystemMinimal.nix # evalModules wrapper without module-list
+│   │   ├── _base-modules.nix  # explicit list of NixOS modules we import
 │   │   └── ramiel/            # one host: boot, hardware, packages
 │   └── modules/
 │       ├── core/              # base system modules

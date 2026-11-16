@@ -1,5 +1,5 @@
 {
-  modules.core =
+  modules.features.desktop =
     { pkgs, ... }:
     {
       security.polkit.enable = true;

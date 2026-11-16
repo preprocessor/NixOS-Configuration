@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.gtk =
+  modules.core = 
     {
       lib,
       pkgs,

@@ -1,5 +1,5 @@
 {
-  modules.core = {
+  modules.features.desktop = {
     # Whether to enable the RealtimeKit system service, which hands out realtime scheduling priority to user processes on demand. For example, PulseAudio and PipeWire use this to acquire realtime priority.
     security.rtkit.enable = true;
 

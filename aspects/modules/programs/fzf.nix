@@ -1,6 +1,5 @@
 {
-  modules.core = { scheme, self, ... }: {
-    imports = [ self.hjemModules.fzf ];
+  modules.core = { scheme, ... }: {
 
     my.fzf = {
       enable = true;

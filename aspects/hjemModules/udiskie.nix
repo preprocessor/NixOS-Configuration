@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.udiskie =
+  modules.core = 
     {
       pkgs,
       config,

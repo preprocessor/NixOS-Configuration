@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.halloy =
+  modules.core = 
     {
       wrapPackage,
       config,

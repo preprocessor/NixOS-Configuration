@@ -1,7 +1,5 @@
 {
-  modules.features.desktop = { scheme, self, ... }: {
-    imports = [ self.hjemModules.fuzzel ];
-
+  modules.features.desktop = { scheme, ... }: {
     my.fuzzel = {
       enable = true;
 

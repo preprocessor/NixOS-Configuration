@@ -1,6 +1,5 @@
 {
-  modules.features.desktop = { self, ... }: {
-    imports = [ self.hjemModules.hyprland ];
+  modules.features.desktop = {
     my.hyprland.enable = true;
 
     my.hyprland.lua.files."general".content = /* lua */ ''

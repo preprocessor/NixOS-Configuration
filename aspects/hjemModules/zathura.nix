@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.zathura =
+  modules.core = 
     {
       wrapPackage,
       config,

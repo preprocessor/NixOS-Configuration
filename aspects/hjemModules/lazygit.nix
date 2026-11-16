@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.lazygit =
+  modules.core = 
     {
       wrapPackage,
       config,

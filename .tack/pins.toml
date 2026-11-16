@@ -41,6 +41,10 @@ type = "fetch"
 url = "gh:dlyongemallo/diffview-plus.nvim/ba05af7a295dcd8449bd03ebb3aead8268a5c379"
 type = "fetch"
 
+[inputs.disko]
+url = "gh:nix-community/disko"
+group = "nix"
+
 [inputs.equicord]
 url = "gh:Equicord/Equicord"
 frozen = true
@@ -87,13 +91,8 @@ url = "gh:preprocessor/hypr-motif"
 url = "gh:NotAShelf/lithic"
 group = "gaming"
 
-[inputs.nix-gaming-edge]
-url = "gh:powerofthe69/nix-gaming-edge"
-frozen = true
-group = "gaming"
-
 [inputs.nixos-core]
-url = "gh:manic-systems/nixos-core/refs/tags/v1.0.1"
+url = "gh:manic-systems/nixos-core"
 group = "nix"
 
 [inputs.nixpkgs]

@@ -4,31 +4,30 @@
     group = "nix";
   };
 
-  modules.core =
-    { constants, ... }:
-    {
-      system.stateVersion = constants.stateVersion;
+  modules.features.rocm = {
+    nixpkgs.config.rocmSupport = true;
+  };
 
-      nixpkgs.config = {
-        allowUnfree = true;
-        rocmSupport = true;
-      };
+  modules.core = { constants, ... }: {
+    system.stateVersion = constants.stateVersion;
 
-      nix.settings = {
-        use-xdg-base-directories = true;
-        warn-dirty = false;
-        auto-optimise-store = true;
-        allow-import-from-derivation = false;
-        experimental-features = [
-          "pipe-operators"
-          "nix-command"
-          "flakes"
-        ];
+    nixpkgs.config.allowUnfree = true;
 
-        trusted-users = [
-          "root"
-          "@wheel"
-        ];
-      };
+    nix.settings = {
+      use-xdg-base-directories = true;
+      warn-dirty = false;
+      auto-optimise-store = true;
+      allow-import-from-derivation = false;
+      experimental-features = [
+        "pipe-operators"
+        "nix-command"
+        "flakes"
+      ];
+
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
     };
+  };
 }

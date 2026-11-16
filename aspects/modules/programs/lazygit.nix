@@ -2,13 +2,10 @@
   modules.core =
     {
       pkgs,
-      self,
       lib,
       ...
     }:
     {
-      imports = [ self.hjemModules.lazygit ];
-
       my.lazygit = {
         enable = true;
 

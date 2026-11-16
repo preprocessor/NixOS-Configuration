@@ -1,7 +1,5 @@
 {
-  modules.core = { self, ... }: {
-    imports = [ self.hjemModules.atuin ];
-
+  modules.core = {
     my.atuin = {
       enable = true;
       settings = {

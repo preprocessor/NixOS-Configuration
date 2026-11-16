@@ -13,7 +13,6 @@
       scheme,
       config,
       pkgs,
-      self,
       lib,
       ...
     }:
@@ -21,8 +20,6 @@
       cfg = config.my.bat;
     in
     {
-      imports = [ self.hjemModules.bat ];
-
       my.bat = {
         enable = true;
 

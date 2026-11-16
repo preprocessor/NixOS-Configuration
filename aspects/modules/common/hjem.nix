@@ -5,11 +5,7 @@
     group = "nix";
   };
 
-  perSystem =
-    { packages', ... }:
-    {
-      remotePackages = { inherit (packages') hjem; };
-    };
+  perSystem = { packages', ... }: { remotePackages = { inherit (packages') hjem; }; };
 
   modules.core =
     {

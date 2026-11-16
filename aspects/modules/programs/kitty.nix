@@ -1,7 +1,5 @@
 {
-  modules.features.desktop = { scheme, self, ... }: {
-    imports = [ self.hjemModules.kitty ];
-
+  modules.features.desktop = { scheme, ... }: {
     my.kitty = {
       enable = true;
 

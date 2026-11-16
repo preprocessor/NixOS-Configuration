@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.yazi =
+  modules.core = 
     {
       self',
       config,

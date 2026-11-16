@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.delta =
+  modules.core = 
     {
       wrapPackage,
       config,

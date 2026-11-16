@@ -1,5 +1,4 @@
 {
-
   modules.features.desktop =
     { self', pkgs, ... }:
     {

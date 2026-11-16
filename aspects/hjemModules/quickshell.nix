@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.quickshell =
+  modules.core = 
     {
       lib,
       pkgs,

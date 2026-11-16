@@ -1,6 +1,5 @@
 {
-  modules.features.desktop = { self, ... }: {
-    imports = [ self.hjemModules.mdfried ];
+  modules.features.desktop = {
     my.mdfried = {
       enable = true;
 

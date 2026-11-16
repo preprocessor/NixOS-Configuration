@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.app2unit =
+  modules.core =
     {
       config,
       pkgs,
@@ -10,7 +10,6 @@
       cfg = config.my.app2unit;
     in
     {
-
       options.my.app2unit = {
         enable = lib.mkEnableOption { } // {
           default = true;

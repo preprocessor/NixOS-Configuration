@@ -1,7 +1,5 @@
 {
-  modules.features.desktop = { config, self, ... }: {
-    imports = [ self.hjemModules.mpv ];
-
+  modules.features.desktop = { config, ... }: {
     my.mpvi = {
       enable = true;
 

@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.xdg-desktop-entries =
+  modules.core = 
     {
       config,
       pkgs,

@@ -1,4 +1,17 @@
 {
+  modules.features.desktop = {
+    boot.loader.systemd-boot.enable = true;
+    boot.kernelParams = [ "systemd.show_status=auto" ];
+    boot.loader.efi.canTouchEfiVariables = true;
+  };
+
+  modules.hardware.xyz-vps = {
+    boot.loader.grub = {
+      enable = true;
+      efiSupport = true;
+    };
+  };
+
   modules.core =
     { scheme, ... }:
     {
@@ -22,20 +35,12 @@
       ];
 
       boot = {
-        loader = {
-          systemd-boot.enable = true;
-          efi.canTouchEfiVariables = true;
-        };
-
-        # initrd.systemd.enable = true;
         consoleLogLevel = 3;
         loader.timeout = 1;
         kernelParams = [
           "quiet"
           "udev.log_level=3"
-          "systemd.show_status=auto"
         ];
       };
     };
-
 }

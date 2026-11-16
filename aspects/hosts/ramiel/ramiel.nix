@@ -6,11 +6,13 @@
     scheme = "amber";
     hardware = "desktop-pc";
     modules = with config.modules.features; [
+      bluetooth
       printing
       desktop
       gaming
-      comms
       neovim
+      comms
+      rocm
     ];
   };
 }

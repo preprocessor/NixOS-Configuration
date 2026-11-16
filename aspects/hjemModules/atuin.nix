@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.atuin =
+  modules.core = 
     {
       config,
       pkgs,

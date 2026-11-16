@@ -97,7 +97,7 @@
           #   inputs'.someFlake.packages.foo
           # is shorthand for:
           #   inputs.someFlake.packages.${system}.foo
-          inputs' = inputs |> lib.mapAttrs (_: systemInput system);
+          inputs' = inputs |> lib.mapAttrs (_: input: systemInput system input);
 
           # Same idea but for this flake's own outputs, this gives you self'.packages.foo.
           self' = systemInput system self;
@@ -122,7 +122,7 @@
                 inherit (projectedAttrs) packages;
                 # 1. Try packages.default first
                 # 2. Try a package literally named after the input itself (an input called foo exposing packages.foo)
-                # 3. fall back to {} so the merge below is a no-op, resulting in the inputs' packages set.
+                # 3. fall back to {} so the merge below is a no-op, resulting in the input's packages set.
                 spec = packages.default or packages.${inputName} or { };
               in
               packages // spec
@@ -167,7 +167,7 @@
         };
       };
 
-      # topEval: the FIRST of two evalModules passes. This one evaluates the top-level modules
+      # topEval: the FIRST of two evalModules passes. This one evaluates the top-level module set
       topEval = lib.evalModules {
         specialArgs = {
           inherit
@@ -262,7 +262,7 @@
     # with config.flake by the top-level modules.
     topEval.config.flake
     // transposed
-    // lib.optionalAttrs (topEval.config.debug) {
+    // lib.optionalAttrs topEval.config.debug {
       # Repl debug entrypoint for the top-level evaluation (tack, perSystem, ...)
       topLevelDebug = { inherit (topEval) options config; };
     };

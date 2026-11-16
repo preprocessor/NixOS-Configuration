@@ -1,7 +1,5 @@
 {
-  modules.core = { scheme, self, ... }: {
-    imports = [ self.hjemModules.btop ];
-
+  modules.core = { scheme, ... }: {
     my.btop = {
       enable = true;
 

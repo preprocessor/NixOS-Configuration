@@ -1,5 +1,5 @@
 {
-  modules.core =
+  modules.host.ramiel =
     { pkgs, wrapPackage, ... }:
     {
       hj.packages = [

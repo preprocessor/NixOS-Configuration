@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.hyprland =
+  modules.core = 
     {
       config,
       pkgs,

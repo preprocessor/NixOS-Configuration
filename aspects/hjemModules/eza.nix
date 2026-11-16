@@ -1,5 +1,5 @@
 {
-  flake.hjemModules.eza =
+  modules.core = 
     {
       wrapPackage,
       config,

@@ -1,5 +1,5 @@
 {
-  modules.core = {
+  modules.host.ramiel = {
     security = {
       sudo.enable = false;
       run0 = {

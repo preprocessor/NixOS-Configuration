@@ -1,7 +1,5 @@
 {
-  modules.core = { self, ... }: {
-    imports = [ self.hjemModules.lla ];
-
+  modules.core = {
     my.lla = {
       enable = true;
 

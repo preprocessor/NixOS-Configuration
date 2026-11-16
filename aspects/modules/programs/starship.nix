@@ -1,7 +1,5 @@
 {
-  modules.core = { self, ... }: {
-    imports = [ self.hjemModules.starship ];
-
+  modules.core = {
     my.starship = {
       enable = true;
       enableFishIntegration = true;
@@ -11,11 +9,9 @@
 
         right_format = "$nix_shell";
 
-        format = "$directory$git_branch$character";
+        nix_shell.format = "[ nix-shell](cyan)";
 
-        nix_shell = {
-          format = "[ nix-shell](cyan)";
-        };
+        git_status.format = "[($all_status$ahead_behind)](fg:blue bold)";
 
         character = {
           success_symbol = " [](bright-green) ";
@@ -40,11 +36,15 @@
           symbol = "";
           format = "[ $symbol $branch](fg:blue bold)";
         };
-
-        git_status = {
-          format = "[($all_status$ahead_behind)](fg:blue bold)";
-        };
       };
     };
+  };
+
+  modules.host.ramiel = {
+    my.starship.settings.format = "$directory$git_branch$character";
+  };
+
+  modules.host.xyz = {
+    my.starship.settings.format = "$hostname$directory$git_branch";
   };
 }
