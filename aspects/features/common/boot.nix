@@ -12,35 +12,33 @@
     };
   };
 
-  modules.core =
-    { scheme, ... }:
-    {
-      console.colors = with scheme.noHashtag; [
-        base00
-        red
-        green
-        yellow
-        blue
-        magenta
-        cyan
-        base05
-        base03
-        red
-        green
-        yellow
-        blue
-        magenta
-        cyan
-        base07
-      ];
+  modules.core = { scheme, ... }: {
+    console.colors = with scheme.noHashtag; [
+      base00
+      red
+      green
+      yellow
+      blue
+      magenta
+      cyan
+      base05
+      base03
+      red
+      green
+      yellow
+      blue
+      magenta
+      cyan
+      base07
+    ];
 
-      boot = {
-        consoleLogLevel = 3;
-        loader.timeout = 1;
-        kernelParams = [
-          "quiet"
-          "udev.log_level=3"
-        ];
-      };
+    boot = {
+      consoleLogLevel = 3;
+      loader.timeout = 1;
+      kernelParams = [
+        "quiet"
+        "udev.log_level=3"
+      ];
     };
+  };
 }
