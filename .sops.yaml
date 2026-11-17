@@ -1,7 +1,13 @@
+---
 keys:
   - &wyspr age1363msjxccrj6cnshdlvfrev333kn7mvre82p9f0294m9cjdj2gws2lq0x9
+  - &xyz-host age172grqrqa8ncdf5exgle30skp8duvf3nv6xd3l9dl3pul0jc43u8q4tcjxk
 creation_rules:
+  - path_regex: \.secrets/xyz\.yaml$
+    key_groups:
+      - age:
+          - *wyspr
+          - *xyz-host
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
-    - age:
-      - *wyspr
+      - age: [*wyspr]

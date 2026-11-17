@@ -6,10 +6,8 @@
   };
 
   modules.hardware.xyz-vps = {
-    boot.loader.grub = {
-      enable = true;
-      efiSupport = true;
-    };
+    # disko sets boot.loader.grub.devices from the EF02 partition.
+    boot.loader.grub.enable = true;
   };
 
   modules.core = { scheme, ... }: {

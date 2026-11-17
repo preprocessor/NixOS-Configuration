@@ -15,10 +15,16 @@
           content = {
             type = "gpt";
             partitions = {
-              ESP = {
+              bios = {
                 priority = 1;
+                name = "BIOS";
+                size = "1M";
+                type = "EF02";
+              };
+              ESP = {
+                priority = 2;
                 name = "ESP";
-                start = "1M";
+                start = "2M";
                 end = "1G";
                 type = "EF00";
                 content = {
