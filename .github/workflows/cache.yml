@@ -25,41 +25,17 @@ jobs:
         with:
           extra-conf: |
             experimental-features = pipe-operators
-            extra-substituters = https://cache.wyspr.xyz
-            extra-trusted-public-keys = cache.wyspr.xyz-1:5XA+mlpNBkL+9Qy1tDvJziPo7ZAyA9krywyWl3xeXYc=
+            extra-substituters = ${{ vars.CACHE_SUBSTITUTER }}
+            extra-trusted-public-keys = ${{ vars.CACHE_PUBLIC_KEY }}
       - name: Materialize tack patches
         run: nix run .#packages.x86_64-linux.tack -- materialize
       - name: Filter uncached packages
         id: set-matrix
+        env:
+          CACHE_URL: ${{ vars.CACHE_SUBSTITUTER }}
         run: |
-          mapfile -t PACKAGES < <(nix run .#list-remote-packages)
-          MISSING=()
-          for pkg in "${PACKAGES[@]}"; do
-            if OUTPUTS_JSON=$(nix eval --json ".#packages.x86_64-linux.$pkg.outputs"); then
-              mapfile -t OUTPUTS < <(jq -r '.[]' <<<"$OUTPUTS_JSON")
-              MISSING_PKG=0
-              for output in "${OUTPUTS[@]}"; do
-                if ! STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.$output.outPath" 2>/dev/null) \
-                  || ! nix path-info --store https://cache.wyspr.xyz -r "$STORE_PATH" >/dev/null 2>&1; then
-                  MISSING_PKG=1
-                  break
-                fi
-              done
-              if [ "$MISSING_PKG" = 1 ]; then
-                MISSING+=("$pkg")
-              fi
-            else
-              echo "::error::Evaluation failed for package: $pkg"
-              exit 1
-            fi
-          done
-          if [ ${#MISSING[@]} -eq 0 ]; then
-            echo "All packages are cached."
-            echo "matrix=[]" >> "$GITHUB_OUTPUT"
-          else
-            JSON_ARRAY="$(printf '%s\n' "${MISSING[@]}" | jq -R . | jq -s -c .)"
-            echo "matrix=$JSON_ARRAY" >> "$GITHUB_OUTPUT"
-          fi
+          matrix=$(bash .github/scripts/missing-packages.sh)
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
   build-packages:
     name: Build ${{ matrix.package }}
     needs: prepare-matrix
@@ -79,8 +55,8 @@ jobs:
         with:
           extra-conf: |
             experimental-features = pipe-operators
-            extra-substituters = https://cache.wyspr.xyz
-            extra-trusted-public-keys = cache.wyspr.xyz-1:5XA+mlpNBkL+9Qy1tDvJziPo7ZAyA9krywyWl3xeXYc=
+            extra-substituters = ${{ vars.CACHE_SUBSTITUTER }}
+            extra-trusted-public-keys = ${{ vars.CACHE_PUBLIC_KEY }}
       - name: Materialize tack patches
         run: nix run .#packages.x86_64-linux.tack -- materialize
       - name: Setup SSH cache key
@@ -92,7 +68,7 @@ jobs:
         env:
           REMOTE_STORE_PATH: remote-store=/var/lib/harmonia-cache
           SSH_KEY_PATH: ssh-key=/home/runner/.ssh/harmonia-ci
-          PUBLIC_KEY: base64-ssh-public-host-key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVWZHE0YklRUXlpOE9HRmRaaVU3YW1JYTcrbW1yT25Ua3BMVm5LVHpRcGIK
+          PUBLIC_KEY: base64-ssh-public-host-key=${{ vars.CACHE_HOST_KEY }}
         run: |
           BUILD_OUT=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --no-link --print-out-paths)
           mapfile -t OUT <<<"$BUILD_OUT"
