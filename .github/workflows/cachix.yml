@@ -25,6 +25,8 @@ jobs:
         with:
           extra-conf: |
             experimental-features = pipe-operators
+      - name: Materialize tack patches
+        run: nix run github:manic-systems/tack -- materialize
       - name: Filter uncached packages
         id: set-matrix
         run: |
@@ -68,6 +70,8 @@ jobs:
             experimental-features = pipe-operators
       - name: Setup Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Materialize tack patches
+        run: nix run github:manic-systems/tack -- materialize
       - name: Setup SSH cache key
         run: |
           mkdir -p ~/.ssh
@@ -76,7 +80,7 @@ jobs:
           ssh-keyscan -t ed25519 cache.wyspr.xyz >> ~/.ssh/known_hosts
       - name: Build and push ${{ matrix.package }}
         env:
-          CACHE_PUSH_STORE: "ssh-ng://wyspr@cache.wyspr.xyz?remote-store=/var/lib/harmonia-cache&ssh-key=/home/runner/.ssh/harmonia-ci"
+          CACHE_PUSH_STORE: ssh-ng://wyspr@cache.wyspr.xyz?remote-store=/var/lib/harmonia-cache&ssh-key=/home/runner/.ssh/harmonia-ci
         run: |
           out=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --print-out-paths)
           nix copy --to "$CACHE_PUSH_STORE" "$out"
