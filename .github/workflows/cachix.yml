@@ -28,7 +28,7 @@ jobs:
             extra-substituters = https://cache.wyspr.xyz
             extra-trusted-public-keys = cache.wyspr.xyz-1:5XA+mlpNBkL+9Qy1tDvJziPo7ZAyA9krywyWl3xeXYc=
       - name: Materialize tack patches
-        run: nix run github:manic-systems/tack -- materialize
+        run: nix run .#packages.x86_64-linux.tack -- materialize
       - name: Filter uncached packages
         id: set-matrix
         run: |
@@ -73,7 +73,7 @@ jobs:
             extra-substituters = https://cache.wyspr.xyz
             extra-trusted-public-keys = cache.wyspr.xyz-1:5XA+mlpNBkL+9Qy1tDvJziPo7ZAyA9krywyWl3xeXYc=
       - name: Materialize tack patches
-        run: nix run github:manic-systems/tack -- materialize
+        run: nix run .#packages.x86_64-linux.tack -- materialize
       - name: Setup SSH cache key
         run: |
           mkdir -p ~/.ssh
@@ -81,10 +81,13 @@ jobs:
           chmod 600 ~/.ssh/harmonia-ci
       - name: Build and push ${{ matrix.package }}
         env:
-          CACHE_PUSH_STORE: "ssh-ng://wyspr@cache.wyspr.xyz?remote-store=/var/lib/harmonia-cache&ssh-key=/home/runner/.ssh/harmonia-ci&base64-ssh-public-host-key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVWZHE0YklRUXlpOE9HRmRaaVU3YW1JYTcrbW1yT25Ua3BMVm5LVHpRcGIK"
+          REMOTE_STORE_PATH: remote-store=/var/lib/harmonia-cache
+          SSH_KEY_PATH: ssh-key=/home/runner/.ssh/harmonia-ci
+          PUBLIC_KEY: base64-ssh-public-host-key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVWZHE0YklRUXlpOE9HRmRaaVU3YW1JYTcrbW1yT25Ua3BMVm5LVHpRcGIK
         run: |
-          out=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --no-link --print-out-paths)
-          nix copy --no-check-sigs --to "$CACHE_PUSH_STORE" "$out"
+          OUT=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --no-link --print-out-paths)
+          CACHE_PUSH_STORE="ssh-ng://wyspr@cache.wyspr.xyz?$REMOTE_STORE_PATH&$SSH_KEY_PATH&$PUBLIC_KEY"
+          nix copy --no-check-sigs --to "$CACHE_PUSH_STORE" "$OUT"
       - name: Record Build Status
         if: always()
         run: echo "${{ job.status }}" > "status-${{ matrix.package }}.txt"
