@@ -28,11 +28,11 @@ jobs:
       - name: Filter uncached packages
         id: set-matrix
         run: |
-          PACKAGES=($(nix run .#list-remote-packages))
+          mapfile -t PACKAGES < <(nix run .#list-remote-packages)
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
             if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
-              if ! nix path-info --store https://bazinga.cachix.org "$STORE_PATH" >/dev/null 2>&1; then
+              if ! nix path-info --store https://cache.wyspr.xyz "$STORE_PATH" >/dev/null 2>&1; then
                 MISSING+=("$pkg")
               fi
             else
@@ -68,13 +68,18 @@ jobs:
             experimental-features = pipe-operators
       - name: Setup Magic Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@main
-      - name: Setup Cachix
-        uses: cachix/cachix-action@v15
-        with:
-          name: bazinga
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - name: Setup SSH cache key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HARMONIA_SSH_KEY }}" > ~/.ssh/harmonia-ci
+          chmod 600 ~/.ssh/harmonia-ci
+          ssh-keyscan -t ed25519 cache.wyspr.xyz >> ~/.ssh/known_hosts
       - name: Build and push ${{ matrix.package }}
-        run: nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs
+        env:
+          CACHE_PUSH_STORE: "ssh-ng://wyspr@cache.wyspr.xyz?remote-store=/var/lib/harmonia-cache&ssh-key=/home/runner/.ssh/harmonia-ci"
+        run: |
+          out=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --print-out-paths)
+          nix copy --to "$CACHE_PUSH_STORE" "$out"
       - name: Record Build Status
         if: always()
         run: echo "${{ job.status }}" > "status-${{ matrix.package }}.txt"

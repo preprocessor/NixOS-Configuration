@@ -13,6 +13,7 @@
 
     users.users.${constants.username}.openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB090gyVUFUA85M9cAjah1Me0juj+ZvfKjr8WZqrSAjm"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDiQDi66GQznJta6GWY7QCK4cn7o81A+1Av9XPBhOPsN github-actions-cache"
     ];
   };
 
