@@ -25,6 +25,7 @@ jobs:
         with:
           extra-conf: |
             experimental-features = pipe-operators
+            extra-substituters = https://cache.wyspr.xyz
             extra-trusted-public-keys = cache.wyspr.xyz-1:5XA+mlpNBkL+9Qy1tDvJziPo7ZAyA9krywyWl3xeXYc=
       - name: Materialize tack patches
         run: nix run github:manic-systems/tack -- materialize
@@ -35,7 +36,7 @@ jobs:
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
             if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
-              if ! nix path-info --store https://cache.wyspr.xyz "$STORE_PATH" >/dev/null 2>&1; then
+              if ! nix path-info --store https://cache.wyspr.xyz -r "$STORE_PATH" >/dev/null 2>&1; then
                 MISSING+=("$pkg")
               fi
             else
@@ -69,9 +70,8 @@ jobs:
         with:
           extra-conf: |
             experimental-features = pipe-operators
+            extra-substituters = https://cache.wyspr.xyz
             extra-trusted-public-keys = cache.wyspr.xyz-1:5XA+mlpNBkL+9Qy1tDvJziPo7ZAyA9krywyWl3xeXYc=
-      - name: Setup Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Materialize tack patches
         run: nix run github:manic-systems/tack -- materialize
       - name: Setup SSH cache key
@@ -79,12 +79,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.HARMONIA_SSH_KEY }}" > ~/.ssh/harmonia-ci
           chmod 600 ~/.ssh/harmonia-ci
-          ssh-keyscan -t ed25519 cache.wyspr.xyz >> ~/.ssh/known_hosts
       - name: Build and push ${{ matrix.package }}
         env:
-          CACHE_PUSH_STORE: ssh-ng://wyspr@cache.wyspr.xyz?remote-store=/var/lib/harmonia-cache&ssh-key=/home/runner/.ssh/harmonia-ci
+          CACHE_PUSH_STORE: "ssh-ng://wyspr@cache.wyspr.xyz?remote-store=/var/lib/harmonia-cache&ssh-key=/home/runner/.ssh/harmonia-ci&base64-ssh-public-host-key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVWZHE0YklRUXlpOE9HRmRaaVU3YW1JYTcrbW1yT25Ua3BMVm5LVHpRcGIK"
         run: |
-          out=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --print-out-paths)
+          out=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --no-link --print-out-paths)
           nix copy --no-check-sigs --to "$CACHE_PUSH_STORE" "$out"
       - name: Record Build Status
         if: always()
