@@ -35,8 +35,17 @@ jobs:
           mapfile -t PACKAGES < <(nix run .#list-remote-packages)
           MISSING=()
           for pkg in "${PACKAGES[@]}"; do
-            if STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.outPath"); then
-              if ! nix path-info --store https://cache.wyspr.xyz -r "$STORE_PATH" >/dev/null 2>&1; then
+            if OUTPUTS_JSON=$(nix eval --json ".#packages.x86_64-linux.$pkg.outputs"); then
+              mapfile -t OUTPUTS < <(jq -r '.[]' <<<"$OUTPUTS_JSON")
+              MISSING_PKG=0
+              for output in "${OUTPUTS[@]}"; do
+                if ! STORE_PATH=$(nix eval --raw ".#packages.x86_64-linux.$pkg.$output.outPath" 2>/dev/null) \
+                  || ! nix path-info --store https://cache.wyspr.xyz -r "$STORE_PATH" >/dev/null 2>&1; then
+                  MISSING_PKG=1
+                  break
+                fi
+              done
+              if [ "$MISSING_PKG" = 1 ]; then
                 MISSING+=("$pkg")
               fi
             else
@@ -85,9 +94,10 @@ jobs:
           SSH_KEY_PATH: ssh-key=/home/runner/.ssh/harmonia-ci
           PUBLIC_KEY: base64-ssh-public-host-key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVWZHE0YklRUXlpOE9HRmRaaVU3YW1JYTcrbW1yT25Ua3BMVm5LVHpRcGIK
         run: |
-          OUT=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --no-link --print-out-paths)
+          BUILD_OUT=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --no-link --print-out-paths)
+          mapfile -t OUT <<<"$BUILD_OUT"
           CACHE_PUSH_STORE="ssh-ng://wyspr@cache.wyspr.xyz?$REMOTE_STORE_PATH&$SSH_KEY_PATH&$PUBLIC_KEY"
-          nix copy --no-check-sigs --to "$CACHE_PUSH_STORE" "$OUT"
+          nix copy --no-check-sigs --to "$CACHE_PUSH_STORE" "${OUT[@]}"
       - name: Record Build Status
         if: always()
         run: echo "${{ job.status }}" > "status-${{ matrix.package }}.txt"
