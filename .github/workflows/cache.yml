@@ -36,6 +36,18 @@ jobs:
         run: |
           matrix=$(bash .github/scripts/missing-packages.sh)
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+      - name: Setup SSH cache key
+        env:
+          HOST_KEY: ${{ vars.CACHE_HOST_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HARMONIA_SSH_KEY }}" > ~/.ssh/harmonia-ci
+          chmod 600 ~/.ssh/harmonia-ci
+          printf 'cache.wyspr.xyz %s\n' "$(printf '%s' "$HOST_KEY" | base64 -d)" >> ~/.ssh/known_hosts
+      - name: Upload keep manifest
+        run: |
+          set -o pipefail
+          bash .github/scripts/keep-manifest.sh | ssh -o BatchMode=yes -i ~/.ssh/harmonia-ci wyspr@cache.wyspr.xyz 'cat > /var/lib/harmonia-cache/keep.txt'
   build-packages:
     name: Build ${{ matrix.package }}
     needs: prepare-matrix
