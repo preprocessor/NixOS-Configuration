@@ -36,18 +36,6 @@ jobs:
         run: |
           matrix=$(bash .github/scripts/missing-packages.sh)
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
-      - name: Setup SSH cache key
-        env:
-          HOST_KEY: ${{ vars.CACHE_HOST_KEY }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.HARMONIA_SSH_KEY }}" > ~/.ssh/harmonia-ci
-          chmod 600 ~/.ssh/harmonia-ci
-          printf 'cache.wyspr.xyz %s\n' "$(printf '%s' "$HOST_KEY" | base64 -d)" >> ~/.ssh/known_hosts
-      - name: Upload keep manifest
-        run: |
-          set -o pipefail
-          bash .github/scripts/keep-manifest.sh | ssh -o BatchMode=yes -i ~/.ssh/harmonia-ci wyspr@cache.wyspr.xyz 'cat > /var/lib/harmonia-cache/keep.txt'
   build-packages:
     name: Build ${{ matrix.package }}
     needs: prepare-matrix
@@ -71,21 +59,17 @@ jobs:
             extra-trusted-public-keys = ${{ vars.CACHE_PUBLIC_KEY }}
       - name: Materialize tack patches
         run: nix run .#packages.x86_64-linux.tack -- materialize
-      - name: Setup SSH cache key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.HARMONIA_SSH_KEY }}" > ~/.ssh/harmonia-ci
-          chmod 600 ~/.ssh/harmonia-ci
+      - name: Install Attic client
+        run: nix profile install nixpkgs#attic-client
       - name: Build and push ${{ matrix.package }}
         env:
-          REMOTE_STORE_PATH: remote-store=/var/lib/harmonia-cache
-          SSH_KEY_PATH: ssh-key=/home/runner/.ssh/harmonia-ci
-          PUBLIC_KEY: base64-ssh-public-host-key=${{ vars.CACHE_HOST_KEY }}
+          ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
+          CACHE_API_ENDPOINT: ${{ vars.CACHE_API_ENDPOINT }}
         run: |
           BUILD_OUT=$(nix build ".#packages.x86_64-linux.${{ matrix.package }}" --print-build-logs --no-link --print-out-paths)
           mapfile -t OUT <<<"$BUILD_OUT"
-          CACHE_PUSH_STORE="ssh-ng://wyspr@cache.wyspr.xyz?$REMOTE_STORE_PATH&$SSH_KEY_PATH&$PUBLIC_KEY"
-          nix copy --no-check-sigs --to "$CACHE_PUSH_STORE" "${OUT[@]}"
+          attic login local "$CACHE_API_ENDPOINT" "$ATTIC_TOKEN"
+          attic push main "${OUT[@]}"
       - name: Record Build Status
         if: always()
         run: echo "${{ job.status }}" > "status-${{ matrix.package }}.txt"

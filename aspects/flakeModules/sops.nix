@@ -33,6 +33,6 @@
 
   modules.host.xyz = {
     sops.defaultSopsFile = rootPath + /.secrets/xyz.yaml;
-    sops.secrets.harmonia_signing_key = { };
+    sops.secrets.attic_rs256_secret = { };
   };
 }

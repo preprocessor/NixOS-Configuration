@@ -6,5 +6,3 @@ tack:
   nix run .#write-tack
 missing-packages:
   bash .github/scripts/missing-packages.sh
-keep-manifest:
-  bash .github/scripts/keep-manifest.sh
