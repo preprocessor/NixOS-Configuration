@@ -16,7 +16,6 @@
   };
 
   modules.host.xyz = {
-    networking.networkmanager.enable = true;
     networking = {
       defaultGateway = "147.93.176.1";
       interfaces."eth0".useDHCP = false;
