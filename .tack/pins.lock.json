@@ -176,9 +176,9 @@
     "type": "github",
     "owner": "feel-co",
     "repo": "hjem",
-    "rev": "8408642aa3035135fa6d70269dc93e0814e2a4f6",
-    "narHash": "sha256-hmlUXxCk6On7Hrop/TyS3//dgI2BLvaN4TEsOq1ma+Y=",
-    "lastModified": 1793333241
+    "rev": "2a28f37d253ea3866f85eabe482c68a84fc32ed5",
+    "narHash": "sha256-IjFbnKzAkaG+tiZxwpP5CfTYVNxKKYSMioLynWAaGd0=",
+    "lastModified": 1795054265
   },
   "hypr-motif": {
     "type": "github",
@@ -208,9 +208,9 @@
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "2074cc672349f14240fb7ea90d509e0b643e9dd4",
-    "narHash": "sha256-E0hYoioqUtM2XmPPvYYpJgdADF5AW9oOoPSEiM9dTHQ=",
-    "lastModified": 1794495034
+    "rev": "e21fec321d73511849707a7585e4ea155ee4bf40",
+    "narHash": "sha256-ySrWnmZB5UsZTYGHHnBjllT05O5iFjElCRS+mabtfP0=",
+    "lastModified": 1794840529
   },
   "nixtopsy": {
     "type": "github",
@@ -280,9 +280,9 @@
     "type": "github",
     "owner": "Mic92",
     "repo": "sops-nix",
-    "rev": "b18e01ce148eb3efff5de2f2d3181ca53b2b2a54",
-    "narHash": "sha256-GoOvpdsjO5hqZuO6T6ok9u6sJEjO0iPli2zRr9oNUNw=",
-    "lastModified": 1793657466
+    "rev": "7c637afdccdf9bcf35c4a2d67b58a77c1fd843a4",
+    "narHash": "sha256-Y28AMB8lyKjASdJ0BVsR2AqR1cUsVuo8RVVpzHoECho=",
+    "lastModified": 1794866654
   },
   "spicetify-nix": {
     "type": "github",
@@ -334,9 +334,9 @@
     "type": "github",
     "owner": "manic-systems",
     "repo": "tack",
-    "rev": "c107b0fc252b0b33b01e6b7d6111aaaedc49613e",
-    "narHash": "sha256-bdNCaHUF3c8hgsYw6FCI+lGcZanZIDxt2Sefu5AsERY=",
-    "lastModified": 1794450976
+    "rev": "1424edc27b6e6f6d4f216410e0a2cc1419d96cb7",
+    "narHash": "sha256-z7m16oDAtHsgbBX6gadOpa6pGPXNEahjwyzPC0pbLvM=",
+    "lastModified": 1795064133
   },
   "tiny5-mono": {
     "type": "github",
