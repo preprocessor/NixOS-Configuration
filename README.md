@@ -61,10 +61,6 @@ The custom TOML generator:
 - renders the url of each input first and the other elements after
 - keeps nested attribute sets within their parent input (`input.*.follows.* = "*"`)
 
-Finally, `self'.packages.tack-fish-completions` takes tack's inputs and groups and uses them to generate fish
-completions for tack subcommands that take an input or group name as an argument,
-such as `tack update` or `tack materialize`
-
 ### What this looks like
 
 ```nix
@@ -84,6 +80,9 @@ nix run .#write-tack
 url = "gh:feel-co/hjem"
 group = "nix"
 ```
+Finally, `self'.packages.tack-fish-completions` takes tack's inputs and groups and uses them to generate fish
+completions for tack subcommands that take an input or group name as an argument,
+such as `tack update` or `tack materialize`
 
 ## Module based package wrapper
 > **File:** [`wrapper.nix`](./aspects/flakeModules/wrapper.nix)
