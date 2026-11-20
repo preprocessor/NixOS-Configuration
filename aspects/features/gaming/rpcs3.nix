@@ -1,4 +1,8 @@
 {
+  perSystem = { pkgs, ... }: {
+    remotePackages = { inherit (pkgs) rpcs3; };
+  };
+
   modules.features.gaming =
     { pkgs, ... }:
     {
