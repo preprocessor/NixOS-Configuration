@@ -171,8 +171,7 @@ let
 
               # Generate files with passAsFile
               ${
-                stringFiles
-                |> catmap (attrName: { path, ... }: ''install -D "''$${attrName}Path" "$out/${path}"'')
+                stringFiles |> catmap (attrName: { path, ... }: ''install -D "''$${attrName}Path" "$out/${path}"'')
               }
 
               # Generate symlinks from external paths
@@ -211,9 +210,12 @@ let
             _:
             { path, ... }:
             {
+              # The files objects are always converted to strings, this is a bit of a hack to create a polymorphic type
               __toString = _: "${placeholder "out"}/${path}";
 
               dir = "${placeholder "out"}/${lib.dirOf path}";
+
+              name = lib.baseNameOf path;
             }
           );
 
