@@ -51,6 +51,22 @@ flake-parts users get.
 Tack is declaratively configured and managed using the top-level `tack` option.
 This option mirrors the layout of pins.toml for ease of use and compatibility.
 
+`write-tack` is a Nix flake app that:
+1. Takes `config.tack` and generates `pins.toml` from it using a custom toml generator.
+2. Diffs them against the current file
+3. Only runs `tack update` or `tack patch` for new or changed inputs
+
+The custom TOML generator:
+- renders the tack options first and tack.inputs last
+- renders the url of each input first and the other elements after
+- keeps nested attribute sets within their parent input (`input.*.follows.* = "*"`)
+
+Finally, `self'.packages.tack-fish-completions` takes tack's inputs and groups and uses them to generate fish
+completions for tack subcommands that take an input or group name as an argument,
+such as `tack update` or `tack materialize`
+
+### What this looks like
+
 ```nix
 {
   tack.inputs.hjem = {
@@ -59,31 +75,15 @@ This option mirrors the layout of pins.toml for ease of use and compatibility.
   };
 }
 ```
-
-`write-tack` is a Nix flake app that:
-1. Takes `config.tack` and generates `pins.toml` from it using a custom toml generator.
-2. Diffs them against the current file
-3. Only runs `tack update` or `tack patch` for new or changed inputs
-
 ```sh
 nix run .#write-tack
 ```
-
-The custom generator:
-    - renders the tack options first and tack.inputs last
-    - renders the url of each input first and the other elements after
-    - keeps nested attribute sets within their parent input (`input.*.follows.* = "*"`)
-
 ```toml
 # .tack/pins.toml
 [inputs.hjem]
 url = "gh:feel-co/hjem"
 group = "nix"
 ```
-
-Finally, `self'.packages.tack-fish-completions` takes tack's inputs and groups and uses them to generate fish
-completions for tack subcommands that take an input or group name as an argument,
-such as `tack update` or `tack materialize`
 
 ## Module based package wrapper
 > **File:** [`wrapper.nix`](./aspects/flakeModules/wrapper.nix)
