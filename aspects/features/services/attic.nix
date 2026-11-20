@@ -25,8 +25,8 @@
 
   modules.features.desktop = {
     nix.settings = {
-      extra-substituters = [ "https://cache.wyspr.xyz/main" ];
-      extra-trusted-public-keys = [
+      trusted-substituters = [ "https://cache.wyspr.xyz/main" ];
+      trusted-public-keys = [
         "main:Rz328YhW+fhUPvBBhMyJyaF6XVOTh5oAzMKr0RO3ySQ="
       ];
     };
