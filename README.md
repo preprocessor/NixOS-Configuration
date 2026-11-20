@@ -9,14 +9,13 @@ So instead, my flake reimplements the pieces I actually use to meet my needs and
 
 ## Features
 
-- A minimal [flake-parts](https://github.com/hercules-ci/flake-parts) perSystem implementation
-- Tack as an input pinner, instead of flake inputs and `flake.lock`
-- A [flake-file](https://github.com/denful/flake-file)-like interface to tack
-- A module-based package wrapper
-- Custom colorschemes available through a global `scheme` object
-- Composable, module based host configurations
-- [hjem](https://github.com/feel-co/hjem) instead of home-manager
-- remote package builds with github actions
+- [A minimal flake-parts perSystem implementation](#minimal-flake-parts-persystem-implementation)
+- [Tack as an input pinner, with a flake-file-like declarative interface](#tack-module--flake-app--fish-completions)
+- [A module-based package wrapper](#module-based-package-wrapper)
+- [Remote package builds and binary caching](#remote-package-builds)
+- [Custom colorschemes available through a global `scheme` object](#colorschemes)
+- [Composable, module-based host configurations](#composable-host-configurations)
+- [hjem instead of home-manager](#hjem-instead-of-home-manager)
 
 > [!WARNING]
 > These configurations won't work on your machines due to
@@ -134,6 +133,36 @@ In the above example we create `files.theme` with its path set to `"config/theme
 Provides a unified interface for generating configuration format libraries, including JSON, TOML, YAML, and INI, using Nix's pkgs.formats.
 It also provides `wlib.out` which returns the wrapper's output path.
 
+## Remote package builds
+
+> file: [`remote-build.nix`](./aspects/flakeModules/remote-build.nix)
+
+`remotePackages` is a per-system option for packages that should be built by CI and
+pushed to the binary cache instead of being built locally.
+
+```nix
+{
+  perSystem = { pkgs, ... }: {
+    remotePackages.hello = pkgs.hello;
+  };
+}
+```
+
+Declaring a remote package has two effects:
+
+- It is merged into the normal `packages.<system>` output, so it can still be built
+  directly with `nix build .#hello`.
+- It is included by the `list-remote-packages` app, which prints one attribute name
+  per line.
+
+```sh
+nix run .#list-remote-packages
+```
+The [`cache.yml`](./.github/workflows/cache.yml) workflow consumes that list: it checks
+every output of each package against the cache, builds only the missing ones, and pushes
+them to the Attic cache. `modules.core` adds the public substituters and trusted keys
+needed to consume that cache.
+
 ## Colorschemes
 > file: [`colors.nix`](./aspects/flakeModules/colors.nix)
 
@@ -196,13 +225,25 @@ modules.features.comms
 modules.features.rocm
 ```
 
+## hjem instead of home-manager
+
+> file: [`hjem.nix`](./aspects/features/hjem.nix)
+
+[hjem](https://github.com/feel-co/hjem) is imported into `modules.core`, so every host
+gets user-level package and dotfile management without home-manager. The module also aliases
+`hj` to `hjem.users.<user>`.
+
+[`aspects/hjemModules/`](./aspects/hjemModules) contribute user-level modules
+through `modules.core`, usually by setting `hj.packages`, `hj.xdg.config.files`, or
+`hj.environment.sessionVariables`.
+
 ## Repository layout
 
 ```text
 .
 ├── flake.nix                  # the perSystem / output machinery
 ├── aspects/
-│   ├── flakeModules/          # flake-level modules (tack, wrappers, 16, sops, ..)
+│   ├── flakeModules/          # flake-level modules (tack, wrapper, remote-build, colors, sops, ..)
 │   ├── hjemModules/           # hjem (user) level modules (kitty, hyprland, yazi, ...)
 │   ├── nixosConfigurations/
 │   │   ├── configurations.nix # host schema and custom module system
