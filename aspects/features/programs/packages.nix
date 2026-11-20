@@ -13,10 +13,8 @@
   modules.features.desktop = { pkgs, ... }: {
     hj.packages = with pkgs; [
       (gnuplot.override { withQt = true; })
-      libreoffice-qt
       imagemagick
       libnotify
-      mcat
     ];
   };
 
