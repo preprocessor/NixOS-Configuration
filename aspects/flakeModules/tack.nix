@@ -250,19 +250,17 @@ in
     modules.core =
       { packages', self', ... }:
       {
-        hj = {
-          packages = [
-            self'.packages.tack-fish-completions
-            packages'.tack
-          ];
-          environment.sessionVariables.TACK_NIX_CONF_TOKENS = 1;
-        };
+        hj.packages = [
+          self'.packages.tack-fish-completions
+          packages'.tack
+        ];
+        hj.environment.sessionVariables.TACK_NIX_CONF_TOKENS = 1;
       };
 
     perSystem =
       {
-        packages',
         wrapPackage,
+        packages',
         self',
         pkgs,
         ...
