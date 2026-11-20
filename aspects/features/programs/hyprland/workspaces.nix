@@ -25,7 +25,7 @@
         for key, name in pairs({
           ["X"] = "scratch",
           ["G"] = "games",
-          ["D"] = "dashboard"
+          ["D"] = "discord"
         }) do
           hl.workspace_rule({
             workspace = "special:" .. name,
@@ -49,9 +49,8 @@
               ws_exec("xdg-open steam://open/friends")
             end,
 
-            ["special:dashboard"] = function()
-              ws_exec("kitty -o font_size=18 -e nvim ~/todo.md")
-            end,
+            -- ["special:discord"] = function()
+            -- end,
 
             ["special:scratch"] = function()
               ws_exec("kitty")
