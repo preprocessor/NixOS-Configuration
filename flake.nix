@@ -18,16 +18,6 @@
 #                          ▀▀▀ ▀▀▀▀▀▀▀               ▀▄▄▄▀
 #
 {
-  nixConfig = {
-    trusted-substituters = [ "https://cache.wyspr.xyz/main" ];
-    trusted-public-keys = [ "main:Rz328YhW+fhUPvBBhMyJyaF6XVOTh5oAzMKr0RO3ySQ=" ];
-    experimental-features = [
-      "pipe-operators"
-      "nix-command"
-      "flakes"
-    ];
-  };
-
   outputs =
     { self, ... }:
     let

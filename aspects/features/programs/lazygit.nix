@@ -55,7 +55,6 @@
             sidePanelWidth = 0.25;
             border = "single";
             mouseEvents = false;
-            showBottomLine = false;
 
             sidePanels = [
               [
