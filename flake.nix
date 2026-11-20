@@ -182,7 +182,7 @@
             ./aspects
             # Walk the ./aspects directory and keep only entries that
             #   a) end in .nix
-            #   b) don't start with _.
+            #   b) don't start with _
             |> lib.fileset.fileFilter (file: file.hasExt "nix" && !lib.hasPrefix "_" file.name)
             |> lib.fileset.toList
           )

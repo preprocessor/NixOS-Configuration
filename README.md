@@ -1,105 +1,167 @@
-# My NixOS Config
+# My NixOS Configuration
 
-This is my personal NixOS setup, and it's kind of grown into its own little flake
-framework. Instead of pulling in flake-parts, flake-file, wrapper-modules, stylix, base16.nix,
-and a pile of other helpers, it reimplements the pieces I actually use with `lib` and `nixpkgs`.
+> A modular multi-host NixOS configuration.
 
-I did this to:
-1. Learn more about NixOS and the Nix expression language.
-2. Have exactly the features I desire and nothing more.
-3. Make each abstraction (*hopefully*) small enough to read in one sitting.
+This is my personal NixOS setup, and it's kind of grown into its own flake framework.
+I enjoyed many of the features of popular modules like flake-parts, flake-file, and nix-wrapper-modules,
+but with each of them I found incompatibilities with my personal workflow.
+So instead, my flake reimplements the pieces I actually use to meet my needs and preferences.
 
-## Design Philosophy
-### Self-reliance
+## Features
 
-The interesting machinery is built from `lib` and `nixpkgs` — no
-flake-parts, no flake-utils, no stylix, no base16.nix. Fewer moving parts means fewer
-inputs to pin, fewer upgrade cliffs, and fewer uncontrolled abstractions.
+- A minimal [flake-parts](https://github.com/hercules-ci/flake-parts) perSystem implementation
+- Tack as an input pinner, instead of flake inputs and `flake.lock`
+- A [flake-file](https://github.com/denful/flake-file)-like interface to tack
+- A module-based package wrapper
+- Custom colorschemes available through a global `scheme` object
+- Composable, module based host configurations
+- [hjem](https://github.com/feel-co/hjem) instead of home-manager
+- remote package builds with github actions
 
-### Every abstraction is small enough to audit
+> [!WARNING]
+> These configurations won't work on your machines due to
+> lack of secrets and hardware differences
+>
+> The exposed packages should work though,
+> and I hope my modules can be educational to others
 
-The `perSystem` layer is a couple hundred lines. `mkScheme` is ~100. The
-package wrapper is one `runCommand`. Each one replaces a third-party tool with a
-deliberately narrow reimplementation, so understanding the repo doesn't require
-understanding a framework first.
-
-### Everything is a module
-
-The flake top level, every `perSystem` fragment, every wrapped package,
-and each host config are all evaluated as modules
-with typed options. The schemas document themselves, and composition happens through
-deferred modules instead of hand-rolled merging.
-
-### Pins are data, not flake inputs
-
-Tack replaces `inputs` with a declarative, signed, patchable `pins.toml`.
-`tack.nix` exposes that file as top-level nix options and generates it, ala flake-file.
-Dependencies show up in a reviewable diff instead of hiding in a `flake.lock`.
-
-### Compose hosts from modules, not one giant config
-
-A host declares its user, state version, colorscheme, hardware profile, and which
-modules it wants. Modules organize themselves into `core`, `host`, `hardware`, or
-a named module within `modules`, and `configurations.nix` assembles the final
-`nixosSystemMinimal`.
-
-## Areas of interest
-
-If you're here to get ideas, these are worth reading:
-
-| # | Area | What it is |
-|---|------|------------|
-| 1 | [A hand-rolled `perSystem`](#a-hand-rolled-persystem) | flake-parts' per-system abstraction, rebuilt from scratch |
-| 2 | [Tack inputs, not flake inputs](#tack-not-flake-inputs) | a flake-file-style interface that generates `pins.toml` |
-| 3 | [The package wrapper](#the-package-wrapper) | an option-driven `wrapPackage` on top of `makeWrapper` |
-| 4 | [Lib-only colorschemes](#lib-only-colorschemes) | a base16/24 engine with zero nixpkgs imports |
-| 5 | [Composable host configurations](#composable-host-configurations) | bucket-based module composition for hosts |
-
-## A hand-rolled perSystem
+## Minimal flake-parts perSystem implementation
 
 > file: [`flake.nix`](./flake.nix)
 
-This is the part that replaces flake-parts perSystem. It runs two `evalModules` passes: the first
+Here we implement flake-parts' perSystem. It runs two `evalModules` passes: the first
 evaluates the top-level `./aspects` tree (flake-level options, tack pins, schemes), and
 the second re-runs one `perSystem` module once per system with extra arguments.
 
-The glue is a handful of small helpers:
+It's implemented with a handful of small helpers:
 
 - `systemInput` narrows a flake-shaped input to a single system, dropping the system
   layer so `inputs'.foo.packages.bar` means `inputs.foo.packages.${system}.bar`.
-- `withSystem` builds the per-system argument bundle: `pkgs`, `inputs'`, `self'`,
-  `packages'`, `meta`, `system`, `rootPath`.
-- `packages'` is a convenience layer that picks `packages.default`, falls back to a
-  package named after the input, then merges everything into one set.
+- `withSystem` builds the per-system argument bundle.
 - output transposition flips `system -> category -> derivation` into the
   `category -> system -> derivation` shape flake outputs expect.
 
 The result is a flake that still looks normal from the outside (`packages.x86_64-linux.*`,
 `nixosConfigurations.*`) but gives every module the same ergonomic arguments
-flake-parts users get, then extends those further.
+flake-parts users get.
+
+## Tack module + flake app + fish completions
+
+> file: [`tack.nix`](./aspects/flakeModules/tack.nix)
+
+Tack is declaratively configured and managed using the top-level `tack` option.
+This option mirrors the layout of pins.toml for ease of use and compatibility.
+
+```nix
+{
+  tack.inputs.hjem = {
+    url = "gh:feel-co/hjem";
+    group = "nix";
+  };
+}
+```
+```sh
+nix run .#write-tack
+```
+
+`write-tack` is a Nix flake app that:
+1. Takes `config.tack` and generates `pins.toml` from it using a custom toml generator.
+2. Diffs them against the current file
+3. Only runs `tack update` or `tack patch` for new or changed inputs
+
+The custom generator:
+    - renders the tack options first and tack.inputs last
+    - renders the url of each input first and the other elements after
+    - keeps nested attribute sets within their parent input (`input.*.follows.* = "*"`)
+
+```toml
+# .tack/pins.toml
+[inputs.hjem]
+url = "gh:feel-co/hjem"
+group = "nix"
+```
+
+Finally, `self'.packages.tack-fish-completions` takes tack's inputs and groups and uses them to generate fish
+completions for tack subcommands that take an input or group name as an argument,
+such as `tack update` or `tack materialize`
+
+## Module based package wrapper
+> file: [`wrapper.nix`](./aspects/flakeModules/wrapper.nix)
+
+`wrapPackage` is a function that takes a module as an argument and returns a wrapped package derivation.
+The following options are available to be used in the module to define a package.
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `package` | `package` | none (required) | The package to wrap. |
+| `linkedPackages` | `listOf package` | `[ ]` | Extra packages symlinked into the derivation root. Unlike `runtimePackages`, these don't inherit environment variables passed to the wrapper. |
+| `binName` | `str` | `config.package.meta.mainProgram or (lib.getName config.package)` | Name of the wrapped binary at `$out/bin/<binName>`. |
+| `args` | `listOf str` | `[ ]` | Arguments to pass to the binary. |
+| `runCommand` | `listOf str` | `[ ]` | Commands to run before the executable. |
+| `env` | `attrsOf (oneOf [ str number bool path ])` | `{ }` | Environment variables to pass to the binary. |
+| `runtimePackages` | `listOf package` | `[ ]` | Packages to add to `PATH` at runtime. |
+| `files` | `attrsOf (submodule)` | `{ }` | Files or directories to add to the output. Strings go through `passAsFile`, store paths are linked directly. |
+| `files.<name>.path` | `str` | none (required) | Path relative to the root of the output. |
+| `files.<name>.file` | `either str pathInStore` | none (required) | String or path to add to the output. |
+| `aliases` | `listOf str` | `[ ]` | Aliases to the main binary. |
+| `wrapper` | `package` (read-only) | none | The built, wrapped derivation. |
+
+```nix
+wrapPackage (
+  { files, wlib, ... }:
+  {
+    package = self'.packages.eza;
+    env.EZA_CONFIG_DIR = files.theme.dir;
+    files.theme = {
+      path = "config/theme.yml";
+      file = wlib.yaml "theme.yml" cfg.settings;
+    };
+  }
+)
+```
+`files` and `wlib` are module arguments accessible from within the `wrapPackage` modules.
+
+### Files
+
+The `files` argument is a way to reference paths of files generated inside the wrapper.
+In the above example we create `files.theme` with its path set to `"config/theme.yml"`, we also use the files argument to set `EZA_CONFIG_DIR` to `files.theme.dir`.
+
+- `files.<name>.dir` gives the path of the file's parent directory.
+- `files.<name>` gives the path of the actual file.
+- `files.<name>.name` gives the name (basename) of the file.
+
+### Wlib
+Provides a unified interface for generating configuration format libraries, including JSON, TOML, YAML, and INI, using Nix's pkgs.formats.
+It also provides `wlib.out` which returns the wrapper's output path.
+
+## Colorschemes
+> file: [`colors.nix`](./aspects/flakeModules/colors.nix)
+
+This is a stripped-down base16.nix.
+Give it a scheme attribute and the `mkScheme` function normalizes it to base24, adds mnemonic names (`red`, `bright-blue`, ..), and exposes a few useful forms:
+
+- `scheme.base0D` — the raw hex value
+- `scheme.noHashtag.base0D` — hex without the `#`
+- `scheme.asRgb8.base0D` — `{ r, g, b; }` in 0–255
+- `scheme.asRgb.base0D` — the same, normalized to 0–1
+
+The color schemes themselves are defined in [`schemes.nix`](./aspects/flakeModules/schemes.nix), and hosts pick one by name. This is passed to the mkScheme function and provided to the host as the `scheme` specialArg.
 
 ## Composable host configurations
 
-> file: [`aspects/hosts/configurations.nix`](./aspects/hosts/configurations.nix)
+> file: [`configurations.nix`](./aspects/nixosConfigurations/configurations.nix)
 
-Hosts are declared as submodules, so `modules.configurations.ramiel` only accepts the fields:
-`system`, `stateVersion`, `user`, `hardware`, `scheme`, `modules`, and `extraConfig`.
-From each entry, the module builds a `nixosSystemMinimal` with the right `specialArgs`
-(`scheme`, `pkgs`, `inputs'`, `hostname`, `constants`, ...). It starts with no NixOS
-modules at all: the base modules we rely on are listed explicitly in
-`aspects/hosts/_base-modules.nix` instead of importing nixpkgs' full module list.
-
-The composition is the important part. We merge deferred modules into sets:
+Modules are organized under the top-level `modules` set and split into the following categories:
 
 - `modules.core` — common configuration modules provided to every host
 - `modules.hardware.<profile>` — hardware-specific modules
 - `modules.host.<hostname>` — per host modules
-- `modules.mods.<name>` — opt-in feature sets like `desktop`, `gaming`, `comms`
+- `modules.features.<name>` — opt-in feature sets like `bluetooth`, `gaming`, `comms`
 
-A host just lists the modules it wants, and the final module list is assembled from those
-sets. So enabling gaming on a second machine is one word, not a copy-paste of config.
+A host just lists the modules it wants and the hardware it uses, then the final module list is assembled from those sets.
+So enabling a feature on a configuration is one word, not a copy-paste of config.
 
-> file: [`aspects/hosts/configurations.nix`](./aspects/hosts/ramiel/ramiel.nix)
+> file: [`ramiel.nix`](./aspects/nixosConfigurations/ramiel/ramiel.nix)
 ```nix
 { config, ... }:
 {
@@ -108,11 +170,14 @@ sets. So enabling gaming on a second machine is one word, not a copy-paste of co
     stateVersion = "25.11";
     scheme = "amber";
     hardware = "desktop-pc";
-    modules = with config.modules.mods; [
+    modules = with config.modules.features; [
+      bluetooth
       printing
       desktop
       gaming
+      neovim
       comms
+      rocm
     ];
   };
 }
@@ -122,115 +187,14 @@ This will receive the following modules:
 modules.core
 modules.hardware.desktop-pc
 modules.host.ramiel
-modules.mods.printing
-modules.mods.desktop
-modules.mods.gaming
-modules.mods.comms
+modules.features.bluetooth
+modules.features.printing
+modules.features.desktop
+modules.features.gaming
+modules.features.neovim
+modules.features.comms
+modules.features.rocm
 ```
-
-## [Tack](https://github.com/manic-systems/tack) ~~flake~~ inputs
-
-> file: [`aspects/flake/tack.nix`](./aspects/flake/tack.nix)
-
-Dependencies live in `.tack/pins.toml` and get imported into the flake, so
-there's no `flake.lock` and no `inputs` block to edit. This module gives that file
-a typed option schema (`tack.inputs.*`, `tack.shorturls`, `tack.signers`, `all_follow`,
-patches, follows, and so on) and then writes it back out with `write-tack`.
-
-`write-tack` is a flake app that:
-1. Turns the evaluated options into TOML using a custom generator
-2. Diffs them against the current file
-3. Only runs `tack update` or `tack patch` for inputs that have changed or updated
-It also rewrites the file so every input starts with its
-`url`, which makes the diffs much nicer to read. Its like flake-file, for tack.
-
-Inputs can be declared as children of the top-level tack option.
-
-```nix
-{
-  tack.inputs.hjem = {
-    url = "gh:feel-co/hjem";
-    group = "nix";
-  };
-
-  ...
-}
-```
-Then:
-```sh
-nix run .#write-tack
-```
-
-Produces:
-
-```toml
-# .tack/pins.toml
-[inputs.hjem]
-url = "gh:feel-co/hjem"
-group = "nix"
-```
-
-## Package wrappers
-
-> file: [`./aspects/flake/wrappers.nix`](./aspects/flake/wrappers.nix)
-
-`wrapPackage` is a module-based wrapper around `makeWrapper`
-
-```nix
-wrapPackage {
-  package = pkgs.kitty;
-  binName = "kitty";
-  env.KITTY_CONFIG_DIRECTORY = files.config.dir;
-  files.config = {
-    path = "config/kitty.conf";
-    file =
-    let
-    toKittyConfig = lib.concatMapAttrsStringSep "\n" (
-      name: value:
-      let
-        mkValue = v: v |> (if lib.isBool v then lib.boolToYesNo else toString);
-      in
-      if lib.isList value then
-        value |> lib.concatMapStringsSep "\n" (v: "${name} ${mkValue v}")
-      else
-        "${name} ${mkValue value}"
-    );
-    in
-    ''
-    # Settings
-    ${toKittyConfig cfg.settings}
-
-    # Keybindings
-    ${toKittyConfig cfg.keybindings}
-
-    # Theme
-    ${cfg.theme}
-    '';
-  runtimePackages = [ pkgs.ydotool ];
-  aliases = [ "term" ];
-}
-```
-
-It supports `env`, `args`, `runCommand`, `runtimePackages`, `linkedPackages`, `files`,
-and `aliases`. Files passed as strings go through `passAsFile`, store paths get
-symlinked, and `wlib` gives you placeholder-aware helpers for generating JSON, TOML,
-YAML, or INI inside the wrapper.
-
-## Colorschemes
-
-> file: [`aspects/flake/16.nix`](./aspects/flake/16.nix)
-
-This is a stripped-down base16.nix with no dependency on pkgs. Give it a scheme and
-`mkScheme` normalizes it to base24, adds mnemonic names (`red`, `bright-blue`, ..), and
-exposes a few useful forms:
-
-- `scheme.base0D` — the raw hex value
-- `scheme.noHashtag.base0D` — hex without the `#`
-- `scheme.asRgb8.base0D` — `{ r, g, b; }` in 0–255
-- `scheme.asRgb.base0D` — the same, normalized to 0–1
-
-The schemes themselves live in [`schemes.nix`](./aspects/flake/schemes.nix), and hosts
-pick one by name. No external theming framework, just a bit of hex math in `lib`.
 
 ## Repository layout
 
@@ -238,20 +202,13 @@ pick one by name. No external theming framework, just a bit of hex math in `lib`
 .
 ├── flake.nix                  # the perSystem / output machinery
 ├── aspects/
-│   ├── flake/                 # flake-level modules (tack, wrappers, 16, sops, ..)
-│   ├── hosts/
-│   │   ├── configurations.nix # host schema and system assembly
-│   │   ├── nixosSystemMinimal.nix # evalModules wrapper without module-list
-│   │   ├── _base-modules.nix  # explicit list of NixOS modules we import
-│   │   └── ramiel/            # one host: boot, hardware, packages
-│   └── modules/
-│       ├── core/              # base system modules
-│       ├── extra/             # gaming, rice, xdg
-│       ├── programs/          # gui and tui apps
-│       └── services/          # audio, networking, disks, ..
-├── .tack/                     # pins.toml and patches
-└── justfile
+│   ├── flakeModules/          # flake-level modules (tack, wrappers, 16, sops, ..)
+│   ├── hjemModules/           # hjem (user) level modules (kitty, hyprland, yazi, ...)
+│   ├── nixosConfigurations/
+│   │   ├── configurations.nix # host schema and custom module system
+│   │   ├── ramiel/            # my desktop pc
+│   │   └── xyz/               # a vps that hosts my package cache and personal git server
+│   ├── packages/              # package overrides/wrappers
+│   └── features/              # where modules.features are defined
+└── .tack/                     # pins.toml and patches
 ```
-That's the tour. If you're building something similar, the five areas above are the
-ones I'd start with — they're the parts that made the rest of the config pleasant to
-live in.
