@@ -91,15 +91,6 @@
             # editAtLine = ''if [ -n "$NVIM" ]; then nvim --server $NVIM --remote-send '<C-\><C-n><cmd>close<cr>' && nvim --server $NVIM --remote +{{line}} {{filename}}; else nvim +{{line}} {{filename}}; fi'';
             editInTerminal = true;
           };
-
-          customCommands = [
-            {
-              key = "P";
-              context = "global";
-              command = "git remote | xargs -L1 git push --all";
-              description = "Push to all remotes";
-            }
-          ];
         };
       };
     };
