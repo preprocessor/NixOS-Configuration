@@ -26,7 +26,7 @@ So instead, my flake reimplements the pieces I actually use to meet my needs and
 
 ## Minimal flake-parts perSystem implementation
 
-> file: [`flake.nix`](./flake.nix)
+> **File:** [`flake.nix`](./flake.nix)
 
 Here we implement flake-parts' perSystem. It runs two `evalModules` passes: the first
 evaluates the top-level `./aspects` tree (flake-level options, tack pins, schemes), and
@@ -37,8 +37,8 @@ It's implemented with a handful of small helpers:
 - `systemInput` narrows a flake-shaped input to a single system, dropping the system
   layer so `inputs'.foo.packages.bar` means `inputs.foo.packages.${system}.bar`.
 - `withSystem` builds the per-system argument bundle.
-- output transposition flips `system -> category -> derivation` into the
-  `category -> system -> derivation` shape flake outputs expect.
+- output transposition flips `system → category → derivation` into the
+  `category → system → derivation` shape flake outputs expect.
 
 The result is a flake that still looks normal from the outside (`packages.x86_64-linux.*`,
 `nixosConfigurations.*`) but gives every module the same ergonomic arguments
@@ -46,7 +46,7 @@ flake-parts users get.
 
 ## Tack module + flake app + fish completions
 
-> file: [`tack.nix`](./aspects/flakeModules/tack.nix)
+> **File:** [`tack.nix`](./aspects/flakeModules/tack.nix)
 
 Tack is declaratively configured and managed using the top-level `tack` option.
 This option mirrors the layout of pins.toml for ease of use and compatibility.
@@ -59,14 +59,15 @@ This option mirrors the layout of pins.toml for ease of use and compatibility.
   };
 }
 ```
-```sh
-nix run .#write-tack
-```
 
 `write-tack` is a Nix flake app that:
 1. Takes `config.tack` and generates `pins.toml` from it using a custom toml generator.
 2. Diffs them against the current file
 3. Only runs `tack update` or `tack patch` for new or changed inputs
+
+```sh
+nix run .#write-tack
+```
 
 The custom generator:
     - renders the tack options first and tack.inputs last
@@ -85,7 +86,7 @@ completions for tack subcommands that take an input or group name as an argument
 such as `tack update` or `tack materialize`
 
 ## Module based package wrapper
-> file: [`wrapper.nix`](./aspects/flakeModules/wrapper.nix)
+> **File:** [`wrapper.nix`](./aspects/flakeModules/wrapper.nix)
 
 `wrapPackage` is a function that takes a module as an argument and returns a wrapped package derivation.
 The following options are available to be used in the module to define a package.
@@ -135,7 +136,7 @@ It also provides `wlib.out` which returns the wrapper's output path.
 
 ## Remote package builds
 
-> file: [`remote-build.nix`](./aspects/flakeModules/remote-build.nix)
+> **File:** [`remote-build.nix`](./aspects/flakeModules/remote-build.nix)
 
 `remotePackages` is a per-system option for packages that should be built by CI and
 pushed to the binary cache instead of being built locally.
@@ -164,7 +165,7 @@ them to the Attic cache. `modules.core` adds the public substituters and trusted
 needed to consume that cache.
 
 ## Colorschemes
-> file: [`colors.nix`](./aspects/flakeModules/colors.nix)
+> **File:** [`colors.nix`](./aspects/flakeModules/colors.nix)
 
 This is a stripped-down base16.nix.
 Give it a scheme attribute and the `mkScheme` function normalizes it to base24, adds mnemonic names (`red`, `bright-blue`, ..), and exposes a few useful forms:
@@ -178,7 +179,7 @@ The color schemes themselves are defined in [`schemes.nix`](./aspects/flakeModul
 
 ## Composable host configurations
 
-> file: [`configurations.nix`](./aspects/nixosConfigurations/configurations.nix)
+> **File:** [`configurations.nix`](./aspects/nixosConfigurations/configurations.nix)
 
 Modules are organized under the top-level `modules` set and split into the following categories:
 
@@ -190,7 +191,7 @@ Modules are organized under the top-level `modules` set and split into the follo
 A host just lists the modules it wants and the hardware it uses, then the final module list is assembled from those sets.
 So enabling a feature on a configuration is one word, not a copy-paste of config.
 
-> file: [`ramiel.nix`](./aspects/nixosConfigurations/ramiel/ramiel.nix)
+> **File:** [`ramiel.nix`](./aspects/nixosConfigurations/ramiel/ramiel.nix)
 ```nix
 { config, ... }:
 {
@@ -227,7 +228,7 @@ modules.features.rocm
 
 ## hjem instead of home-manager
 
-> file: [`hjem.nix`](./aspects/features/hjem.nix)
+> **File:** [`hjem.nix`](./aspects/features/hjem.nix)
 
 [hjem](https://github.com/feel-co/hjem) is imported into `modules.core`, so every host
 gets user-level package and dotfile management without home-manager. The module also aliases
