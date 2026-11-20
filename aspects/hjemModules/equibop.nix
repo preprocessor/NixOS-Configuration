@@ -1,5 +1,5 @@
 {
-  modules.core = 
+  modules.core =
     {
       config,
       pkgs,
@@ -47,7 +47,7 @@
           (lib.mkIf config.my.hyprland.enable {
             my.hyprland.startup = [
               /* lua */ ''
-                hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "3 silent" })
+                hl.exec_cmd("${lib.getExe cfg.package}", { workspace = "special:discord silent" })
               ''
             ];
 
