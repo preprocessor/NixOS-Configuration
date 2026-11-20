@@ -18,11 +18,6 @@
       warn-dirty = false;
       auto-optimise-store = true;
       allow-import-from-derivation = false;
-      experimental-features = [
-        "pipe-operators"
-        "nix-command"
-        "flakes"
-      ];
 
       trusted-users = [
         "root"
