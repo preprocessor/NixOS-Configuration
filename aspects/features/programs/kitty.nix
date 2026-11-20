@@ -26,6 +26,9 @@
           "left press ungrabbed mouse_selection drag_or_normal_select"
         ];
 
+        allow_remote_control = "socket";
+        listen_on = "unix:/tmp/kitty";
+
         env = "TERMINAL=kitty";
 
         resize_debounce_time = "0 0";

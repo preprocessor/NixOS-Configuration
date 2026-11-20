@@ -1,5 +1,5 @@
 {
-  modules.core = 
+  modules.core =
     {
       wrapPackage,
       config,
@@ -47,9 +47,29 @@
           ];
 
         my.hyprland.lua.files."keybinds.kitty".content = /* lua */ ''
-          hl.bind("SUPER + Return", hl.dsp.exec_raw("kitty -1"), { release = true })
+          local kitty_cwd = function(exec, exec_ops)
+            local win = hl.get_active_window()
+            if not win or win.class ~= "kitty" then
+              hl.dispatch(hl.dsp.exec_raw(exec), exec_ops)
+              return
+            end
+            -- Hyprland has no KITTY_LISTEN_ON variable; pass the socket explicitly.
+            hl.dispatch(hl.dsp.exec_raw(
+              "kitty @ --to ${cfg.settings.listen_on}-" .. win.pid ..
+              " launch --type=os-window --cwd=current --source-window=state:focused || kitty -1"
+            ))
+          end
 
-          hl.bind("SUPER + CTRL + Return", hl.dsp.exec_raw("kitty --class float-kitty"), { release = true, center = true })
+          hl.bind("SUPER + Return", function()
+            kitty_cwd("kitty -1", { release = true, })
+          end)
+
+          hl.bind("SUPER + CTRL + Return", function()
+            kitty_cwd("kitty --class float-kitty", { release = true, center = true })
+          end)
+          -- hl.bind("SUPER + Return", hl.dsp.exec_raw("kitty -1"), { release = true })
+          --
+          -- hl.bind("SUPER + CTRL + Return", hl.dsp.exec_raw("kitty --class float-kitty"), { release = true, center = true })
         '';
 
         my.hyprland.windowrules.kitty = [
