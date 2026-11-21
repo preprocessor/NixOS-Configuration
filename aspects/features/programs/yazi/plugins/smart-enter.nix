@@ -1,6 +1,6 @@
 {
   modules.core =
-    { config, pkgs, ... }:
+    { config, ... }:
     {
       my.yazi.initLua = /* lua */ ''
         require("smart-enter"):setup {
