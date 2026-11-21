@@ -1,8 +1,6 @@
 {
   modules.features.desktop =
     {
-      scheme,
-      pkgs,
       ...
     }:
 
